@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MaterialsController } from './materials/materials.controller';
@@ -7,24 +8,36 @@ import { DataSource } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { UsersService } from './users/usersService/users.service';
+import { MaterialsModule } from './materials/materials.module';
+import { Material } from './materials/materials.entity';
+import { Price } from './materials/price.entity';
 
 @Module({
   imports: [
-      TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
-      entities: [User],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
+        entities: [User, Material, Price],
+        synchronize: true,
+      }),
     }),
-      UsersModule,
+    UsersModule,
+    MaterialsModule,
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController, MaterialsController],
   providers: [AppService, UsersService],
 })
 export class AppModule {
-  constructor(private readonly dataSource: DataSource) {}
+  constructor(
+    private configService: ConfigService,
+    private readonly dataSource: DataSource,
+  ) {}
 }
