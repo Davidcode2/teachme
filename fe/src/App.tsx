@@ -3,10 +3,11 @@ import './App.css'
 import Card from './components/card/card'
 import fetcher from './lib/fetcher'
 import useSWR from 'swr'
+import Material from './DTOs/material'
 
-function App() {
+function App(): JSX.Element {
   const [count, setCount] = useState(0)
-  const { data, error, isLoading } = useSWR('http://localhost:3000', fetcher)
+  const { data, error, isLoading } = useSWR('http://localhost:3000/materials', fetcher)
 
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
@@ -14,8 +15,13 @@ function App() {
 
   return (
     <>
-      <div>{data.message}</div>
-      <Card></Card>
+      <div>
+        {
+          data.map((el: Material) => {
+            return <Card key={el.id} material={el}></Card>
+          })
+        }
+      </div>
     </>
   )
 }
