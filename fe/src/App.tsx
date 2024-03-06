@@ -6,14 +6,15 @@ import useSWR from 'swr'
 
 function App() {
   const [count, setCount] = useState(0)
-  //const { data, error, isLoading } = useSWR('https://wttr.in', fetcher)
+  const { data, error, isLoading } = useSWR('http://localhost:3000', fetcher)
 
-  //if (error) return <div>failed to load</div>
-  //if (isLoading) return <div>loading...</div>
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
   //else return <div>{data}</div>
 
   return (
     <>
+      <div>{data.message}</div>
       <Card></Card>
     </>
   )
