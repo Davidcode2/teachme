@@ -20,6 +20,8 @@ export class AppController {
 
   @Post('auth/signup')
   async signup(@Request() req) {
+    console.log(req);
+    console.log(req.body);
     return this.authService.signUp(req.body.email, req.body.password);
   }
 }
