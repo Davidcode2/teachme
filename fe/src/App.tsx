@@ -4,6 +4,7 @@ import Card from './components/card/card'
 import fetcher from './lib/fetcher'
 import useSWR from 'swr'
 import Material from './DTOs/material'
+import Header from './components/header/header'
 
 function App(): JSX.Element {
   const [count, setCount] = useState(0)
@@ -15,6 +16,7 @@ function App(): JSX.Element {
 
   return (
     <>
+      <Header></Header>
       <div>
         {
           data.map((el: Material) => {
