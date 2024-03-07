@@ -9,7 +9,8 @@ export class AuthService {
 
   async signUp(email: string, password: string): Promise<any> {
     const hash = await this.hashPassword(password);
-    return this.usersService.create(email, hash);
+    this.usersService.create(email, hash);
+    return true;
   }
 
   async validateUser(email: string, password: string): Promise<User> {

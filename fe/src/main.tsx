@@ -10,15 +10,19 @@ import SignUpForm, { handleSubmit as signUpAction } from './components/signin/si
 import LoginForm, { handleSubmit as loginAction } from './components/signin/login.tsx'
 
 const router = createBrowserRouter([
-  { path: '/', element: <App /> },
   {
-    path: '/login',
+    path: "/",
+    element: <App />,
+    children: [],
+  },
+  {
+    path: "/login",
     element: <LoginForm />,
     action: loginAction
   },
   {
-    path: '/signup',
-    element: <SignUpForm />,
+    path: "/signup",
+    element: <SignUpForm/>,
     action: signUpAction
   },
 ])

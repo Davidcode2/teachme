@@ -5,9 +5,9 @@ import fetcher from './lib/fetcher'
 import useSWR from 'swr'
 import Material from './DTOs/material'
 import Header from './components/header/header'
+import { Outlet } from 'react-router-dom'
 
 function App(): JSX.Element {
-  const [count, setCount] = useState(0)
   const { data, error, isLoading } = useSWR('http://localhost:3000/materials', fetcher)
 
   if (error) return <div>failed to load</div>
@@ -16,6 +16,7 @@ function App(): JSX.Element {
 
   return (
     <>
+    <Outlet/>
       <Header></Header>
       <div>
         {
