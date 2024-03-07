@@ -28,7 +28,7 @@ function LoginForm() {
 
   return (
     <>
-    <Link to="/"><img className="p-4 md:px-20" src={ChevronIcon} alt=""/></Link>
+    <Link to="/materials"><img className="p-4 md:px-20" src={ChevronIcon} alt=""/></Link>
       <div className="lg:h-[80vh] xl:grid grid-cols-[40vw_60vw] justify-center items-center">
         <div>
           <h1 className="m-4 md:m-20 text-9xl font-extrabold">Schön, dass du wieder da bist</h1>
