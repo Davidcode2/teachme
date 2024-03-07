@@ -12,7 +12,7 @@ export async function handleSubmit({ request }) {
   });
 
   const responseData = await response.json();
-  if (responseData === true) {
+  if (JSON.stringify(responseData).includes("access_token")) {
     return redirect('/');
   }
   return false;

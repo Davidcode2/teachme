@@ -13,7 +13,7 @@ export async function handleSubmit({ request }) {
 
   const responseData = await response.json();
   if (responseData === true) {
-    return redirect('/');
+    return redirect('/login');
   }
   return false;
 };
