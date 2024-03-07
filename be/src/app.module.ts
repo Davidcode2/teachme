@@ -34,7 +34,7 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot(),
     AuthModule,
   ],
-  controllers: [AppController, MaterialsController],
+  controllers: [AppController],
   providers: [AppService, UsersService],
 })
 export class AppModule {
