@@ -3,6 +3,7 @@ type Material = {
   title: string;
   price: number;
   author: string;
+  datePublished: Date;
 }
 
 export default Material;

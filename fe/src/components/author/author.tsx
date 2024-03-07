@@ -15,7 +15,7 @@ function Author(props: AppProps) {
           {props.author}
         </div>
         <div>
-          {props.published.toDateString()}
+          {new Date(props.published).toLocaleString("de-DE", { year: 'numeric', month: 'long', day: 'numeric' })}
         </div>
       </div>
     </div>
