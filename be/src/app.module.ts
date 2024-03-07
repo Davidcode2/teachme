@@ -12,7 +12,6 @@ import { MaterialsModule } from './materials/materials.module';
 import { Material } from './materials/materials.entity';
 import { Price } from './materials/price.entity';
 import { AuthModule } from './auth/auth.module';
-import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -36,7 +35,7 @@ import { AuthService } from './auth/auth.service';
     AuthModule,
   ],
   controllers: [AppController, MaterialsController],
-  providers: [AppService, UsersService, AuthService],
+  providers: [AppService, UsersService],
 })
 export class AppModule {
   constructor(
