@@ -12,6 +12,18 @@ export const useAccessTokenStore = create<AccessTokenState>((set) => ({
   removeAccessToken: () => set({ accessToken: null }),
 }))
 
+type UserState = {
+  user: any
+  setUser: (user: any) => void
+  removeUser: () => void
+}
+
+export const useUserStore = create<UserState>((set) => ({
+  user: null,
+  setUser: (user: any) => set({ user }),
+  removeUser: () => set({ user: null }),
+}));
+
 interface BearState {
   bears: number
   increasePopulation: (by: number) => void

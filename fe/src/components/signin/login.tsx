@@ -1,7 +1,7 @@
 import ArrowIcon from '../../assets/icons/icons8-logout-50.png';
 import ChevronIcon from '../../assets/icons/icons8-chevron-24.png';
-import { Form, Link, redirect, useActionData } from "react-router-dom";
-import { useAccessTokenStore } from '../../store';
+import { Form, Link, redirect } from "react-router-dom";
+import { useAccessTokenStore, useUserStore } from '../../store';
 
 export async function handleSubmit({ request }) {
   const formData = await request.formData();
@@ -17,14 +17,14 @@ export async function handleSubmit({ request }) {
   if (JSON.stringify(responseData).includes("access_token")) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(responseData.access_token);
+    const setUser = useUserStore.getState().setUser;
+    setUser(responseData.user);
     return redirect('/');
   }
   return false;
 };
 
 function LoginForm() {
-  let actionData = useActionData();
-  actionData
 
   return (
     <>
