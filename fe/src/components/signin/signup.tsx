@@ -1,4 +1,5 @@
 import { Form, Link, redirect } from 'react-router-dom';
+import ChevronIcon from '../../assets/icons/icons8-chevron-24.png';
 import ArrowIcon from '../../assets/icons/icons8-logout-50.png';
 
 export async function handleSubmit({ request }) {
@@ -22,6 +23,7 @@ function SignUpForm() {
 
   return (
     <>
+      <Link to="/"><img className="p-4 md:px-20" src={ChevronIcon} alt="" /></Link>
       <div className="lg:h-[80vh] xl:grid grid-cols-[40vw_60vw] justify-center items-center">
         <div>
           <h1 className="m-4 md:m-20 text-9xl font-extrabold">Will<br />kom<br />men Lehrkraft</h1>

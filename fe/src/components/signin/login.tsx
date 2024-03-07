@@ -1,5 +1,7 @@
 import ArrowIcon from '../../assets/icons/icons8-logout-50.png';
-import { Form, Link, redirect } from "react-router-dom";
+import ChevronIcon from '../../assets/icons/icons8-chevron-24.png';
+import { Form, Link, redirect, useActionData } from "react-router-dom";
+import { useAccessTokenStore } from '../../store';
 
 export async function handleSubmit({ request }) {
   const formData = await request.formData();
@@ -13,15 +15,20 @@ export async function handleSubmit({ request }) {
 
   const responseData = await response.json();
   if (JSON.stringify(responseData).includes("access_token")) {
+    const setAccessToken = useAccessTokenStore.getState().setAccessToken;
+    setAccessToken(responseData.access_token);
     return redirect('/');
   }
   return false;
 };
 
 function LoginForm() {
+  let actionData = useActionData();
+  actionData
 
   return (
     <>
+    <Link to="/"><img className="p-4 md:px-20" src={ChevronIcon} alt=""/></Link>
       <div className="lg:h-[80vh] xl:grid grid-cols-[40vw_60vw] justify-center items-center">
         <div>
           <h1 className="m-4 md:m-20 text-9xl font-extrabold">Schön, dass du wieder da bist</h1>
