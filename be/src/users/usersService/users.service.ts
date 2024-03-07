@@ -24,7 +24,6 @@ export class UsersService {
     user.hash = hash;
     user.signUpDate = new Date();
     let {...res} = user;
-    console.log(res);
     return this.usersRepository.save(user);
   }
 
