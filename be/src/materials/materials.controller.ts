@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('materials')
 export class MaterialsController {
+
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(): Material[] {
     return [

@@ -19,7 +19,7 @@ export async function handleSubmit({ request }) {
     setAccessToken(responseData.access_token);
     const setUser = useUserStore.getState().setUser;
     setUser(responseData.user);
-    return redirect('/');
+    return redirect('/materials');
   }
   return false;
 };
