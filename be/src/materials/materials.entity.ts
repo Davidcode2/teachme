@@ -4,7 +4,7 @@ import { Price } from './price.entity';
 
 @Entity()
 export class Material {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: number;
 
   @Column()

@@ -12,6 +12,8 @@ import { MaterialsModule } from './materials/materials.module';
 import { Material } from './materials/materials.entity';
 import { Price } from './materials/price.entity';
 import { AuthModule } from './auth/auth.module';
+import { Consumer } from './users/consumer.entity';
+import { Author } from './users/author.entity';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { AuthModule } from './auth/auth.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User, Material, Price],
+        entities: [User, Material, Price, Author, Consumer],
         synchronize: true,
       }),
     }),
