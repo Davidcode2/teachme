@@ -7,9 +7,12 @@ import {
 import App from './App.tsx'
 import './index.css'
 import SignUpForm, { handleSubmit as signUpAction } from './components/signin/signup.tsx'
-import LoginForm, { handleSubmit as loginAction } from './components/signin/login.tsx'
+import loginAction from './actions/loginAction.ts'
+import LoginForm from './components/signin/login.tsx'
 import Materials from './components/materials/materials.tsx'
 import materialLoader from './loaders/materialLoader.ts'
+import AddMaterial from './components/materials/addMaterial.tsx'
+import addMaterialAction from './actions/addMaterialAction.ts'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,12 @@ const router = createBrowserRouter([
       path: "/materials",
       element: <Materials/>,
       loader: materialLoader
-      }
+      },
+      {
+      path: "/materials/add",
+      element: <AddMaterial/>,
+      action: addMaterialAction,
+      },
     ],
   },
   {

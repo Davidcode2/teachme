@@ -13,15 +13,15 @@ export class Material {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   link: string;
 
   @Column()
   datePublished: Date;
 
-  @OneToOne(type => User) 
-  author: User;
+//  @OneToOne(type => User) 
+//  author: User;
 
-  @OneToOne(type => Price)
-  price: Price;
+//  @OneToOne(type => Price)
+//  price: Price;
 }

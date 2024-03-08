@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import UserIcon from '../../assets/icons/icons8-user-32.png';
-import fetcher from '../../lib/fetcher';
-import useSwr from 'swr';
 import { useUserStore } from '../../store';
 
 function Header() {
@@ -27,7 +25,7 @@ function Header() {
         <h1 className="hidden md:block text-xl">TeachMe</h1>
         <div className="flex gap-2">
           <input className="rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
-          <button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button>
+          <Link to="materials/add"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></Link>
         </div>
         <div className="flex  gap-2">
           <div className="text-slate-400 relative top-1">{initials}</div>

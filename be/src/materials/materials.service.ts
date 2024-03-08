@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Material } from './materials.entity';
 import { User } from 'src/users/user.entity';
+import { Price } from './price.entity';
 
 @Injectable()
 export class MaterialsService {
@@ -19,10 +20,11 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
-  create(user: User, title: string): Promise<Material> {
+  create(user: User, mat: Material): Promise<Material> {
     let material = new Material();
-    material.title = title;
+    material.title = mat.title;
     material.author = user;
+    material.description = mat.description;
     material.datePublished = new Date();
     return this.materialsRepository.save(material);
   }

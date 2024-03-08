@@ -11,4 +11,10 @@ export class MaterialsController {
   findAll() {
     return this.materialsService.findAll();
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  create(@Body() body) {
+    return this.materialsService.create(body.user, body.material);
+  }
 }
