@@ -13,7 +13,7 @@ function Card({material}): JSX.Element {
           <div>{material.description}</div>
         </div>
         <div className="flex mt-auto">
-          <div className="self-end">
+          <div className="self-center">
             <ActionButtons></ActionButtons>
           </div>
           <div className="ml-auto self-end">

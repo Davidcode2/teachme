@@ -18,10 +18,4 @@ export class Material {
 
   @Column()
   datePublished: Date;
-
-//  @OneToOne(type => User) 
-//  author: User;
-
-//  @OneToOne(type => Price)
-//  price: Price;
 }

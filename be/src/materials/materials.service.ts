@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Material } from './materials.entity';
 import { User } from 'src/users/user.entity';
-import { Price } from './price.entity';
 
 @Injectable()
 export class MaterialsService {
