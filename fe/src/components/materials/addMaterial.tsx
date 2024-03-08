@@ -4,13 +4,13 @@ import Material from '../../DTOs/material'
 
 function AddMaterials() {
   return (
-    <div className="lg:my-40 lg:mx-60">
+    <div className="my-10 md:my-40 mx-4 sm:mx-10 xl:mx-60">
       <Form className="flex flex-col gap-4" method="post">
-        <div className="flex gap-4">
-          <div className="border border-slate-200 rounded-lg">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="border border-slate-200 rounded-lg md:w-52 lg:w-auto">
             <input type="file" />
           </div>
-          <div className="flex-1 grid grid-cols-[.2fr_1fr] gap-10">
+          <div className="flex-1 flex flex-col md:grid grid-cols-[.2fr_1fr] md:gap-10">
             <label className="p-2" htmlFor="title">Titel</label>
             <input id="title" className="rounded-md border border-slate-200 shadow-sm py-2 px-4" type="text" name="title" />
             <label className="p-2" htmlFor="description">Beschreibung</label>

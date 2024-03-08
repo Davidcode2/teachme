@@ -21,15 +21,15 @@ function Header() {
 
   return (
     <>
-      <div className="flex p-4 justify-between">
+      <div className="flex p-4 justify-between gap-1">
         <h1 className="hidden md:block text-xl">TeachMe</h1>
         <div className="flex gap-2">
-          <input className="rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+          <input className="min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
           <Link to="materials/add"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></Link>
         </div>
-        <div className="flex  gap-2">
-          <div className="text-slate-400 relative top-1">{initials}</div>
-          <Link to="login" ><img className="" src={UserIcon} alt="User" /></Link>
+        <div className="flex items-center gap-2">
+          <div className="text-slate-400 hidden sm:block">{initials}</div>
+          <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>
         </div>
       </div>
     </>
