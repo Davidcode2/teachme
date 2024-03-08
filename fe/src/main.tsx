@@ -9,6 +9,7 @@ import './index.css'
 import SignUpForm, { handleSubmit as signUpAction } from './components/signin/signup.tsx'
 import LoginForm, { handleSubmit as loginAction } from './components/signin/login.tsx'
 import Materials from './components/materials/materials.tsx'
+import materialLoader from './loaders/materialLoader.ts'
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
     children: [
       {
       path: "/materials",
-      element: <Materials/>
+      element: <Materials/>,
+      loader: materialLoader
       }
     ],
   },
