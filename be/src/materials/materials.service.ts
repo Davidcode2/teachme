@@ -19,6 +19,10 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
+//  findForUser(user: User): Promise<Material[]> {
+//    return this.materialsRepository.find({ author: user });
+//  }
+
   create(user: User, mat: Material): Promise<Material> {
     let material = new Material();
     material.title = mat.title;

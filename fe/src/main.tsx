@@ -29,6 +29,11 @@ const router = createBrowserRouter([
       element: <AddMaterial/>,
       action: addMaterialAction,
       },
+      {
+      path: "/materials/mine",
+      element: <Materials/>,
+      loader: myMaterialLoader,
+      },
     ],
   },
   {
