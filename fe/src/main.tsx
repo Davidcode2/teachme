@@ -13,6 +13,7 @@ import Materials from './components/materials/materials.tsx'
 import materialLoader from './loaders/materialLoader.ts'
 import AddMaterial from './components/materials/addMaterial.tsx'
 import addMaterialAction from './actions/addMaterialAction.ts'
+import myMaterialLoader from './loaders/myMaterialLoader.ts'
 
 const router = createBrowserRouter([
   {

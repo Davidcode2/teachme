@@ -18,6 +18,10 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email: email });
   }
 
+  findOneById(id: number): Promise<User | null> {
+    return this.usersRepository.findOneBy({ id: id });
+  }
+
   create(email: string, hash: string): Promise<User> {
     let user = new User();
     user.email = email;

@@ -8,4 +8,9 @@ export class ConsumerService {
   constructor(
     @InjectRepository(Consumer)
     private consumersRepository: Repository<Consumer>) {}
+
+    findAll(): Promise<Consumer[]> {
+      return this.consumersRepository.find();
+    }
+
 }
