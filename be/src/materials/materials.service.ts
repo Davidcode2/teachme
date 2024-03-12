@@ -26,7 +26,6 @@ export class MaterialsService {
   create(user: User, mat: Material): Promise<Material> {
     let material = new Material();
     material.title = mat.title;
-    material.author = user;
     material.description = mat.description;
     material.datePublished = new Date();
     return this.materialsRepository.save(material);

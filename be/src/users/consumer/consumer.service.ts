@@ -12,5 +12,4 @@ export class ConsumerService {
     findAll(): Promise<Consumer[]> {
       return this.consumersRepository.find();
     }
-
 }
