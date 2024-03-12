@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 @Entity()
 export class Consumer {
   @PrimaryGeneratedColumn("uuid")
-  id: number;
+  id: string;
 
   @ManyToMany((type) => Material)
   @JoinTable()

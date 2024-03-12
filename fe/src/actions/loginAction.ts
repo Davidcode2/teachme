@@ -17,6 +17,7 @@ export default async function handleSubmit({ request }) {
     setAccessToken(responseData.access_token);
     const setUser = useUserStore.getState().setUser;
     setUser(responseData.user);
+    console.log(responseData.user);
     return redirect('/materials');
   }
   return false;

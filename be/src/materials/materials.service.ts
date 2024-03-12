@@ -15,7 +15,7 @@ export class MaterialsService {
     return this.materialsRepository.find();
   }
 
-  findOne(id: number): Promise<Material | null> {
+  findOne(id: string): Promise<Material | null> {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
@@ -31,7 +31,7 @@ export class MaterialsService {
     return this.materialsRepository.save(material);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.materialsRepository.delete(id);
   }
 

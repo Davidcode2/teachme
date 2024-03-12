@@ -20,6 +20,7 @@ export class AuthService {
     if (!validated) {
       throw new UnauthorizedException();
     }
+    console.log(user);
     let { hash, ...userData } = user; 
     const payload = { sub: user.id, email: user.email };
     return {
@@ -35,7 +36,7 @@ export class AuthService {
   }
 
   async findUser(email: string): Promise<User> {
-    return this.usersService.findOne(email);
+    return this.usersService.findOneByEmail(email);
   }
 
   async validateUser(email: string, password: string): Promise<User> {

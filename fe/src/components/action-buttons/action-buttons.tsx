@@ -1,13 +1,29 @@
-import uploadIcon from '../../assets/icons/icons8-upload-48.png';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
+import { useUserStore } from '../../store';
 
-function ActionButtons() {
+function ActionButtons({materialId}) {
+
+  const user = useUserStore.getState().user;
+  const consumerId = user.consumerId;
+
+  const buyMaterial = () => {
+    fetch('http://localhost:3000/consumer/buy', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'materialId': materialId, 'consumerId': consumerId})
+    });
+    console.log(user);
+    console.log(consumerId);
+  }
+
   return (
     <>
       <div className="flex">
         <div className="hidden">rating</div>
         <div className="hidden">downloads</div>
-        <img src={addToShoppingCartIcon} width="30" alt=""/>
+        <img onClick={buyMaterial} src={addToShoppingCartIcon} width="30" alt=""/>
       </div>
     </>
   )
