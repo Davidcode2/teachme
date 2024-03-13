@@ -14,11 +14,13 @@ import materialLoader from './loaders/materialLoader.ts'
 import AddMaterial from './components/materials/addMaterial.tsx'
 import addMaterialAction from './actions/addMaterialAction.ts'
 import myMaterialLoader from './loaders/myMaterialLoader.ts'
+import ErrorPage from './error-page.tsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage/>,
     children: [
       {
       path: "/materials",
