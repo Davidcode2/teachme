@@ -15,6 +15,7 @@ import AddMaterial from './components/materials/addMaterial.tsx'
 import addMaterialAction from './actions/addMaterialAction.ts'
 import myMaterialLoader from './loaders/myMaterialLoader.ts'
 import ErrorPage from './error-page.tsx'
+import NoData from './components/materials/noData.tsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage/>,
     children: [
+    {index: true, element: <NoData/>},
       {
       path: "/materials",
       element: <Materials/>,
