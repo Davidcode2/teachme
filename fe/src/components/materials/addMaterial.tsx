@@ -7,7 +7,7 @@ function AddMaterials() {
     <div className="my-10 md:my-40 mx-4 sm:mx-10 xl:mx-60">
       <Form className="flex flex-col gap-4" method="post">
         <div className="flex flex-col md:flex-row gap-4">
-          <div className="border border-slate-200 rounded-lg md:w-52 lg:w-auto">
+          <div className="shadow-sm border border-slate-200 rounded-lg md:w-52 lg:w-auto">
             <input type="file" />
           </div>
           <div className="flex-1 flex flex-col md:grid grid-cols-[.2fr_1fr] md:gap-10">

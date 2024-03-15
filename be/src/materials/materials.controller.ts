@@ -6,7 +6,6 @@ import { MaterialsService } from './materials.service';
 export class MaterialsController {
   constructor(private materialsService: MaterialsService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.materialsService.findAll();

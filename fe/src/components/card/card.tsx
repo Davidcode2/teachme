@@ -3,7 +3,7 @@ import ActionButtons from "../action-buttons/action-buttons.tsx"
 import Author from "../author/author.tsx"
 import Material from "../../DTOs/material.ts"
 
-function Card({material}): JSX.Element {
+function Card({ material }): JSX.Element {
   return (
     <div className="m-4 md:m-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
       <img src={sampleImage} className="w-[400px] rounded-lg" alt="SampleImage" />

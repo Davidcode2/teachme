@@ -23,11 +23,12 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage/>,
     children: [
-    {index: true, element: <NoData/>},
+    {index: true, element: <Materials/>, loader: materialLoader },
       {
       path: "/materials",
       element: <Materials/>,
-      loader: materialLoader
+      loader: materialLoader,
+      errorElement: <div>Ups</div>,
       },
       {
       path: "/materials/add",
