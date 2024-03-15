@@ -28,7 +28,6 @@ export class StripeService {
   }
 
   public async createCheckoutSession(price) {
-    console.log(price);
     const session = await this.stripe.checkout.sessions.create({
       line_items: [
         {
