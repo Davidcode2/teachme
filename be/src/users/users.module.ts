@@ -16,7 +16,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Consumer, Author]), MaterialsModule, StripeModule, ConfigModule],
-  providers: [UsersService, ConsumerService, AuthorService, MaterialsService, StripeService, ConfigService],
+  providers: [UsersService, ConsumerService, AuthorService, ConfigService],
   exports: [TypeOrmModule, UsersService],
   controllers: [UsersController, ConsumerController],
 })

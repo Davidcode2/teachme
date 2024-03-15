@@ -9,8 +9,8 @@ import { StripeModule } from 'src/stripe/stripe.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Material]), ConfigModule, StripeModule],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, MaterialsService],
   controllers: [MaterialsController],
-  providers: [MaterialsService, StripeService, ConfigService],
+  providers: [MaterialsService, ConfigService],
 })
 export class MaterialsModule {}
