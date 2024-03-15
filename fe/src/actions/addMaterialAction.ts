@@ -13,6 +13,7 @@ export default async function addMaterialAction({request}) {
   const user = useUserStore.getState().user 
   const material = { ...Object.fromEntries(formData) };
   const body = { user, material };
+  console.log(JSON.stringify(body));
   const response = await fetch('http://localhost:3000/materials', {
     method: 'POST',
     headers: {
@@ -21,7 +22,6 @@ export default async function addMaterialAction({request}) {
     },
     body: JSON.stringify(body)
   });
-  console.log(JSON.stringify(body));
   return redirect("/materials");
 }
 

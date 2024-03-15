@@ -1,6 +1,4 @@
-import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
-import { Price } from './price.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Material {
@@ -13,8 +11,14 @@ export class Material {
   @Column()
   description: string;
 
+  @Column({nullable: true})
+  price: number;
+
   @Column({ nullable: true })
   link: string;
+
+  @Column({ nullable: true })
+  stripePriceId: string;
 
   @Column()
   datePublished: Date;

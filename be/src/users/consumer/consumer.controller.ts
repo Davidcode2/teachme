@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Header, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { ConsumerService } from './consumer.service';
 
 @Controller('consumer')
@@ -6,9 +7,11 @@ export class ConsumerController {
   constructor(private consumerService: ConsumerService) {}
 
   @Post('buy') 
-  async buyMaterial(@Body() requestBody: {consumerId: string, materialId: string})
+  @Header('mode', 'no-cors')
+  async buyMaterial(@Body() requestBody: {consumerId: string, materialId: string}, @Res() res: Response)
   {
     console.log(requestBody);
-    this.consumerService.addMaterial(requestBody.materialId, requestBody.consumerId);
+    const session = await this.consumerService.addMaterial(requestBody.materialId, requestBody.consumerId);
+    res.json({url: session.url});
   }
 }

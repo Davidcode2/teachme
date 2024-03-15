@@ -10,10 +10,13 @@ import { Author } from './author.entity';
 import { MaterialsService } from 'src/materials/materials.service';
 import { MaterialsModule } from 'src/materials/materials.module';
 import { ConsumerController } from './consumer/consumer.controller';
+import { StripeModule } from 'src/stripe/stripe.module';
+import { StripeService } from 'src/stripe/stripe.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Consumer, Author]), MaterialsModule],
-  providers: [UsersService, ConsumerService, AuthorService, MaterialsService],
+  imports: [TypeOrmModule.forFeature([User, Consumer, Author]), MaterialsModule, StripeModule, ConfigModule],
+  providers: [UsersService, ConsumerService, AuthorService, MaterialsService, StripeService, ConfigService],
   exports: [TypeOrmModule, UsersService],
   controllers: [UsersController, ConsumerController],
 })

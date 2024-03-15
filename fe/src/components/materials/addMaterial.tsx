@@ -1,6 +1,4 @@
 import { Form } from 'react-router-dom'
-import Card from '../../components/card/card'
-import Material from '../../DTOs/material'
 
 function AddMaterials() {
   return (

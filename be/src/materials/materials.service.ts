@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Material } from './materials.entity';
 import { User } from 'src/users/user.entity';
+import { StripeService } from 'src/stripe/stripe.service';
 
 @Injectable()
 export class MaterialsService {
   constructor(
     @InjectRepository(Material)
     private materialsRepository: Repository<Material>,
+    private stripeService: StripeService,
   ) { }
 
   findAll(): Promise<Material[]> {
@@ -19,15 +21,14 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
-//  findForUser(user: User): Promise<Material[]> {
-//    return this.materialsRepository.find({ author: user });
-//  }
-
-  create(user: User, mat: Material): Promise<Material> {
+  async create(user: User, mat: MaterialDto): Promise<Material> {
     let material = new Material();
     material.title = mat.title;
     material.description = mat.description;
     material.datePublished = new Date();
+    material.price = Number(mat.price);
+    const price = await this.stripeService.createProduct(material);
+    material.stripePriceId = price.id; 
     return this.materialsRepository.save(material);
   }
 
@@ -35,4 +36,11 @@ export class MaterialsService {
     await this.materialsRepository.delete(id);
   }
 
+}
+
+class MaterialDto {
+  title: string;
+  description: string;
+  price: string;
+  link: string;
 }

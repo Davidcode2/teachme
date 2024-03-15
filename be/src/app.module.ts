@@ -9,10 +9,10 @@ import { User } from './users/user.entity';
 import { UsersService } from './users/usersService/users.service';
 import { MaterialsModule } from './materials/materials.module';
 import { Material } from './materials/materials.entity';
-import { Price } from './materials/price.entity';
 import { AuthModule } from './auth/auth.module';
 import { Consumer } from './users/consumer.entity';
 import { Author } from './users/author.entity';
+import { StripeModule } from './stripe/stripe.module';
 
 @Module({
   imports: [
@@ -26,7 +26,7 @@ import { Author } from './users/author.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User, Material, Price, Author, Consumer],
+        entities: [User, Material, Author, Consumer],
         synchronize: true,
       }),
     }),
@@ -34,6 +34,7 @@ import { Author } from './users/author.entity';
     MaterialsModule,
     ConfigModule.forRoot(),
     AuthModule,
+    StripeModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],
