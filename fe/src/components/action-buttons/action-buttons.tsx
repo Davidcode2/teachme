@@ -28,12 +28,24 @@ function ActionButtons({ materialId }) {
     window.location.href = body.url
   }
 
+  const addToShoppingCart = async () => {
+    const res = await fetch('http://localhost:3000/consumer/addToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 'materialId': materialId, 'consumerId': consumerId })
+    });
+    console.log(user);
+    console.log(consumerId);
+  }
+
   return (
     <>
       <div className="flex">
         <div className="hidden">rating</div>
         <div className="hidden">downloads</div>
-        <img onClick={buyMaterial} src={addToShoppingCartIcon} width="30" alt="" />
+        <img onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />
       </div>
     </>
   )

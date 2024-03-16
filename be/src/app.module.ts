@@ -13,6 +13,9 @@ import { AuthModule } from './auth/auth.module';
 import { Consumer } from './users/consumer.entity';
 import { Author } from './users/author.entity';
 import { StripeModule } from './stripe/stripe.module';
+import { CartService } from './cart/cart.service';
+import { CartModule } from './cart/cart.module';
+import { Cart } from './cart/cart.entity';
 
 @Module({
   imports: [
@@ -26,7 +29,7 @@ import { StripeModule } from './stripe/stripe.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User, Material, Author, Consumer],
+        entities: [User, Material, Author, Consumer, Cart],
         synchronize: true,
       }),
     }),
@@ -35,9 +38,10 @@ import { StripeModule } from './stripe/stripe.module';
     ConfigModule.forRoot(),
     AuthModule,
     StripeModule,
+    CartModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CartService],
 })
 export class AppModule {
   constructor(

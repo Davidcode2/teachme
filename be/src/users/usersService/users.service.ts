@@ -5,14 +5,14 @@ import { User } from '../user.entity';
 import { Consumer } from '../consumer.entity';
 import { Author } from '../author.entity';
 import { Material } from 'src/materials/materials.entity';
+import { ConsumerService } from '../consumer/consumer.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    @InjectRepository(Consumer)
-    private consumerRepository: Repository<Consumer>,
+    private consumerService: ConsumerService,
     @InjectRepository(Author)
     private authorRepository: Repository<Author>,
   ) {}
@@ -31,7 +31,7 @@ export class UsersService {
 
   async create(email: string, hash: string): Promise<User> {
     let user = new User();
-    const consumer = await this.createConsumer();
+    const consumer = await this.consumerService.create();
     const author = await this.createAuthor();
     user.email = email;
     user.hash = hash;
@@ -54,17 +54,8 @@ export class UsersService {
 
   async getMaterials(id: string): Promise<Material[]> {
     const user = await this.findOneById(id);
-    const consumer = await this.consumerRepository.findOneBy({
-      id: user.consumerId,
-    });
-    const consumerWithMaterials = await this.consumerRepository
-      .createQueryBuilder('consumer')
-      .leftJoinAndSelect('consumer.materials', 'materials')
-      .where('consumer.id = :id', { id: consumer.id })
-      .getOneOrFail();
-    console.log(user);
-    console.log(consumerWithMaterials);
-    return consumerWithMaterials.materials;
+    const materials = this.consumerService.getMaterials(user.consumerId);
+    return materials;
   }
 
   private async createAuthor(): Promise<Author> {
@@ -73,9 +64,4 @@ export class UsersService {
     return author;
   }
 
-  private async createConsumer(): Promise<Consumer> {
-    const consumer = new Consumer();
-    await this.consumerRepository.save(consumer);
-    return consumer;
-  }
 }

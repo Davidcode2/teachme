@@ -29,7 +29,7 @@ export class User {
   @Column()
   signUpDate: Date;
 
-  @OneToOne((type) => Consumer)
+  @OneToOne((type) => Consumer, { cascade: true })
   @JoinColumn()
   consumer: Consumer;
 
