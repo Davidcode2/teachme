@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
+import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png"
 import UserIcon from '../../assets/icons/icons8-user-32.png';
-import { useUserStore } from '../../store';
+import { useSidebarStore, useUserStore } from '../../store';
 
 function Header() {
   const user = useUserStore((state) => state.user);
@@ -27,6 +28,7 @@ function Header() {
           </div>
           <div className="flex items-center gap-2">
             <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>
+            <button className="" onClick={useSidebarStore().toggleSidebar}><img src={hamburgerIcon} width="30" alt="" /></button>
           </div>
         </div>
         <div className="flex md:hidden mt-4 gap-2">

@@ -24,6 +24,16 @@ export const useUserStore = create<UserState>((set) => ({
   removeUser: () => set({ user: null }),
 }));
 
+type SidebarState = {
+  isShown: boolean
+  toggleSidebar: () => void
+}
+
+export const useSidebarStore = create<SidebarState>((set) => ({
+  isShown: false,
+  toggleSidebar: () => set((state) => ({ isShown: !state.isShown })),
+}));
+
 interface BearState {
   bears: number
   increasePopulation: (by: number) => void

@@ -21,24 +21,24 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
-    {index: true, element: <Materials/>, loader: materialLoader },
+      { index: true, element: <Materials />, loader: materialLoader },
       {
-      path: "/materials",
-      element: <Materials/>,
-      loader: materialLoader,
-      errorElement: <div>Ups</div>,
+        path: "/materials",
+        element: <Materials />,
+        loader: materialLoader,
+        errorElement: <NoData />,
       },
       {
-      path: "/materials/add",
-      element: <AddMaterial/>,
-      action: addMaterialAction,
+        path: "/materials/add",
+        element: <AddMaterial />,
+        action: addMaterialAction,
       },
       {
-      path: "/materials/mine",
-      element: <Materials/>,
-      loader: myMaterialLoader,
+        path: "/materials/mine",
+        element: <Materials />,
+        loader: myMaterialLoader,
       },
     ],
   },
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <SignUpForm/>,
+    element: <SignUpForm />,
     action: signUpAction
   },
 ])
