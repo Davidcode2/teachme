@@ -76,4 +76,15 @@ export class ConsumerService {
     return consumerWithMaterials.materials;
   }
 
+  async getCartItems(id: string): Promise<Material[]> {
+    let consumer = await this.findById(id);
+    consumer = await this.consumersRepository
+      .createQueryBuilder('consumer')
+      .leftJoinAndSelect('consumer.cart', 'cart')
+      .where('consumer.id = :id', { id: consumer.id })
+      .leftJoinAndSelect('cart.materials', 'materials')
+      .getOneOrFail();
+    return consumer.cart.materials;
+  }
+
 }

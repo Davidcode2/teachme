@@ -58,6 +58,13 @@ export class UsersService {
     return materials;
   }
 
+  async getCartItems(id: string): Promise<Material[]> {
+    const user = await this.findOneById(id);
+    const materials = this.consumerService.getCartItems(user.consumerId);
+    return materials;
+  }
+
+
   private async createAuthor(): Promise<Author> {
     const author = new Author();
     await this.authorRepository.save(author);

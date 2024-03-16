@@ -10,5 +10,11 @@ export class UsersController {
     console.log(id);
     return this.usersService.getMaterials(id);
   }
+
+  @Get(':id/cart')
+  async getCart(@Param('id') id: string) {
+    console.log(id);
+    return this.usersService.getCartItems(id);
+  }
 }
 
