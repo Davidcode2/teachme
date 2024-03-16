@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png"
 import UserIcon from '../../assets/icons/icons8-user-32.png';
 import { useSidebarStore, useUserStore } from '../../store';
+import Nav from './nav';
 
 function Header() {
   const user = useUserStore((state) => state.user);
@@ -10,16 +11,7 @@ function Header() {
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
-            <NavLink to="materials" end
-              className={({ isActive, isPending }) =>
-                isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-              }
-            >Browse</NavLink>
-            <NavLink to="login" end
-              className={({ isActive, isPending }) =>
-                isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-              }
-            >Mine</NavLink>
+            <Nav materialsLink="materials" myMaterialsLink="login"></Nav>
           </div>
           <div className="flex gap-2">
             <input className="min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
@@ -32,16 +24,7 @@ function Header() {
           </div>
         </div>
         <div className="flex md:hidden mt-4 gap-2">
-          <NavLink to="materials" end
-            className={({ isActive, isPending }) =>
-              isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-            }
-          >Browse</NavLink>
-          <NavLink to="login" end
-            className={({ isActive, isPending }) =>
-              isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-            }
-          >Mine</NavLink>
+          <Nav materialsLink="materials" myMaterialsLink="login"></Nav>
         </div>
       </div>
     </>
@@ -59,16 +42,7 @@ function Header() {
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
-            <NavLink to="materials" end
-              className={({ isActive, isPending }) =>
-                isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-              }
-            >Browse</NavLink>
-            <NavLink to="materials/mine" end
-              className={({ isActive, isPending }) =>
-                isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-              }
-            >Mine</NavLink>
+            <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
           </div>
           <div className="flex gap-2">
             <input className="min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
@@ -77,20 +51,12 @@ function Header() {
           </div>
           <div className="flex items-center gap-2">
             <div className="text-slate-400 hidden sm:block">{initials}</div>
-            <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>
+            <Link to="login" className="hidden sm:block" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>
+            <button className="" onClick={useSidebarStore().toggleSidebar}><img src={hamburgerIcon} width="30" alt="" /></button>
           </div>
         </div>
         <div className="flex md:hidden mt-4 gap-2">
-          <NavLink to="materials" end
-            className={({ isActive, isPending }) =>
-              isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-            }
-          >Browse</NavLink>
-          <NavLink to="materials/mine" end
-            className={({ isActive, isPending }) =>
-              isPending ? "border-b border-slate-200" : isActive ? "border-b border-blue-800" : "border-none"
-            }
-          >Mine</NavLink>
+          <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
         </div>
       </div>
     </>
