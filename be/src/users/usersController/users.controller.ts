@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { UsersService } from '../usersService/users.service';
 
 @Controller('users')
@@ -15,6 +15,11 @@ export class UsersController {
   async getCart(@Param('id') id: string) {
     console.log(id);
     return this.usersService.getCartItems(id);
+  }
+
+  @Delete(':userId/cart/:materialId')
+  async removeItemFromCart(@Param('userId') id: string, @Param('materialId') materialId: string) {
+    return this.usersService.removeFromCart(id, materialId);
   }
 }
 

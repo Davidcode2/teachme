@@ -87,4 +87,17 @@ export class ConsumerService {
     return consumer.cart.materials;
   }
 
+  async removeFromCart(id: string, materialId: string): Promise<Material[]> {
+    let consumer = await this.findById(id);
+    consumer = await this.consumersRepository
+      .createQueryBuilder('consumer')
+      .leftJoinAndSelect('consumer.cart', 'cart')
+      .where('consumer.id = :id', { id: consumer.id })
+      .leftJoinAndSelect('cart.materials', 'materials')
+      .getOneOrFail();
+    consumer.cart.materials = consumer.cart.materials.filter((material) => material.id !== materialId);
+    this.consumersRepository.save(consumer);
+    return consumer.cart.materials;
+  }
+
 }

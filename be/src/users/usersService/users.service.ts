@@ -64,6 +64,11 @@ export class UsersService {
     return materials;
   }
 
+  async removeFromCart(id: string, materialId: string): Promise<Material[]> {
+    const user = await this.findOneById(id);
+    const materials = this.consumerService.removeFromCart(user.consumerId, materialId);
+    return materials;
+  }
 
   private async createAuthor(): Promise<Author> {
     const author = new Author();

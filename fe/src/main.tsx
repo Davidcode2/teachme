@@ -27,10 +27,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Materials />, loader: materialLoader },
-      { element: <Sidebar/>,
-      children: [
-        { path: "cart", element: <Cart />, loader: cartLoader }
-      ],
+      {
+        element: <Sidebar />,
+        children: [
+          {
+            path: "/cart",
+            element: <Cart />,
+            loader: cartLoader
+          }
+        ],
       },
       {
         path: "/materials",
