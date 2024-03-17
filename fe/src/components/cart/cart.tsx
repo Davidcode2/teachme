@@ -1,21 +1,18 @@
 import bag from "../../assets/icons/icons8-bag-64.png"
 import sampleImage from "../../assets/exampleMaterialThumbnail.png"
 import { useEffect, useState } from "react";
-import { useAccessTokenStore, useUserStore } from "../../store";
 import CartService from "../../services/cart.service";
-import Card from "../card/card";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
-  const [spinner, setSpinner] = useState(true);
-  const user = useUserStore.getState().user;
+  const [loading, setLoading] = useState(true);
   const cartService = new CartService();
 
   const getItems = () => {
-    cartService.getItems(user.id)
+    cartService.getItems()
       .then((res) => res.json())
       .then((data) => {
-        setSpinner(false);
+        setLoading(false);
         setCartItems(data);
       });
   }
@@ -25,20 +22,19 @@ export default function Cart(): JSX.Element {
   });
 
   const removeItem = (id: string) => {
-    cartService.removeItem(id, user.id);
+    cartService.removeItem(id);
   }
 
-  if (!spinner && cartItems.length === 0) {
+  if (!loading && cartItems.length === 0) {
     return (
       <>
         <div className="flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">
           <div>Noch nichts in der Tasche</div>
-          <div>{String(spinner)}</div>
           <img src={bag} alt="" width="30" />
         </div>
       </>
     )
-  } else if (spinner) {
+  } else if (loading) {
     return (
       <div className="m-20"><img className="animate-spin" src={bag} alt="" /></div>
     )
@@ -72,7 +68,6 @@ export default function Cart(): JSX.Element {
       })}
       <button className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
     </div>
-
   )
 
 }

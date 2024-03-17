@@ -1,8 +1,10 @@
-import { useAccessTokenStore } from "../store";
+import { useAccessTokenStore, useUserStore } from '../store';
 
 class CartService {
-  removeItem(id: string, userId: string) {
-    return fetch(`http://localhost:3000/users/${userId}/cart/${id}`, {
+  user = useUserStore.getState().user;
+
+  removeItem(id: string) {
+    return fetch(`http://localhost:3000/users/${this.user.id}/cart/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -10,8 +12,8 @@ class CartService {
     });
   }
 
-  getItems(userId: string) {
-    const res = fetch(`http://localhost:3000/users/${userId}/cart`, {
+  getItems() {
+    const res = fetch(`http://localhost:3000/users/${this.user.id}/cart`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
