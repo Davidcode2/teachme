@@ -7,30 +7,42 @@ import Card from "../card/card";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
+  const [spinner, setSpinner] = useState(true);
   const user = useUserStore.getState().user;
   const cartService = new CartService();
 
-  useEffect(() => {
+  const getItems = () => {
     cartService.getItems(user.id)
       .then((res) => res.json())
       .then((data) => {
+        setSpinner(false);
         setCartItems(data);
       });
+  }
+
+  useEffect(() => {
+    getItems();
   });
 
   const removeItem = (id: string) => {
     cartService.removeItem(id, user.id);
   }
 
-  if (cartItems.length === 0) {
+  if (!spinner && cartItems.length === 0) {
     return (
       <>
         <div className="flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">
           <div>Noch nichts in der Tasche</div>
+          <div>{String(spinner)}</div>
           <img src={bag} alt="" width="30" />
         </div>
       </>
     )
+  } else if (spinner) {
+    return (
+      <div className="m-20"><img className="animate-spin" src={bag} alt="" /></div>
+    )
+
   }
   return (
     <div className="flex flex-col gap-4">
@@ -39,12 +51,12 @@ export default function Cart(): JSX.Element {
           <div className="border border-slate-200 rounded-lg" key={index}>
             <div className="grid grid-cols-[400px_200px]">
               <div className="m-10">
-                <p>
-                  Material: {item.title}
-                </p>
-                <p>
-                  Preis: {item.price}
-                </p>
+                <div>
+                  Material: <p className="text-2xl">{item.title}</p>
+                </div>
+                <div>
+                  Preis: <p className="text-3xl text-emerald-500">{Number((item.price) / 100).toFixed(2)} €</p>
+                </div>
               </div>
               <div className="m-4">
                 <img src={sampleImage} alt="sample" />
