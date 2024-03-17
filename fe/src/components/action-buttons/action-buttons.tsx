@@ -14,19 +14,6 @@ function ActionButtons({ materialId }) {
   )
   const consumerId = user.consumerId;
 
-  const buyMaterial = async () => {
-    const res = await fetch('http://localhost:3000/consumer/buy', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 'materialId': materialId, 'consumerId': consumerId })
-    });
-    console.log(user);
-    console.log(consumerId);
-    const body = await res.json()
-    window.location.href = body.url
-  }
 
   const addToShoppingCart = async () => {
     const res = await fetch('http://localhost:3000/consumer/addToCart', {
