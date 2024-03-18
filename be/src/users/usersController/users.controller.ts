@@ -1,4 +1,5 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { UsersService } from '../usersService/users.service';
 
 @Controller('users')
@@ -12,7 +13,9 @@ export class UsersController {
   }
 
   @Get(':id/cart')
-  async getCart(@Param('id') id: string) {
+  async getCart(@Param('id') id: string, @Req() req: Request) {
+    console.log(req.cookies);
+    console.log(req.signedCookies);
     console.log(id);
     return this.usersService.getCartItems(id);
   }

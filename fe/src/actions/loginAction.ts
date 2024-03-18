@@ -6,7 +6,8 @@ export default async function handleSubmit({ request }) {
   const response = await fetch('http://localhost:3000/auth/login', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'withCredentials': 'true'
     },
     body: JSON.stringify(Object.fromEntries(formData))
   });

@@ -19,7 +19,7 @@ export default function Cart(): JSX.Element {
 
   useEffect(() => {
     getItems();
-  });
+  }, []);
 
   const removeItem = (id: string) => {
     cartService.removeItem(id);
