@@ -4,7 +4,7 @@ class CartService {
   user = useUserStore.getState().user;
 
   removeItem(id: string) {
-    return fetch(`http://localhost:3000/users/${this.user.id}/cart/${id}`, {
+    return fetch(`api/users/${this.user.id}/cart/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ class CartService {
   }
 
   getItems() {
-    const res = fetch(`http://localhost:3000/users/${this.user.id}/cart`, {
+    const res = fetch(`/api/users/${this.user.id}/cart`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
@@ -24,7 +24,7 @@ class CartService {
   }
 
   buyMaterial = async (materialId: string) => {
-    const res = await fetch('http://localhost:3000/consumer/buy', {
+    const res = await fetch('api/consumer/buy', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

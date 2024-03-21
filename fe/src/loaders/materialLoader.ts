@@ -1,7 +1,7 @@
 import { useAccessTokenStore } from '../store';
 
 export default async function loadMaterials() {
-  const response = await fetch('http://localhost:3000/materials', {
+  const response = await fetch('/api/materials', {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

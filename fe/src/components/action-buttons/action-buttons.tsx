@@ -16,7 +16,7 @@ function ActionButtons({ materialId }) {
 
 
   const addToShoppingCart = async () => {
-    const res = await fetch('http://localhost:3000/consumer/addToCart', {
+    const res = await fetch('api/consumer/addToCart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

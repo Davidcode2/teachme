@@ -4,19 +4,29 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as session from 'express-session';
 import { ConfigService } from '@nestjs/config';
 
+import * as cookieParser from 'cookie-parser';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
 
+  app.use(cookieParser());
+
   app.use(
     session({
       secret: configService.get('SESSION_SECRET'),
-      resave: false,
+      resave: true,
       saveUninitialized: false,
     }),
   );
 
-  app.enableCors({credentials: true} );
+  app.enableCors({
+    credentials: true,
+    origin: [
+      'http://localhost:5173',
+      /\.localhost:5173$/,
+    ],
+  });
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Teach Me API')
     .setDescription('The Teach Me API description')

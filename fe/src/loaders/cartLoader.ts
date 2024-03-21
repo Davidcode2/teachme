@@ -4,7 +4,7 @@ import { useUserStore } from '../store';
 export default async function loadCart() {
   const user = useUserStore.getState().user;
   console.log(user);
-  const response = await fetch(`http://localhost:3000/users/${user.id}/cart`, {
+  const response = await fetch(`api/users/${user.id}/cart`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

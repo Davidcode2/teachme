@@ -6,6 +6,7 @@ import Nav from './nav';
 
 function Header() {
   const user = useUserStore((state) => state.user);
+
   if (!user) return (
     <>
       <div className="p-4">

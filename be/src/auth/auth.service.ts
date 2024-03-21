@@ -20,7 +20,6 @@ export class AuthService {
     if (!validated) {
       throw new UnauthorizedException();
     }
-    console.log(user);
     let { hash, ...userData } = user; 
     const payload = { sub: user.id, email: user.email };
     return {

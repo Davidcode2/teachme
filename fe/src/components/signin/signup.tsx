@@ -4,7 +4,7 @@ import ArrowIcon from '../../assets/icons/icons8-logout-50.png';
 
 export async function handleSubmit({ request }) {
   const formData = await request.formData();
-  const response = await fetch('http://localhost:3000/auth/signup', {
+  const response = await fetch('api/auth/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
