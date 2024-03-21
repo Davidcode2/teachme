@@ -32,7 +32,9 @@ function ActionButtons({ materialId }) {
       <div className="flex">
         <div className="hidden">rating</div>
         <div className="hidden">downloads</div>
-        <img onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />
+        <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
+          <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />
+        </div>
       </div>
     </>
   )
