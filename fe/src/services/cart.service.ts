@@ -24,7 +24,7 @@ class CartService {
   }
 
   buyMaterial = async (materialId: string) => {
-    const res = await fetch('api/consumer/buy', {
+    const res = await fetch('/api/consumer/buy', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
