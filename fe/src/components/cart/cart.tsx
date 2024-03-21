@@ -45,11 +45,11 @@ export default function Cart(): JSX.Element {
 
   }
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 md:max-w-[600px] ">
       {cartItems.map((item, index) => {
         return (
           <div className="border border-slate-200 rounded-lg" key={index}>
-            <div className="grid grid-cols-[400px_200px]">
+            <div className="grid grid-cols-2">
               <div className="m-10">
                 <div>
                   Material: <p className="text-2xl">{item.title}</p>

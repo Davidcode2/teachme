@@ -25,7 +25,7 @@ export default function Sidebar() {
   );
 
   return (
-    <div className="p-4 fixed bg-white shadow-md right-0 h-screen">
+    <div className="p-4 md:fixed bg-white shadow-md md:right-0 h-screen">
       <div className="flex flex-col">
         <div className="mt-[6px] self-end">
           <button onClick={useSidebarStore().toggleSidebar}><img src={hamburgerIcon} width="30" alt="" /></button>
