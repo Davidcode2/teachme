@@ -25,6 +25,9 @@ export class User {
 
   @Column({ nullable: true })
   lastName: string;
+  
+  @Column({ nullable: true })
+  refreshToken: string;
 
   @Column()
   signUpDate: Date;

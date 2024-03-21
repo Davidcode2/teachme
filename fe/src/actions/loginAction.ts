@@ -13,7 +13,7 @@ export default async function handleSubmit({ request }) {
   });
 
   const responseData = await response.json();
-  if (JSON.stringify(responseData).includes("access_token")) {
+  if (JSON.stringify(responseData).includes("accessToken")) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(responseData.access_token);
     const setUser = useUserStore.getState().setUser;

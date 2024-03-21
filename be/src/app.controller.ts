@@ -21,8 +21,18 @@ export class AppController {
   @Post('auth/login')
   async login(@Request() req, @Res({ passthrough: true }) response: Response) {
     const login = await this.authService.login(req.body.email, req.body.password);
-    response.cookie('refresh_token', login.refresh_token, { secure: true, httpOnly: true })
+    response.cookie('refresh_token', login.tokens.refreshToken, { secure: true, httpOnly: true })
+    response.cookie('userId', login.user.id, { secure: true, httpOnly: true })
     return login;
+  }
+
+  @Get('auth/refresh')
+  async refresh(@Request() req, @Res({ passthrough: true }) response: Response) {
+    const refreshToken = req.cookies.refresh_token;
+    const userId = req.cookies.userId;
+    const tokens = await this.authService.refreshTokens(userId, refreshToken);
+    response.cookie('refresh_token', tokens.refreshToken, { secure: true, httpOnly: true })
+    return tokens;
   }
 
   @Post('auth/signup')

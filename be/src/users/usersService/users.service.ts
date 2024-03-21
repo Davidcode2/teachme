@@ -42,6 +42,10 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
+  async updateRefreshToken(id: string, refreshToken: string): Promise<User> {
+    return this.usersRepository.save({ id: id, refreshToken: refreshToken });
+  }
+
   async findHash(email: string): Promise<string | null> {
     return this.usersRepository.findOneBy({ email: email }).then((user) => {
       return user.hash;
