@@ -30,9 +30,9 @@ export class AppController {
   async refresh(@Request() req, @Res({ passthrough: true }) response: Response) {
     const refreshToken = req.cookies.refresh_token;
     const userId = req.cookies.userId;
-    const tokens = await this.authService.refreshTokens(userId, refreshToken);
+    const { user, tokens } = await this.authService.refreshTokens(userId, refreshToken);
     response.cookie('refresh_token', tokens.refreshToken, { secure: true, httpOnly: true })
-    return tokens;
+    return {user, tokens};
   }
 
   @Post('auth/signup')

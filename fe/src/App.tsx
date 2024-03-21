@@ -3,7 +3,7 @@ import Header from './components/header/header'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
 import { useEffect } from 'react';
-import { useAccessTokenStore } from './store';
+import { useAccessTokenStore, useUserStore } from './store';
 
 function App(): JSX.Element {
 
@@ -16,10 +16,17 @@ function App(): JSX.Element {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.accessToken) {
-          useAccessTokenStore((state) => state.setAccessToken(data.accessToken))
+        console.log(data);
+        if (data.tokens.accessToken) {
+          const setAccessToken = useAccessTokenStore.getState().setAccessToken;
+          setAccessToken(data.tokens.access_token);
+        }
+        if (data.user) {
+          const setUser = useUserStore.getState().setUser;
+          setUser(data.user);
         }
       });
+
   }, []);
 
   return (
