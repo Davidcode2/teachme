@@ -1,15 +1,17 @@
 import { Form, Link } from 'react-router-dom';
 import ChevronIcon from '../../assets/icons/icons8-chevron-24.png';
-import ArrowIcon from '../../assets/icons/icons8-logout-50.png';
 import CheckMarkIcon from '../../assets/icons/icons8-checkmark-48.png';
+import ArrowIcon from '../../assets/icons/icons8-logout-50.png';
 import { useState } from 'react';
 import PasswordValidation from './passwordValidation';
 
 function SignUpForm() {
   const [password, setPassword] = useState('');
+  const [passwordValid, setPasswordValid] = useState(false);
 
   const checkPasswordRequirements = (e) => {
     setPassword(e.target.value);
+    setPasswordValid(e.target.form.password.validity.valid);
   }
 
   return (
@@ -27,6 +29,9 @@ function SignUpForm() {
               <input className="p-2 rounded-md border-b" id="email" type="email" name="email" maxLength="80" required />
               <label className="p-2" htmlFor="password">Password</label>
               <input onChange={checkPasswordRequirements} className="p-2 rounded-md border-b" id="password" minLength="6" type="password" name="password" maxLength="20" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$" required />
+              <div className="relative">
+                <img src={CheckMarkIcon} className={passwordValid ? "absolute" : "hidden"} width="15" alt="" />
+              </div>
               <PasswordValidation password={password} />
             </div>
             <button type="submit" className="ml-auto p-4"><img src={ArrowIcon} width="30" alt="" /></button>
