@@ -1,6 +1,6 @@
 import { redirect } from 'react-router-dom';
 
-export async function handleSubmit({ request }) {
+export default async function handleSubmit({ request }) {
   const formData = await request.formData();
   const response = await fetch('api/auth/signup', {
     method: 'POST',

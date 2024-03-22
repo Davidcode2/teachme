@@ -14,11 +14,11 @@ function LoginForm() {
         <div className="border border-slate-400 rounded-xl shadow-md xl:w-[30vw] md:m-20 m-4">
           <Form method="post" className="flex flex-col">
             <button className="ml-auto p-4 invisible"><img src={ArrowIcon} width="30" alt="" /></button>
-            <div className="grid grid-cols-[.2fr_1fr] px-4 sm:px-10 2xl:px-20 py-4">
+            <div className="grid grid-cols-[.2fr_1fr] gap-y-1 px-4 sm:px-10 2xl:px-20 py-4">
               <label className="p-2" htmlFor="email">E-Mail</label>
-              <input className="p-2 rounded-md border-b" id="email" type="email" name="email" />
+              <input className="p-2 rounded-md border-b" id="email" type="email" name="email" maxLength="80" required/>
               <label className="p-2" htmlFor="password">Password</label>
-              <input className="p-2 rounded-md border-b" id="password" type="password" name="password" />
+              <input className="p-2 rounded-md border-b" id="password" type="password" name="password" minLength="6" maxLength="20" required />
             </div>
             <button type="submit" className="ml-auto p-4"><img src={ArrowIcon} width="30" alt="" /></button>
           </Form>
