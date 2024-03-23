@@ -27,7 +27,7 @@ function LoginForm() {
           path: [{ x: 500, y: -400, }, { x: -400, y: -100 }, { x: 400, y: 400 }, { x: 500, y: 0 }],
           autoRotate: true,
           curviness: 2,
-        }, repeat: -1
+        }
       });
     failTween.current = gsap.to("#paperPlane",
       {
@@ -39,13 +39,11 @@ function LoginForm() {
           autoRotate: true,
           curviness: 2,
         },
-        repeat: -1,
       });
   });
 
   const toggleTimeline = (() => {
     setShowPlane(true);
-    console.log("lets go");
     loopTween.current.play();
   });
 
