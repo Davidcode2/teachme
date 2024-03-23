@@ -5,6 +5,7 @@ import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { TextPlugin } from "gsap/TextPlugin";
 import { useRef, useState } from 'react';
 
 function LoginForm() {
@@ -13,9 +14,30 @@ function LoginForm() {
   const loginSuccess = useActionData();
   const loopTween = useRef();
   const failTween = useRef();
+  gsap.registerPlugin(TextPlugin)
   gsap.registerPlugin(MotionPathPlugin)
 
   console.log(loginSuccess);
+
+  if (navigation.state === "submitting" | navigation.state === "loading") {
+    //replaces yourElement's text with "This is the new text" 
+    gsap.to(".textReplace", {
+      duration: 1,
+      text: {
+        value: "Lädt...",
+        newClass: "text-black"
+      },
+      ease: "none",
+    });
+  } else if (showPlane && navigation.state === "idle") {
+    setTimeout(() => {
+      gsap.to(".textReplace", {
+        duration: 1,
+        text: "Versuchs nochmal",
+        ease: "none",
+      });
+    }, 3000);
+  }
 
   useGSAP(() => {
     loopTween.current = gsap.to("#paperPlane",
@@ -61,19 +83,19 @@ function LoginForm() {
       <Link to="/materials"><img className="p-4 md:px-20" src={ChevronIcon} alt="" /></Link>
       <div className="lg:h-[80vh] xl:grid grid-cols-2 justify-center items-center">
         <div>
-          <h1 className="m-4 md:m-20 text-7xl md:text-9xl font-extrabold">Schön, dass du wieder da bist</h1>
+          <h1 id="heroText" className="m-4 md:m-20 text-7xl md:text-9xl font-extrabold">Schön, dass du wieder da bist</h1>
         </div>
         <div className="border border-slate-400 rounded-xl shadow-md xl:w-[30vw] md:m-20 m-4">
           <Form onSubmit={toggleTimeline} method="post" className="flex flex-col">
             <button className="ml-auto p-4 invisible"><img src={ArrowIcon} width="30" alt="" /></button>
             <div className="grid grid-cols-[.2fr_1fr] gap-y-1 px-4 sm:px-10 2xl:px-20 py-4">
               <label className="p-2" htmlFor="email">E-Mail</label>
-              <input className="p-2 rounded-md border-b" id="email" type="email" name="email" maxLength="80" required />
+              <input className=" p-2 rounded-md border-b" id="email" type="email" name="email" maxLength="80" required />
               <label className="p-2" htmlFor="password">Password</label>
               <input className="p-2 rounded-md border-b" id="password" type="password" name="password" minLength="6" maxLength="20" required />
             </div>
             <div className="flex justify-center text-sm text-red-400">
-              <div className={loginSuccess === false ? "flex" : "hidden"}>
+              <div className={loginSuccess === false ? "flex textReplace" : "hidden"}>
                 Ups, das hat nicht geklappt
               </div>
             </div>
