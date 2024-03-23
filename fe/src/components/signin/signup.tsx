@@ -8,10 +8,15 @@ import PasswordValidation from './passwordValidation';
 function SignUpForm() {
   const [password, setPassword] = useState('');
   const [passwordValid, setPasswordValid] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
 
   const checkPasswordRequirements = (e) => {
     setPassword(e.target.value);
     setPasswordValid(e.target.form.password.validity.valid);
+  }
+
+  const checkEmailRequirements = (e) => {
+    setEmailValid(e.target.form.email.validity.valid);
   }
 
   return (
@@ -26,11 +31,14 @@ function SignUpForm() {
             <button className="ml-auto p-4 invisible"><img src={ArrowIcon} width="30" alt="" /></button>
             <div className="grid grid-cols-[.2fr_1fr] gap-y-1 px-4 sm:px-10 2xl:px-20 py-4">
               <label className="p-2" htmlFor="email">E-Mail</label>
-              <input className="p-2 rounded-md border-b" id="email" type="email" name="email" maxLength="80" required />
+              <input onChange={checkEmailRequirements} className="p-2 rounded-md border-b" id="email" type="email" name="email" maxLength="80" required />
+              <div className="col-start-2 justify-self-end w-4 bottom-8 right-1 z-50 relative">
+                <img src={CheckMarkIcon} className={emailValid ? "absolute" : "hidden"} width="30" alt="" />
+              </div>
               <label className="p-2" htmlFor="password">Password</label>
               <input onChange={checkPasswordRequirements} className="p-2 rounded-md border-b" id="password" minLength="6" type="password" name="password" maxLength="20" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$" required />
-              <div className="relative">
-                <img src={CheckMarkIcon} className={passwordValid ? "absolute" : "hidden"} width="15" alt="" />
+              <div className="col-start-2 justify-self-end w-4 bottom-8 right-1 z-50 relative">
+                <img src={CheckMarkIcon} className={passwordValid ? "absolute" : "hidden"} width="30" alt="" />
               </div>
               <PasswordValidation password={password} />
             </div>
