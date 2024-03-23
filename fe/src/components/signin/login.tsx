@@ -24,7 +24,7 @@ function LoginForm() {
           </Form>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center my-10">
         <Link to="../signup"><button>Not yet signed up? Join here!</button></Link>
       </div>
     </>

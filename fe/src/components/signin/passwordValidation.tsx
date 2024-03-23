@@ -12,7 +12,6 @@ export default function PasswordValidation({ password }) {
   }, [password]);
 
   const checkPasswordRequirements = () => {
-    console.log(password);
     let current = password;
     checkPasswordLengthRequirement(current);
     checkPasswordUpperCaseRequirement(current);
@@ -21,7 +20,6 @@ export default function PasswordValidation({ password }) {
   }
 
   const checkPasswordNumberRequirement = (password: string) => {
-    console.log(password.match(/.*[\d].*/));
     if (password.match(/.*[\d].*/)) {
       setPasswordNumberRequirementMet(true);
     } else {
