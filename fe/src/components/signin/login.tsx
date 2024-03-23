@@ -11,42 +11,51 @@ function LoginForm() {
   const [showPlane, setShowPlane] = useState(false);
   const navigation = useNavigation();
   const loginSuccess = useActionData();
-  const tl = useRef();
+  const loopTween = useRef();
+  const failTween = useRef();
   gsap.registerPlugin(MotionPathPlugin)
 
   console.log(loginSuccess);
 
   useGSAP(() => {
-    tl.current = gsap.timeline({ paused: true })
-      .to("#paperPlane",
-        {
-          duration: 4,
-          motionPath: {
-            relative: true,
-            path: [{ x: 500, y: -400, }, { x: -400, y: -100 }, { x: 400, y: 400 }, { x: 500, y: 0 }],
-            autoRotate: true,
-            curviness: 2,
-          }
-        });
-  });
-
-  const toggleTimeline = (() => {
-    setShowPlane(true);
-    tl.current.play();
-  });
-
-  if (loginSuccess === false) {
-    console.log("login failed");
-    tl.current.to("#paperPlane",
+    loopTween.current = gsap.to("#paperPlane",
       {
+        paused: true,
+        duration: 4,
+        motionPath: {
+          relative: true,
+          path: [{ x: 500, y: -400, }, { x: -400, y: -100 }, { x: 400, y: 400 }, { x: 500, y: 0 }],
+          autoRotate: true,
+          curviness: 2,
+        }, repeat: -1
+      });
+    failTween.current = gsap.to("#paperPlane",
+      {
+        paused: true,
         duration: 1,
         motionPath: {
           path: [{ x: 100, y: 100 }],
           relative: true,
           autoRotate: true,
           curviness: 2,
-        }
-      }, "-=1");
+        },
+        repeat: -1,
+      });
+  });
+
+  const toggleTimeline = (() => {
+    setShowPlane(true);
+    console.log("lets go");
+    loopTween.current.play();
+  });
+
+  if (loginSuccess === false) {
+    console.log("login failed");
+    loopTween.current.pause();
+    failTween.current.play();
+    setTimeout(() => {
+      failTween.current.pause();
+    }, 900);
   }
 
   return (
