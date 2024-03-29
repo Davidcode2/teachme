@@ -20,6 +20,7 @@ import NoData from './components/materials/noData.tsx'
 import Sidebar from './components/sidebar/sidebar.tsx'
 import cartLoader from './loaders/cartLoader.ts'
 import Cart from './components/cart/cart.tsx'
+import SuccessPage from './components/successPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
     element: <SignUpForm />,
     action: signUpAction
   },
+  {
+  path: "/success",
+  element: <SuccessPage />
+  }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

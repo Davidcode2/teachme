@@ -27,6 +27,24 @@ export class StripeService {
     return prices;
   }
 
+  public async createEmbeddedCheckoutSession(price) {
+    const session = await this.stripe.checkout.sessions.create({
+      line_items: [
+        {
+          // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+          price: price.priceId,
+          quantity: 1,
+        },
+      ],
+      ui_mode: 'embedded',
+      mode: 'payment',
+      return_url: `${this.configuration.get('DEV_FE_URL')}/return.html?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `http://localhost:5173/success`,
+      cancel_url: `http://localhost:5173/cancelled`,
+    });
+    return session;
+  }
+
   public async createCheckoutSession(price) {
     const session = await this.stripe.checkout.sessions.create({
       line_items: [
@@ -37,8 +55,8 @@ export class StripeService {
         },
       ],
       mode: 'payment',
-      success_url: `http://localhost:5173/login`,
-      cancel_url: `http://localhost:5173/signup`,
+      success_url: `http://localhost:5173/success`,
+      cancel_url: `http://localhost:5173/cancelled`,
     });
     return session;
   }

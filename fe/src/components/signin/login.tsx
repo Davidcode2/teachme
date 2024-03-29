@@ -20,7 +20,6 @@ function LoginForm() {
   console.log(loginSuccess);
 
   if (navigation.state === "submitting" | navigation.state === "loading") {
-    //replaces yourElement's text with "This is the new text" 
     gsap.to(".textReplace", {
       duration: 1,
       text: {
