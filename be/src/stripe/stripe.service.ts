@@ -8,7 +8,9 @@ export class StripeService {
   private stripeTest: string;
   private stripe = null;
 
-  constructor(private configuration: ConfigService) {
+  constructor(
+    private configuration: ConfigService,
+  ) {
     this.stripeTest = this.configuration.get('STRIPE_TEST');
     this.stripe = new Stripe(this.stripeTest);
   }
@@ -54,11 +56,28 @@ export class StripeService {
 
     try {
       event = Stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-      console.log(event);
-      return true;
+      return { status: true, res: event };
     } catch (err) {
-      console.log(err);
-      return err;
+      return { status: false, res: err };
     }
+  }
+
+  public async handleCheckoutSessionCompleted(
+    event: Stripe.CheckoutSessionCompletedEvent,
+  ) {
+    // Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
+    const sessionWithLineItems = await this.stripe.checkout.sessions.retrieve(
+      event.data.object.id,
+      {
+        expand: ['line_items'],
+      },
+    );
+    const lineItems = sessionWithLineItems.line_items;
+
+    this.fulfillOrder(lineItems);
+  }
+
+  private fulfillOrder(lineItems: Stripe.LineItem[]) {
+    //this.consumerService.addMaterial();
   }
 }
