@@ -8,7 +8,6 @@ export default function SuccessPage() {
         <div className="text-5xl">
           Yay! Du hast es geschafft!
         </div>
-      <Link to="/materials/mine">Zu meinen Materialien</Link>
       </div>
     </>
   )
