@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 
 export default function SuccessPage() {
+  const [sessionStatus, setSessionStatus] = useState('idle');
+
+  const getSessionStatus = async () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const sessionId = urlParams.get('session_id');
+    const response = await fetch(`api/stripe/session-status?session_id=${sessionId}`);
+    const json = await response.json();
+    console.log(json);
+    setSessionStatus(json.status);
+  };
+
+  useEffect(() => {
+    getSessionStatus();
+  }, []);
+
   return (
     <>
       <div className="flex gap-10 justify-center items-center h-screen">
