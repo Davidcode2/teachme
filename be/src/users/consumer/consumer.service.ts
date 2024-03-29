@@ -9,13 +9,16 @@ import { CartService } from 'src/cart/cart.service';
 
 @Injectable()
 export class ConsumerService {
+  private consumer: Consumer;
+  private material: Material;
+
   constructor(
     @InjectRepository(Consumer)
     private consumersRepository: Repository<Consumer>,
     private materialsService: MaterialsService,
     private stripeService: StripeService,
     private cartService: CartService,
-  ) { }
+  ) {}
 
   async create(): Promise<Consumer> {
     const consumer = new Consumer();
@@ -29,7 +32,7 @@ export class ConsumerService {
   }
 
   findById(id: string): Promise<Consumer | null> {
-    return this.consumersRepository.findOneBy({id: id});
+    return this.consumersRepository.findOneBy({ id: id });
   }
 
   async addToCart(materialId: string, consumerId: string) {
@@ -48,21 +51,34 @@ export class ConsumerService {
     this.consumersRepository.save(consumer);
   }
 
-  async addMaterial(materialId: string, consumerId: string) {
+  async buyMaterial(materialId: string, consumerId: string) {
+    this.setConsumer(consumerId);
+    this.setMaterial(materialId);
     const material = await this.materialsService.findOne(materialId);
-    const consumer = await this.consumersRepository
-    .createQueryBuilder('consumer')
-    .leftJoinAndSelect('consumer.materials', 'materials')
-    .where('consumer.id = :id', { id: consumerId })
-    .getOneOrFail();
-
-    const session = await this.stripeService.createCheckoutSession({priceId: material.stripePriceId});
-    if (!consumer.materials) {
-      consumer.materials = [];
-    }
-    consumer.materials.push(material);
-    this.consumersRepository.save(consumer);
+    const session = await this.stripeService.createCheckoutSession({
+      priceId: material.stripePriceId,
+    });
     return session;
+  }
+
+  private async setConsumer(consumerId: string) {
+    this.consumer = await this.consumersRepository
+      .createQueryBuilder('consumer')
+      .leftJoinAndSelect('consumer.materials', 'materials')
+      .where('consumer.id = :id', { id: consumerId })
+      .getOneOrFail();
+  }
+  
+  private async setMaterial(materialId: string) {
+    this.material = await this.materialsService.findOne(materialId);
+  }
+
+  async addMaterial() {
+    if (!this.consumer.materials) {
+      this.consumer.materials = [];
+    }
+    this.consumer.materials.push(this.material);
+    this.consumersRepository.save(this.consumer);
   }
 
   async getMaterials(id: string): Promise<Material[]> {
@@ -95,9 +111,10 @@ export class ConsumerService {
       .where('consumer.id = :id', { id: consumer.id })
       .leftJoinAndSelect('cart.materials', 'materials')
       .getOneOrFail();
-    consumer.cart.materials = consumer.cart.materials.filter((material) => material.id !== materialId);
+    consumer.cart.materials = consumer.cart.materials.filter(
+      (material) => material.id !== materialId,
+    );
     this.consumersRepository.save(consumer);
     return consumer.cart.materials;
   }
-
 }

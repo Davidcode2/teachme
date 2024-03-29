@@ -16,7 +16,7 @@ export class ConsumerController {
   @Header('mode', 'no-cors')
   async buyMaterial(@Body() requestBody: {consumerId: string, materialId: string}, @Res() res: Response)
   {
-    const session = await this.consumerService.addMaterial(requestBody.materialId, requestBody.consumerId);
+    const session = await this.consumerService.buyMaterial(requestBody.materialId, requestBody.consumerId);
     res.json({url: session.url});
   }
 }
