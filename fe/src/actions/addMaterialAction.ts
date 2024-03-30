@@ -13,8 +13,7 @@ export default async function addMaterialAction({request}) {
   const user = useUserStore.getState().user 
   const material = { ...Object.fromEntries(formData) };
   const body = { user, material };
-  console.log(JSON.stringify(body));
-  const response = await fetch('api/materials', {
+  const response = await fetch('/api/materials', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

@@ -4,16 +4,18 @@ class CartService {
   user = useUserStore.getState().user;
 
   removeItem(id: string) {
-    return fetch(`api/users/${this.user.id}/cart/${id}`, {
+    return fetch(`api/cart/${id}`, {
       method: 'DELETE',
       headers: {
+        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ userId: this.user.id}),
     });
   }
 
   getItems() {
-    const res = fetch(`/api/users/${this.user.id}/cart`, {
+    const res = fetch(`/api/cart?id=${this.user.id}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
@@ -27,12 +29,11 @@ class CartService {
     const res = await fetch('/api/consumer/buy', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ 'materialId': materialId, 'consumerId': this.user.consumerId })
     });
-    console.log(this.user);
-    console.log(this.user.consumerId);
     const body = await res.json()
     window.location.href = body.url
   }

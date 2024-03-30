@@ -16,10 +16,9 @@ function App(): JSX.Element {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         if (data.tokens.accessToken) {
           const setAccessToken = useAccessTokenStore.getState().setAccessToken;
-          setAccessToken(data.tokens.access_token);
+          setAccessToken(data.tokens.accessToken);
         }
         if (data.user) {
           const setUser = useUserStore.getState().setUser;

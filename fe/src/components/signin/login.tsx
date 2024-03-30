@@ -17,8 +17,6 @@ function LoginForm() {
   gsap.registerPlugin(TextPlugin)
   gsap.registerPlugin(MotionPathPlugin)
 
-  console.log(loginSuccess);
-
   if (navigation.state === "submitting" | navigation.state === "loading") {
     gsap.to(".textReplace", {
       duration: 1,

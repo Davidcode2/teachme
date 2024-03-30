@@ -16,15 +16,13 @@ function ActionButtons({ materialId }) {
 
 
   const addToShoppingCart = async () => {
-    const res = await fetch('api/consumer/addToCart', {
+    const res = await fetch('api/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ 'materialId': materialId, 'consumerId': consumerId })
+      body: JSON.stringify({ 'userId': user.id, 'materialId': materialId })
     });
-    console.log(user);
-    console.log(consumerId);
   }
 
   return (

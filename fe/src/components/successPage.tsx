@@ -10,7 +10,6 @@ export default function SuccessPage() {
     const sessionId = urlParams.get('session_id');
     const response = await fetch(`api/stripe/session-status?session_id=${sessionId}`);
     const json = await response.json();
-    console.log(json);
     setSessionStatus(json.status);
   };
 

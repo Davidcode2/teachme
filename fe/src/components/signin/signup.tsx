@@ -19,8 +19,6 @@ function SignUpForm() {
   const tl = useRef();
 
   const navigation = useNavigation();
-  console.log(navigation);
-  console.log(navigation.state);
 
   const checkPasswordRequirements = (e) => {
     setPassword(e.target.value);
