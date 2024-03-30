@@ -24,8 +24,12 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email: email });
   }
 
-  findOneById(id: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id: id });
+  async findOneById(id: string): Promise<User | null> {
+    let user = await this.usersRepository.findOneBy({ id: id });
+    user.consumer = await this.consumerService.findById(user.consumerId);
+    user.consumer.materials = await this.consumerService.getMaterials(user.consumerId);
+    user.consumer.cart = await this.consumerService.getCart(user.consumerId);
+    return user;
   }
 
   async create(email: string, hash: string): Promise<User> {
@@ -37,7 +41,10 @@ export class UsersService {
     user.signUpDate = new Date();
     user.author = author;
     user.consumer = consumer;
-    console.log(user);
+    return this.usersRepository.save(user);
+  }
+
+  async update(user: User): Promise<User> {
     return this.usersRepository.save(user);
   }
 
@@ -58,18 +65,6 @@ export class UsersService {
   async getMaterials(id: string): Promise<Material[]> {
     const user = await this.findOneById(id);
     const materials = this.consumerService.getMaterials(user.consumerId);
-    return materials;
-  }
-
-  async getCartItems(id: string): Promise<Material[]> {
-    const user = await this.findOneById(id);
-    const materials = this.consumerService.getCartItems(user.consumerId);
-    return materials;
-  }
-
-  async removeFromCart(id: string, materialId: string): Promise<Material[]> {
-    const user = await this.findOneById(id);
-    const materials = this.consumerService.removeFromCart(user.consumerId, materialId);
     return materials;
   }
 

@@ -6,6 +6,7 @@ import { MaterialsService } from 'src/materials/materials.service';
 import { StripeService } from 'src/stripe/stripe.service';
 import { Material } from 'src/materials/materials.entity';
 import { CartService } from 'src/cart/cart.service';
+import { Cart } from 'src/cart/cart.entity';
 
 @Injectable()
 export class ConsumerService {
@@ -17,12 +18,10 @@ export class ConsumerService {
     private consumersRepository: Repository<Consumer>,
     private materialsService: MaterialsService,
     private stripeService: StripeService,
-    private cartService: CartService,
   ) {}
 
   async create(): Promise<Consumer> {
     const consumer = new Consumer();
-    consumer.cart = await this.cartService.create();
     await this.consumersRepository.save(consumer);
     return consumer;
   }
@@ -33,22 +32,6 @@ export class ConsumerService {
 
   findById(id: string): Promise<Consumer | null> {
     return this.consumersRepository.findOneBy({ id: id });
-  }
-
-  async addToCart(materialId: string, consumerId: string) {
-    const material = await this.materialsService.findOne(materialId);
-    let consumer = await this.findById(consumerId);
-    consumer = await this.consumersRepository
-      .createQueryBuilder('consumer')
-      .leftJoinAndSelect('consumer.cart', 'cart')
-      .where('consumer.id = :id', { id: consumer.id })
-      .leftJoinAndSelect('cart.materials', 'materials')
-      .getOneOrFail();
-    if (!consumer.cart.materials) {
-      consumer.cart.materials = [];
-    }
-    consumer.cart.materials.push(material);
-    this.consumersRepository.save(consumer);
   }
 
   async buyMaterial(materialId: string, consumerId: string) {
@@ -88,8 +71,18 @@ export class ConsumerService {
       .leftJoinAndSelect('consumer.materials', 'materials')
       .where('consumer.id = :id', { id: consumer.id })
       .getOneOrFail();
-    console.log(consumerWithMaterials);
     return consumerWithMaterials.materials;
+  }
+
+  async getCart(id: string): Promise<Cart> {
+    let consumer = await this.findById(id);
+    consumer = await this.consumersRepository
+      .createQueryBuilder('consumer')
+      .leftJoinAndSelect('consumer.cart', 'cart')
+      .where('consumer.id = :id', { id: consumer.id })
+      .leftJoinAndSelect('cart.materials', 'materials')
+      .getOneOrFail();
+    return consumer.cart;
   }
 
   async getCartItems(id: string): Promise<Material[]> {

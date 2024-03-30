@@ -9,9 +9,6 @@ export class MaterialsController {
 
   @Get()
   findAll(@Req() request: Request) {
-    console.log(request.session);
-    console.log(request.cookies.jwt_token);
-    console.log(request.sessionID);
     return this.materialsService.findAll();
   }
 
