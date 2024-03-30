@@ -6,16 +6,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
-import { UsersService } from './users/usersService/users.service';
 import { MaterialsModule } from './materials/materials.module';
 import { Material } from './materials/materials.entity';
 import { AuthModule } from './auth/auth.module';
-import { Consumer } from './users/consumer.entity';
+import { Consumer } from './consumer/consumer.entity';
 import { Author } from './users/author.entity';
 import { StripeModule } from './stripe/stripe.module';
 import { CartService } from './cart/cart.service';
 import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/cart.entity';
+import { ConsumerModule } from './consumer/consumer.module';
 
 @Module({
   imports: [
@@ -39,6 +39,7 @@ import { Cart } from './cart/cart.entity';
     AuthModule,
     StripeModule,
     CartModule,
+    ConsumerModule,
   ],
   controllers: [AppController],
   providers: [AppService, CartService],

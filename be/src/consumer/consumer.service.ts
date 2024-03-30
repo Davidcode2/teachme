@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Consumer } from '../consumer.entity';
+import { Consumer } from './consumer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MaterialsService } from 'src/materials/materials.service';
 import { StripeService } from 'src/stripe/stripe.service';

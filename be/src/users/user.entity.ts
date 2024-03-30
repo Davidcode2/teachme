@@ -6,7 +6,7 @@ import {
   JoinColumn,
   RelationId,
 } from 'typeorm';
-import { Consumer } from './consumer.entity';
+import { Consumer } from '../consumer/consumer.entity';
 import { Author } from './author.entity';
 
 @Entity()
@@ -36,7 +36,7 @@ export class User {
   @JoinColumn()
   consumer: Consumer;
 
-  @RelationId((user: User) => user.consumer) // you need to specify target relation
+  @RelationId((user: User) => user.consumer) 
   consumerId: string;
 
   @OneToOne((type) => Author)
