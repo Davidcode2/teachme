@@ -25,8 +25,8 @@ export default function Cart(): JSX.Element {
     cartService.removeItem(id);
   }
 
-  const toCheckout = (id: string) => {
-    cartService.buyMaterial(id);
+  const toCheckout = (ids: string[]) => {
+    cartService.buyMaterial(ids);
   }
 
   if (!loading && cartItems.length === 0) {
@@ -70,7 +70,7 @@ export default function Cart(): JSX.Element {
           </div>
         )
       })}
-      <button onClick={() => toCheckout(cartItems[0].id)} className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
+      <button onClick={() => toCheckout(() => cartItems.map((item) => item.id))} className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
     </div>
   )
 

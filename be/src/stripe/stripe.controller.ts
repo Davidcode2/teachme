@@ -38,14 +38,17 @@ export class StripeController {
   ): Promise<any> {
     const payload = req.rawBody;
     const sig = req.headers['stripe-signature'] as string;
+    const userId = req.cookies.userId;
 
     const res = this.stripeService.verifyWebhookSignature(payload, sig);
     if (res.status !== true) {
       return response.status(400).send(`Webhook Error: ${res.res.message}`);
     }
 
+    console.log(res.res);
     if (res.res.type === 'checkout.session.completed') {
-      this.stripeService.handleCheckoutSessionCompleted(res.res);
+      console.log('Checkout session completed');
+      this.stripeService.handleCheckoutSessionCompleted(res.res, userId);
     }
 
     return response.status(200).end();

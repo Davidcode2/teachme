@@ -25,14 +25,14 @@ class CartService {
     return res;
   }
 
-  buyMaterial = async (materialId: string) => {
-    const res = await fetch('/api/consumer/buy', {
+  buyMaterial = async (materialIds: string[]) => {
+    const res = await fetch('/api/cart/buy', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ 'materialId': materialId, 'consumerId': this.user.consumerId })
+      body: JSON.stringify({ 'materialId': materialIds, 'consumerId': this.user.consumerId })
     });
     const body = await res.json()
     window.location.href = body.url

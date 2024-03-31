@@ -57,11 +57,11 @@ export class CartService {
     }
   }
 
-  async buyMaterial(materialId: string) {
-    const material = await this.materialsService.findOne(materialId);
-    const session = await this.stripeService.createCheckoutSession({
-      priceId: material.stripePriceId,
-    });
+  async buyMaterial(materialIds: string[]) {
+    const material = await this.materialsService.findMany(materialIds);
+    const session = await this.stripeService.createCheckoutSession(
+      [...material].map((m) => m.stripePriceId),
+    );
     return session;
   }
 }

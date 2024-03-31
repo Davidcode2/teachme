@@ -11,7 +11,7 @@ export class MaterialsService {
     @InjectRepository(Material)
     private materialsRepository: Repository<Material>,
     private stripeService: StripeService,
-  ) { }
+  ) {}
 
   findAll(): Promise<Material[]> {
     return this.materialsRepository.find();
@@ -21,6 +21,13 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
+  findMany(ids: string[]): Promise<Material[]> {
+    return this.materialsRepository
+      .createQueryBuilder('material')
+      .where('material.id IN (:...ids)', { ids: ids })
+      .getMany();
+  }
+
   async create(user: User, mat: MaterialDto): Promise<Material> {
     let material = new Material();
     material.title = mat.title;
@@ -28,7 +35,7 @@ export class MaterialsService {
     material.datePublished = new Date();
     material.price = Number(mat.price);
     const price = await this.stripeService.createProduct(material);
-    material.stripePriceId = price.id; 
+    material.stripePriceId = price.id;
     return this.materialsRepository.save(material);
   }
 
@@ -36,6 +43,14 @@ export class MaterialsService {
     await this.materialsRepository.delete(id);
   }
 
+  async findByStripePriceIds(stripeIds: string[]): Promise<Material[] | null> {
+    return this.materialsRepository
+      .createQueryBuilder('material')
+      .where('material.stripePriceId IN (:...stripeIds)', {
+        stripeIds: stripeIds,
+      })
+      .getMany();
+  }
 }
 
 class MaterialDto {

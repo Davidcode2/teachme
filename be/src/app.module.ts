@@ -16,6 +16,7 @@ import { CartService } from './cart/cart.service';
 import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/cart.entity';
 import { ConsumerModule } from './consumer/consumer.module';
+import { MaterialPriceIdFinderModule } from './material-price-id-finder/material-price-id-finder.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ConsumerModule } from './consumer/consumer.module';
     StripeModule,
     CartModule,
     ConsumerModule,
+    MaterialPriceIdFinderModule,
   ],
   controllers: [AppController],
   providers: [AppService, CartService],

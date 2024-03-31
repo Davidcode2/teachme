@@ -5,6 +5,7 @@ import { User } from '../user.entity';
 import { Author } from '../author.entity';
 import { Material } from 'src/materials/materials.entity';
 import { ConsumerService } from '../../consumer/consumer.service';
+import Stripe from 'stripe';
 
 @Injectable()
 export class UsersService {
@@ -62,8 +63,9 @@ export class UsersService {
     await this.usersRepository.delete(id);
   }
 
-  async addMaterials(items) {
-    console.log(items);
+  async addMaterials(materials: Material[], userId: string) {
+    const consumerId = (await this.findOneById(userId)).consumerId;
+    this.consumerService.addMaterials(materials, consumerId);
   }
 
   async getMaterials(id: string): Promise<Material[]> {

@@ -30,7 +30,7 @@ export class CartController {
 
   @Post('buy') 
   @Header('mode', 'no-cors')
-  async buyMaterial(@Body() requestBody: {materialId: string}, @Req() req: Request, @Res() res: Response)
+  async buyMaterial(@Body() requestBody: {materialId: string[]}, @Req() req: Request, @Res() res: Response)
   {
     const userId = req.cookies.userId;
     const session = await this.cartService.buyMaterial(requestBody.materialId);

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Material } from 'src/materials/materials.entity';
 import { UsersService } from 'src/users/usersService/users.service';
 import Stripe from 'stripe';
+import { FinderByPriceIdService } from 'src/material-price-id-finder/material-price-id-finder.service';
 
 @Injectable()
 export class StripeService {
@@ -12,6 +13,7 @@ export class StripeService {
   constructor(
     private configuration: ConfigService,
     private userService: UsersService,
+    private materialFinderService: FinderByPriceIdService
   ) {
     this.stripeTest = this.configuration.get('STRIPE_TEST');
     this.stripe = new Stripe(this.stripeTest);
@@ -31,14 +33,10 @@ export class StripeService {
     return prices;
   }
 
-  public async createCheckoutSession(price) {
+  public async createCheckoutSession(items) {
     const session = await this.stripe.checkout.sessions.create({
       line_items: [
-        {
-          // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-          price: price.priceId,
-          quantity: 1,
-        },
+        items
       ],
       mode: 'payment',
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -66,6 +64,7 @@ export class StripeService {
 
   public async handleCheckoutSessionCompleted(
     event: Stripe.CheckoutSessionCompletedEvent,
+    userId: string,
   ) {
     // Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
     const sessionWithLineItems = await this.stripe.checkout.sessions.retrieve(
@@ -76,10 +75,13 @@ export class StripeService {
     );
     const lineItems = sessionWithLineItems.line_items;
 
-    this.fulfillOrder(lineItems);
+    console.log("fulfilling order...");
+    this.fulfillOrder(lineItems, userId);
   }
 
-  private fulfillOrder(lineItems: Stripe.LineItem[]) {
-    this.userService.addMaterials(lineItems);
+  private async fulfillOrder(lineItems: Stripe.LineItem[], userId: string) {
+    const priceIds = lineItems.map((lineItem) => lineItem.id);
+    const materials = await this.materialFinderService.findByStripePriceIds(priceIds);
+    this.userService.addMaterials(materials, userId);
   }
 }

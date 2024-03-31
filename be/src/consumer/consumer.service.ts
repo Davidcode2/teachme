@@ -37,6 +37,12 @@ export class ConsumerService {
     this.consumersRepository.save(this.consumer);
   }
 
+  async addMaterials(materials: Material[], consumerId: string) {
+    const consumer = await this.findById(consumerId);
+    consumer.materials.push(...materials);
+    this.consumersRepository.save(consumer);
+  }
+
   async getMaterials(id: string): Promise<Material[]> {
     const consumer = await this.findById(id);
     const consumerWithMaterials = await this.consumersRepository
@@ -57,6 +63,4 @@ export class ConsumerService {
       .getOneOrFail();
     return consumer.cart;
   }
-
 }
-
