@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Consumer } from './consumer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MaterialsService } from 'src/materials/materials.service';
-import { StripeService } from 'src/stripe/stripe.service';
 import { Material } from 'src/materials/materials.entity';
-import { CartService } from 'src/cart/cart.service';
 import { Cart } from 'src/cart/cart.entity';
 
 @Injectable()
@@ -16,8 +13,6 @@ export class ConsumerService {
   constructor(
     @InjectRepository(Consumer)
     private consumersRepository: Repository<Consumer>,
-    private materialsService: MaterialsService,
-    private stripeService: StripeService,
   ) {}
 
   async create(): Promise<Consumer> {
@@ -32,28 +27,6 @@ export class ConsumerService {
 
   findById(id: string): Promise<Consumer | null> {
     return this.consumersRepository.findOneBy({ id: id });
-  }
-
-  async buyMaterial(materialId: string, consumerId: string) {
-    this.setConsumer(consumerId);
-    this.setMaterial(materialId);
-    const material = await this.materialsService.findOne(materialId);
-    const session = await this.stripeService.createCheckoutSession({
-      priceId: material.stripePriceId,
-    });
-    return session;
-  }
-
-  private async setConsumer(consumerId: string) {
-    this.consumer = await this.consumersRepository
-      .createQueryBuilder('consumer')
-      .leftJoinAndSelect('consumer.materials', 'materials')
-      .where('consumer.id = :id', { id: consumerId })
-      .getOneOrFail();
-  }
-  
-  private async setMaterial(materialId: string) {
-    this.material = await this.materialsService.findOne(materialId);
   }
 
   async addMaterial() {

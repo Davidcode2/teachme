@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/usersService/users.service';
 import { Material } from 'src/materials/materials.entity';
 import { MaterialsService } from 'src/materials/materials.service';
+import { StripeService } from 'src/stripe/stripe.service';
 
 @Injectable()
 export class CartService {
@@ -13,6 +14,7 @@ export class CartService {
     private cartRepository: Repository<Cart>,
     private userService: UsersService,
     private materialsService: MaterialsService,
+    private stripeService: StripeService,
   ) { }
 
   async create(userId: string): Promise<Cart> {
@@ -55,4 +57,11 @@ export class CartService {
     }
   }
 
+  async buyMaterial(materialId: string) {
+    const material = await this.materialsService.findOne(materialId);
+    const session = await this.stripeService.createCheckoutSession({
+      priceId: material.stripePriceId,
+    });
+    return session;
+  }
 }

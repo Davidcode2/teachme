@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Material } from 'src/materials/materials.entity';
+import { UsersService } from 'src/users/usersService/users.service';
 import Stripe from 'stripe';
 
 @Injectable()
@@ -10,6 +11,7 @@ export class StripeService {
 
   constructor(
     private configuration: ConfigService,
+    private userService: UsersService,
   ) {
     this.stripeTest = this.configuration.get('STRIPE_TEST');
     this.stripe = new Stripe(this.stripeTest);
@@ -78,6 +80,6 @@ export class StripeService {
   }
 
   private fulfillOrder(lineItems: Stripe.LineItem[]) {
-    //this.consumerService.addMaterial();
+    this.userService.addMaterials(lineItems);
   }
 }

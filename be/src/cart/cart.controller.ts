@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Delete, Get, Header, Param, Post, Query, RawBodyRequest, Req, Res, UseGuards } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { CartService } from './cart.service';
 import { Material } from 'src/materials/materials.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -26,6 +26,15 @@ export class CartController {
   @Delete(':materialId')
   async removeItem(@Body() requestBody: { userId: string }, @Param('materialId') materialId: string) {
     return this.cartService.removeItem(requestBody.userId, materialId);
+  }
+
+  @Post('buy') 
+  @Header('mode', 'no-cors')
+  async buyMaterial(@Body() requestBody: {materialId: string}, @Req() req: Request, @Res() res: Response)
+  {
+    const userId = req.cookies.userId;
+    const session = await this.cartService.buyMaterial(requestBody.materialId);
+    res.json({url: session.url});
   }
 
 }

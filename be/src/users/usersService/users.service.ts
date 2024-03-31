@@ -62,6 +62,10 @@ export class UsersService {
     await this.usersRepository.delete(id);
   }
 
+  async addMaterials(items) {
+    console.log(items);
+  }
+
   async getMaterials(id: string): Promise<Material[]> {
     const user = await this.findOneById(id);
     const materials = this.consumerService.getMaterials(user.consumerId);
