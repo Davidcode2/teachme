@@ -33,11 +33,9 @@ export class StripeService {
     return prices;
   }
 
-  public async createCheckoutSession(items) {
+  public async createCheckoutSession(items: { price: string, quantity: number}[]) {
     const session = await this.stripe.checkout.sessions.create({
-      line_items: [
-        items
-      ],
+      line_items: items,
       mode: 'payment',
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `http://localhost:5173/cancelled`,

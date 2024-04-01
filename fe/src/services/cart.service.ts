@@ -32,7 +32,7 @@ class CartService {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ 'materialId': materialIds, 'consumerId': this.user.consumerId })
+      body: JSON.stringify({ 'materialId': materialIds })
     });
     const body = await res.json()
     window.location.href = body.url

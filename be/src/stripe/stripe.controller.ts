@@ -18,7 +18,7 @@ export class StripeController {
 
   @Post()
   async createCheckoutSession(
-    @Body() createCheckoutSessionDto: { priceId: string },
+    @Body() createCheckoutSessionDto: { price: string, quantity: number }[],
   ): Promise<Stripe.Checkout.Session> {
     return this.stripeService.createCheckoutSession(createCheckoutSessionDto);
   }
