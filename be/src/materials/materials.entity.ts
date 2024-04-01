@@ -18,8 +18,8 @@ export class Material {
   link: string;
 
   @Column({ nullable: true })
-  stripePriceId: string;
+  stripe_price_id: string;
 
   @Column()
-  datePublished: Date;
+  date_published: Date;
 }

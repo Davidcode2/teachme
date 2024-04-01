@@ -60,7 +60,7 @@ export class CartService {
   async buyMaterial(materialIds: string[]) {
     const material = await this.materialsService.findMany(materialIds);
     const session = await this.stripeService.createCheckoutSession(
-      [...material].map((m) => m.stripePriceId),
+      [...material].map((m) => m.stripe_price_id),
     );
     return session;
   }

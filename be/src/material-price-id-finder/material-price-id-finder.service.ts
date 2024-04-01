@@ -13,7 +13,7 @@ export class FinderByPriceIdService {
   async findByStripePriceIds(stripeIds: string[]): Promise<Material[] | null> {
     return this.materialsRepository
       .createQueryBuilder('material')
-      .where('material.stripePriceId IN (:...stripeIds)', {
+      .where('material.stripe_price_id IN (:...stripeIds)', {
         stripeIds: stripeIds,
       })
       .getMany();

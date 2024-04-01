@@ -32,10 +32,10 @@ export class MaterialsService {
     let material = new Material();
     material.title = mat.title;
     material.description = mat.description;
-    material.datePublished = new Date();
+    material.date_published = new Date();
     material.price = Number(mat.price);
     const price = await this.stripeService.createProduct(material);
-    material.stripePriceId = price.id;
+    material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
   }
 
@@ -46,7 +46,7 @@ export class MaterialsService {
   async findByStripePriceIds(stripeIds: string[]): Promise<Material[] | null> {
     return this.materialsRepository
       .createQueryBuilder('material')
-      .where('material.stripePriceId IN (:...stripeIds)', {
+      .where('material.stripe_price_id IN (:...stripeIds)', {
         stripeIds: stripeIds,
       })
       .getMany();
