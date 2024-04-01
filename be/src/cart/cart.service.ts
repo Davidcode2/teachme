@@ -58,7 +58,6 @@ export class CartService {
   }
 
   async buyMaterial(materialIds: string[]) {
-    console.log(materialIds);
     const materials = await this.materialsService.findMany(materialIds);
     const stripePriceIds = materials.map((m) => m.stripe_price_id);
     const lineItems = stripePriceIds.map((m) => { return { "price": m, "quantity": 1 }});

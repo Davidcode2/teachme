@@ -38,9 +38,23 @@ export class ConsumerService {
   }
 
   async addMaterials(materials: Material[], consumerId: string) {
-    const consumer = await this.findById(consumerId);
+    const consumer = await this.getConsumerWithMaterials(consumerId);
     consumer.materials.push(...materials);
     this.consumersRepository.save(consumer);
+  }
+
+  private async getConsumerWithMaterials(id: string) {
+    const consumer = await this.consumersRepository
+      .createQueryBuilder('consumer')
+      .leftJoinAndSelect('consumer.materials', 'materials')
+      .where('consumer.id = :id', { id })
+      .getOneOrFail();
+    if (!consumer.materials) {
+      consumer.materials = [];
+      this.consumersRepository.save(consumer);
+    }
+
+    return consumer;
   }
 
   async getMaterials(id: string): Promise<Material[]> {

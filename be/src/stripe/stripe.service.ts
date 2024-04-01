@@ -77,8 +77,8 @@ export class StripeService {
     this.fulfillOrder(lineItems, userId);
   }
 
-  private async fulfillOrder(lineItems: Stripe.LineItem[], userId: string) {
-    const priceIds = lineItems.map((lineItem) => lineItem.id);
+  private async fulfillOrder(lineItems: any , userId: string) {
+    const priceIds = lineItems.data.map((lineItem) => lineItem.price.id);
     const materials = await this.materialFinderService.findByStripePriceIds(priceIds);
     this.userService.addMaterials(materials, userId);
   }
