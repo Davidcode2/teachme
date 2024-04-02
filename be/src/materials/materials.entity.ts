@@ -20,6 +20,9 @@ export class Material {
   @Column({ nullable: true })
   stripe_price_id: string;
 
+  @Column({ nullable: true })
+  file_path: string
+
   @Column()
   date_published: Date;
 }
