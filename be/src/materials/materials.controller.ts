@@ -1,7 +1,18 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { MaterialsService } from './materials.service';
+import { Express } from 'express';
 import { Request } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('materials')
 export class MaterialsController {
@@ -14,7 +25,9 @@ export class MaterialsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() body) {
-    return this.materialsService.create(body.user, body.material);
+  @UseInterceptors(FileInterceptor('file'))
+  create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
+    const materialDto = { file, ...body };
+    return this.materialsService.create(materialDto);
   }
 }

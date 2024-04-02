@@ -45,7 +45,6 @@ export class StripeController {
       return response.status(400).send(`Webhook Error: ${res.res.message}`);
     }
 
-    console.log(res.res);
     if (res.res.type === 'checkout.session.completed') {
       console.log('Checkout session completed');
       this.stripeService.handleCheckoutSessionCompleted(res.res, userId);

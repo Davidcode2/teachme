@@ -17,9 +17,8 @@ export default async function addMaterialAction({request}) {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body)
+    body: formData,
   });
   return redirect("/materials");
 }

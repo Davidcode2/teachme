@@ -3,10 +3,10 @@ import { Form } from 'react-router-dom'
 function AddMaterials() {
   return (
     <div className="my-10 md:my-40 mx-4 sm:mx-10 xl:mx-60">
-      <Form className="flex flex-col gap-4" method="post">
+      <Form className="flex flex-col gap-4" method="post" encType="multipart/form-data">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="shadow-sm border border-slate-200 rounded-lg md:w-52 lg:w-auto">
-            <input type="file" />
+            <input type="file" name="file" />
           </div>
           <div className="flex-1 flex flex-col md:grid grid-cols-[.2fr_1fr] md:gap-10">
             <label className="p-2" htmlFor="title">Titel</label>

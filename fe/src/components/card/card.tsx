@@ -17,7 +17,7 @@ function Card({ material }): JSX.Element {
             <ActionButtons materialId={material.id}></ActionButtons>
           </div>
           <div className="ml-auto self-end">
-            <Author author={material.author} published={material.datePublished} ></Author>
+            <Author author={material.author} published={material.date_published} ></Author>
           </div>
         </div>
       </div>
