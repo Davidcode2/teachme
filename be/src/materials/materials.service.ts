@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Material } from './materials.entity';
 import * as fs from 'node:fs/promises';
 import { StripeService } from 'src/stripe/stripe.service';
+import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class MaterialsService {
@@ -55,7 +56,7 @@ export class MaterialsService {
 
   private storeFile(multerFile: Express.Multer.File) {
     const file = multerFile.buffer;
-    const filePath = "abcdefghijklmno_path_xxx";
+    const filePath = randomUUID();
     fs.writeFile(filePath, file)
     return filePath;
   }
