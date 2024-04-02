@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Material } from './materials.entity';
+import * as fs from 'node:fs/promises';
 import { StripeService } from 'src/stripe/stripe.service';
 
 @Injectable()
@@ -33,6 +34,7 @@ export class MaterialsService {
     material.description = materialDto.description;
     material.date_published = new Date();
     material.price = Number(materialDto.price);
+    material.file_path = this.storeFile(materialDto.file);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
@@ -49,6 +51,13 @@ export class MaterialsService {
         stripeIds: stripeIds,
       })
       .getMany();
+  }
+
+  private storeFile(multerFile: Express.Multer.File) {
+    const file = multerFile.buffer;
+    const filePath = "abcdefghijklmno_path_xxx";
+    fs.writeFile(filePath, file)
+    return filePath;
   }
 }
 
