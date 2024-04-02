@@ -4,7 +4,7 @@ class CartService {
   user = useUserStore.getState().user;
 
   removeItem(id: string) {
-    return fetch(`api/cart/${id}`, {
+    return fetch(`/api/cart/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

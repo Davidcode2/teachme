@@ -19,10 +19,15 @@ export default function Cart(): JSX.Element {
 
   useEffect(() => {
     getItems();
-  }, []);
+  }, [loading]);
 
   const removeItem = (id: string) => {
-    cartService.removeItem(id);
+  setLoading(true);
+    cartService.removeItem(id)
+    .then((res) => { res.json() })
+    .then(() => {
+      setLoading(false);
+    });
   }
 
   const toCheckout = (ids: string[]) => {
