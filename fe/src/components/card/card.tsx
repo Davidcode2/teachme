@@ -14,7 +14,7 @@ function Card({ material }): JSX.Element {
         </div>
         <div className="flex mt-auto">
           <div className="self-center">
-            <ActionButtons materialId={material.id}></ActionButtons>
+            <ActionButtons id={material.id} path={material.file_path}></ActionButtons>
           </div>
           <div className="ml-auto self-end">
             <Author author={material.author} published={material.date_published} ></Author>

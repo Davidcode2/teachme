@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
+import arrow from '../../assets/icons/icons8-arrow-50.png';
 import { useUserStore } from '../../store';
 
-function ActionButtons({ materialId }) {
-
+function ActionButtons({ id, path }) {
   const user = useUserStore.getState().user;
   if (!user) return (
     <div className="flex">
@@ -19,12 +19,12 @@ function ActionButtons({ materialId }) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ 'userId': user.id, 'materialId': materialId })
+      body: JSON.stringify({ 'userId': user.id, 'materialId': id })
     });
   }
 
   const downloadMaterial = async () => {
-    const res = await fetch(`api/materials/download?id=${materialId}`, {
+    const res = await fetch(`api/materials/download?id=${id}`, {
       method: 'GET',
     });
   }
@@ -37,9 +37,12 @@ function ActionButtons({ materialId }) {
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
           <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />
         </div>
-        <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-          <img className="rotate-180" onClick={downloadMaterial} src={addToShoppingCartIcon} width="30" alt="" />
-        </div>
+        {path ?
+          <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
+            <img className="rotate-90" onClick={downloadMaterial} src={arrow} width="30" alt="" />
+          </div>
+          : <></>
+        }
       </div>
     </>
   )
