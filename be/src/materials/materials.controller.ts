@@ -2,7 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
+  Query,
   Req,
   UploadedFile,
   UseGuards,
@@ -29,5 +31,13 @@ export class MaterialsController {
   create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     const materialDto = { file, ...body };
     return this.materialsService.create(materialDto);
+  }
+
+  @Get('download')
+  download(@Query('id') materialId: string) {
+    console.log(materialId);
+    // check if material is owned by user
+    // if not throw unauthorized exception
+    return this.materialsService.getFile(materialId);
   }
 }

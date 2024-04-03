@@ -12,8 +12,6 @@ function ActionButtons({ materialId }) {
       <Link to="/login"><img src={addToShoppingCartIcon} width="30" alt="" /></Link>
     </div>
   )
-  const consumerId = user.consumerId;
-
 
   const addToShoppingCart = async () => {
     const res = await fetch('api/cart', {
@@ -25,6 +23,12 @@ function ActionButtons({ materialId }) {
     });
   }
 
+  const downloadMaterial = async () => {
+    const res = await fetch(`api/materials/download?id=${materialId}`, {
+      method: 'GET',
+    });
+  }
+
   return (
     <>
       <div className="flex">
@@ -32,6 +36,9 @@ function ActionButtons({ materialId }) {
         <div className="hidden">downloads</div>
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
           <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />
+        </div>
+        <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
+          <img className="rotate-180" onClick={downloadMaterial} src={addToShoppingCartIcon} width="30" alt="" />
         </div>
       </div>
     </>

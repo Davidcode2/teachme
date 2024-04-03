@@ -54,6 +54,11 @@ export class MaterialsService {
       .getMany();
   }
 
+  async getFile(materialId: string) {
+    const material = await this.findOne(materialId);
+    return fs.readFile(material.file_path);
+  }
+
   private storeFile(multerFile: Express.Multer.File) {
     const file = multerFile.buffer;
     const filePath = randomUUID();
