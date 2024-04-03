@@ -15,7 +15,15 @@ export class MaterialsService {
   ) {}
 
   findAll(): Promise<Material[]> {
-    return this.materialsRepository.find();
+      return this.materialsRepository
+        .createQueryBuilder('material')
+        .select('material.id')
+        .addSelect('material.title')
+        .addSelect('material.description')
+        .addSelect('material.price')
+        .addSelect('material.stripe_price_id')
+        .addSelect('material.date_published')
+        .getMany();
   }
 
   findOne(id: string): Promise<Material | null> {
@@ -62,7 +70,7 @@ export class MaterialsService {
   private storeFile(multerFile: Express.Multer.File) {
     const file = multerFile.buffer;
     const filePath = randomUUID();
-    fs.writeFile(filePath, file)
+    fs.writeFile(filePath, file);
     return filePath;
   }
 }

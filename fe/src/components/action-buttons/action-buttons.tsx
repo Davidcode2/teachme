@@ -14,7 +14,7 @@ function ActionButtons({ id, path }) {
   )
 
   const addToShoppingCart = async () => {
-    const res = await fetch('api/cart', {
+    const res = await fetch('/api/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ function ActionButtons({ id, path }) {
         </div>
         {path ?
           <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-            <a href={`api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrow} width="30" alt="" /></a>
+            <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrow} width="30" alt="" /></a>
           </div>
           : <></>
         }
