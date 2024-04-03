@@ -23,15 +23,6 @@ function ActionButtons({ id, path }) {
     });
   }
 
-  const downloadMaterial = async () => {
-//    const res = await fetch(`api/materials/download?id=${id}`, {
- //     method: 'GET',
-  //  });
-    const anchorTag = document.createElement('a');
-    anchorTag.download = `api/materials/download?id=${id}`;
-    anchorTag.click();
-  }
-
   return (
     <>
       <div className="flex">
@@ -42,7 +33,7 @@ function ActionButtons({ id, path }) {
         </div>
         {path ?
           <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-            <a href={`api/materials/download?id=${id}`} download={id}><img className="rotate-90" onClick={downloadMaterial} src={arrow} width="30" alt="" /></a>
+            <a href={`api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrow} width="30" alt="" /></a>
           </div>
           : <></>
         }
