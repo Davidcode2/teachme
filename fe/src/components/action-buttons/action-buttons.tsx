@@ -24,9 +24,12 @@ function ActionButtons({ id, path }) {
   }
 
   const downloadMaterial = async () => {
-    const res = await fetch(`api/materials/download?id=${id}`, {
-      method: 'GET',
-    });
+//    const res = await fetch(`api/materials/download?id=${id}`, {
+ //     method: 'GET',
+  //  });
+    const anchorTag = document.createElement('a');
+    anchorTag.download = `api/materials/download?id=${id}`;
+    anchorTag.click();
   }
 
   return (
@@ -39,7 +42,7 @@ function ActionButtons({ id, path }) {
         </div>
         {path ?
           <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-            <img className="rotate-90" onClick={downloadMaterial} src={arrow} width="30" alt="" />
+            <a href={`api/materials/download?id=${id}`} download={id}><img className="rotate-90" onClick={downloadMaterial} src={arrow} width="30" alt="" /></a>
           </div>
           : <></>
         }

@@ -2,10 +2,10 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
   Query,
   Req,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -13,7 +13,7 @@ import {
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { MaterialsService } from './materials.service';
 import { Express } from 'express';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('materials')
@@ -34,10 +34,12 @@ export class MaterialsController {
   }
 
   @Get('download')
-  download(@Query('id') materialId: string) {
+  async download(@Query('id') materialId: string, @Res() response: Response) {
     console.log(materialId);
     // check if material is owned by user
     // if not throw unauthorized exception
-    return this.materialsService.getFile(materialId);
+    response.setHeader('content-type', 'application/pdf');
+    const file = await this.materialsService.getFile(materialId);
+    response.send(file);
   }
 }
