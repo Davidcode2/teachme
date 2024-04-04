@@ -42,7 +42,7 @@ export default function Cart(): JSX.Element {
   }
   return (
     <div className="flex flex-col gap-4 md:max-w-[600px] ">
-      {cartItems.map((item, index) => <div className="w-[500px]"><CartItem item={item} index={index} cartService={cartService} /></div>)}
+      {cartItems.map((item, index) => <div className="w-[500px]"><CartItem item={item} index={index} cartService={cartService} setCartItems={setCartItems} /></div>)}
       <button onClick={() => toCheckout(cartItems.map((item) => item.id))} className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
     </div>
   )

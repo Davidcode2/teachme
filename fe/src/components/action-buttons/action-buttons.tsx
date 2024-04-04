@@ -4,7 +4,7 @@ import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
 import { useUserStore } from '../../store';
 
 function ActionButtons({ id, path }) {
-  const user = useUserStore.getState().user;
+  const { user } = useUserStore();
   if (!user) return (
     <div className="flex">
       <div className="hidden">rating</div>
