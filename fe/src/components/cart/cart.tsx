@@ -1,7 +1,7 @@
 import bag from "../../assets/icons/icons8-bag-64.png"
-import sampleImage from "../../assets/exampleMaterialThumbnail.png"
 import { useEffect, useState } from "react";
 import CartService from "../../services/cart.service";
+import CartItem from "./cartItem";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
@@ -19,16 +19,7 @@ export default function Cart(): JSX.Element {
 
   useEffect(() => {
     getItems();
-  }, [loading]);
-
-  const removeItem = (id: string) => {
-  setLoading(true);
-    cartService.removeItem(id)
-    .then((res) => { res.json() })
-    .then(() => {
-      setLoading(false);
-    });
-  }
+  }, []);
 
   const toCheckout = (ids: string[]) => {
     cartService.buyMaterial(ids);
@@ -51,30 +42,7 @@ export default function Cart(): JSX.Element {
   }
   return (
     <div className="flex flex-col gap-4 md:max-w-[600px] ">
-      {cartItems.map((item, index) => {
-        return (
-          <div className="border border-slate-200 rounded-lg" key={index}>
-            <div className="grid grid-cols-2">
-              <div className="m-10">
-                <div>
-                  Material: <p className="text-2xl">{item.title}</p>
-                </div>
-                <div>
-                  Preis: <p className="text-3xl text-emerald-500">{Number((item.price) / 100).toFixed(2)} €</p>
-                </div>
-              </div>
-              <div className="m-4">
-                <img src={sampleImage} alt="sample" />
-              </div>
-            </div>
-            <div className="flex mx-10 my-2">
-              <button onClick={() => removeItem(item.id)} className="border border-slate-200 rounded-md px-2 hover:bg-red-400">
-                Entfernen
-              </button>
-            </div>
-          </div>
-        )
-      })}
+      {cartItems.map((item, index) => <div className="w-[500px]"><CartItem item={item} index={index} cartService={cartService} /></div>)}
       <button onClick={() => toCheckout(cartItems.map((item) => item.id))} className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
     </div>
   )
