@@ -5,7 +5,6 @@ import { User } from '../user.entity';
 import { Author } from '../author.entity';
 import { Material } from 'src/materials/materials.entity';
 import { ConsumerService } from '../../consumer/consumer.service';
-import Stripe from 'stripe';
 
 @Injectable()
 export class UsersService {

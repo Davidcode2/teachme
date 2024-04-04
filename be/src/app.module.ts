@@ -17,6 +17,7 @@ import { CartModule } from './cart/cart.module';
 import { Cart } from './cart/cart.entity';
 import { ConsumerModule } from './consumer/consumer.module';
 import { MaterialPriceIdFinderModule } from './material-price-id-finder/material-price-id-finder.module';
+import { CommonCartModule } from './common-cart/common-cart.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { MaterialPriceIdFinderModule } from './material-price-id-finder/material
     CartModule,
     ConsumerModule,
     MaterialPriceIdFinderModule,
+    CommonCartModule,
   ],
   controllers: [AppController],
   providers: [AppService, CartService],

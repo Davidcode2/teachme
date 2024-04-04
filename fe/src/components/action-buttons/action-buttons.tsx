@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
-import arrow from '../../assets/icons/icons8-arrow-50.png';
+import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
 import { useUserStore } from '../../store';
 
 function ActionButtons({ id, path }) {
@@ -33,7 +33,7 @@ function ActionButtons({ id, path }) {
         </div>
         {path ?
           <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-            <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrow} width="30" alt="" /></a>
+            <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>
           </div>
           : <></>
         }

@@ -4,6 +4,7 @@ import { Material } from 'src/materials/materials.entity';
 import { UsersService } from 'src/users/usersService/users.service';
 import Stripe from 'stripe';
 import { FinderByPriceIdService } from 'src/material-price-id-finder/material-price-id-finder.service';
+import { CommonCartService } from 'src/common-cart/common-cart.service';
 
 @Injectable()
 export class StripeService {
@@ -13,7 +14,8 @@ export class StripeService {
   constructor(
     private configuration: ConfigService,
     private userService: UsersService,
-    private materialFinderService: FinderByPriceIdService
+    private materialFinderService: FinderByPriceIdService,
+    private commonCartService: CommonCartService,
   ) {
     this.stripeTest = this.configuration.get('STRIPE_TEST');
     this.stripe = new Stripe(this.stripeTest);
@@ -81,5 +83,8 @@ export class StripeService {
     const priceIds = lineItems.data.map((lineItem) => lineItem.price.id);
     const materials = await this.materialFinderService.findByStripePriceIds(priceIds);
     this.userService.addMaterials(materials, userId);
+    for (const material of materials) {
+      this.commonCartService.removeItem(userId, material.id);
+    }
   }
 }

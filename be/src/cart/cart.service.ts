@@ -6,6 +6,7 @@ import { UsersService } from 'src/users/usersService/users.service';
 import { Material } from 'src/materials/materials.entity';
 import { MaterialsService } from 'src/materials/materials.service';
 import { StripeService } from 'src/stripe/stripe.service';
+import { CommonCartService } from 'src/common-cart/common-cart.service';
 
 @Injectable()
 export class CartService {
@@ -15,6 +16,7 @@ export class CartService {
     private userService: UsersService,
     private materialsService: MaterialsService,
     private stripeService: StripeService,
+    private commonCartService: CommonCartService,
   ) { }
 
   async create(userId: string): Promise<Cart> {
@@ -35,11 +37,7 @@ export class CartService {
   }
 
   async removeItem(id: string, materialId: string): Promise<Material[]> {
-    const user = await this.userService.findOneById(id);
-    const materials = user.consumer.cart.materials.filter((material) => material.id !== materialId);
-    user.consumer.cart.materials = materials;
-    this.userService.update(user);
-    return materials;
+    return this.commonCartService.removeItem(id, materialId);
   }
 
   async addItem(userId: string, materialId: string) {
