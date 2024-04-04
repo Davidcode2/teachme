@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import Material from './DTOs/material'
 
 type AccessTokenState = {
   accessToken: string | null
@@ -32,6 +33,16 @@ type SidebarState = {
 export const useSidebarStore = create<SidebarState>((set) => ({
   isShown: false,
   toggleSidebar: () => set((state) => ({ isShown: !state.isShown })),
+}));
+
+type CartState = {
+  cart: any
+  setCartItem: (item: any) => void
+}
+
+export const useCartStore = create<CartState>((set) => ({
+  cart: null,
+  setCartItem: (item: any) => set({ cart: item}),
 }));
 
 interface BearState {

@@ -2,11 +2,13 @@ import bag from "../../assets/icons/icons8-bag-64.png"
 import { useEffect, useState } from "react";
 import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
+import { useCartStore } from "../../store";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const cartService = new CartService();
+  const { cart } = useCartStore();
 
   const getItems = () => {
     cartService.getItems()
@@ -19,7 +21,8 @@ export default function Cart(): JSX.Element {
 
   useEffect(() => {
     getItems();
-  }, []);
+  }, [cart]);
+
 
   const toCheckout = (ids: string[]) => {
     cartService.buyMaterial(ids);

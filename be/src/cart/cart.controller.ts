@@ -11,7 +11,7 @@ export class CartController {
   @Post() 
   async addItem(@Body() requestBody: {userId: string, materialId: string})
   {
-    await this.cartService.addItem(requestBody.userId, requestBody.materialId);
+    return await this.cartService.addItem(requestBody.userId, requestBody.materialId);
   }
 
   @UseGuards(JwtAuthGuard)

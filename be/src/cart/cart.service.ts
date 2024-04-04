@@ -46,6 +46,7 @@ export class CartService {
     const material = await this.materialsService.findOne(materialId);
     user.consumer.cart.materials.push(material);
     this.userService.update(user);
+    return material;
   }
 
   private async createCartIfNotExists(userId: string) {

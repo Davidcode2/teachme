@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
 import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
-import { useUserStore } from '../../store';
+import { useCartStore, useUserStore } from '../../store';
 
 function ActionButtons({ id, path }) {
   const { user } = useUserStore();
@@ -21,6 +21,8 @@ function ActionButtons({ id, path }) {
       },
       body: JSON.stringify({ 'userId': user.id, 'materialId': id })
     });
+    const data = await res.json();
+    useCartStore.setState({ cart: data });
   }
 
   return (
