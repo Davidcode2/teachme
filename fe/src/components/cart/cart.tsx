@@ -36,13 +36,15 @@ export default function Cart(): JSX.Element {
     )
   } else if (loading) {
     return (
-      <div className="m-20"><img className="animate-spin" src={bag} alt="" /></div>
+      <div className="m-20 flex justify-center">
+        <img className="animate-spin" src={bag} alt="" />
+      </div>
     )
 
   }
   return (
     <div className="flex flex-col gap-4 md:max-w-[600px] ">
-      {cartItems.map((item, index) => <div className="w-[500px]"><CartItem item={item} index={index} cartService={cartService} setCartItems={setCartItems} /></div>)}
+      {cartItems.map((item, index) => <div className="" key={index} ><CartItem item={item} index={index} cartService={cartService} setCartItems={setCartItems} /></div>)}
       <button onClick={() => toCheckout(cartItems.map((item) => item.id))} className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
     </div>
   )
