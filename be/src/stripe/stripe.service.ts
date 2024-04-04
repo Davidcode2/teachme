@@ -40,7 +40,7 @@ export class StripeService {
       line_items: items,
       mode: 'payment',
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:5173/cancelled`,
+      cancel_url: `http://localhost:5173/materials`,
     });
     return session;
   }
@@ -82,7 +82,7 @@ export class StripeService {
   private async fulfillOrder(lineItems: any , userId: string) {
     const priceIds = lineItems.data.map((lineItem) => lineItem.price.id);
     const materials = await this.materialFinderService.findByStripePriceIds(priceIds);
-    this.userService.addMaterials(materials, userId);
+    await this.userService.addMaterials(materials, userId);
     for (const material of materials) {
       this.commonCartService.removeItem(userId, material.id);
     }

@@ -27,7 +27,9 @@ export class UsersService {
   async findOneById(id: string): Promise<User | null> {
     let user = await this.usersRepository.findOneBy({ id: id });
     user.consumer = await this.consumerService.findById(user.consumerId);
-    user.consumer.materials = await this.consumerService.getMaterials(user.consumerId);
+    user.consumer.materials = await this.consumerService.getMaterials(
+      user.consumerId,
+    );
     user.consumer.cart = await this.consumerService.getCart(user.consumerId);
     return user;
   }
@@ -63,8 +65,10 @@ export class UsersService {
   }
 
   async addMaterials(materials: Material[], userId: string) {
-    const consumerId = (await this.findOneById(userId)).consumerId;
-    this.consumerService.addMaterials(materials, consumerId);
+    const user = await this.findOneById(userId);
+    const consumerId = user.consumerId;
+    user.consumer = await this.consumerService.addMaterials(materials, consumerId);
+    this.usersRepository.save(user);
   }
 
   async getMaterials(id: string): Promise<Material[]> {
@@ -78,5 +82,4 @@ export class UsersService {
     await this.authorRepository.save(author);
     return author;
   }
-
 }

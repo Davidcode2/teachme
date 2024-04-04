@@ -68,6 +68,9 @@ export class MaterialsService {
   }
 
   private storeFile(multerFile: Express.Multer.File) {
+    if (!multerFile) {
+      return null;
+    }
     const file = multerFile.buffer;
     const filePath = randomUUID();
     fs.writeFile(filePath, file);

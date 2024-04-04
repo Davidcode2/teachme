@@ -41,6 +41,7 @@ export class ConsumerService {
     const consumer = await this.getConsumerWithMaterials(consumerId);
     consumer.materials.push(...materials);
     this.consumersRepository.save(consumer);
+    return consumer;
   }
 
   private async getConsumerWithMaterials(id: string) {
@@ -53,7 +54,6 @@ export class ConsumerService {
       consumer.materials = [];
       this.consumersRepository.save(consumer);
     }
-
     return consumer;
   }
 

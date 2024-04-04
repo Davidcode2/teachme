@@ -35,7 +35,6 @@ export class MaterialsController {
 
   @Get('download')
   async download(@Query('id') materialId: string, @Res() response: Response) {
-    console.log(materialId);
     // check if material is owned by user
     // if not throw unauthorized exception
     response.setHeader('content-type', 'application/pdf');
