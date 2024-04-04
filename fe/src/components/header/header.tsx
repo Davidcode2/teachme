@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png"
 import UserIcon from '../../assets/icons/icons8-user-32.png';
+import UserIconWhale from '../../assets/userIconWhale.png';
 import { useSidebarStore, useUserStore } from '../../store';
 import Nav from './nav';
 
@@ -35,7 +36,7 @@ function Header() {
   if (user.firstName && user.lastName) {
     initials = user.firstName.split('.')[0] + user.lastName.split('.')[1];
   } else {
-    initials = '##';
+    initials = '';
   }
 
   return (
@@ -52,7 +53,7 @@ function Header() {
           </div>
           <div className="flex items-center gap-2">
             <div className="text-slate-400 hidden sm:block">{initials}</div>
-            <Link to="login" className="hidden sm:block" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>
+            <Link to="login" className="hidden sm:block" ><img className="min-w-5 rounded-full" src={UserIconWhale} width="30" alt="User" /></Link>
             <button className="" onClick={useSidebarStore().toggleSidebar}><img src={hamburgerIcon} width="30" alt="" /></button>
           </div>
         </div>
