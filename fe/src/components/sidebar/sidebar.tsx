@@ -27,7 +27,7 @@ export default function Sidebar() {
   );
 
   return (
-    <div className="p-4 md:fixed bg-white shadow-md overflow-y-auto w-[500px] md:right-0 h-screen">
+    <div className="p-4 md:fixed bg-white shadow-md overflow-y-auto w-[500px] md:right-0 h-screen z-50">
       <div className="flex flex-col">
         <div className="my-[6px] self-end">
           <div className="flex items-center gap-2">
