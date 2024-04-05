@@ -26,6 +26,13 @@ export class AppController {
     return login;
   }
 
+  @Get('auth/logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('refresh_token');
+    response.clearCookie('userId');
+    return true;
+  }
+
   @Get('auth/refresh')
   async refresh(@Request() req, @Res({ passthrough: true }) response: Response) {
     const refreshToken = req.cookies.refresh_token;
