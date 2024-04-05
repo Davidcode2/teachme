@@ -32,11 +32,11 @@ function Header() {
     </>
   );
 
-  let initials = '';
-  if (user.firstName && user.lastName) {
-    initials = user.firstName.split('.')[0] + user.lastName.split('.')[1];
+  let email = '';
+  if (user.email) {
+    email = user.email;
   } else {
-    initials = '';
+    email = '';
   }
 
   return (
@@ -52,7 +52,7 @@ function Header() {
               to="materials/add"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></NavLink>
           </div>
           <div className="flex items-center gap-2">
-            <div className="text-slate-400 hidden sm:block">{initials}</div>
+            <div className="text-slate-400 hidden sm:block">{email}</div>
             <Link to="login" className="hidden sm:block" ><img className="min-w-5 rounded-full" src={UserIconWhale} width="30" alt="User" /></Link>
             <button className="" onClick={useSidebarStore().toggleSidebar}><img src={hamburgerIcon} width="30" alt="" /></button>
           </div>

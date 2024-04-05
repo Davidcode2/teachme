@@ -16,18 +16,11 @@ import Stripe from 'stripe';
 export class StripeController {
   constructor(private stripeService: StripeService) {}
 
-  @Post()
-  async createCheckoutSession(
-    @Body() createCheckoutSessionDto: { price: string, quantity: number }[],
-  ): Promise<Stripe.Checkout.Session> {
-    return this.stripeService.createCheckoutSession(createCheckoutSessionDto);
-  }
-
   @Get('/session-status')
   async getSessionStatus(
     @Query('session_id') sessionId: string,
   ): Promise<Stripe.Checkout.Session> {
-    const session = await this.stripeService.getSessionStatus(sessionId);
+    const session: Stripe.Checkout.Session = await this.stripeService.getSessionStatus(sessionId);
     return session;
   }
 
@@ -38,7 +31,6 @@ export class StripeController {
   ): Promise<any> {
     const payload = req.rawBody;
     const sig = req.headers['stripe-signature'] as string;
-    const userId = req.cookies.userId;
 
     const res = this.stripeService.verifyWebhookSignature(payload, sig);
     if (res.status !== true) {
@@ -47,7 +39,7 @@ export class StripeController {
 
     if (res.res.type === 'checkout.session.completed') {
       console.log('Checkout session completed');
-      this.stripeService.handleCheckoutSessionCompleted(res.res, userId);
+      this.stripeService.handleCheckoutSessionCompleted(res.res);
     }
 
     return response.status(200).end();

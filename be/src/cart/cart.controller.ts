@@ -33,7 +33,7 @@ export class CartController {
   async buyMaterial(@Body() requestBody: {materialId: string[]}, @Req() req: Request, @Res() res: Response)
   {
     const userId = req.cookies.userId;
-    const session = await this.cartService.buyMaterial(requestBody.materialId);
+    const session = await this.cartService.buyMaterial(requestBody.materialId, userId);
     res.json({url: session.url});
   }
 

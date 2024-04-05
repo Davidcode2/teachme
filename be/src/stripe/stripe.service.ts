@@ -10,6 +10,7 @@ import { CommonCartService } from 'src/common-cart/common-cart.service';
 export class StripeService {
   private stripeTest: string;
   private stripe = null;
+  private sessions = {};
 
   constructor(
     private configuration: ConfigService,
@@ -33,6 +34,10 @@ export class StripeService {
     });
 
     return prices;
+  }
+
+  public storeUserSession(userId: string, sessionId: string) {
+    this.sessions[sessionId] = userId;
   }
 
   public async createCheckoutSession(items: { price: string, quantity: number}[]) {
@@ -64,9 +69,9 @@ export class StripeService {
 
   public async handleCheckoutSessionCompleted(
     event: Stripe.CheckoutSessionCompletedEvent,
-    userId: string,
   ) {
     // Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
+    const checkoutId = event.data.object.id;
     const sessionWithLineItems = await this.stripe.checkout.sessions.retrieve(
       event.data.object.id,
       {
@@ -76,10 +81,17 @@ export class StripeService {
     const lineItems = sessionWithLineItems.line_items;
 
     console.log("fulfilling order...");
-    this.fulfillOrder(lineItems, userId);
+    this.fulfillOrder(lineItems, checkoutId);
   }
 
-  private async fulfillOrder(lineItems: any , userId: string) {
+  private popSession(sessionId: string) {
+    const userId = this.sessions[sessionId];
+    this.sessions = [];
+    return userId;
+  }
+
+  private async fulfillOrder(lineItems: any, checkoutId: string) {
+    const userId = this.popSession(checkoutId);
     const priceIds = lineItems.data.map((lineItem) => lineItem.price.id);
     const materials = await this.materialFinderService.findByStripePriceIds(priceIds);
     await this.userService.addMaterials(materials, userId);

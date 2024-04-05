@@ -56,11 +56,12 @@ export class CartService {
     }
   }
 
-  async buyMaterial(materialIds: string[]) {
+  async buyMaterial(materialIds: string[], userId: string) {
     const materials = await this.materialsService.findMany(materialIds);
     const stripePriceIds = materials.map((m) => m.stripe_price_id);
     const lineItems = stripePriceIds.map((m) => { return { "price": m, "quantity": 1 }});
     const session = await this.stripeService.createCheckoutSession(lineItems);
+    this.stripeService.storeUserSession(userId, session.id);
     return session;
   }
 }
