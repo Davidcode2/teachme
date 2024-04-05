@@ -7,8 +7,6 @@ import { Cart } from 'src/cart/cart.entity';
 
 @Injectable()
 export class ConsumerService {
-  private consumer: Consumer;
-  private material: Material;
 
   constructor(
     @InjectRepository(Consumer)
@@ -27,14 +25,6 @@ export class ConsumerService {
 
   findById(id: string): Promise<Consumer | null> {
     return this.consumersRepository.findOneBy({ id: id });
-  }
-
-  async addMaterial() {
-    if (!this.consumer.materials) {
-      this.consumer.materials = [];
-    }
-    this.consumer.materials.push(this.material);
-    this.consumersRepository.save(this.consumer);
   }
 
   async addMaterials(materials: Material[], consumerId: string) {
