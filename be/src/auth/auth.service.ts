@@ -86,7 +86,7 @@ export class AuthService {
           username,
         },
         {
-          secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
+          secret: this.configService.get<string>('JWT_SECRET'),
           expiresIn: '15m',
         },
       ),
@@ -101,6 +101,7 @@ export class AuthService {
         },
       ),
     ]);
+    console.log(accessToken, refreshToken);
     return {
       accessToken,
       refreshToken,
