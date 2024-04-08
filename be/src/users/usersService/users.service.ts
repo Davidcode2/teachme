@@ -21,10 +21,12 @@ export class UsersService {
   }
 
   findOneByEmail(email: string): Promise<User | null> {
+    if (!email) return null;
     return this.usersRepository.findOneBy({ email: email });
   }
 
   async findOneById(id: string): Promise<User | null> {
+    if (!id) return null;
     let user = await this.usersRepository.findOneBy({ id: id });
     user.consumer = await this.consumerService.findById(user.consumerId);
     user.consumer.materials = await this.consumerService.getMaterials(

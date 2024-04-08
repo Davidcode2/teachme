@@ -1,4 +1,4 @@
-import { Controller, Request, Get, Post, UseGuards, Res } from '@nestjs/common';
+import { Controller, Request, Get, Post, UseGuards, Res, ForbiddenException } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
@@ -26,8 +26,11 @@ export class AppController {
     return login;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('auth/logout')
-  async logout(@Res({ passthrough: true }) response: Response) {
+  async logout(@Res({ passthrough: true }) response: Response, @Request() req) {
+    const userId = req.cookies.userId;
+    await this.authService.logout(userId);
     response.clearCookie('refresh_token');
     response.clearCookie('userId');
     return true;
@@ -37,6 +40,7 @@ export class AppController {
   async refresh(@Request() req, @Res({ passthrough: true }) response: Response) {
     const refreshToken = req.cookies.refresh_token;
     const userId = req.cookies.userId;
+    if (!userId || !refreshToken) throw new ForbiddenException('Access Denied');
     const { user, tokens } = await this.authService.refreshTokens(userId, refreshToken);
     response.cookie('refresh_token', tokens.refreshToken, { secure: true, httpOnly: true })
     return {user, tokens};
@@ -45,12 +49,6 @@ export class AppController {
   @Post('auth/signup')
   async signup(@Request() req) {
     return this.authService.signUp(req.body.email, req.body.password);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
   }
 
 }

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useUserStore } from '../store';
+import { useAccessTokenStore, useUserStore } from '../store';
 import UserIconWhale from '../assets/userIconWhale.png';
 import { useState } from 'react';
 
@@ -8,7 +8,12 @@ export default function UserMenu() {
   const [showMenu, setShowMenu] = useState(false);
 
   const logout = () => {
-    fetch('/api/auth/logout');
+    const res = fetch('/api/auth/logout', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
+      }
+    });
   }
 
   const toggleMenu = () => showMenu ? setShowMenu(false) : setShowMenu(true);
