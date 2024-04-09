@@ -3,6 +3,9 @@ import { useUserStore } from '../store';
 
 export default async function loadMyMaterials() {
   const user = useUserStore.getState().user;
+  if (!user) {
+    return [];
+  }
   const response = await fetch(`/api/users/${user.id}/materials`, {
     method: 'GET',
     headers: {
