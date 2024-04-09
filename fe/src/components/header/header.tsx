@@ -7,6 +7,7 @@ import UserMenu from '../userMenu';
 
 function Header() {
   const user = useUserStore((state) => state.user);
+  const setSidebarShown = useSidebarStore((state) => state.toggleSidebar);
 
   if (!user) return (
     <>
@@ -22,7 +23,6 @@ function Header() {
           </div>
           <div className="flex items-center gap-2">
             <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>
-            <button className="" onClick={useSidebarStore().toggleSidebar}><img src={hamburgerIcon} width="30" alt="" /></button>
           </div>
         </div>
         <div className="flex md:hidden mt-4 gap-2">
@@ -46,7 +46,7 @@ function Header() {
           </div>
           <div className="flex items-center gap-2">
             <UserMenu />
-            <button className="" onClick={useSidebarStore().toggleSidebar}><img src={hamburgerIcon} width="30" alt="" /></button>
+            <button className="" onClick={setSidebarShown}><img src={hamburgerIcon} width="30" alt="" /></button>
           </div>
         </div>
         <div className="flex md:hidden mt-4 gap-2">
