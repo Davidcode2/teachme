@@ -14,6 +14,12 @@ export default function UserMenu() {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
       }
     });
+    res.then((response) => {
+      if (response.status === 200) {
+        useAccessTokenStore.getState().setAccessToken('');
+        useUserStore.getState().setUser(null);
+      }
+    });
   }
 
   const toggleMenu = () => showMenu ? setShowMenu(false) : setShowMenu(true);
