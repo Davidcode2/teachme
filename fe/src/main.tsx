@@ -17,9 +17,6 @@ import addMaterialAction from './actions/addMaterialAction.ts'
 import myMaterialLoader from './loaders/myMaterialLoader.ts'
 import ErrorPage from './error-page.tsx'
 import NoData from './components/materials/noData.tsx'
-import Sidebar from './components/sidebar/sidebar.tsx'
-import cartLoader from './loaders/cartLoader.ts'
-import Cart from './components/cart/cart.tsx'
 import SuccessPage from './components/successPage.tsx'
 
 const router = createBrowserRouter([
@@ -29,16 +26,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Materials />, loader: materialLoader },
-      {
-        element: <Sidebar />,
-        children: [
-          {
-            path: "/cart",
-            element: <Cart />,
-            loader: cartLoader
-          }
-        ],
-      },
       {
         path: "/materials",
         element: <Materials />,

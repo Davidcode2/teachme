@@ -10,7 +10,7 @@ function App(): JSX.Element {
   let loading = useGlobalLoadingStore((state) => state.loading);
 
   useEffect(() => {
-    fetch('api/auth/refresh', {
+    fetch('/api/auth/refresh', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
