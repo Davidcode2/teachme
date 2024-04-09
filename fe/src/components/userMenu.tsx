@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useAccessTokenStore, useUserStore } from '../store';
+import { useAccessTokenStore, useGlobalLoadingStore, useUserStore } from '../store';
 import UserIconWhale from '../assets/userIconWhale.png';
 import { useState } from 'react';
 
 export default function UserMenu() {
   const user = useUserStore((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const logout = () => {
+    useGlobalLoadingStore.setState({ loading: true });
     const res = fetch('/api/auth/logout', {
       method: 'GET',
       headers: {
@@ -15,6 +17,7 @@ export default function UserMenu() {
       }
     });
     res.then((response) => {
+      useGlobalLoadingStore.setState({ loading: false });
       if (response.status === 200) {
         useAccessTokenStore.getState().setAccessToken('');
         useUserStore.getState().setUser(null);

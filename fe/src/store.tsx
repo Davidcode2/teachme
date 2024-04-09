@@ -42,7 +42,17 @@ type CartState = {
 
 export const useCartStore = create<CartState>((set) => ({
   cart: null,
-  setCartItem: (item: any) => set({ cart: item}),
+  setCartItem: (item: any) => set({ cart: item }),
+}));
+
+type LoadingState = {
+  loading: boolean,
+  setLoading: (loading: boolean) => void
+}
+
+export const useGlobalLoadingStore = create<LoadingState>((set) => ({
+  loading: true,
+  setLoading: (loading: boolean) => set({ loading }),
 }));
 
 interface BearState {

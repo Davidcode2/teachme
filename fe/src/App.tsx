@@ -4,10 +4,10 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
 import SpinnerGif from './assets/icons/icons8-spinner.gif'
 import { useEffect, useState } from 'react';
-import { useAccessTokenStore, useUserStore } from './store';
+import { useAccessTokenStore, useUserStore, useGlobalLoadingStore } from './store';
 
 function App(): JSX.Element {
-  const [loading, setLoading] = useState(true);
+  let loading = useGlobalLoadingStore((state) => state.loading);
 
   useEffect(() => {
     fetch('api/auth/refresh', {
@@ -18,7 +18,7 @@ function App(): JSX.Element {
     })
       .then(response => response.json())
       .then(data => {
-        setLoading(false);
+        useGlobalLoadingStore.setState({ loading: false });
         if (data.tokens.accessToken) {
           const setAccessToken = useAccessTokenStore.getState().setAccessToken;
           setAccessToken(data.tokens.accessToken);
@@ -34,7 +34,7 @@ function App(): JSX.Element {
   return (
     <div>
       <div className="text-5xl font-bold fixed top-1/2 left-1/2">
-        {loading ? <div><img src={SpinnerGif} alt="" width="60"/></div> : <></>}
+        { loading ? <div><img src={SpinnerGif} alt="" width="60"/></div> : <></>}
         </div>
         <div className={loading ? "blur-sm" : ""}>
           <div>
