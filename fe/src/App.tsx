@@ -2,6 +2,7 @@ import './App.css'
 import Header from './components/header/header'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
+import SpinnerGif from './assets/icons/icons8-spinner.gif'
 import { useEffect, useState } from 'react';
 import { useAccessTokenStore, useUserStore } from './store';
 
@@ -33,7 +34,7 @@ function App(): JSX.Element {
   return (
     <div>
       <div className="text-5xl font-bold fixed top-1/2 left-1/2">
-        {loading ? <div>Lädt...</div> : <></>}
+        {loading ? <div><img src={SpinnerGif} alt="" width="60"/></div> : <></>}
         </div>
         <div className={loading ? "blur-sm" : ""}>
           <div>
