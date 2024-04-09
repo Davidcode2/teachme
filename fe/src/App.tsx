@@ -2,10 +2,11 @@ import './App.css'
 import Header from './components/header/header'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAccessTokenStore, useUserStore } from './store';
 
 function App(): JSX.Element {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('api/auth/refresh', {
@@ -16,6 +17,7 @@ function App(): JSX.Element {
     })
       .then(response => response.json())
       .then(data => {
+        setLoading(false);
         if (data.tokens.accessToken) {
           const setAccessToken = useAccessTokenStore.getState().setAccessToken;
           setAccessToken(data.tokens.accessToken);
@@ -29,13 +31,18 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <>
-      <div>
-        <Sidebar></Sidebar>
+    <div>
+      <div className="text-5xl font-bold fixed top-1/2 left-1/2">
+        {loading ? <div>Lädt...</div> : <></>}
+        </div>
+        <div className={loading ? "blur-sm" : ""}>
+          <div>
+            <Sidebar></Sidebar>
+          </div>
+          <Header></Header>
+          <Outlet />
+        </div>
       </div>
-      <Header></Header>
-      <Outlet />
-    </>
   )
 }
 
