@@ -17,7 +17,7 @@ export default function Sidebar() {
     <div className="sidebar fixed right-0 w-screen md:w-[500px]">
       {sidebarShown ?
         <div className="p-4 bg-white shadow-md overflow-y-auto md:w-[500px] h-screen z-50">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
             <div className="my-[6px] self-end">
               <div className="flex items-center gap-2">
                 <UserMenu />

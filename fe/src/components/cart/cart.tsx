@@ -39,7 +39,7 @@ export default function Cart(): JSX.Element {
     )
   } else if (loading) {
     return (
-      <div className="m-20 flex justify-center">
+      <div className="m-20 flex justify-center animate-pulse">
         <img className="animate-spin" src={bag} alt="" />
       </div>
     )
