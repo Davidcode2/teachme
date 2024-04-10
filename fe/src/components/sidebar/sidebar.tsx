@@ -6,12 +6,6 @@ import UserMenu from "../userMenu";
 export default function Sidebar() {
   const toggleSidebarShown = useSidebarStore((state) => state.toggleSidebar);
 
-  if (!useSidebarStore().isShown) {
-    return (
-      <></>
-    );
-  }
-
   return (
     <div className="p-4 md:fixed bg-white shadow-md overflow-y-auto md:w-[500px] md:right-0 h-screen z-50">
       <div className="flex flex-col">
