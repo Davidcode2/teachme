@@ -23,6 +23,9 @@ export class Material {
   @Column({ nullable: true })
   file_path: string
 
+  @Column({ nullable: true })
+  thumbnail_path: string;
+
   @Column()
   date_published: Date;
 }

@@ -44,6 +44,7 @@ export class MaterialsService {
     material.date_published = new Date();
     material.price = Number(materialDto.price);
     material.file_path = this.storeFile(materialDto.file);
+    material.thumbnail_path = this.createThumbnail(materialDto.file);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
@@ -65,6 +66,10 @@ export class MaterialsService {
   async getFile(materialId: string) {
     const material = await this.findOne(materialId);
     return fs.readFile(material.file_path);
+  }
+
+  private createThumbnail(multerFile: Express.Multer.File) {
+    return "";
   }
 
   private storeFile(multerFile: Express.Multer.File) {
