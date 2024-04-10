@@ -4,10 +4,23 @@ import UserIcon from '../../assets/icons/icons8-user-32.png';
 import { useSidebarStore, useUserStore } from '../../store';
 import Nav from './nav';
 import UserMenu from '../userMenu';
+import { useState } from 'react';
+import Search from './search';
 
 function Header() {
   const user = useUserStore((state) => state.user);
   const setSidebarShown = useSidebarStore((state) => state.toggleSidebar);
+  const [showSearch, setShowSearch] = useState(false);
+
+  const toggleSearch = () => {
+    if (showSearch) {
+      setShowSearch(false)
+      document.body.classList.remove('blur-sm');
+    }
+    else {
+      setShowSearch(true);
+    }
+  }
 
   if (!user) return (
     <>
@@ -40,7 +53,7 @@ function Header() {
             <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
           </div>
           <div className="flex gap-2">
-            <input className="min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+            <input onClick={toggleSearch} className="min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to="materials/add"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></NavLink>
           </div>
@@ -53,6 +66,8 @@ function Header() {
           <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
         </div>
       </div>
+
+      {showSearch ? <div className="backdrop-blur-sm"><Search /></div> : <></>}
     </>
   )
 }
