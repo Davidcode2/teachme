@@ -6,18 +6,17 @@ import Nav from './nav';
 import UserMenu from '../userMenu';
 import { useState } from 'react';
 import Search from './search';
+import { gsap } from 'gsap';
 
 function Header() {
   const user = useUserStore((state) => state.user);
   const setSidebarShown = useSidebarStore((state) => state.toggleSidebar);
   const [showSearch, setShowSearch] = useState(false);
-  const [eventListenerRegistered, setEventListenerRegistered]  = useState(false);
+  const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
 
   const toggleSearch = () => {
-    if (showSearch) {
-      setShowSearch(false)
-    }
-    else {
+    if (!showSearch) {
+      console.log("show serach")
       setShowSearch(true);
     }
   }
@@ -26,14 +25,22 @@ function Header() {
     document.body.addEventListener('click', function(event) {
       if (event.target.closest('.searchBar')) return;
       if (event.target.closest('.searchBox')) return;
-      setShowSearch(false);
+      let tl = gsap.timeline({
+        onComplete: () => {
+          setShowSearch(false);
+          gsap.set('.searchScreenContainer', { opacity: 100, y: 0, delay: 0.1 });
+        }
+      });
+      tl.to('.searchScreenContainer', { opacity: 0, duration: 0.5 });
     });
     setEventListenerRegistered(true);
   }
 
   if (!user) return (
     <>
-      {showSearch ? <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div> : <></>}
+      <div className="fixed searchScreenContainer">
+        {showSearch ? <div className="fixed w-screen h-screen"><Search /></div> : <></>}
+      </div>
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
@@ -57,7 +64,9 @@ function Header() {
 
   return (
     <>
-      {showSearch ? <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div> : <></>}
+      <div className="fixed searchScreenContainer">
+        {showSearch ? <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div> : <></>}
+      </div>
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
