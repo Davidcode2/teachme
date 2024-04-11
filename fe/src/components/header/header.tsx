@@ -11,26 +11,36 @@ function Header() {
   const user = useUserStore((state) => state.user);
   const setSidebarShown = useSidebarStore((state) => state.toggleSidebar);
   const [showSearch, setShowSearch] = useState(false);
+  const [eventListenerRegistered, setEventListenerRegistered]  = useState(false);
 
   const toggleSearch = () => {
     if (showSearch) {
       setShowSearch(false)
-      document.body.classList.remove('blur-sm');
     }
     else {
       setShowSearch(true);
     }
   }
 
+  if (!eventListenerRegistered) {
+    document.body.addEventListener('click', function(event) {
+      if (event.target.closest('.searchBar')) return;
+      if (event.target.closest('.searchBox')) return;
+      setShowSearch(false);
+    });
+    setEventListenerRegistered(true);
+  }
+
   if (!user) return (
     <>
+      {showSearch ? <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div> : <></>}
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
             <Nav materialsLink="materials" myMaterialsLink="login"></Nav>
           </div>
           <div className="flex gap-2">
-            <input className="min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+            <input onClick={toggleSearch} className="searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink
               to="login"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></NavLink>
           </div>
@@ -47,13 +57,14 @@ function Header() {
 
   return (
     <>
+      {showSearch ? <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div> : <></>}
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
             <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
           </div>
           <div className="flex gap-2">
-            <input onClick={toggleSearch} className="min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+            <input onClick={toggleSearch} className="searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to="materials/add"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></NavLink>
           </div>
@@ -66,8 +77,6 @@ function Header() {
           <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
         </div>
       </div>
-
-      {showSearch ? <div className="backdrop-blur-sm"><Search /></div> : <></>}
     </>
   )
 }
