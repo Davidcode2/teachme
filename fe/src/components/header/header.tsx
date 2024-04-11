@@ -15,7 +15,6 @@ function Header() {
 
   const toggleSearch = () => {
     if (!showSearch) {
-      console.log("show serach")
       setShowSearch(true);
     }
   }

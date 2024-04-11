@@ -5,6 +5,7 @@ import { Material } from './materials.entity';
 import * as fs from 'node:fs/promises';
 import { StripeService } from 'src/stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
+import { fromPath } from 'pdf2pic';
 
 @Injectable()
 export class MaterialsService {
@@ -15,15 +16,15 @@ export class MaterialsService {
   ) {}
 
   findAll(): Promise<Material[]> {
-      return this.materialsRepository
-        .createQueryBuilder('material')
-        .select('material.id')
-        .addSelect('material.title')
-        .addSelect('material.description')
-        .addSelect('material.price')
-        .addSelect('material.stripe_price_id')
-        .addSelect('material.date_published')
-        .getMany();
+    return this.materialsRepository
+      .createQueryBuilder('material')
+      .select('material.id')
+      .addSelect('material.title')
+      .addSelect('material.description')
+      .addSelect('material.price')
+      .addSelect('material.stripe_price_id')
+      .addSelect('material.date_published')
+      .getMany();
   }
 
   findOne(id: string): Promise<Material | null> {
@@ -44,7 +45,7 @@ export class MaterialsService {
     material.date_published = new Date();
     material.price = Number(materialDto.price);
     material.file_path = this.storeFile(materialDto.file);
-    material.thumbnail_path = this.createThumbnail(materialDto.file);
+    material.thumbnail_path = this.createThumbnail(material.file_path);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
@@ -68,8 +69,24 @@ export class MaterialsService {
     return fs.readFile(material.file_path);
   }
 
-  private createThumbnail(multerFile: Express.Multer.File) {
-    return "";
+  private createThumbnail(pdfPath: string) {
+    const options = {
+      density: 100,
+      saveFilename: `${pdfPath}_thumbnail`,
+      savePath: './images',
+      format: 'png',
+      width: 600,
+      height: 600,
+    };
+
+    const convert = fromPath(pdfPath, options);
+    const pageToConvertAsImage = 1;
+
+    convert(pageToConvertAsImage, { responseType: 'image' }).then((resolve) => {
+      console.log('Page 1 is now converted as image');
+      return resolve;
+    });
+    return options.savePath + options.saveFilename + '.' + options.format;
   }
 
   private storeFile(multerFile: Express.Multer.File) {
