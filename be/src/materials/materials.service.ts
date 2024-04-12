@@ -48,8 +48,9 @@ export class MaterialsService {
     material.description = materialDto.description;
     material.date_published = new Date();
     material.price = Number(materialDto.price);
-    material.file_path = this.storeFile(materialDto.file);
-    material.thumbnail_path = this.createThumbnail(material.file_path);
+    const fileInfo = this.storeFile(materialDto.file);
+    material.file_path = fileInfo.filePath;
+    material.thumbnail_path = this.createThumbnail(fileInfo);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
@@ -73,17 +74,17 @@ export class MaterialsService {
     return fs.readFile(material.file_path);
   }
 
-  private createThumbnail(pdfPath: string) {
+  private createThumbnail(fileInfo: { fileName: string; filePath: string }) {
     const options = {
       density: 100,
-      saveFilename: `${pdfPath}_thumbnail`,
+      saveFilename: `${fileInfo.fileName}_thumbnail`,
       savePath: 'images',
       format: 'png',
       width: 600,
       height: 600,
     };
 
-    const convert = fromPath(pdfPath, options);
+    const convert = fromPath(fileInfo.filePath, options);
     const pageToConvertAsImage = 1;
 
     convert(pageToConvertAsImage, { responseType: 'image' }).then((resolve) => {
@@ -101,7 +102,7 @@ export class MaterialsService {
     const fileName = randomUUID();
     const filePath = `materials/${fileName}.pdf`
     fs.writeFile(filePath, file);
-    return filePath;
+    return { fileName, filePath };
   }
 
   private mapThumbnails(materials: Material[]) {
