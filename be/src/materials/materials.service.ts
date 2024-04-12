@@ -13,9 +13,9 @@ export class MaterialsService {
     @InjectRepository(Material)
     private materialsRepository: Repository<Material>,
     private stripeService: StripeService,
-  ) {}
+  ) { }
 
-  async findAll(): Promise<{material: Material, thumbnail: Buffer}[]> {
+  async findAll(): Promise<{ material: Material, thumbnail: Buffer }[]> {
     const materials = await this.materialsRepository
       .createQueryBuilder('material')
       .select('material.id')
@@ -27,11 +27,8 @@ export class MaterialsService {
       .addSelect('material.date_published')
       .getMany();
 
-      const materialsWithThumbnails = materials.map(async material => {
-        let thumbnail = await fs.readFile(material.thumbnail_path);
-        return { material, thumbnail };
-      });
-      return Promise.all(materialsWithThumbnails);
+    const materialsWithThumbnails = this.mapThumbnails(materials);
+    return Promise.all(materialsWithThumbnails);
   }
 
   findOne(id: string): Promise<Material | null> {
@@ -101,10 +98,20 @@ export class MaterialsService {
       return null;
     }
     const file = multerFile.buffer;
-    const filePath = randomUUID();
+    const fileName = randomUUID();
+    const filePath = `materials/${fileName}.pdf`
     fs.writeFile(filePath, file);
     return filePath;
   }
+
+  private mapThumbnails(materials: Material[]) {
+    const materialsWithThumbnails = materials.map(async material => {
+      let thumbnail = await fs.readFile(material.thumbnail_path);
+      return { material, thumbnail };
+    });
+    return materialsWithThumbnails;
+  }
+
 }
 
 class MaterialDto {
