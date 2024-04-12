@@ -34,9 +34,13 @@ function App(): JSX.Element {
 
   return (
     <div>
-      <div className="text-5xl font-bold fixed top-1/2 left-1/2">
-        {loading ? <div><img src={SpinnerGif} alt="" width="60" /></div> : <></>}
-      </div>
+      {loading ?
+        <div className="font-bold fixed h-screen w-screen">
+          <div className="flex w-full h-full justify-center items-center">
+            <img className="" src={SpinnerGif} alt="" width="60" />
+          </div>
+        </div>
+        : <></>}
       <div className={loading ? "blur-sm" : ""}>
         <Sidebar></Sidebar>
         <Header></Header>
