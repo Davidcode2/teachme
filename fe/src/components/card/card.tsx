@@ -9,7 +9,7 @@ function Card({ material }): JSX.Element {
 
   return (
     <div className="m-4 md:m-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
-      <img src={image} className="w-[400px] rounded-lg" alt="SampleImage" />
+      <img src={image} className="w-[400px] rounded-l-lg" alt="SampleImage" />
       <div className="p-10 flex flex-col flex-1 gap-4 overflow-auto md:border-l md:border-t-0 border-t border-slate-100">
         <div className="flex flex-col">
           <div className="text-2xl">{material.material.title}</div>

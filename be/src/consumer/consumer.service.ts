@@ -4,10 +4,10 @@ import { Consumer } from './consumer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Material } from 'src/materials/materials.entity';
 import { Cart } from 'src/cart/cart.entity';
+import * as fs from 'node:fs/promises';
 
 @Injectable()
 export class ConsumerService {
-
   constructor(
     @InjectRepository(Consumer)
     private consumersRepository: Repository<Consumer>,
@@ -54,7 +54,27 @@ export class ConsumerService {
       .leftJoinAndSelect('consumer.materials', 'materials')
       .where('consumer.id = :id', { id: consumer.id })
       .getOneOrFail();
+
     return consumerWithMaterials.materials;
+  }
+
+  async getMaterialsWithThumbnails(
+    id: string,
+  ): Promise<{ material: Material; thumbnail: Buffer }[]> {
+    const consumer = await this.findById(id);
+    const consumerWithMaterials = await this.consumersRepository
+      .createQueryBuilder('consumer')
+      .leftJoinAndSelect('consumer.materials', 'materials')
+      .where('consumer.id = :id', { id: consumer.id })
+      .getOneOrFail();
+
+    const materialsWithThumbnails = consumerWithMaterials.materials.map(
+      async (material) => {
+        let thumbnail = await fs.readFile(material.thumbnail_path);
+        return { material, thumbnail };
+      },
+    );
+    return Promise.all(materialsWithThumbnails);
   }
 
   async getCart(id: string): Promise<Cart> {

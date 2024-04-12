@@ -5,6 +5,7 @@ import { User } from '../user.entity';
 import { Author } from '../author.entity';
 import { Material } from 'src/materials/materials.entity';
 import { ConsumerService } from '../../consumer/consumer.service';
+import { MaterialDto } from 'src/shared/DTOs/materialDTO';
 
 @Injectable()
 export class UsersService {
@@ -73,9 +74,9 @@ export class UsersService {
     this.usersRepository.save(user);
   }
 
-  async getMaterials(id: string): Promise<Material[]> {
+  async getMaterials(id: string): Promise<MaterialDto[]> {
     const user = await this.findOneById(id);
-    const materials = this.consumerService.getMaterials(user.consumerId);
+    const materials = this.consumerService.getMaterialsWithThumbnails(user.consumerId);
     return materials;
   }
 
