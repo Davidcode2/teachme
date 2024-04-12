@@ -10,8 +10,8 @@ function Materials() {
       <>
         <div>
           {
-            data.map((el: Material) => {
-              return <Card key={el.id} material={el}></Card>
+            data.map((el: {material: Material, thumbnail: any}) => {
+              return <Card key={el.material.id} material={el}></Card>
             })
           }
         </div>

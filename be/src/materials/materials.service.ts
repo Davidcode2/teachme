@@ -15,16 +15,23 @@ export class MaterialsService {
     private stripeService: StripeService,
   ) {}
 
-  findAll(): Promise<Material[]> {
-    return this.materialsRepository
+  async findAll(): Promise<{material: Material, thumbnail: Buffer}[]> {
+    const materials = await this.materialsRepository
       .createQueryBuilder('material')
       .select('material.id')
       .addSelect('material.title')
       .addSelect('material.description')
       .addSelect('material.price')
       .addSelect('material.stripe_price_id')
+      .addSelect('material.thumbnail_path')
       .addSelect('material.date_published')
       .getMany();
+
+      const materialsWithThumbnails = materials.map(async material => {
+        let thumbnail = await fs.readFile(material.thumbnail_path);
+        return { material, thumbnail };
+      });
+      return Promise.all(materialsWithThumbnails);
   }
 
   findOne(id: string): Promise<Material | null> {
@@ -73,7 +80,7 @@ export class MaterialsService {
     const options = {
       density: 100,
       saveFilename: `${pdfPath}_thumbnail`,
-      savePath: './images',
+      savePath: 'images',
       format: 'png',
       width: 600,
       height: 600,
@@ -86,7 +93,7 @@ export class MaterialsService {
       console.log('Page 1 is now converted as image');
       return resolve;
     });
-    return options.savePath + options.saveFilename + '.' + options.format;
+    return options.savePath + '/' + options.saveFilename + '.' + '1.' + options.format;
   }
 
   private storeFile(multerFile: Express.Multer.File) {
