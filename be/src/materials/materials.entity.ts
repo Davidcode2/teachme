@@ -26,6 +26,11 @@ export class Material {
   @Column({ nullable: true })
   thumbnail_path: string;
 
+  @Column({ nullable: true })
+  preview_path: string;
+
   @Column()
   date_published: Date;
+
+
 }

@@ -35,6 +35,10 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
+  findOneWithPreview(id: string): Promise<Material | null> {
+    return null;
+  }
+
   findMany(ids: string[]): Promise<Material[]> {
     return this.materialsRepository
       .createQueryBuilder('material')
@@ -51,6 +55,7 @@ export class MaterialsService {
     const fileInfo = this.storeFile(materialDto.file);
     material.file_path = fileInfo.filePath;
     material.thumbnail_path = this.createThumbnail(fileInfo);
+    material.preview_path = this.createPreview(fileInfo);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
@@ -74,11 +79,30 @@ export class MaterialsService {
     return fs.readFile(material.file_path);
   }
 
+  private createPreview(fileInfo: { fileName: string; filePath: string }) {
+    const options = {
+      density: 100,
+      saveFilename: `${fileInfo.fileName}_preview`,
+      savePath: 'assets/previews',
+      format: 'png',
+      width: 600,
+      height: 600,
+    };
+
+    const convert = fromPath(fileInfo.filePath, options);
+
+    convert(1, { responseType: 'image' }).then((resolve) => {
+      console.log('All pages are now converted to image');
+      return resolve;
+    });
+    return options.savePath + '/' + options.saveFilename + '.' + options.format;
+  }
+
   private createThumbnail(fileInfo: { fileName: string; filePath: string }) {
     const options = {
       density: 100,
       saveFilename: `${fileInfo.fileName}_thumbnail`,
-      savePath: 'images',
+      savePath: 'assets/images',
       format: 'png',
       width: 600,
       height: 600,
@@ -94,13 +118,17 @@ export class MaterialsService {
     return options.savePath + '/' + options.saveFilename + '.' + '1.' + options.format;
   }
 
+  private imageOptions = {
+  }
+
   private storeFile(multerFile: Express.Multer.File) {
     if (!multerFile) {
       return null;
     }
+    const path = "assets/materials";
     const file = multerFile.buffer;
     const fileName = randomUUID();
-    const filePath = `materials/${fileName}.pdf`
+    const filePath = `${path}/${fileName}.pdf`
     fs.writeFile(filePath, file);
     return { fileName, filePath };
   }

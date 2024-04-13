@@ -25,6 +25,11 @@ export class MaterialsController {
     return this.materialsService.findAll();
   }
 
+  @Get()
+  findOne(@Query('id') materialId: string) {
+    return this.materialsService.findOne(materialId);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file'))
