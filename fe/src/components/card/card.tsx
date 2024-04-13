@@ -8,6 +8,8 @@ import Preview from "../preview.tsx";
 function Card({ material }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [previewImage, setPreviewImage] = useState('');
 
   const image = material.thumbnail.data
     ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
@@ -20,6 +22,8 @@ function Card({ material }): JSX.Element {
     });
     const json = await res.json();
     console.log(json);
+    setPreviewImage(URL.createObjectURL(new Blob([new Uint8Array(json.preview.data)], { type: 'image/png' })));
+    setPreview(json);
   }
 
   if (!eventListenerRegistered && showPreview === true) {
@@ -33,7 +37,7 @@ function Card({ material }): JSX.Element {
 
   return (
     <>
-      {showPreview ? <div className="fixed w-screen h-screen top-0"><Preview /></div> : <></>}
+      {showPreview ? <Preview material={preview} image={previewImage} /> : <></>}
       <div className="m-4 md:m-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
         <img src={image} onClick={togglePreview} className="thumbnail w-[400px] rounded-l-lg" alt="Thumbnail" />
         <div className="p-10 flex flex-col flex-1 gap-4 overflow-auto md:border-l md:border-t-0 border-t border-slate-100">
