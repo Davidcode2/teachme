@@ -35,8 +35,10 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
-  findOneWithPreview(id: string): Promise<Material | null> {
-    return null;
+  async findOneWithPreview(id: string): Promise<{ material: Material, preview: Buffer} | null> {
+    const material = await this.materialsRepository.findOneBy({ id: id });
+    const preview = await this.getPreview(material.preview_path);
+    return { material, preview }
   }
 
   findMany(ids: string[]): Promise<Material[]> {
@@ -91,11 +93,11 @@ export class MaterialsService {
 
     const convert = fromPath(fileInfo.filePath, options);
 
-    convert(1, { responseType: 'image' }).then((resolve) => {
+    convert.bulk(-1, { responseType: 'image' }).then((resolve) => {
       console.log('All pages are now converted to image');
       return resolve;
     });
-    return options.savePath + '/' + options.saveFilename + '.' + options.format;
+    return options.savePath + '/' + options.saveFilename + '.' + '1.' + options.format;
   }
 
   private createThumbnail(fileInfo: { fileName: string; filePath: string }) {
@@ -139,6 +141,11 @@ export class MaterialsService {
       return { material, thumbnail };
     });
     return materialsWithThumbnails;
+  }
+
+  private async getPreview(path: string) {
+    const file = await fs.readFile(path);
+    return file;
   }
 
 }

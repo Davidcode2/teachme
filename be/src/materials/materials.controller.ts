@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   Req,
@@ -25,9 +26,9 @@ export class MaterialsController {
     return this.materialsService.findAll();
   }
 
-  @Get()
-  findOne(@Query('id') materialId: string) {
-    return this.materialsService.findOne(materialId);
+  @Get(':id')
+  findOne(@Param('id') materialId: string) {
+    return this.materialsService.findOneWithPreview(materialId);
   }
 
   @UseGuards(JwtAuthGuard)
