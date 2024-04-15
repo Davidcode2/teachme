@@ -9,7 +9,7 @@ function Card({ material }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const [preview, setPreview] = useState(null);
-  const [previewImage, setPreviewImage] = useState([]);
+  const [previewImage, setPreviewImage] = useState(['']);
 
   const image = material.thumbnail.data
     ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
@@ -22,10 +22,12 @@ function Card({ material }): JSX.Element {
     });
     const json = await res.json();
     console.log(json);
+    let images: string[] = [];
     json.preview.forEach((img) => {
       const imageUrl = URL.createObjectURL(new Blob([new Uint8Array(img.data)], { type: 'image/png' }))
-      setPreviewImage((prev) => [...prev, imageUrl]);
+      images.push(imageUrl);
     });
+    setPreviewImage(images);
     setPreview(json);
   }
 
