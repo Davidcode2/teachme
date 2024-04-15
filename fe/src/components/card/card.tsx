@@ -9,7 +9,7 @@ function Card({ material }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const [preview, setPreview] = useState(null);
-  const [previewImage, setPreviewImage] = useState('');
+  const [previewImage, setPreviewImage] = useState([]);
 
   const image = material.thumbnail.data
     ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
@@ -22,7 +22,10 @@ function Card({ material }): JSX.Element {
     });
     const json = await res.json();
     console.log(json);
-    setPreviewImage(URL.createObjectURL(new Blob([new Uint8Array(json.preview.data)], { type: 'image/png' })));
+    json.preview.forEach((img) => {
+      const imageUrl = URL.createObjectURL(new Blob([new Uint8Array(img.data)], { type: 'image/png' }))
+      setPreviewImage((prev) => [...prev, imageUrl]);
+    });
     setPreview(json);
   }
 
@@ -37,7 +40,7 @@ function Card({ material }): JSX.Element {
 
   return (
     <>
-      {showPreview ? <Preview material={preview} image={previewImage} /> : <></>}
+      {showPreview ? <Preview material={preview} images={previewImage} /> : <></>}
       <div className="m-4 md:m-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
         <img src={image} onClick={togglePreview} className="thumbnail w-[400px] rounded-l-lg" alt="Thumbnail" />
         <div className="p-10 flex flex-col flex-1 gap-4 overflow-auto md:border-l md:border-t-0 border-t border-slate-100">

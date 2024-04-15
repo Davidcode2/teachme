@@ -1,5 +1,5 @@
 import sampleImage from "../assets/exampleMaterialThumbnail.png"
-export default function Preview({ material, image }) {
+export default function Preview({ material, images }) {
 
   console.log(material);
   return (
@@ -8,7 +8,7 @@ export default function Preview({ material, image }) {
         {!material
           ? <div>lädt...</div>
           : <div className="bg-white p-10 border rounded-lg shadow-lg">
-            <img src={image} alt="" />
+            {images.forEach((img) => <img src={img} alt="" />)}
             <div>
               {material.material.title}
             </div>

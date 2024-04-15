@@ -13,9 +13,9 @@ export class MaterialsService {
     @InjectRepository(Material)
     private materialsRepository: Repository<Material>,
     private stripeService: StripeService,
-  ) { }
+  ) {}
 
-  async findAll(): Promise<{ material: Material, thumbnail: Buffer }[]> {
+  async findAll(): Promise<{ material: Material; thumbnail: Buffer }[]> {
     const materials = await this.materialsRepository
       .createQueryBuilder('material')
       .select('material.id')
@@ -35,10 +35,13 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
-  async findOneWithPreview(id: string): Promise<{ material: Material, preview: Buffer} | null> {
+  async findOneWithPreview(
+    id: string,
+  ): Promise<{ material: Material; preview: Buffer[] } | null> {
     const material = await this.materialsRepository.findOneBy({ id: id });
-    const preview = await this.getPreview(material.preview_path);
-    return { material, preview }
+    const previewPromises = await this.getPreview(material.preview_path);
+    const preview = await Promise.all(previewPromises);
+    return { material, preview };
   }
 
   findMany(ids: string[]): Promise<Material[]> {
@@ -57,7 +60,7 @@ export class MaterialsService {
     const fileInfo = this.storeFile(materialDto.file);
     material.file_path = fileInfo.filePath;
     material.thumbnail_path = this.createThumbnail(fileInfo);
-    material.preview_path = this.createPreview(fileInfo);
+    material.preview_path = await this.createPreview(fileInfo);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
@@ -81,15 +84,20 @@ export class MaterialsService {
     return fs.readFile(material.file_path);
   }
 
-  private createPreview(fileInfo: { fileName: string; filePath: string }) {
+  private async createPreview(fileInfo: {
+    fileName: string;
+    filePath: string;
+  }) {
     const options = {
       density: 100,
       saveFilename: `${fileInfo.fileName}_preview`,
-      savePath: 'assets/previews',
+      savePath: `assets/previews/${fileInfo.fileName}`,
       format: 'png',
       width: 600,
       height: 600,
     };
+
+    const dir = await fs.mkdir(options.savePath);
 
     const convert = fromPath(fileInfo.filePath, options);
 
@@ -97,7 +105,7 @@ export class MaterialsService {
       console.log('All pages are now converted to image');
       return resolve;
     });
-    return options.savePath + '/' + options.saveFilename + '.' + '1.' + options.format;
+    return options.savePath;
   }
 
   private createThumbnail(fileInfo: { fileName: string; filePath: string }) {
@@ -117,37 +125,48 @@ export class MaterialsService {
       console.log('Page 1 is now converted as image');
       return resolve;
     });
-    return options.savePath + '/' + options.saveFilename + '.' + '1.' + options.format;
+    return (
+      options.savePath +
+      '/' +
+      options.saveFilename +
+      '.' +
+      '1.' +
+      options.format
+    );
   }
 
-  private imageOptions = {
-  }
+  private imageOptions = {};
 
   private storeFile(multerFile: Express.Multer.File) {
     if (!multerFile) {
       return null;
     }
-    const path = "assets/materials";
+    const path = 'assets/materials';
     const file = multerFile.buffer;
     const fileName = randomUUID();
-    const filePath = `${path}/${fileName}.pdf`
+    const filePath = `${path}/${fileName}.pdf`;
     fs.writeFile(filePath, file);
     return { fileName, filePath };
   }
 
   private mapThumbnails(materials: Material[]) {
-    const materialsWithThumbnails = materials.map(async material => {
+    const materialsWithThumbnails = materials.map(async (material) => {
       let thumbnail = await fs.readFile(material.thumbnail_path);
       return { material, thumbnail };
     });
     return materialsWithThumbnails;
   }
 
-  private async getPreview(path: string) {
-    const file = await fs.readFile(path);
-    return file;
+  private async getPreview(path: string): Promise<Buffer[]> {
+    const fileNames: string[] = await fs.readdir(path);
+    let fileBuffers = [];
+    fileNames.forEach(async (fileName) => {
+      const filePath = `${path}/${fileName}`;
+      const buffer = fs.readFile(filePath);
+      fileBuffers.push(buffer);
+    });
+    return fileBuffers;
   }
-
 }
 
 class MaterialDto {
