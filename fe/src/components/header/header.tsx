@@ -28,29 +28,7 @@ function Header() {
     });
   }
 
-  if (!user) return (
-    <>
-      {showSearch ? <div className="fixed w-screen h-screen"><Search /></div> : <></>}
-      <div className="p-4">
-        <div className="flex justify-between gap-1">
-          <div className="hidden md:flex items-center gap-2">
-            <Nav materialsLink="materials" myMaterialsLink="login"></Nav>
-          </div>
-          <div className="flex gap-2">
-            <input onClick={toggleSearch} className="searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
-            <NavLink
-              to="login"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></NavLink>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>
-          </div>
-        </div>
-        <div className="flex md:hidden mt-4 gap-2">
-          <Nav materialsLink="materials" myMaterialsLink="login"></Nav>
-        </div>
-      </div>
-    </>
-  );
+  const addButton = <button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button>;
 
   return (
     <>
@@ -58,20 +36,28 @@ function Header() {
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
-            <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
+            <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>
           </div>
           <div className="flex gap-2">
             <input onClick={toggleSearch} className="searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
-            <NavLink className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
-              to="materials/add"><button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button></NavLink>
+            <NavLink
+              className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
+              to={user ? "materials/add" : "login"}>
+              {addButton}
+            </NavLink>
           </div>
           <div className="flex items-center gap-2">
-            <UserMenu />
-            <button className="" onClick={setSidebarShown}><img src={hamburgerIcon} width="30" alt="" /></button>
+            {!user && <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>}
+            {user &&
+              <>
+                <UserMenu />
+                <button className="" onClick={setSidebarShown}><img src={hamburgerIcon} width="30" alt="" /></button>
+              </>
+            }
           </div>
         </div>
         <div className="flex md:hidden mt-4 gap-2">
-          <Nav materialsLink="materials" myMaterialsLink="materials/mine"></Nav>
+          <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>
         </div>
       </div>
     </>
