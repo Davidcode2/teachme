@@ -28,7 +28,7 @@ function Header() {
     });
   }
 
-  const addButton = <button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button>;
+  const navigation = <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>;
 
   return (
     <>
@@ -36,14 +36,14 @@ function Header() {
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
-            <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>
+            {navigation}
           </div>
           <div className="flex gap-2">
             <input onClick={toggleSearch} className="searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink
               className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to={user ? "materials/add" : "login"}>
-              {addButton}
+              <button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button>
             </NavLink>
           </div>
           <div className="flex items-center gap-2">
@@ -57,7 +57,7 @@ function Header() {
           </div>
         </div>
         <div className="flex md:hidden mt-4 gap-2">
-          <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>
+          {navigation}
         </div>
       </div>
     </>
