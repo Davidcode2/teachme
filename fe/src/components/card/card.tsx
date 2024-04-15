@@ -1,15 +1,16 @@
 import sampleImage from "../../assets/exampleMaterialThumbnail.png"
 import ActionButtons from "../action-buttons/action-buttons.tsx"
 import Author from "../author/author.tsx"
-import Material from "../../DTOs/material.ts"
 import { useState } from "react";
 import Preview from "../preview.tsx";
+import CardService from "../../services/cardService.ts";
 
 function Card({ material }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const [preview, setPreview] = useState(null);
   const [previewImage, setPreviewImage] = useState(['']);
+  const cardService = new CardService();
 
   const image = material.thumbnail.data
     ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
@@ -17,16 +18,8 @@ function Card({ material }): JSX.Element {
 
   const togglePreview = async () => {
     setShowPreview(true);
-    const res = await fetch(`/api/materials/${material.material.id}`, {
-      method: 'GET',
-    });
-    const json = await res.json();
-    console.log(json);
-    let images: string[] = [];
-    json.preview.forEach((img) => {
-      const imageUrl = URL.createObjectURL(new Blob([new Uint8Array(img.data)], { type: 'image/png' }))
-      images.push(imageUrl);
-    });
+    const json = await cardService.getPreview(material.material.id);
+    const images = cardService.getImages(json.preview);
     setPreviewImage(images);
     setPreview(json);
   }
