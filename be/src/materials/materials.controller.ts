@@ -26,7 +26,7 @@ export class MaterialsController {
     return this.materialsService.findAll();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   findOne(@Param('id') materialId: string) {
     return this.materialsService.findOneWithPreview(materialId);
   }

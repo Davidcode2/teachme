@@ -1,7 +1,7 @@
 export default class CardService {
 
   public async getPreview(materialId: string) {
-    const res = await fetch(`/api/materials/${materialId}`, {
+    const res = await fetch(`/api/materials/id/${materialId}`, {
       method: 'GET',
     });
     const json = await res.json();
