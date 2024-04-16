@@ -26,7 +26,8 @@ function Card({ material }): JSX.Element {
 
   if (!eventListenerRegistered && showPreview === true) {
     document.body.addEventListener('click', (e) => {
-      if (e.target.classList.contains('bg-white')) return;
+      console.log(e.target);
+      if (e.target.closest('.bg-white')) return;
       if (e.target.closest('.thumbnail')) return;
       setShowPreview(false);
     });
@@ -35,7 +36,7 @@ function Card({ material }): JSX.Element {
 
   return (
     <>
-      {showPreview ? <Preview material={preview} images={previewImage} /> : <></>}
+      {showPreview && <Preview material={preview} images={previewImage} />}
       <div className="m-4 md:m-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
         <img src={image} onClick={togglePreview} className="thumbnail w-[400px] rounded-l-lg" alt="Thumbnail" />
         <div className="p-10 flex flex-col flex-1 gap-4 overflow-auto md:border-l md:border-t-0 border-t border-slate-100">
