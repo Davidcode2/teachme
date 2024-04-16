@@ -26,7 +26,6 @@ function Card({ material }): JSX.Element {
 
   if (!eventListenerRegistered && showPreview === true) {
     document.body.addEventListener('click', (e) => {
-      console.log(e.target);
       if (e.target.closest('.bg-white')) return;
       if (e.target.closest('.thumbnail')) return;
       setShowPreview(false);
@@ -46,7 +45,7 @@ function Card({ material }): JSX.Element {
           </div>
           <div className="flex mt-auto">
             <div className="self-center">
-              <ActionButtons id={material.material.id} path={material.material.file_path}></ActionButtons>
+              <ActionButtons id={material.material.id} isMine={material.material.file_path}></ActionButtons>
             </div>
             <div className="ml-auto self-end">
               <Author author={material.material.author} published={material.material.date_published} ></Author>
