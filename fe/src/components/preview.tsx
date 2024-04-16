@@ -8,8 +8,8 @@ export default function Preview({ material, images }) {
       <div className="flex justify-center items-center h-full">
         {!material && <div>lädt...</div>}
         {material &&
-          <div className="flex flex-col sm:flex-row bg-white p-10 border rounded-lg shadow-lg gap-5 mx-10 lg:mx-0">
-            <div className="overflow-scroll h-[75vh]">
+          <div className="flex flex-col sm:flex-row bg-white p-2 md:p-10 border rounded-lg shadow-lg gap-5 mx-10 lg:mx-0">
+            <div className="overflow-scroll h-[50vh] md:h-[75vh]">
               {_images}
             </div>
             <div className="flex flex-col gap-5">
