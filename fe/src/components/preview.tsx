@@ -9,7 +9,7 @@ export default function Preview({ material, images }: PreviewProps) {
   const _images = images.map((img, index) => <img src={img} alt="" key={index} />)
 
   return (
-    <div className="fixed top-0 h-screen w-screen backdrop-blur-sm">
+    <div className="fixed top-0 h-screen w-screen backdrop-blur-sm z-50">
       <div className="flex justify-center items-center h-full">
         {!material && <div>lädt...</div>}
         {material &&
