@@ -1,19 +1,9 @@
 import { redirect } from "react-router-dom";
-import { useAccessTokenStore, useUserStore } from "../store";
+import { useAccessTokenStore } from "../store";
 
-type User = {
-  firstName: string,
-  lastName: string,
-  email: string,
-  signUpDate: Date,
-}
-
-export default async function addMaterialAction({request}) {
+export default async function addMaterialAction({request}: { request: Request }) {
   const formData = await request.formData();
-  const user = useUserStore.getState().user 
-  const material = { ...Object.fromEntries(formData) };
-  const body = { user, material };
-  const response = await fetch('/api/materials', {
+  await fetch('/api/materials', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

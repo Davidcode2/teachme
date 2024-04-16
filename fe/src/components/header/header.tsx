@@ -20,7 +20,7 @@ function Header() {
   }
 
   if (!eventListenerRegistered) {
-    document.body.addEventListener('click', function(event) {
+    document.body.addEventListener('click', function(event: any) {
       if (event.target.closest('.searchBar')) return;
       if (event.target.closest('.searchBox')) return;
       setShowSearch(false);

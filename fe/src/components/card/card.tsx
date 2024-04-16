@@ -5,7 +5,7 @@ import { useState } from "react";
 import Preview from "../preview.tsx";
 import CardService from "../../services/cardService.ts";
 
-function Card({ material }): JSX.Element {
+function Card({ material }: { material: any}): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -25,7 +25,7 @@ function Card({ material }): JSX.Element {
   }
 
   if (!eventListenerRegistered && showPreview === true) {
-    document.body.addEventListener('click', (e) => {
+    document.body.addEventListener('click', (e: any) => {
       if (e.target.closest('.bg-white')) return;
       if (e.target.closest('.thumbnail')) return;
       setShowPreview(false);

@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom";
 
-export default function Nav({materialsLink, myMaterialsLink}) {
+interface NavProps {
+  materialsLink: string;
+  myMaterialsLink: string;
+}
+
+export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
   return (
     <>
       <NavLink to={materialsLink} end

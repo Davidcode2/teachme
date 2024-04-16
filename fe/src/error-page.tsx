@@ -2,7 +2,7 @@ import catSticker from "./assets/catSticker.jpg";
 import { useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
-  const error = useRouteError();
+  const error: any = useRouteError();
 
   return (
     <div className="flex justify-center place-items-center h-screen flex-col gap-10">

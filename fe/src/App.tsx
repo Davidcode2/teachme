@@ -3,12 +3,11 @@ import Header from './components/header/header'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
 import SpinnerGif from './assets/icons/icons8-spinner.gif'
-import { useEffect, useState } from 'react';
-import { useAccessTokenStore, useUserStore, useGlobalLoadingStore, useSidebarStore } from './store';
+import { useEffect } from 'react';
+import { useAccessTokenStore, useUserStore, useGlobalLoadingStore } from './store';
 
 function App(): JSX.Element {
   let loading = useGlobalLoadingStore((state) => state.loading);
-  let sidebarShown = useSidebarStore((state) => state.isShown);
 
   useEffect(() => {
     fetch('/api/auth/refresh', {

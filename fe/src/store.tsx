@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import Material from './DTOs/material'
 
 type AccessTokenState = {
   accessToken: string | null
@@ -54,25 +53,3 @@ export const useGlobalLoadingStore = create<LoadingState>((set) => ({
   loading: true,
   setLoading: (loading: boolean) => set({ loading }),
 }));
-
-interface BearState {
-  bears: number
-  increasePopulation: (by: number) => void
-  removeAllBears: () => void
-}
-
-const useBearStore = create<BearState>((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
-}))
-
-function BearCounter() {
-  const bears = useBearStore((state) => state.bears)
-  return <h1>{bears} around here ...</h1>
-}
-
-function Controls() {
-  const increasePopulation = useBearStore((state) => state.increasePopulation)
-  return <button onClick={increasePopulation}>one up</button>
-}

@@ -1,6 +1,11 @@
 import ActionButtons from "./action-buttons/action-buttons"
 
-export default function Preview({ material, images }) {
+interface PreviewProps {
+  material: any;
+  images: string[];
+}
+
+export default function Preview({ material, images }: PreviewProps) {
   const _images = images.map((img, index) => <img src={img} alt="" key={index} />)
 
   return (
@@ -8,7 +13,7 @@ export default function Preview({ material, images }) {
       <div className="flex justify-center items-center h-full">
         {!material && <div>lädt...</div>}
         {material &&
-          <div className="flex flex-col sm:flex-row bg-white p-2 md:p-10 border rounded-lg shadow-lg gap-5 mx-10 lg:mx-0">
+          <div className="flex flex-col sm:flex-row bg-white p-2 md:p-10 border rounded-lg shadow-lg gap-5 mx-6 md:mx-10">
             <div className="overflow-scroll h-[50vh] md:h-[75vh]">
               {_images}
             </div>
@@ -16,7 +21,7 @@ export default function Preview({ material, images }) {
               <div className="xl:text-4xl text-2xl">
                 {material.material.title}
               </div>
-              <hr/>
+              <hr />
               <div>
                 {material.material.description}
               </div>

@@ -6,10 +6,14 @@ import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
 import { useCartStore, useUserStore } from '../../store';
 import { useState } from 'react';
 
-function ActionButtons({ id, isMine }) {
+interface ActionButtonsProps {
+  id: string;
+  isMine: string;
+}
+
+function ActionButtons({ id, isMine }: ActionButtonsProps) {
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  console.log('isMine', isMine);
 
   const { user } = useUserStore();
   if (!user) return (
@@ -50,8 +54,8 @@ function ActionButtons({ id, isMine }) {
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
           <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />
         </div>
-        {loading && <div className=""><img src={SpinnerGif} alt="" width="30"/></div> }
-        {showSuccess && <div className=""><img src={CheckMarkIcon} alt="" width="30" /></div> }
+        {loading && <div className=""><img src={SpinnerGif} alt="" width="30" /></div>}
+        {showSuccess && <div className=""><img src={CheckMarkIcon} alt="" width="30" /></div>}
         {isMine &&
           <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
             <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>

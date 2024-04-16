@@ -1,7 +1,7 @@
 import { redirect } from "react-router-dom";
 import { useAccessTokenStore, useUserStore } from '../store';
 
-export default async function handleSubmit({ request }) {
+export default async function handleSubmit({ request }: { request: Request }) {
   const formData = await request.formData();
   const response = await fetch('/api/auth/login', {
     method: 'POST',

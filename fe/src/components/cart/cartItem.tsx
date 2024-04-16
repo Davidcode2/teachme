@@ -1,7 +1,13 @@
 import { useState } from "react";
 import sampleImage from "../../assets/exampleMaterialThumbnail.png"
 
-export default function CartItem({ item, cartService, setCartItems }) {
+interface CartItemProps {
+  item: any;
+  cartService: any;
+  setCartItems: any;
+}
+
+export default function CartItem({ item, cartService, setCartItems }: CartItemProps) {
   const [loading, setLoading] = useState(false);
 
   const removeItem = async (id: string) => {

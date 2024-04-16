@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 
 export default function SuccessPage() {
-  const [sessionStatus, setSessionStatus] = useState('idle');
+  const [_, setSessionStatus] = useState('idle');
 
   const getSessionStatus = async () => {
     const queryString = window.location.search;

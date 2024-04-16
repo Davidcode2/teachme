@@ -4,7 +4,7 @@ import Material from '../../DTOs/material'
 import NoData from './noData';
 
 function Materials() {
-  let data = useLoaderData();
+  let data: any = useLoaderData();
 
   if (data.length === 0) {
     return <NoData/>

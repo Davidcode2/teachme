@@ -6,7 +6,6 @@ import { useState } from 'react';
 export default function UserMenu() {
   const user = useUserStore((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const logout = () => {
     useGlobalLoadingStore.setState({ loading: true });
@@ -27,7 +26,7 @@ export default function UserMenu() {
 
   const toggleMenu = () => showMenu ? setShowMenu(false) : setShowMenu(true);
 
-  document.body.addEventListener('click', (e) => {
+  document.body.addEventListener('click', (e: any) => {
     if (e.target.classList.contains('userMenu')) return;
     if (showMenu) {
       setShowMenu(false);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CheckMarkIcon from '../../assets/icons/icons8-checkmark-48.png';
 
-export default function PasswordValidation({ password }) {
+export default function PasswordValidation({ password }: { password: string }) {
   const [passwordLengthRequirementMet, setPasswordLengthRequirementMet] = useState(false);
   const [passwordUppercaseRequirementMet, setPasswordUppercaseRequirementMet] = useState(false);
   const [passwordLowercaseRequirementMet, setPasswordLowercaseRequirementMet] = useState(false);
