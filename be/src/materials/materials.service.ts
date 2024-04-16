@@ -96,7 +96,7 @@ export class MaterialsService {
       saveFilename: `${fileInfo.fileName}_preview`,
       savePath: `assets/previews/${fileInfo.fileName}`,
       format: 'png',
-      width: 600,
+      width: 800,
       height: 600,
     };
 
@@ -117,7 +117,7 @@ export class MaterialsService {
       saveFilename: `${fileInfo.fileName}_thumbnail`,
       savePath: 'assets/images',
       format: 'png',
-      width: 600,
+      width: 800,
       height: 600,
     };
 
