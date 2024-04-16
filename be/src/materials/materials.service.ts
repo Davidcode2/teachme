@@ -37,8 +37,11 @@ export class MaterialsService {
 
   async findOneWithPreview(
     id: string,
-  ): Promise<{ material: Material; preview: Buffer[] } | null> {
-    const material = await this.materialsRepository.findOneBy({ id: id });
+  ): Promise<{ material: MaterialUnboughtDto; preview: Buffer[] } | null> {
+    const completeMaterial = await this.materialsRepository.findOneBy({
+      id: id,
+    });
+    const { file_path, ...material } = completeMaterial;
     const previewPromises = await this.getPreview(material.preview_path);
     const preview = await Promise.all(previewPromises);
     return { material, preview };
@@ -51,7 +54,7 @@ export class MaterialsService {
       .getMany();
   }
 
-  async create(materialDto: MaterialDto): Promise<Material> {
+  async create(materialDto: MaterialDtoIn): Promise<Material> {
     let material = new Material();
     material.title = materialDto.title;
     material.description = materialDto.description;
@@ -169,7 +172,19 @@ export class MaterialsService {
   }
 }
 
-class MaterialDto {
+class MaterialUnboughtDto {
+  title: string;
+  description: string;
+  price: number;
+  link: string;
+  id: string;
+  stripe_price_id: string;
+  thumbnail_path: string;
+  preview_path: string;
+  date_published: Date;
+}
+
+class MaterialDtoIn {
   file: Express.Multer.File;
   title: string;
   description: string;
