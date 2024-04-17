@@ -20,13 +20,6 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors({
-    credentials: true,
-    origin: [
-      'http://localhost:5173',
-      /\.localhost:5173$/,
-    ],
-  });
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Teach Me API')
     .setDescription('The Teach Me API description')
