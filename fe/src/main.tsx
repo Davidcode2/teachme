@@ -18,6 +18,8 @@ import myMaterialLoader from './loaders/myMaterialLoader.ts'
 import ErrorPage from './error-page.tsx'
 import NoData from './components/materials/noData.tsx'
 import SuccessPage from './components/successPage.tsx'
+import SharedPreview from './components/sharedPreview.tsx'
+import sharedPreviewLoader from './loaders/sharedPreviewLoader.ts'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,11 @@ const router = createBrowserRouter([
         path: "/materials/mine",
         element: <Materials />,
         loader: myMaterialLoader,
+      },
+      {
+        path: "/materials/id:id",
+        element: <SharedPreview />,
+        loader: ({params}) => sharedPreviewLoader(params.id),
       },
     ],
   },

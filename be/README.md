@@ -1,6 +1,12 @@
 # TechMe
 
-```docker run -dp 8080:80 <tag>```
+## Frontend
+
+```docker run -dp 8080:80 --name fe_teachme <tag>```
+
+## Backend 
+
+```docker run -dp 3000:3000 --name be_teachme <tag>```
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
