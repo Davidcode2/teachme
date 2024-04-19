@@ -3,7 +3,7 @@ import ActionButtons from "./action-buttons/action-buttons"
 
 export default function SharedPreview() {
   const data: any = useLoaderData();
-  const _images = data.images.map((img, index) => <img src={img} alt="" key={index} />)
+  const _images = data.images.map((img: string, index: number) => <img src={img} alt="" key={index} />)
 
   return (
     <div className="fixed top-0 h-screen w-screen backdrop-blur-sm z-50">
