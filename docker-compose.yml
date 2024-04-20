@@ -1,0 +1,29 @@
+services: 
+  backend: 
+    build:
+      context: ./be
+      dockerfile: Dockerfile
+    image: backend
+    container_name: backend
+    restart: unless-stopped
+    ports: 
+      - "3000:3000"
+    networks: 
+      - app-network
+
+  frontend:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+    image: frontend
+    container_name: frontend
+    restart: unless-stopped
+    ports: 
+      - "80:80"
+    networks: 
+      - app-network
+  
+
+networks:
+  app-network:
+    driver: bridge
