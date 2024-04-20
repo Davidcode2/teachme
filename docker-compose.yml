@@ -20,9 +20,31 @@ services:
     restart: unless-stopped
     ports: 
       - "80:80"
+    volumes:
+      - web-root:/usr/share/nginx/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - backend
     networks: 
       - app-network
-  
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - frontend
+    command: certonly --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --staging -d teachly.store -d www.teachly.store
+
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+    driver: local
 
 networks:
   app-network:
