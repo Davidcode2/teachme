@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         loader: myMaterialLoader,
       },
       {
-        path: "/materials/id:id",
+        path: "/materials/id/:id",
         element: <SharedPreview />,
         loader: ({params}) => sharedPreviewLoader(params.id),
       },
