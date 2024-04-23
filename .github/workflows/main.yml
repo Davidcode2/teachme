@@ -1,4 +1,4 @@
-            - name: SFTP Deploy
+- name: SFTP Deploy
   # You may pin to the exact commit or the version.
   # uses: wlixcc/SFTP-Deploy-Action@da88a4dbe95286266bbac3c0b2b8284048d20c8f
   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
@@ -23,4 +23,4 @@
     delete_remote_files: # optional
     # SSH passsword，If a password is set, the secret key pair is ignored
     password: ${{ password }}
-          
+
