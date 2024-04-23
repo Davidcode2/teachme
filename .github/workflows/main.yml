@@ -18,9 +18,9 @@ jobs:
         # Private key part of an SSH key pair
         SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_SSH_KEY }}
         # Remote host
-        REMOTE_HOST: 164.92.171.183
+        REMOTE_HOST: ${{ secrets.SERVER_ADDRESS }}
         # Remote user
-        REMOTE_USER: root
+        REMOTE_USER: ${{ secrets.USER_NAME }}
         # Remote port
         REMOTE_PORT: 22
         # Source directory, path relative to `$GITHUB_WORKSPACE` root, eg: `dist/`
