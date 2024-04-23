@@ -44,8 +44,8 @@ export class StripeService {
     const session = await this.stripe.checkout.sessions.create({
       line_items: items,
       mode: 'payment',
-      success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:5173/materials`,
+      success_url: `${this.configuration.get('FE_URL')}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${this.configuration.get('FE_URL')}/materials`,
     });
     return session;
   }
@@ -70,7 +70,6 @@ export class StripeService {
   public async handleCheckoutSessionCompleted(
     event: Stripe.CheckoutSessionCompletedEvent,
   ) {
-    // Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
     const checkoutId = event.data.object.id;
     const sessionWithLineItems = await this.stripe.checkout.sessions.retrieve(
       event.data.object.id,
