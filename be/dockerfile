@@ -11,9 +11,9 @@ COPY . .
 
 FROM base as build 
 RUN npm run build
-COPY ./dist .
 
 FROM build as production
+COPY --from=build /app/dist .
 CMD ["npm", "run", "start:prod"]
 
 EXPOSE 3000
