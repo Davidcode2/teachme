@@ -1,13 +1,19 @@
-FROM node:latest
-
-COPY . /app
+FROM node:latest as base
 
 WORKDIR /app
 
+COPY package.json .
+COPY package-lock.json .
+
 RUN npm install --omit=dev
 RUN npm install @nestjs/cli
-RUN npm run build
+COPY . .
 
+FROM base as build 
+RUN npm run build
+COPY ./dist .
+
+FROM build as production
 CMD ["npm", "run", "start:prod"]
 
 EXPOSE 3000
