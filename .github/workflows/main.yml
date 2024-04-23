@@ -19,7 +19,7 @@ jobs:
         # you can copy private_key from your *.pem file, keep format
         local_path: .
         # files will copy to under remote_path
-        remote_path: ~/teachme
+        remote_path: /root/teachme
         # connection via sftp protocol only
         # SSH passsword，If a password is set, the secret key pair is ignored
         password: ${{ secrets.SERVER_PASSWORD }}
