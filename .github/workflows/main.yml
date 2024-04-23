@@ -22,5 +22,5 @@ jobs:
         remote_path: ~/teachme
         # connection via sftp protocol only
         # SSH passsword，If a password is set, the secret key pair is ignored
-        password: ${{ SERVER_PASSWORD }}
+        password: ${{ secrets.SERVER_PASSWORD }}
   
