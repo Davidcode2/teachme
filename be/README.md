@@ -2,7 +2,7 @@
 
 ## Frontend
 
-```docker run -dp 8080:80 --name fe_teachme <tag>```
+```docker run -dp 80:80 --name fe_teachme <tag>```
 
 ## Backend 
 
