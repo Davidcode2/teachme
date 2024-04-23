@@ -17,7 +17,7 @@ jobs:
         # your sftp server
         server: 164.92.171.183
         # you can copy private_key from your *.pem file, keep format
-        local_path: ./*
+        local_path: .
         # files will copy to under remote_path
         remote_path: ~/teachme
         # connection via sftp protocol only
