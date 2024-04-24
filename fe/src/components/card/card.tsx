@@ -5,15 +5,17 @@ import { useState } from "react";
 import Preview from "../preview.tsx";
 import CardService from "../../services/cardService.ts";
 
-function Card({ material }: { material: any}): JSX.Element {
+function Card({ material }: { material: any }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const [preview, setPreview] = useState(null);
   const [previewImage, setPreviewImage] = useState(['']);
   const cardService = new CardService();
 
-  const image = material.thumbnail.data
-    ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
+  const image = material.thumbnail
+    ? material.thumbnail.data
+      ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
+      : sampleImage
     : sampleImage;
 
   const togglePreview = async () => {
@@ -22,6 +24,7 @@ function Card({ material }: { material: any}): JSX.Element {
     const images = cardService.getImages(json.preview);
     setPreviewImage(images);
     setPreview(json);
+    //Router(`/materials/id/${material.material.id}`);
   }
 
   if (!eventListenerRegistered && showPreview === true) {

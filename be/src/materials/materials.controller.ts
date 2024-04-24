@@ -22,7 +22,11 @@ export class MaterialsController {
   constructor(private materialsService: MaterialsService) {}
 
   @Get()
-  findAll(@Req() request: Request) {
+  findAll(@Query('search') searchString: string) {
+    console.log(searchString);
+    if (searchString) {
+      return this.materialsService.search(searchString);
+    }
     return this.materialsService.findAll();
   }
 

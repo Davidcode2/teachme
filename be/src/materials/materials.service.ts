@@ -35,6 +35,15 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
+  async search(term: string) {
+    const materials = await this.materialsRepository
+    .createQueryBuilder('material')
+    .where('material.title LIKE :term', { term: `%${term}%` })
+    .getMany();
+    console.log(materials);
+    return materials;
+  }
+
   async findOneWithPreview(
     id: string,
   ): Promise<{ material: MaterialUnboughtDto; preview: Buffer[] } | null> {
