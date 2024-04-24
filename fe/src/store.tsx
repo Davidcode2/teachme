@@ -53,3 +53,13 @@ export const useGlobalLoadingStore = create<LoadingState>((set) => ({
   loading: true,
   setLoading: (loading: boolean) => set({ loading }),
 }));
+
+type SearchStringState = {
+  searchString: string,
+  setSearchString: (search: string) => void
+}
+
+export const useSearchStringState = create<SearchStringState>((set) => ({
+  searchString: '',
+  setSearchString: (search: string) => set({ searchString: search }),
+}));
