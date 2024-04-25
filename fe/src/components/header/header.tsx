@@ -32,7 +32,7 @@ function Header() {
 
   return (
     <>
-      {showSearch ? <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div> : <></>}
+      {showSearch && <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div>}
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">

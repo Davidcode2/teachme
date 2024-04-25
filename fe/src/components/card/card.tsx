@@ -30,7 +30,7 @@ function Card({ material }: { material: any }): JSX.Element {
 
   const imageElement = image
     ? <img src={image} onClick={togglePreview} className="thumbnail w-[400px] rounded-l-lg" alt="Thumbnail" />
-    : <div className={`thumbnail w-[400px] h-[400px] rounded-l-lg`} style={{backgroundImage: gradient}}></div>;
+    : <div className={`thumbnail md:w-[400px] lg:w-[600px] h-[400px] rounded-l-lg`} style={{backgroundImage: gradient}}></div>;
 
   if (!eventListenerRegistered && showPreview === true) {
     document.body.addEventListener('click', (e: any) => {
