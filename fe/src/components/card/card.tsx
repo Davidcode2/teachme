@@ -3,6 +3,7 @@ import ActionButtons from "../action-buttons/action-buttons.tsx"
 import Author from "../author/author.tsx"
 import { useState } from "react";
 import Preview from "../preview.tsx";
+import GradientGenerator from "../../services/gradientGenerator.ts";
 import CardService from "../../services/cardService.ts";
 
 function Card({ material }: { material: any }): JSX.Element {
@@ -11,12 +12,13 @@ function Card({ material }: { material: any }): JSX.Element {
   const [preview, setPreview] = useState(null);
   const [previewImage, setPreviewImage] = useState(['']);
   const cardService = new CardService();
+  const gradient = new GradientGenerator().randomGradient();
 
   const image = material.thumbnail
     ? material.thumbnail.data
       ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
-      : sampleImage
-    : sampleImage;
+      : null
+    : null;
 
   const togglePreview = async () => {
     setShowPreview(true);
@@ -26,6 +28,10 @@ function Card({ material }: { material: any }): JSX.Element {
     setPreview(json);
     //Router(`/materials/id/${material.material.id}`);
   }
+
+  const imageElement = image
+    ? <img src={image} onClick={togglePreview} className="thumbnail w-[400px] rounded-l-lg" alt="Thumbnail" />
+    : <div className={`thumbnail w-[400px] h-[400px] rounded-l-lg ${gradient}`} style={{backgroundColor: gradient}}>Hello</div>;
 
   if (!eventListenerRegistered && showPreview === true) {
     document.body.addEventListener('click', (e: any) => {
@@ -40,7 +46,7 @@ function Card({ material }: { material: any }): JSX.Element {
     <>
       {showPreview && <Preview material={preview} images={previewImage} />}
       <div className="m-4 md:m-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
-        <img src={image} onClick={togglePreview} className="thumbnail w-[400px] rounded-l-lg" alt="Thumbnail" />
+        {imageElement}
         <div className="p-10 flex flex-col flex-1 gap-4 overflow-auto md:border-l md:border-t-0 border-t border-slate-100">
           <div className="flex flex-col">
             <div className="text-2xl">{material.material.title}</div>
