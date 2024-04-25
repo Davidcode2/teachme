@@ -1,9 +1,9 @@
-import { useSearchStringState } from '../../store';
+import { useSearchState } from '../../store';
 export default function Search() {
 
   const changeSearchString = (e: any) => {
     const searchString: string = e.target.value;
-    useSearchStringState.getState().setSearchString(searchString);
+    useSearchState.getState().setSearchString(searchString);
   }
 
   return (

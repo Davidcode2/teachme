@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom'
-import { useSearchStringState } from '../../store';
+import { useSearchState } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from './noData';
@@ -13,23 +13,27 @@ type MaterialWithThumbnail = {
 function Materials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   let data: MaterialWithThumbnail[] = useLoaderData() as MaterialWithThumbnail[];
-  let searchString = useSearchStringState.subscribe((state) => state.searchString);
+  let searchString = useSearchState((state) => state.searchString);
   //setMaterials(data as MaterialWithThumbnail[]);
 
-  useSearchStringState.subscribe(async (state) => {
-    const searchString = state.searchString;
+  const searchMaterials = async () => {
     const res = await fetch(`api/materials?search=${searchString}`);
     const json = await res.json();
+    useSearchState.setState({ searchResults: json });
     const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
     setMaterials(materialsWithNullThumbnail);
-    data = materialsWithNullThumbnail;
     console.log(searchString);
-  });
+  };
 
   useEffect(() => {
+    if (searchString === '') {
+      setMaterials(data);
+      return;
+    }
+    searchMaterials();
   }, [searchString]);
 
-  if (data.length === 0) {
+  if (materials.length === 0) {
     return <NoData />
   }
 

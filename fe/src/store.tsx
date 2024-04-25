@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import Material from './DTOs/material'
 
 type AccessTokenState = {
   accessToken: string | null
@@ -54,12 +55,16 @@ export const useGlobalLoadingStore = create<LoadingState>((set) => ({
   setLoading: (loading: boolean) => set({ loading }),
 }));
 
-type SearchStringState = {
+type SearchState = {
   searchString: string,
+  searchResults: Material[];
   setSearchString: (search: string) => void
+  setSearchResults: (results: Material[]) => void
 }
 
-export const useSearchStringState = create<SearchStringState>((set) => ({
+export const useSearchState = create<SearchState>((set) => ({
   searchString: '',
+  searchResults: [],
   setSearchString: (search: string) => set({ searchString: search }),
+  setSearchResults: (results: Material[]) => set({ searchResults: results }),
 }));
