@@ -1,31 +1,29 @@
 export default class GradientGenerator {
-  private colors = [
-    'emerald',
-    'teal',
-    'violet',
-    'fuchsia',
-    'purple',
-    'zinc',
-    'orange',
-    'blue',
-  ];
+  private colors = ['teal', 'violet', 'fuchsia', 'purple', 'lightblue', 'snow'];
+
+  private gradientDirections = ['to right', 'to top right', 'to bottom right'];
 
   public randomGradient = () => {
     const color1 = this.generateRandomColor();
-    const color2 = this.generateRandomColor();
-    const colorGradient = `bg-gradient-to-tl from-${color1} to-${color2}`;
+    let color2 = this.generateRandomColor();
+    if (color1 === color2) {
+      color2 = this.generateRandomColor();
+    }
+    const randomDirection = this.generateRandomDirection()
+    const colorGradient = `linear-gradient(${randomDirection}, ${color1}, ${color2})`;
     console.log(colorGradient);
     return colorGradient;
   };
 
+  private generateRandomDirection() {
+    const index = Number(Math.random().toFixed(1)) * 10 % this.gradientDirections.length;
+    return this.gradientDirections[index];
+  }
+
   private generateRandomColor = () => {
     const zeroToOne = Number(Math.random().toFixed(1));
-    console.log(zeroToOne);
-    const zeroToNine = zeroToOne > 0.9 ? zeroToOne - 0.1 : zeroToOne;
-    const oneToNine = zeroToNine < 0.1 ? zeroToNine + 0.1 : zeroToNine;
-    const colorStrength = oneToNine * 1000;
     const colorIndex = (zeroToOne * 10) % this.colors.length;
-    const color = `${this.colors[colorIndex]}-${colorStrength}`;
+    const color = this.colors[colorIndex];
     return color;
   };
 }
