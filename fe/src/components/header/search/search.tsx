@@ -1,5 +1,7 @@
-import { useSearchState } from '../../store';
+import { useSearchState } from '../../../store';
+import SearchResultsPreview from './searchResultsPreview';
 export default function Search() {
+  let searchResults = useSearchState(state => state.searchResults);
 
   const changeSearchString = (e: any) => {
     const searchString: string = e.target.value;
@@ -12,11 +14,7 @@ export default function Search() {
         <div className="searchBox border border-gray-200 bg-white shadow-lg rounded-lg p-10 blur-none flex flex-col">
           <input onChange={changeSearchString} className="searchBox p-4 rounded-full border" type="text" />
           <ul className="searchBox flex flex-col gap-2">
-            <li>Text somethin</li>
-            <li>Text somethin</li>
-            <li>Text somethin</li>
-            <li>Text somethin</li>
-            <li>Text somethin</li>
+            <SearchResultsPreview searchResults={searchResults} />
           </ul>
         </div></div>
     </div>

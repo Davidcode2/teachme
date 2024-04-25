@@ -14,7 +14,6 @@ function Materials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   let data: MaterialWithThumbnail[] = useLoaderData() as MaterialWithThumbnail[];
   let searchString = useSearchState((state) => state.searchString);
-  //setMaterials(data as MaterialWithThumbnail[]);
 
   const searchMaterials = async () => {
     const res = await fetch(`api/materials?search=${searchString}`);

@@ -11,7 +11,6 @@ export default class GradientGenerator {
     }
     const randomDirection = this.generateRandomDirection()
     const colorGradient = `linear-gradient(${randomDirection}, ${color1}, ${color2})`;
-    console.log(colorGradient);
     return colorGradient;
   };
 

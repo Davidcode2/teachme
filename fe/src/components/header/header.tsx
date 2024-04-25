@@ -5,7 +5,7 @@ import { useSidebarStore, useUserStore } from '../../store';
 import Nav from './nav';
 import UserMenu from '../userMenu';
 import { useState } from 'react';
-import Search from './search';
+import Search from './search/search';
 
 function Header() {
   const user = useUserStore((state) => state.user);

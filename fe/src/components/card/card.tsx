@@ -1,4 +1,3 @@
-import sampleImage from "../../assets/exampleMaterialThumbnail.png"
 import ActionButtons from "../action-buttons/action-buttons.tsx"
 import Author from "../author/author.tsx"
 import { useState } from "react";
