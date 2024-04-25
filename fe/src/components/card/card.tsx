@@ -44,7 +44,7 @@ function Card({ material }: { material: any }): JSX.Element {
   return (
     <>
       {showPreview && <Preview material={preview} images={previewImage} />}
-      <div className="m-4 md:mb-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
+      <div className="m-4 md:mb-10 md:mx-10 rounded-lg border-slate-100 border flex flex-col md:flex-row shadow-lg">
         {imageElement}
         <div className="p-10 flex flex-col flex-1 gap-4 overflow-auto md:border-l md:border-t-0 border-t border-slate-100">
           <div className="flex flex-col">

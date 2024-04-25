@@ -18,8 +18,6 @@ function ActionButtons({ id, isMine }: ActionButtonsProps) {
   const { user } = useUserStore();
   if (!user) return (
     <div className="flex">
-      <div className="hidden">rating</div>
-      <div className="hidden">downloads</div>
       <Link to="/login"><img src={addToShoppingCartIcon} width="30" alt="" /></Link>
     </div>
   )
@@ -48,19 +46,17 @@ function ActionButtons({ id, isMine }: ActionButtonsProps) {
 
   return (
     <>
-      <div className="flex gap-x-2">
-        <div className="hidden">rating</div>
-        <div className="hidden">downloads</div>
+      <div className="flex">
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-          <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />
+          {!isMine && <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />}
         </div>
-        {loading && <div className=""><img src={SpinnerGif} alt="" width="30" /></div>}
-        {showSuccess && <div className=""><img src={CheckMarkIcon} alt="" width="30" /></div>}
-        {isMine &&
-          <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-            <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>
-          </div>
-        }
+        <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
+          {isMine && <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a> }
+        </div>
+        <div className="mx-2">
+          {loading && <div className=""><img src={SpinnerGif} alt="" width="30" /></div>}
+          {showSuccess && <div className=""><img src={CheckMarkIcon} alt="" width="30" /></div>}
+        </div>
       </div>
     </>
   )

@@ -33,19 +33,17 @@ function App(): JSX.Element {
 
   return (
     <div>
-      {loading ?
+      {loading &&
         <div className="font-bold fixed h-screen w-screen">
           <div className="flex w-full h-full justify-center items-center">
             <img className="" src={SpinnerGif} alt="" width="60" />
           </div>
         </div>
-        : <></>}
+      }
       <div className={loading ? "blur-sm" : ""}>
-        <div className="mx-10">
           <Sidebar></Sidebar>
           <Header></Header>
           <Outlet />
-        </div>
       </div>
     </div>
   )
