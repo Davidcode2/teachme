@@ -1,9 +1,9 @@
-import { useLoaderData } from 'react-router-dom'
-import { useSearchState } from '../../store';
+import { useSearchState, useUserStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from './noData';
 import { useEffect, useState } from 'react';
+import loadMaterials from '../../loaders/materialLoader';
 
 type MaterialWithThumbnail = {
   material: Material,
@@ -12,23 +12,32 @@ type MaterialWithThumbnail = {
 
 function Materials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
-  let data: MaterialWithThumbnail[] = useLoaderData() as MaterialWithThumbnail[];
   let searchString = useSearchState((state) => state.searchString);
+  let onMinePage = document.location.pathname === "/materials/mine";
+  const user = useUserStore(state => state.user);
 
   const searchMaterials = async () => {
-    const res = await fetch(`api/materials?search=${searchString}`);
-    const json = await res.json();
+    let baseUrl = getUrl();
+    const url = `${baseUrl}?search=${searchString}`;
+    const json = await loadMaterials(url);
     useSearchState.setState({ searchResults: json });
-    const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
-    setMaterials(materialsWithNullThumbnail);
+    if (searchString !== "") {
+      const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
+      setMaterials(materialsWithNullThumbnail);
+      return;
+    }
+    setMaterials(json);
     console.log(searchString);
   };
 
-  useEffect(() => {
-    if (searchString === '') {
-      setMaterials(data);
-      return;
+  const getUrl = () => {
+    if (onMinePage) {
+      return `/api/users/${user.id}/materials`;
     }
+    return "api/materials";
+  }
+
+  useEffect(() => {
     searchMaterials();
   }, [searchString]);
 

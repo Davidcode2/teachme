@@ -31,18 +31,16 @@ const router = createBrowserRouter([
       {
         path: "/materials",
         element: <Materials />,
-        loader: materialLoader,
         errorElement: <NoData />,
+      },
+      {
+        path: "/materials/mine",
+        element: <Materials />,
       },
       {
         path: "/materials/add",
         element: <AddMaterial />,
         action: addMaterialAction,
-      },
-      {
-        path: "/materials/mine",
-        element: <Materials />,
-        loader: myMaterialLoader,
       },
       {
         path: "/materials/id/:id",
