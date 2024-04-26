@@ -27,18 +27,16 @@ function Materials() {
       return;
     }
     setMaterials(json);
-    console.log(searchString);
   };
 
-  const setSearchResults = (json: any) => {
-    let materials = json;
+  const setSearchResults = (materials: any) => {
     if (materials.length === 0) {
       useSearchState.setState({ searchResults: [] });
       return;
     }
-    let hasThumbnail = json[0].thumbnail;
+    let hasThumbnail = materials[0].thumbnail;
     if (hasThumbnail) {
-      materials = json.map((el: { material: Material, thumbnail: any }) => { return el.material; });
+      materials = materials.map((el: { material: Material, thumbnail: any }) => { return el.material; });
       useSearchState.setState({ searchResults: materials });
     } else {
       useSearchState.setState({ searchResults: materials });

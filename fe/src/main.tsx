@@ -11,10 +11,8 @@ import signUpAction from './actions/signUpAction.ts'
 import loginAction from './actions/loginAction.ts'
 import LoginForm from './components/signin/login.tsx'
 import Materials from './components/materials/materials.tsx'
-import materialLoader from './loaders/materialLoader.ts'
 import AddMaterial from './components/materials/addMaterial.tsx'
 import addMaterialAction from './actions/addMaterialAction.ts'
-import myMaterialLoader from './loaders/myMaterialLoader.ts'
 import ErrorPage from './error-page.tsx'
 import NoData from './components/materials/noData.tsx'
 import SuccessPage from './components/successPage.tsx'
@@ -27,7 +25,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Materials />, loader: materialLoader },
+      { index: true, element: <Materials /> },
       {
         path: "/materials",
         element: <Materials />,
