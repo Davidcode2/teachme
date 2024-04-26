@@ -37,8 +37,8 @@ export class MaterialsController {
 
   @UseGuards(JwtAuthGuard)
   @Get('user/:id')
-  findByUser(@Param('id') userId: string) {
-    return this.materialsService.findByUser(userId);
+  findByUser(@Param('id') userId: string, @Query('search') searchString: string) {
+    return this.materialsService.findByUser(userId, searchString);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -20,8 +20,8 @@ function Materials() {
     let baseUrl = getUrl();
     const url = `${baseUrl}?search=${searchString}`;
     const json = await loadMaterials(url);
-    useSearchState.setState({ searchResults: json });
-    if (searchString !== "") {
+    setSearchResults(json);
+    if (searchString !== "" && !onMinePage) {
       const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
       setMaterials(materialsWithNullThumbnail);
       return;
@@ -29,6 +29,21 @@ function Materials() {
     setMaterials(json);
     console.log(searchString);
   };
+
+  const setSearchResults = (json: any) => {
+    let materials = json;
+    if (materials.length === 0) {
+      useSearchState.setState({ searchResults: [] });
+      return;
+    }
+    let hasThumbnail = json[0].thumbnail;
+    if (hasThumbnail) {
+      materials = json.map((el: { material: Material, thumbnail: any }) => { return el.material; });
+      useSearchState.setState({ searchResults: materials });
+    } else {
+      useSearchState.setState({ searchResults: materials });
+    }
+  }
 
   const getUrl = () => {
     if (onMinePage) {

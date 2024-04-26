@@ -29,19 +29,35 @@ export class MaterialsService {
       .addSelect('material.date_published')
       .getMany();
 
-    const materialsWithThumbnails = this.mapThumbnails(materials);
-    return Promise.all(materialsWithThumbnails);
+    return this.mapThumbnails(materials);
   }
 
   findOne(id: string): Promise<Material | null> {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
-  async findByUser(userId: string): Promise<{ material: Material, thumbnail: Buffer}[]> {
+  async findByUser(
+    userId: string,
+    searchString: string,
+  ): Promise<{ material: Material; thumbnail: Buffer }[]> {
+    const materials = await this.getMaterialsForUser(userId);
+    if (searchString) {
+      return this.searchMyMaterials(searchString, materials);
+    }
+    return this.mapThumbnails(materials);
+  }
+
+  private async getMaterialsForUser(userId: string) {
     const user = await this.userService.findOneById(userId);
     const materials = user.consumer.materials;
-    const materialsWithThumbnails = this.mapThumbnails(materials);
-    return Promise.all(materialsWithThumbnails);
+    return materials;
+  }
+
+  private searchMyMaterials(searchString: string, materials: Material[]) {
+    let filteredMaterials = materials.filter((material) =>
+      material.title.includes(searchString),
+    );
+    return this.mapThumbnails(filteredMaterials);
   }
 
   async search(term: string) {
@@ -175,7 +191,7 @@ export class MaterialsService {
       let thumbnail = await fs.readFile(material.thumbnail_path);
       return { material, thumbnail };
     });
-    return materialsWithThumbnails;
+    return Promise.all(materialsWithThumbnails);
   }
 
   private async getPreview(path: string): Promise<Buffer[]> {
