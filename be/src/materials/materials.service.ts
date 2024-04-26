@@ -6,6 +6,7 @@ import * as fs from 'node:fs/promises';
 import { StripeService } from 'src/stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
 import { fromPath } from 'pdf2pic';
+import { UsersService } from 'src/users/usersService/users.service';
 
 @Injectable()
 export class MaterialsService {
@@ -13,6 +14,7 @@ export class MaterialsService {
     @InjectRepository(Material)
     private materialsRepository: Repository<Material>,
     private stripeService: StripeService,
+    private userService: UsersService,
   ) {}
 
   async findAll(): Promise<{ material: Material; thumbnail: Buffer }[]> {
@@ -35,11 +37,18 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
+  async findByUser(userId: string): Promise<{ material: Material, thumbnail: Buffer}[]> {
+    const user = await this.userService.findOneById(userId);
+    const materials = user.consumer.materials;
+    const materialsWithThumbnails = this.mapThumbnails(materials);
+    return Promise.all(materialsWithThumbnails);
+  }
+
   async search(term: string) {
     const materials = await this.materialsRepository
-    .createQueryBuilder('material')
-    .where('material.title LIKE :term', { term: `%${term}%` })
-    .getMany();
+      .createQueryBuilder('material')
+      .where('material.title LIKE :term', { term: `%${term}%` })
+      .getMany();
     console.log(materials);
     return materials;
   }

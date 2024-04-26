@@ -32,7 +32,7 @@ function Materials() {
 
   const getUrl = () => {
     if (onMinePage) {
-      return `/api/users/${user.id}/materials`;
+      return `/api/materials/user/${user.id}`;
     }
     return "api/materials";
   }

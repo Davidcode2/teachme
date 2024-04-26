@@ -36,6 +36,12 @@ export class MaterialsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('user/:id')
+  findByUser(@Param('id') userId: string) {
+    return this.materialsService.findByUser(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
