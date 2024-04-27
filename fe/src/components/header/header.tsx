@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
-import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png"
+import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png";
+import plus from "../../assets/addPlusGradient.png";
 import UserIcon from '../../assets/icons/icons8-user-32.png';
 import { useSidebarStore, useUserStore } from '../../store';
 import Nav from './nav';
@@ -38,12 +39,12 @@ function Header() {
           <div className="hidden md:flex items-center gap-2">
             {navigation}
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <input onClick={toggleSearch} className="searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink
               className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to={user ? "materials/add" : "login"}>
-              <button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2">Add</button>
+              <button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2"><img src={plus} alt="" width="20"/></button>
             </NavLink>
           </div>
           <div className="flex items-center gap-2">
