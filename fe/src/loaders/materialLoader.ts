@@ -1,6 +1,7 @@
-import { useAccessTokenStore } from '../store';
+import { useAccessTokenStore, useGlobalLoadingStore } from '../store';
 
 export default async function loadMaterials(url: string) {
+  useGlobalLoadingStore.setState({ loading: true });
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -8,6 +9,7 @@ export default async function loadMaterials(url: string) {
       'Content-Type': 'application/json',
     },
   });
+  useGlobalLoadingStore.setState({ loading: false });
 
   const responseData = await response.json();
   return responseData;

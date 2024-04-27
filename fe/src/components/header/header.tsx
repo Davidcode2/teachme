@@ -40,7 +40,7 @@ function Header() {
             {navigation}
           </div>
           <div className="flex gap-2 items-center">
-            <input onClick={toggleSearch} className="searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+            <input onClick={toggleSearch} className="focus:outline-none searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink
               className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to={user ? "materials/add" : "login"}>
