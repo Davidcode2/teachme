@@ -1,14 +1,16 @@
-services: 
-  backend: 
+services:
+  backend:
     build:
       context: ./be
       dockerfile: Dockerfile
     image: backend
     container_name: backend
     restart: unless-stopped
-    ports: 
-      - "3000:3000"
-    networks: 
+    ports:
+      - '3000:3000'
+    volumes:
+      - assets:/assets
+    networks:
       - app-network
 
   frontend:
@@ -18,16 +20,16 @@ services:
     image: frontend
     container_name: frontend
     restart: unless-stopped
-    ports: 
-      - "80:80"
-      - "443:443"
+    ports:
+      - '80:80'
+      - '443:443'
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - web-root:/var/www/html
     depends_on:
       - backend
-    networks: 
+    networks:
       - app-network
 
   certbot:
@@ -44,6 +46,7 @@ services:
 volumes:
   certbot-etc:
   certbot-var:
+  assets:
   web-root:
     driver: local
 
