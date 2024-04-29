@@ -40,11 +40,11 @@ function Header() {
             {navigation}
           </div>
           <div className="flex gap-2 items-center">
-            <input onClick={toggleSearch} className="focus:outline-none searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+            <input onClick={toggleSearch} className="focus:outline-none hover:scale-y-125 transition searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink
               className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to={user ? "materials/add" : "login"}>
-              <button className="border border-slate-200 shadow-sm rounded-lg px-4 py-2"><img src={plus} alt="" width="20"/></button>
+              <button className="border border-slate-200 shadow-sm rounded-lg flex"><div className="hover:scale-125 hover:brightness-110 transition px-4 py-2"><img  src={plus} alt="" width="20"/></div></button>
             </NavLink>
           </div>
           <div className="flex items-center gap-2">

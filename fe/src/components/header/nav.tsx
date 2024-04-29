@@ -14,7 +14,7 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
           className={({ isActive, isPending }) =>
             isPending ? "animate-pulse" : isActive ? "" : "border-none"
           }
-        ><img className="hover:brightness-125" src={logo} alt="" width="100" /></NavLink>
+        ><img className="hover:brightness-125 transition hover:scale-105" src={logo} alt="" width="100" /></NavLink>
         <NavLink to={myMaterialsLink} end
           className={({ isActive, isPending }) =>
             isPending ? "animate-pulse" : isActive ? "decoration-wavy underline decoration-green-300 underline-offset-4 decoration-1" : "border-none"
