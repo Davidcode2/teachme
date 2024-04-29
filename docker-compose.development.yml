@@ -1,0 +1,55 @@
+services:
+  backend:
+    build:
+      context: ./be
+      dockerfile: Dockerfile
+    image: backend
+    container_name: backend
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - assets:/assets
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+    image: frontend
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - frontend
+    command: certonly -v --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --staging -d teachly.store -d www.teachly.store
+
+volumes:
+  certbot-etc:
+  certbot-var:
+  assets:
+  web-root:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
