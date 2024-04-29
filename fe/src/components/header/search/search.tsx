@@ -1,7 +1,8 @@
-import { useSearchState } from '../../../store';
-import SearchResultsPreview from './searchResultsPreview';
+import { useSearchState } from '../../../store'
+import SearchResultsPreview from './searchResultsPreview'
+
 export default function Search() {
-  let searchResults = useSearchState(state => state.searchResults);
+  let searchResults = useSearchState((state: any) => state.searchResults);
 
   const changeSearchString = (e: any) => {
     const searchString: string = e.target.value;
@@ -16,7 +17,8 @@ export default function Search() {
           <ul className="searchBox flex flex-col gap-2">
             <SearchResultsPreview searchResults={searchResults} />
           </ul>
-        </div></div>
+        </div>
+      </div>
     </div>
   )
 }
