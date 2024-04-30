@@ -23,7 +23,6 @@ export class MaterialsController {
 
   @Get()
   findAll(@Query('search') searchString: string) {
-    console.log(searchString);
     if (searchString) {
       return this.materialsService.search(searchString);
     }

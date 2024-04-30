@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { LoggerService } from 'src/logger/logger.service';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/usersService/users.service';
 const bcrypt = require('bcrypt');
@@ -11,6 +12,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private logger: LoggerService,
   ) {}
 
   async login(email: string, password: string) {
@@ -101,7 +103,8 @@ export class AuthService {
         },
       ),
     ]);
-    console.log(accessToken, refreshToken);
+    this.logger.log(`accessToken: ${accessToken}`);
+    this.logger.log(`refreshToken: ${refreshToken}`);
     return {
       accessToken,
       refreshToken,

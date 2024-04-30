@@ -7,11 +7,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
+import { LoggerModule } from 'src/logger/logger.module';
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
+    LoggerModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
