@@ -65,7 +65,6 @@ export class MaterialsService {
       .createQueryBuilder('material')
       .where('material.title LIKE :term', { term: `%${term}%` })
       .getMany();
-    Logger.log('Searching for materials', 'DEBUG');
     return materials;
   }
 
