@@ -12,6 +12,11 @@ FROM base as build
 RUN npm run build
 
 FROM build as production
+
+RUN apt update
+RUN apt install -y ghostscript
+RUN apt install -y graphicsmagick
+
 COPY --from=build /app/dist .
 CMD ["npm", "run", "start:prod"]
 
