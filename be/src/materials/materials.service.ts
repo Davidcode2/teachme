@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Material } from './materials.entity';
@@ -7,7 +7,6 @@ import { StripeService } from 'src/stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
 import { fromPath } from 'pdf2pic';
 import { UsersService } from 'src/users/usersService/users.service';
-import { LoggerService } from 'src/logger/logger.service';
 
 @Injectable()
 export class MaterialsService {
@@ -16,7 +15,6 @@ export class MaterialsService {
     private materialsRepository: Repository<Material>,
     private stripeService: StripeService,
     private userService: UsersService,
-    private loggerService: LoggerService,
   ) {}
 
   async findAll(): Promise<{ material: Material; thumbnail: Buffer }[]> {
@@ -67,7 +65,7 @@ export class MaterialsService {
       .createQueryBuilder('material')
       .where('material.title LIKE :term', { term: `%${term}%` })
       .getMany();
-    this.loggerService.log('Searching for materials', 'DEBUG');
+    Logger.log('Searching for materials', 'DEBUG');
     return materials;
   }
 
@@ -141,7 +139,7 @@ export class MaterialsService {
     const convert = fromPath(fileInfo.filePath, options);
 
     convert.bulk(-1, { responseType: 'image' }).then((resolve) => {
-      this.loggerService.log('All pages are now converted to image');
+      Logger.log('All pages are now converted to image');
       return resolve;
     });
     return options.savePath;
@@ -161,7 +159,7 @@ export class MaterialsService {
     const pageToConvertAsImage = 1;
 
     convert(pageToConvertAsImage, { responseType: 'image' }).then((resolve) => {
-      this.loggerService.log('Page 1 is now converted as image');
+      Logger.log('Page 1 is now converted as image');
       return resolve;
     });
     return (

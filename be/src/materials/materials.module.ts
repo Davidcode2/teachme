@@ -7,10 +7,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { StripeModule } from 'src/stripe/stripe.module';
 import { MaterialPriceIdFinderModule } from 'src/material-price-id-finder/material-price-id-finder.module';
 import { UsersModule } from 'src/users/users.module';
-import { LoggerModule } from 'src/logger/logger.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Material]), ConfigModule, StripeModule, MaterialPriceIdFinderModule, UsersModule, LoggerModule],
+  imports: [TypeOrmModule.forFeature([Material]), ConfigModule, StripeModule, MaterialPriceIdFinderModule, UsersModule],
   exports: [TypeOrmModule, MaterialsService],
   controllers: [MaterialsController],
   providers: [MaterialsService, ConfigService],
