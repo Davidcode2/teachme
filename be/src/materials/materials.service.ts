@@ -15,7 +15,7 @@ export class MaterialsService {
     private materialsRepository: Repository<Material>,
     private stripeService: StripeService,
     private userService: UsersService,
-  ) {}
+  ) { }
 
   async findAll(): Promise<{ material: Material; thumbnail: Buffer }[]> {
     const materials = await this.materialsRepository
@@ -65,7 +65,11 @@ export class MaterialsService {
       .createQueryBuilder('material')
       .where('material.title LIKE :term', { term: `%${term}%` })
       .getMany();
-    return materials;
+    const unboughtMaterials = materials.map((material) => {
+      const { file_path, ...unboughtMaterial } = material;
+      return unboughtMaterial;
+    });
+    return unboughtMaterials;
   }
 
   async findOneWithPreview(
@@ -185,8 +189,8 @@ export class MaterialsService {
     return { fileName, filePath };
   }
 
-  private mapThumbnails(materials: Material[]) {
-    const materialsWithThumbnails = materials.map(async (material) => {
+  private mapThumbnails(materials: Material[] | MaterialUnboughtDto[]) {
+    const materialsWithThumbnails = materials.map(async (material: any) => {
       let thumbnail = await fs.readFile(material.thumbnail_path);
       return { material, thumbnail };
     });
