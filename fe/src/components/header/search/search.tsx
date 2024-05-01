@@ -8,16 +8,25 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
   let setSearchString = useSearchState((state: any) => state.setSearchString);
   const clearSearch = new SearchService().clearSearch;;
 
+  const keyCodeEnter = 13;
+  const keycodeEscape = 27;
+
   const changeSearchString = (e: any) => {
     const searchString: string = e.target.value;
     setSearchString(searchString);
   }
 
   const onEnter = (e: any) => {
-    if (e.key === 'Enter') {
-      setShowSearch();
+    if (e.key === 'Enter'
+      || e.keyCode == keyCodeEnter
+      || e.keyCode == keycodeEscape
+    ) {
+
+      setShowSearch(false);
     }
   }
+
+  document.body.addEventListener('keydown', onEnter);
 
   return (
     <div className="flex h-full w-full justify-center">
