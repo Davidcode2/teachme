@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png";
 import plus from "../../assets/addPlusGradient.png";
 import UserIcon from '../../assets/icons/icons8-user-32.png';
-import { useSidebarStore, useUserStore } from '../../store';
+import { useSearchState, useSidebarStore, useUserStore } from '../../store';
 import Nav from './nav';
 import UserMenu from '../userMenu';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ function Header() {
   const setSidebarShown = useSidebarStore((state) => state.toggleSidebar);
   const [showSearch, setShowSearch] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
+  let searchString = useSearchState((state: any) => state.searchString);
 
   const toggleSearch = () => {
     if (!showSearch) {
@@ -40,7 +41,7 @@ function Header() {
             {navigation}
           </div>
           <div className="flex gap-2 items-center">
-            <input onClick={toggleSearch} className="focus:outline-none hover:scale-y-125 transition searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+            <input readOnly value={searchString} onClick={toggleSearch} className="focus:outline-none hover:scale-y-125 transition searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
             <NavLink
               className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to={user ? "materials/add" : "login"}>
