@@ -7,6 +7,7 @@ import Nav from './nav';
 import UserMenu from '../userMenu';
 import { useState } from 'react';
 import Search from './search/search';
+import SearchService from '../../services/searchService';
 
 function Header() {
   const user = useUserStore((state) => state.user);
@@ -14,6 +15,7 @@ function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   let searchString = useSearchState((state: any) => state.searchString);
+  const searchService = new SearchService();
 
   const toggleSearch = () => {
     if (!showSearch) {
@@ -41,11 +43,14 @@ function Header() {
             {navigation}
           </div>
           <div className="flex gap-2 items-center">
-            <input readOnly value={searchString} onClick={toggleSearch} className="focus:outline-none hover:scale-y-125 transition searchBar min-w-0 rounded-full border border-slate-200 shadow-sm py-2 px-4" type="text" />
+            <div className="flex rounded-full border border-slate-200 shadow-sm py-2 px-4">
+              <input readOnly value={searchString} onClick={toggleSearch} className="focus:outline-none searchBar min-w-0 " type="text" />
+              {searchString && <div onClick={searchService.clearSearch} className="cursor-pointer font-handwriting text-stone-500 text-xs self-center">X<img src="" alt="" /></div>}
+            </div>
             <NavLink
               className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
               to={user ? "materials/add" : "login"}>
-              <button className="border border-slate-200 shadow-sm rounded-lg flex"><div className="hover:scale-125 hover:brightness-110 transition px-4 py-2"><img  src={plus} alt="" width="20"/></div></button>
+              <button className="border border-slate-200 shadow-sm rounded-lg flex"><div className="hover:scale-125 hover:brightness-110 transition px-4 py-2"><img src={plus} alt="" width="20" /></div></button>
             </NavLink>
           </div>
           <div className="flex items-center gap-2">
