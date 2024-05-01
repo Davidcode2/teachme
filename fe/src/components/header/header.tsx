@@ -36,15 +36,15 @@ function Header() {
 
   return (
     <>
-      {showSearch && <div className="fixed w-screen h-screen backdrop-blur-sm"><Search /></div>}
+      {showSearch && <div className="fixed w-screen h-screen backdrop-blur-sm"><Search setShowSearch={setShowSearch} /></div>}
       <div className="p-4">
         <div className="flex justify-between gap-1">
           <div className="hidden md:flex items-center gap-2">
             {navigation}
           </div>
-          <div className="flex gap-2 items-center">
-            <div className="flex rounded-full border border-slate-200 shadow-sm py-2 px-4">
-              <input readOnly value={searchString} onClick={toggleSearch} className="focus:outline-none searchBar min-w-0 " type="text" />
+          <div className="flex gap-2 items-center my-2">
+            <div onClick={toggleSearch} className="searchBar flex rounded-full border border-slate-200 shadow-sm py-2 px-4 h-full">
+              <div className="w-52 self-center">{searchString}</div>
               {searchString && <div onClick={searchService.clearSearch} className="cursor-pointer font-handwriting text-stone-500 text-xs self-center">X<img src="" alt="" /></div>}
             </div>
             <NavLink
