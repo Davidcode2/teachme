@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useRef, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 function LoginForm() {
   const [showPlane, setShowPlane] = useState(false);
@@ -14,6 +15,7 @@ function LoginForm() {
   const loginSuccess = useActionData();
   const loopTween: any = useRef();
   const failTween: any = useRef();
+  const reCaptchaSiteKey: string = "6Le_MeEpAAAAAMqvY6DqvfU9X4FLmpjxh9SqFk6W";
   gsap.registerPlugin(TextPlugin)
   gsap.registerPlugin(MotionPathPlugin)
 
@@ -75,6 +77,10 @@ function LoginForm() {
     }, 900);
   }
 
+  const onRecaptchaChange = (value: string | null) => {
+    console.log("Captcha value:", value);
+  }
+
   return (
     <>
       <Link to="/materials"><img className="p-4 md:px-20" src={ChevronIcon} alt="" /></Link>
@@ -99,6 +105,7 @@ function LoginForm() {
             <button type="submit" className="ml-auto p-4"><img src={ArrowIcon} width="30" alt="" /></button>
           </Form>
         </div>
+        <ReCAPTCHA className="ml-20" sitekey={reCaptchaSiteKey} onChange={onRecaptchaChange} />
         <div className="flex">
           <div className={showPlane ? "block" : "hidden"}>
             <img id="paperPlane" className={loginSuccess === false ? "" : ""} src={PaperPlane} alt="Paper Plane" />
