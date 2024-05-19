@@ -16,6 +16,7 @@ function LoginForm() {
   const loopTween: any = useRef();
   const failTween: any = useRef();
   const reCaptchaSiteKey: string = "6Le_MeEpAAAAAMqvY6DqvfU9X4FLmpjxh9SqFk6W";
+  const recaptchaRef: any = useRef();
   gsap.registerPlugin(TextPlugin)
   gsap.registerPlugin(MotionPathPlugin)
 
@@ -78,6 +79,15 @@ function LoginForm() {
   }
 
   const onRecaptchaChange = (value: string | null) => {
+    const recaptchaValue = recaptchaRef.current.getValue();
+    console.log("Recaptcha value:", recaptchaValue);
+    if (!recaptchaValue) {
+      return;
+    }
+    if (recaptchaValue <= 0.4) {
+      console.log("Captcha failed");
+      return false;
+    }
     console.log("Captcha value:", value);
   }
 
@@ -105,7 +115,7 @@ function LoginForm() {
             <button type="submit" className="ml-auto p-4"><img src={ArrowIcon} width="30" alt="" /></button>
           </Form>
         </div>
-        <ReCAPTCHA className="ml-20" sitekey={reCaptchaSiteKey} onChange={onRecaptchaChange} />
+        <ReCAPTCHA className="ml-20" sitekey={reCaptchaSiteKey} ref={recaptchaRef} onChange={onRecaptchaChange} />
         <div className="flex">
           <div className={showPlane ? "block" : "hidden"}>
             <img id="paperPlane" className={loginSuccess === false ? "" : ""} src={PaperPlane} alt="Paper Plane" />
