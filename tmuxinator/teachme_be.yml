@@ -1,7 +1,7 @@
-# /home/jakob/.config/tmuxinator/teachme_fe.yml
+# /home/jakob/documents/code/teachme/tmuxinator/teachme_fe.yml
 
 name: teachme_be
-root: .
+root: ~/documents/code/teachme/be/
 attach: false
 
 # Optional tmux socket
