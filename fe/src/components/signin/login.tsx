@@ -8,7 +8,7 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useLikelyHumanStore } from '../../store';
+import verifyCaptcha from '../../services/reCaptchaService';
 
 function LoginForm() {
   const [showPlane, setShowPlane] = useState(false);
@@ -79,21 +79,6 @@ function LoginForm() {
     }, 900);
   }
 
-  const onRecaptchaChange = (value: string | null) => {
-    const recaptchaValue = recaptchaRef.current.getValue();
-    console.log("Recaptcha value:", recaptchaValue);
-    if (!recaptchaValue) {
-      useLikelyHumanStore.setState({ isLikelyHuman: false });
-      return;
-    }
-    if (recaptchaValue <= 0.4) {
-      console.log("Captcha failed");
-      return false;
-    }
-    useLikelyHumanStore.setState({ isLikelyHuman: true });
-    console.log("Captcha value:", value);
-  }
-
   return (
     <>
       <Link to="/materials"><img className="p-4 md:px-20" src={ChevronIcon} alt="" /></Link>
@@ -118,7 +103,7 @@ function LoginForm() {
             <button type="submit" className="ml-auto p-4"><img src={ArrowIcon} width="30" alt="" /></button>
           </Form>
         </div>
-        <ReCAPTCHA className="ml-20" sitekey={reCaptchaSiteKey} ref={recaptchaRef} onChange={onRecaptchaChange} />
+        <ReCAPTCHA className="ml-20" sitekey={reCaptchaSiteKey} ref={recaptchaRef} onChange={() => verifyCaptcha(recaptchaRef.current.getValue())} />
         <div className="flex">
           <div className={showPlane ? "block" : "hidden"}>
             <img id="paperPlane" className={loginSuccess === false ? "" : ""} src={PaperPlane} alt="Paper Plane" />
