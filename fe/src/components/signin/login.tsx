@@ -8,6 +8,7 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { useLikelyHumanStore } from '../../store';
 
 function LoginForm() {
   const [showPlane, setShowPlane] = useState(false);
@@ -82,12 +83,14 @@ function LoginForm() {
     const recaptchaValue = recaptchaRef.current.getValue();
     console.log("Recaptcha value:", recaptchaValue);
     if (!recaptchaValue) {
+      useLikelyHumanStore.setState({ isLikelyHuman: false });
       return;
     }
     if (recaptchaValue <= 0.4) {
       console.log("Captcha failed");
       return false;
     }
+    useLikelyHumanStore.setState({ isLikelyHuman: true });
     console.log("Captcha value:", value);
   }
 

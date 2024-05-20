@@ -55,6 +55,16 @@ export const useGlobalLoadingStore = create<LoadingState>((set) => ({
   setLoading: (loading: boolean) => set({ loading }),
 }));
 
+type LikelyHuman = {
+  isLikelyHuman: boolean,
+  setIsLikelyHuman: (loading: boolean) => void
+}
+
+export const useLikelyHumanStore = create<LikelyHuman>((set) => ({
+  isLikelyHuman: false,
+  setIsLikelyHuman: (isLikelyHuman: boolean) => set({ isLikelyHuman }),
+}));
+
 type SearchState = {
   searchString: string,
   searchResults: Material[];
