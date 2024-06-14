@@ -9,7 +9,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { StripeService } from 'src/stripe/stripe.service';
+import { StripeService } from '../stripe/stripe.service';
 import Stripe from 'stripe';
 
 @Controller('stripe')
@@ -20,7 +20,8 @@ export class StripeController {
   async getSessionStatus(
     @Query('session_id') sessionId: string,
   ): Promise<Stripe.Checkout.Session> {
-    const session: Stripe.Checkout.Session = await this.stripeService.getSessionStatus(sessionId);
+    const session: Stripe.Checkout.Session =
+      await this.stripeService.getSessionStatus(sessionId);
     return session;
   }
 

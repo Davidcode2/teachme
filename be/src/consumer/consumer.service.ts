@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Consumer } from './consumer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Material } from 'src/materials/materials.entity';
-import { Cart } from 'src/cart/cart.entity';
+import { Material } from '../materials/materials.entity';
+import { Cart } from '../cart/cart.entity';
 import * as fs from 'node:fs/promises';
 
 @Injectable()

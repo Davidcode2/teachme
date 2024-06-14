@@ -1,9 +1,9 @@
-import { Material } from 'src/materials/materials.entity';
+import { Material } from '../materials/materials.entity';
 import { Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class Cart {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToMany((type) => Material)

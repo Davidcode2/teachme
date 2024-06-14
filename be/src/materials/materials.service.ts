@@ -3,10 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Material } from './materials.entity';
 import * as fs from 'node:fs/promises';
-import { StripeService } from 'src/stripe/stripe.service';
+import { StripeService } from '../stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
 import { fromPath } from 'pdf2pic';
-import { UsersService } from 'src/users/usersService/users.service';
+import { UsersService } from '../users/usersService/users.service';
+import { ImageService } from './image.service';
 
 @Injectable()
 export class MaterialsService {
@@ -15,7 +16,8 @@ export class MaterialsService {
     private materialsRepository: Repository<Material>,
     private stripeService: StripeService,
     private userService: UsersService,
-  ) { }
+    private imageService: ImageService,
+  ) {}
 
   async findAll(): Promise<{ material: Material; thumbnail: Buffer }[]> {
     const materials = await this.materialsRepository
@@ -92,7 +94,7 @@ export class MaterialsService {
   }
 
   async create(materialDto: MaterialDtoIn): Promise<Material> {
-    let material = new Material();
+    const material = new Material();
     material.title = materialDto.title;
     material.description = materialDto.description;
     material.date_published = new Date();
@@ -100,7 +102,7 @@ export class MaterialsService {
     const fileInfo = this.storeFile(materialDto.file);
     material.file_path = fileInfo.filePath;
     material.thumbnail_path = this.createThumbnail(fileInfo);
-    material.preview_path = await this.createPreview(fileInfo);
+    material.preview_path = await this.imageService.createPreview(fileInfo);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
     return this.materialsRepository.save(material);
@@ -136,8 +138,6 @@ export class MaterialsService {
       width: 800,
       height: 600,
     };
-
-    const dir = await fs.mkdir(options.savePath);
 
     const convert = fromPath(fileInfo.filePath, options);
 
@@ -175,8 +175,6 @@ export class MaterialsService {
     );
   }
 
-  private imageOptions = {};
-
   private storeFile(multerFile: Express.Multer.File) {
     if (!multerFile) {
       return null;
@@ -191,7 +189,7 @@ export class MaterialsService {
 
   private mapThumbnails(materials: Material[] | MaterialUnboughtDto[]) {
     const materialsWithThumbnails = materials.map(async (material: any) => {
-      let thumbnail = await fs.readFile(material.thumbnail_path);
+      const thumbnail = await fs.readFile(material.thumbnail_path);
       return { material, thumbnail };
     });
     return Promise.all(materialsWithThumbnails);
@@ -199,7 +197,7 @@ export class MaterialsService {
 
   private async getPreview(path: string): Promise<Buffer[]> {
     const fileNames: string[] = await fs.readdir(path);
-    let fileBuffers = [];
+    const fileBuffers = [];
     fileNames.forEach(async (fileName) => {
       const filePath = `${path}/${fileName}`;
       const buffer = fs.readFile(filePath);

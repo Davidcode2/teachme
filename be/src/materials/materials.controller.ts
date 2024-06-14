@@ -5,16 +5,15 @@ import {
   Param,
   Post,
   Query,
-  Req,
   Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { MaterialsService } from './materials.service';
 import { Express } from 'express';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('materials')
@@ -36,7 +35,10 @@ export class MaterialsController {
 
   @UseGuards(JwtAuthGuard)
   @Get('user/:id')
-  findByUser(@Param('id') userId: string, @Query('search') searchString: string) {
+  findByUser(
+    @Param('id') userId: string,
+    @Query('search') searchString: string,
+  ) {
     return this.materialsService.findByUser(userId, searchString);
   }
 

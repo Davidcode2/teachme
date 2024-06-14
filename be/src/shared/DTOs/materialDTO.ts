@@ -1,6 +1,6 @@
-import { Material } from "src/materials/materials.entity"
+import { Material } from '../../materials/materials.entity';
 
 export interface MaterialDto {
-  material: Material
-  thumbnail: Buffer
+  material: Material;
+  thumbnail: Buffer;
 }

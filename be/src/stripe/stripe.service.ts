@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Material } from 'src/materials/materials.entity';
-import { UsersService } from 'src/users/usersService/users.service';
+import { Material } from '../materials/materials.entity';
+import { UsersService } from '../users/usersService/users.service';
 import Stripe from 'stripe';
-import { FinderByPriceIdService } from 'src/material-price-id-finder/material-price-id-finder.service';
-import { CommonCartService } from 'src/common-cart/common-cart.service';
+import { FinderByPriceIdService } from '../material-price-id-finder/material-price-id-finder.service';
+import { CommonCartService } from '../common-cart/common-cart.service';
 
 @Injectable()
 export class StripeService {

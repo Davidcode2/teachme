@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from './cart.entity';
 import { Repository } from 'typeorm';
-import { UsersService } from 'src/users/usersService/users.service';
-import { Material } from 'src/materials/materials.entity';
-import { MaterialsService } from 'src/materials/materials.service';
-import { StripeService } from 'src/stripe/stripe.service';
-import { CommonCartService } from 'src/common-cart/common-cart.service';
+import { UsersService } from '../users/usersService/users.service';
+import { Material } from '../materials/materials.entity';
+import { MaterialsService } from '../materials/materials.service';
+import { StripeService } from '../stripe/stripe.service';
+import { CommonCartService } from '../common-cart/common-cart.service';
 
 @Injectable()
 export class CartService {

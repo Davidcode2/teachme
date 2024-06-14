@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Material } from 'src/materials/materials.entity';
-import { UsersService } from 'src/users/usersService/users.service';
+import { Material } from '../materials/materials.entity';
+import { UsersService } from '../users/usersService/users.service';
 
 @Injectable()
 export class CommonCartService {

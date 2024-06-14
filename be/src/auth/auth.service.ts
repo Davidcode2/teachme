@@ -1,8 +1,13 @@
-import { ForbiddenException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/users/user.entity';
-import { UsersService } from 'src/users/usersService/users.service';
+import { User } from '../users/user.entity';
+import { UsersService } from '../users/usersService/users.service';
 const bcrypt = require('bcrypt');
 
 @Injectable()
@@ -19,7 +24,7 @@ export class AuthService {
     if (!validated) {
       throw new UnauthorizedException();
     }
-    let { hash, ...userData } = user;
+    const { hash, ...userData } = user;
     const tokens = await this.makeTokens(user.id, user.email);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
     return { user: userData, tokens };
@@ -47,19 +52,23 @@ export class AuthService {
 
   async refreshTokens(userId: string, refreshToken: string) {
     const { hash, ...user } = await this.usersService.findOneById(userId);
-    if (!user || !user.refreshToken) throw new ForbiddenException('Access Denied');
-    const refreshTokenMatches = await this.checkRefreshToken(user.refreshToken, refreshToken);
+    if (!user || !user.refreshToken)
+      throw new ForbiddenException('Access Denied');
+    const refreshTokenMatches = await this.checkRefreshToken(
+      user.refreshToken,
+      refreshToken,
+    );
     if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
     const tokens = await this.makeTokens(user.id, user.email);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
     return { user, tokens };
   }
 
-  private async checkRefreshToken(userRefreshToken: string, refreshToken: string) {
-    return await bcrypt.compare(
-      refreshToken,
-      userRefreshToken,
-    );
+  private async checkRefreshToken(
+    userRefreshToken: string,
+    refreshToken: string,
+  ) {
+    return await bcrypt.compare(refreshToken, userRefreshToken);
   }
 
   private async findUserBy(email: string): Promise<User> {
