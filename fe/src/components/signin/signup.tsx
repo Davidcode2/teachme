@@ -8,7 +8,7 @@ import PasswordValidation from './passwordValidation';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { ReCAPTCHA } from 'react-google-recaptcha';
+import ReCAPTCHA from 'react-google-recaptcha';
 import verifyCaptcha from '../../services/reCaptchaService';
 
 function SignUpForm() {
