@@ -6,7 +6,7 @@ export class ImageService {
     const options = {
       density: 100,
       saveFilename: `${fileInfo.fileName}_preview`,
-      savePath: `assets/previews/${fileInfo.fileName}`,
+      savePath: `assets/previews/`,
       format: 'png',
       width: 800,
       height: 600,
