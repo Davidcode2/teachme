@@ -3,6 +3,7 @@ import {
   useAccessTokenStore,
   useUserStore,
   useLikelyHumanStore,
+  useAvatarStore,
 } from '../store';
 import verifyCaptcha from '../services/reCaptchaService';
 
@@ -27,8 +28,22 @@ export default async function handleSubmit({ request }: { request: Request }) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(responseData.tokens.accessToken);
     const setUser = useUserStore.getState().setUser;
+    const avatar = getAvatar(responseData.user.id);
+    const setAvatar = useAvatarStore.getState().setAvatar;
+    setAvatar(avatar);
     setUser(responseData.user);
     return redirect('/materials');
   }
   return false;
+}
+
+async function getAvatar(userId: string) {
+  const response = await fetch(`/api/users/avatar/${userId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.blob();
 }

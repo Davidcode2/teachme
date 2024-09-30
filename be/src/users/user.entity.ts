@@ -25,9 +25,12 @@ export class User {
 
   @Column({ nullable: true })
   lastName: string;
-  
+
   @Column({ nullable: true })
   refreshToken: string;
+
+  @Column({ nullable: true })
+  avatar: string;
 
   @Column()
   signUpDate: Date;
@@ -36,7 +39,7 @@ export class User {
   @JoinColumn()
   consumer: Consumer;
 
-  @RelationId((user: User) => user.consumer) 
+  @RelationId((user: User) => user.consumer)
   consumerId: string;
 
   @OneToOne((type) => Author)

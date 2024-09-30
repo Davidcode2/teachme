@@ -5,6 +5,8 @@ import { User } from '../user.entity';
 import { Author } from '../author.entity';
 import { Material } from '../../materials/materials.entity';
 import { ConsumerService } from '../../consumer/consumer.service';
+const jdenticon = require('jdenticon');
+import * as fs from 'node:fs/promises';
 
 @Injectable()
 export class UsersService {
@@ -45,6 +47,7 @@ export class UsersService {
     user.signUpDate = new Date();
     user.author = author;
     user.consumer = consumer;
+    user.avatar = this.createAvatar(email);
     return this.usersRepository.save(user);
   }
 
@@ -69,13 +72,30 @@ export class UsersService {
   async addMaterials(materials: Material[], userId: string) {
     const user = await this.findOneById(userId);
     const consumerId = user.consumerId;
-    user.consumer = await this.consumerService.addMaterials(materials, consumerId);
+    user.consumer = await this.consumerService.addMaterials(
+      materials,
+      consumerId,
+    );
     this.usersRepository.save(user);
+  }
+
+  async getAvatarPath(userId: string): Promise<string> {
+    const user = await this.findOneById(userId);
+    return user.avatar;
   }
 
   private async createAuthor(): Promise<Author> {
     const author = new Author();
     await this.authorRepository.save(author);
     return author;
+  }
+
+  private createAvatar(name: string): string {
+    const size = 200;
+    const png = jdenticon.toPng(name, size);
+    const avatarsFolder = 'assets/avatars';
+    const filePath = `${avatarsFolder}/${name}.png`;
+    fs.writeFile(filePath, png);
+    return filePath;
   }
 }

@@ -25,6 +25,18 @@ export const useUserStore = create<UserState>((set) => ({
   removeUser: () => set({ user: null }),
 }));
 
+type AvatarState = {
+  avatar: any
+  setAvatar: (avatar: any) => void
+  removeAvatar: () => void
+}
+  
+export const useAvatarStore = create<AvatarState>((set) => ({
+  avatar: null,
+  setAvatar: (avatar: any) => set({ avatar }),
+  removeAvatar: () => set({ avatar: null }),
+}));
+
 type SidebarState = {
   isShown: boolean
   toggleSidebar: () => void
