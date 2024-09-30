@@ -64,23 +64,30 @@ export class AuthService {
     return { user, tokens };
   }
 
+  private makeRequestBody(token: string) {
+    return {
+      event: {
+        token: token,
+        expectedAction: 'LOGIN',
+        siteKey: '6LeuYlMqAAAAAAS88977iQmCAxq8coWUbe4Z436W',
+      },
+    };
+  }
+
   async verifyRecaptcha(token: string) {
-    const secret = this.configService.get<string>('RECAPTCHA_SHARED_SECRET');
+    const api_key = this.configService.get<string>('GCLOUD_API_KEY');
     const response = await fetch(
-      `https://www.google.com/recaptcha/api/siteverify`,
+      `https://recaptchaenterprise.googleapis.com/v1/projects/teachly-421210/assessments?key=${api_key}`,
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: new URLSearchParams({
-          secret: secret,
-          response: token,
-        }),
+        body: JSON.stringify(this.makeRequestBody(token)),
       },
     );
     const data = await response.json();
-    return data.success;
+    return data;
   }
 
   private async checkRefreshToken(
