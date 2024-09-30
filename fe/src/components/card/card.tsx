@@ -51,6 +51,7 @@ function Card({ material }: { material: any }): JSX.Element {
             <div className="text-2xl">{material.material.title}</div>
             <div>{material.material.description}</div>
           </div>
+          <p className="text-3xl text-emerald-500">{Number((material.material.price) / 100).toFixed(2)} €</p>
           <div className="flex mt-auto">
             <div className="self-center">
               <ActionButtons id={material.material.id} isMine={material.material.file_path}></ActionButtons>
