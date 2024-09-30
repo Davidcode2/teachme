@@ -11,6 +11,7 @@ export default async function handleSubmit({ request }: { request: Request }) {
   if (useLikelyHumanStore.getState().isLikelyHuman === false) {
     return false;
   }
+  useLikelyHumanStore.setState({ isLikelyHuman: false });
   const formData = await request.formData();
   const response = await fetch('/api/auth/login', {
     method: 'POST',
