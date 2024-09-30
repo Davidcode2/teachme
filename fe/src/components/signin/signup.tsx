@@ -8,8 +8,6 @@ import PasswordValidation from './passwordValidation';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import ReCAPTCHA from 'react-google-recaptcha';
-import verifyCaptcha from '../../services/reCaptchaService';
 
 function SignUpForm() {
   gsap.registerPlugin(MotionPathPlugin)
@@ -18,8 +16,6 @@ function SignUpForm() {
   const [passwordValid, setPasswordValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
   const tl: any = useRef();
-  const reCaptchaSiteKey: string = "6Le_MeEpAAAAAMqvY6DqvfU9X4FLmpjxh9SqFk6W";
-  const recaptchaRef: any = useRef();
   const navigation = useNavigation();
 
   const checkPasswordRequirements = (e: any) => {
@@ -76,7 +72,6 @@ function SignUpForm() {
             <button type="submit" className="ml-auto p-4"><img src={ArrowIcon} width="30" alt="" /></button>
           </Form>
         </div>
-        <ReCAPTCHA className="ml-20" sitekey={reCaptchaSiteKey} ref={recaptchaRef} onChange={() => verifyCaptcha(recaptchaRef.current.getValue())} />
         <div className="flex">
           <div className={navigation.state === "submitting" ? "block" : "hidden"}>
             <img className="paperPlane" src={PaperPlane} alt="Paper Plane" />

@@ -4,8 +4,9 @@ import { useState } from "react";
 import Preview from "../preview.tsx";
 import GradientGenerator from "../../services/gradientGenerator.ts";
 import CardService from "../../services/cardService.ts";
+import MaterialWithThumbnail from "../../types/MaterialWithThumbnail.ts";
 
-function Card({ material }: { material: any }): JSX.Element {
+function Card({ material: materialWithThumbnail }: { material: MaterialWithThumbnail }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -13,19 +14,18 @@ function Card({ material }: { material: any }): JSX.Element {
   const cardService = new CardService();
   const gradient = new GradientGenerator().randomGradient();
 
-  const image = material.thumbnail
-    ? material.thumbnail.data
-      ? URL.createObjectURL(new Blob([new Uint8Array(material.thumbnail.data)], { type: 'image/png' }))
+  const image = materialWithThumbnail.thumbnail
+    ? materialWithThumbnail.thumbnail.data
+      ? URL.createObjectURL(new Blob([new Uint8Array(materialWithThumbnail.thumbnail.data)], { type: 'image/png' }))
       : null
     : null;
 
   const togglePreview = async () => {
     setShowPreview(true);
-    const json = await cardService.getPreview(material.material.id);
+    const json = await cardService.getPreview(materialWithThumbnail.material.id.toString());
     const images = cardService.getImages(json.preview);
     setPreviewImage(images);
     setPreview(json);
-    //Router(`/materials/id/${material.material.id}`);
   }
 
   const imageElement = image
@@ -48,16 +48,16 @@ function Card({ material }: { material: any }): JSX.Element {
         {imageElement}
         <div className="bg-white p-10 flex flex-col flex-1 gap-4 overflow-auto md:rounded-r-lg rounded-b-lg md:rounded-bl-none md:border-l md:border-t-0 border-t border-slate-100">
           <div className="flex flex-col">
-            <div className="text-2xl">{material.material.title}</div>
-            <div>{material.material.description}</div>
+            <div className="text-2xl">{materialWithThumbnail.material.title}</div>
+            <div>{materialWithThumbnail.material.description}</div>
           </div>
-          <p className="text-3xl text-emerald-500">{Number((material.material.price) / 100).toFixed(2)} €</p>
+          <p className="text-3xl text-emerald-500">{Number((materialWithThumbnail.material.price) / 100).toFixed(2)} €</p>
           <div className="flex mt-auto">
             <div className="self-center">
-              <ActionButtons id={material.material.id} isMine={material.material.file_path}></ActionButtons>
+              <ActionButtons id={materialWithThumbnail.material.id} isMine={materialWithThumbnail.material.file_path}></ActionButtons>
             </div>
             <div className="ml-auto self-end">
-              <Author author={material.material.author} published={material.material.date_published} ></Author>
+              <Author author={materialWithThumbnail.material.author} published={materialWithThumbnail.material.date_published} ></Author>
             </div>
           </div>
         </div>
