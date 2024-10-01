@@ -1,17 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import CheckMarkIcon from '../../assets/icons/icons8-checkmark-48.png';
+import TrashBin from '../../assets/icons/icons8-trash-48.png';
+import EditIcon from '../../assets/icons/icons8-edit-48.png';
 import SpinnerGif from '../../assets/icons/icons8-spinner.gif';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
 import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
-import { useCartStore, useUserStore } from '../../store';
-import { useState } from 'react';
+import { useAccessTokenStore, useCartStore, useUserStore } from '../../store';
+import { useEffect, useState } from 'react';
 
 interface ActionButtonsProps {
   id: string;
   isMine: string;
+  authorId: string;
 }
 
-function ActionButtons({ id, isMine }: ActionButtonsProps) {
+function ActionButtons({ id, isMine, authorId }: ActionButtonsProps) {
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -44,6 +47,23 @@ function ActionButtons({ id, isMine }: ActionButtonsProps) {
     }, 5000);
   }
 
+  const deleteMaterial = () => {
+    return async () => {
+      setLoading(true);
+      const res = await fetch(`/api/materials/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
+        }
+      });
+      if (res.status === 200) {
+        setLoading(false);
+        window.location.reload();
+      }
+    }
+  }
+
   return (
     <>
       <div className="flex">
@@ -51,7 +71,15 @@ function ActionButtons({ id, isMine }: ActionButtonsProps) {
           {!isMine && <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />}
         </div>
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-          {isMine && <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a> }
+          {isMine && <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>}
+        </div>
+        <div className="">
+          {authorId === user.author.id
+            && <div className="flex">
+              <a href={`/api/materials/download?id=${id}`} download={id} className="hover:cursor-pointer hover:bg-gray-100 rounded-full"><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>
+              <button className="hover:cursor-pointer hover:bg-gray-100 rounded-full" onClick={deleteMaterial()}><img className="" src={TrashBin} width="30" alt="" /></button>
+              <NavLink to={`/materials/${id}/edit`}><img className="hover:cursor-pointer hover:bg-gray-100 rounded-full" src={EditIcon} width="30" alt="" /></NavLink>
+            </div>}
         </div>
         <div className="mx-2">
           {loading && <div className=""><img src={SpinnerGif} alt="" width="30" /></div>}

@@ -1,7 +1,7 @@
 import { useSearchState, useUserStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
-import NoData from './noData';
+import NoData from '../materials/noData';
 import { useEffect, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
 
@@ -10,7 +10,8 @@ type MaterialWithThumbnail = {
   thumbnail: any
 }
 
-function Materials() {
+export default function Workspace() {
+
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   let searchString = useSearchState((state) => state.searchString);
   let onMinePage = document.location.pathname === "/materials/mine";
@@ -47,7 +48,7 @@ function Materials() {
     if (onMinePage) {
       return `/api/materials/user/${user.id}`;
     }
-    return "api/materials";
+    return "/api/materials";
   }
 
   useEffect(() => {
@@ -75,4 +76,3 @@ function Materials() {
   )
 }
 
-export default Materials

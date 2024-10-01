@@ -18,6 +18,8 @@ import NoData from './components/materials/noData.tsx'
 import SuccessPage from './components/successPage.tsx'
 import SharedPreview from './components/sharedPreview.tsx'
 import sharedPreviewLoader from './loaders/sharedPreviewLoader.ts'
+import Workspace from './components/workspace/workspace.tsx'
+import Mine from './components/workspace/mine.tsx'
 
 const router = createBrowserRouter([
   {
@@ -33,7 +35,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/materials/mine",
-        element: <Materials />,
+        element: <Mine />,
+        children: [
+          { index: true, element: <Materials /> },
+          { 
+            path: "workspace/",
+            element: <Workspace />,
+          },
+        ]
       },
       {
         path: "/materials/add",

@@ -54,7 +54,7 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
           <p className="text-3xl text-emerald-500">{Number((materialWithThumbnail.material.price) / 100).toFixed(2)} €</p>
           <div className="flex mt-auto">
             <div className="self-center">
-              <ActionButtons id={materialWithThumbnail.material.id} isMine={materialWithThumbnail.material.file_path}></ActionButtons>
+              <ActionButtons id={materialWithThumbnail.material.id} authorId={materialWithThumbnail.material.author_id} isMine={materialWithThumbnail.material.file_path}></ActionButtons>
             </div>
             <div className="ml-auto self-end">
               <Author authorId={materialWithThumbnail.material.author_id} published={materialWithThumbnail.material.date_published} ></Author>
