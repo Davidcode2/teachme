@@ -1,11 +1,10 @@
 import { redirect } from 'react-router-dom';
 import {
   useAccessTokenStore,
-  useUserStore,
   useLikelyHumanStore,
-  useAvatarStore,
 } from '../store';
 import verifyCaptcha from '../services/reCaptchaService';
+import { UserService } from '../services/userService';
 
 export default async function handleSubmit({ request }: { request: Request }) {
   if (!checkCaptchaAndResetLikelyHumanStore()) return false;
@@ -14,30 +13,11 @@ export default async function handleSubmit({ request }: { request: Request }) {
   if (JSON.stringify(response).includes('accessToken')) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(response.tokens.accessToken);
-    setUserAndAvatar(response);
+    UserService.setUserAndAvatar(response.user);
     return redirect('/materials');
   }
   return false;
 }
-
-async function getAvatar(userId: string) {
-  const response = await fetch(`/api/users/avatar/${userId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.blob();
-}
-
-async function setUserAndAvatar(responseData: any) {
-  const setUser = useUserStore.getState().setUser;
-  const avatar = await getAvatar(responseData.user.id);
-  const setAvatar = useAvatarStore.getState().setAvatar;
-  setAvatar(avatar);
-  setUser(responseData.user);
-} 
 
 async function checkCaptchaAndResetLikelyHumanStore() {
   await verifyCaptcha();

@@ -5,6 +5,7 @@ import Sidebar from './components/sidebar/sidebar'
 import SpinnerGif from './assets/icons/icons8-spinner.gif'
 import { useEffect } from 'react';
 import { useAccessTokenStore, useUserStore, useGlobalLoadingStore } from './store';
+import { UserService } from './services/userService'
 
 function App(): JSX.Element {
   let loading = useGlobalLoadingStore((state) => state.loading);
@@ -24,8 +25,7 @@ function App(): JSX.Element {
           setAccessToken(data.tokens.accessToken);
         }
         if (data.user) {
-          const setUser = useUserStore.getState().setUser;
-          setUser(data.user);
+          UserService.setUserAndAvatar(data.user);
         }
       });
 
