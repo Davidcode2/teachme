@@ -28,7 +28,7 @@ export default function SharedPreview() {
               </div>
               <div className="flex gap-x-10">
                 <p className="text-3xl text-emerald-500">{Number((data.material.price) / 100).toFixed(2)} €</p>
-                <ActionButtons id={data.material.id} isMine={data.material.file_path} />
+                <ActionButtons id={data.material.id} authorId={data.material.author_id} isMine={data.material.file_path} />
               </div>
             </div>
           </div>

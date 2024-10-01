@@ -1,7 +1,7 @@
 import SpinnerGif from '../../assets/icons/icons8-spinner.gif'
+import userIcon from '../../assets/icons/icons8-user-48.png'
 import { useEffect, useState } from 'react';
 import { UserService } from '../../services/userService';
-import AuthorDTO from '../../DTOs/author';
 import CardService from '../../services/cardService';
 
 type AppProps = {
@@ -42,7 +42,7 @@ function Author(props: AppProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <img src={avatar} alt="" width="40" />
+      <img src={avatar ? avatar : userIcon} alt="" width="40" />
       <div>
         <div className="font-bold">
           {author}

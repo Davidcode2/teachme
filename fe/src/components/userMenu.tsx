@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import userIcon from '../assets/icons/icons8-user-48.png';
 import { useAccessTokenStore, useAvatarStore, useGlobalLoadingStore, useUserStore } from '../store';
 import { useState } from 'react';
 
@@ -24,7 +25,7 @@ export default function UserMenu() {
   }
 
   const avatar = useAvatarStore.getState().avatar
-      ? URL.createObjectURL(useAvatarStore.getState().avatar, { type: 'image/png' })
+      ? URL.createObjectURL(useAvatarStore.getState().avatar)
       : null
 
   const toggleMenu = () => showMenu ? setShowMenu(false) : setShowMenu(true);
@@ -46,7 +47,7 @@ export default function UserMenu() {
   return (
     <div className="flex items-center">
       <div className="text-slate-400 hidden sm:block mr-2">{email}</div>
-      <div className="hidden sm:block userMenu hover:cursor-pointer" onClick={toggleMenu} ><img className="userMenu min-w-5 rounded-full" src={avatar} width="30" alt="User" /></div>
+      <div className="hidden sm:block userMenu hover:cursor-pointer" onClick={toggleMenu} ><img className="userMenu min-w-5 rounded-full" src={avatar ? avatar : userIcon} width="30" alt="User" /></div>
       {showMenu ?
         <div className="userMenu relative">
           <div className="userMenu absolute bg-white border rounded-md shadow-md top-6 right-0">

@@ -1,5 +1,4 @@
 import { NavLink, Outlet } from "react-router-dom";
-import Materials from "../materials/materials";
 
 export default function Mine() {
 

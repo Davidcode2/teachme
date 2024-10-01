@@ -1,6 +1,6 @@
 import Material from "../DTOs/material"
 
-export default class MaterialWithThumbnail {
+export type MaterialWithThumbnail = {
   material: Material;
   thumbnail: any;
 }

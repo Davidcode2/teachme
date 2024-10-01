@@ -4,11 +4,11 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
 import SpinnerGif from './assets/icons/icons8-spinner.gif'
 import { useEffect } from 'react';
-import { useAccessTokenStore, useUserStore, useGlobalLoadingStore } from './store';
+import { useAccessTokenStore, useGlobalLoadingStore } from './store';
 import { UserService } from './services/userService'
 
 function App(): JSX.Element {
-  let loading = useGlobalLoadingStore((state) => state.loading);
+  const loading = useGlobalLoadingStore((state) => state.loading);
 
   useEffect(() => {
     fetch('/api/auth/refresh', {

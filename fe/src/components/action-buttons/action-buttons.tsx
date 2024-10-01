@@ -6,7 +6,7 @@ import SpinnerGif from '../../assets/icons/icons8-spinner.gif';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
 import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
 import { useAccessTokenStore, useCartStore, useUserStore } from '../../store';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface ActionButtonsProps {
   id: string;
@@ -74,7 +74,7 @@ function ActionButtons({ id, isMine, authorId }: ActionButtonsProps) {
           {isMine && <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>}
         </div>
         <div className="">
-          {authorId === user.author.id
+          {user.author && authorId === user.author.id
             && <div className="flex">
               <a href={`/api/materials/download?id=${id}`} download={id} className="hover:cursor-pointer hover:bg-gray-100 rounded-full"><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>
               <button className="hover:cursor-pointer hover:bg-gray-100 rounded-full" onClick={deleteMaterial()}><img className="" src={TrashBin} width="30" alt="" /></button>
