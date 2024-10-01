@@ -7,7 +7,6 @@ import { Response } from 'express';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('avatar/:id')
   async avatar(@Param('id') userId: string, @Res() response: Response) {
     const avatarPath = await this.usersService.getAvatarPath(userId);
@@ -17,7 +16,6 @@ export class UsersController {
 
   @Get('author/:id')
   async getUserByAuthorId(@Param('id') authorId: string) {
-    console.log("authorID", authorId);
     const user = await this.usersService.findOneByAuthorId(authorId);
     return user;
   }

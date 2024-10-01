@@ -8,6 +8,5 @@ export default async function sharedPreviewLoader(id: string | undefined) {
   });
 
   const responseData = await response.json();
-  console.log('responseData', responseData);
   return responseData;
 }

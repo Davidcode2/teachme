@@ -1,34 +1,43 @@
-import SpinnerGif from './assets/icons/icons8-spinner.gif'
+import SpinnerGif from '../../assets/icons/icons8-spinner.gif'
 import { useEffect, useState } from 'react';
 import { UserService } from '../../services/userService';
-import { useAvatarStore } from '../../store';
 import AuthorDTO from '../../DTOs/author';
+import CardService from '../../services/cardService';
 
 type AppProps = {
-  author: AuthorDTO
+  authorId: string
   published: Date
 }
 
 function Author(props: AppProps) {
   const [loading, setLoading] = useState(true);
   const [avatar, setAvatar] = useState<string | null>(null);
+  const [author, setAuthor] = useState<string | null>(null);
+  const cardService = new CardService();
 
   useEffect(() => {
-    const getAvatar = async () => {
-      const avatarData = await UserService.getAvatar(props.author.userId!);
+    const getAuthor = async () => {
+      const authorIn = await cardService.getAuthor(props.authorId);
+      await getAvatar(authorIn.id);
+      setAuthor(authorIn.email);
+    }
+    if (!author) {
+      getAuthor();
+    }
+    const getAvatar = async (userId: string) => {
+      const avatarData = await UserService.getAvatar(userId!);
       setAvatar(avatarData
         ? URL.createObjectURL(avatarData)
         : null)
     }
-    if (props.author) {
+    if (author) {
       setLoading(false);
-      getAvatar();
     }
-  }, [props.author]);
+  }, [author]);
 
 
   if (loading) {
-    return <><img src="SpinnerGif" /></>
+    return <><img src={SpinnerGif} /></>
   }
 
   return (
@@ -36,7 +45,7 @@ function Author(props: AppProps) {
       <img src={avatar} alt="" width="40" />
       <div>
         <div className="font-bold">
-          {props.author.name}
+          {author}
         </div>
         <div>
           {new Date(props.published).toLocaleString("de-DE", { year: 'numeric', month: 'long', day: 'numeric' })}
