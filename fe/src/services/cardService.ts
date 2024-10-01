@@ -9,7 +9,7 @@ export default class CardService {
   }
 
   public getImages(imageBuffers: { data: number[] }[]) {
-    let images: string[] = [];
+    const images: string[] = [];
     imageBuffers.forEach((img) => {
       const imageUrl = URL.createObjectURL(
         new Blob([new Uint8Array(img.data)], { type: 'image/png' }),
