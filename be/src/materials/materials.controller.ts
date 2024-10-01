@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -48,6 +49,12 @@ export class MaterialsController {
   create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     const materialDto = { file, ...body };
     return this.materialsService.create(materialDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  delete(@Param('id') materialId: string) {
+    return this.materialsService.delete(materialId);
   }
 
   @Get('download')

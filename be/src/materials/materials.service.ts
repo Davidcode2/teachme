@@ -5,7 +5,6 @@ import { Material } from './materials.entity';
 import * as fs from 'node:fs/promises';
 import { StripeService } from '../stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
-import { fromPath } from 'pdf2pic';
 import { UsersService } from '../users/usersService/users.service';
 import { ImageService } from './image.service';
 
@@ -48,6 +47,16 @@ export class MaterialsService {
       return this.searchMyMaterials(searchString, materials);
     }
     return this.mapThumbnails(materials);
+  }
+
+  async delete(id: string) {
+    const material = await this.materialsRepository.findOneBy({ id: id });
+    if (!material) {
+      return null;
+    }
+    //await this.stripeService.deleteProduct(material.stripe_price_id);
+    await this.materialsRepository.delete(id);
+    return material;
   }
 
   private async getMaterialsForUser(userId: string) {
@@ -103,7 +112,7 @@ export class MaterialsService {
     material.price = Number(materialDto.price);
     const fileInfo = this.storeFile(materialDto.file);
     material.file_path = fileInfo.filePath;
-    material.thumbnail_path = this.createThumbnail(fileInfo);
+    material.thumbnail_path = this.imageService.createThumbnail(fileInfo);
     material.preview_path = await this.imageService.createPreview(fileInfo);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
@@ -128,61 +137,6 @@ export class MaterialsService {
   async getFile(materialId: string) {
     const material = await this.findOne(materialId);
     return fs.readFile(material.file_path);
-  }
-
-  private async createPreview(fileInfo: {
-    fileName: string;
-    filePath: string;
-  }) {
-    const options = {
-      density: 100,
-      saveFilename: `${fileInfo.fileName}_preview`,
-      savePath: `assets/previews/${fileInfo.fileName}`,
-      format: 'png',
-      width: 800,
-      height: 600,
-    };
-
-    const convert = fromPath(fileInfo.filePath, options);
-
-    convert.bulk(-1, { responseType: 'image' }).then((resolve) => {
-      Logger.log('All pages are now converted to image');
-      return resolve;
-    });
-    return options.savePath;
-  }
-
-  private createThumbnail(fileInfo: { fileName: string; filePath: string }) {
-    const options = {
-      density: 100,
-      saveFilename: `${fileInfo.fileName}_thumbnail`,
-      savePath: 'assets/images',
-      format: 'png',
-      width: 800,
-      height: 600,
-    };
-
-    const convert = fromPath(fileInfo.filePath, options);
-    const pageToConvertAsImage = 1;
-
-    try {
-      convert(pageToConvertAsImage, { responseType: 'image' }).then(
-        (resolve) => {
-          Logger.log('Page 1 is now converted as image');
-          return resolve;
-        },
-      );
-    } catch (error) {
-      Logger.error(error);
-    }
-    return (
-      options.savePath +
-      '/' +
-      options.saveFilename +
-      '.' +
-      '1.' +
-      options.format
-    );
   }
 
   private storeFile(multerFile: Express.Multer.File) {
