@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
-import SignUpForm  from './components/signin/signup.tsx'
+import SignUpForm from './components/signin/signup.tsx'
 import signUpAction from './actions/signUpAction.ts'
 import loginAction from './actions/loginAction.ts'
 import LoginForm from './components/signin/login.tsx'
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       {
         path: "/materials/id/:id",
         element: <SharedPreview />,
-        loader: ({params}) => sharedPreviewLoader(params.id),
+        loader: ({ params }) => sharedPreviewLoader(params.id),
       },
     ],
   },
@@ -58,8 +58,8 @@ const router = createBrowserRouter([
     action: signUpAction
   },
   {
-  path: "/success",
-  element: <SuccessPage />
+    path: "/success",
+    element: <SuccessPage />
   }
 ])
 
