@@ -34,7 +34,7 @@ export default function Cart(): JSX.Element {
         <img className="animate-spin" src={bag} alt="" />
       </div>
     )
-  } if (cartItems.length === 0) {
+  } if (!cartItems || cartItems.length === 0) {
     return (
       <>
         <div className="flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">

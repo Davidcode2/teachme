@@ -5,6 +5,7 @@ import Preview from "../preview.tsx";
 import GradientGenerator from "../../services/gradientGenerator.ts";
 import CardService from "../../services/cardService.ts";
 import MaterialWithThumbnail from "../../types/MaterialWithThumbnail.ts";
+import AuthorDTO from "../../DTOs/author.ts";
 
 function Card({ material: materialWithThumbnail }: { material: MaterialWithThumbnail }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
@@ -13,7 +14,7 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
   const [previewImage, setPreviewImage] = useState(['']);
   const cardService = new CardService();
   const gradient = new GradientGenerator().randomGradient();
-  const authorName = useRef(null);
+  const author = useRef<AuthorDTO>();
 
   const image = materialWithThumbnail.thumbnail
     ? materialWithThumbnail.thumbnail.data
@@ -45,11 +46,12 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
   useEffect(() => {
     const getAuthor = async () => {
       console.log(materialWithThumbnail.material);
-      const author = await cardService.getAuthor(materialWithThumbnail.material.author_id);
+      const authorIn = await cardService.getAuthor(materialWithThumbnail.material.author_id);
+      console.log(authorIn);
+      author.current = { name: authorIn.email, avatarPath: authorIn.avatar, userId: authorIn.id };
       console.log(author);
-      authorName.current = author.email;
     }
-    if (!authorName.current) {
+    if (!author.current) {
       getAuthor();
     }
   }, []);
@@ -70,7 +72,7 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
               <ActionButtons id={materialWithThumbnail.material.id} isMine={materialWithThumbnail.material.file_path}></ActionButtons>
             </div>
             <div className="ml-auto self-end">
-              <Author author={authorName.current} published={materialWithThumbnail.material.date_published} ></Author>
+              <Author author={author.current} published={materialWithThumbnail.material.date_published} ></Author>
             </div>
           </div>
         </div>
