@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useAccessTokenStore, useAvatarStore, useGlobalLoadingStore, useUserStore } from '../store';
-import UserIconWhale from '../assets/userIconWhale.png';
 import { useState } from 'react';
 
 export default function UserMenu() {
