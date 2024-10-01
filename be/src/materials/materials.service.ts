@@ -83,6 +83,7 @@ export class MaterialsService {
     });
     const { file_path, ...material } = completeMaterial;
     const previewPromises = await this.getPreview(material.preview_path);
+    Logger.debug(`material Preview Path ${material.preview_path}`);
     const preview = await Promise.all(previewPromises);
     return { material, preview };
   }
@@ -164,10 +165,16 @@ export class MaterialsService {
     const convert = fromPath(fileInfo.filePath, options);
     const pageToConvertAsImage = 1;
 
-    convert(pageToConvertAsImage, { responseType: 'image' }).then((resolve) => {
-      Logger.log('Page 1 is now converted as image');
-      return resolve;
-    });
+    try {
+      convert(pageToConvertAsImage, { responseType: 'image' }).then(
+        (resolve) => {
+          Logger.log('Page 1 is now converted as image');
+          return resolve;
+        },
+      );
+    } catch (error) {
+      Logger.error(error);
+    }
     return (
       options.savePath +
       '/' +
