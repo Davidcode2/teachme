@@ -28,7 +28,13 @@ export default function Cart(): JSX.Element {
     cartService.buyMaterial(ids);
   }
 
-  if (!loading && cartItems.length === 0) {
+  if (loading) {
+    return (
+      <div className="m-20 flex justify-center animate-pulse">
+        <img className="animate-spin" src={bag} alt="" />
+      </div>
+    )
+  } if (cartItems.length === 0) {
     return (
       <>
         <div className="flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">
@@ -37,13 +43,6 @@ export default function Cart(): JSX.Element {
         </div>
       </>
     )
-  } else if (loading) {
-    return (
-      <div className="m-20 flex justify-center animate-pulse">
-        <img className="animate-spin" src={bag} alt="" />
-      </div>
-    )
-
   }
   return (
     <div className="flex flex-col gap-4 md:max-w-[600px] ">

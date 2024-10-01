@@ -27,6 +27,13 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email: email });
   }
 
+  findOneByAuthorId(authorId: string): Promise<User | null> {
+    if (authorId) {
+      return this.usersRepository.findOneBy({ author: { id: authorId } });
+    }
+    return null;
+  }
+
   async findOneById(id: string): Promise<User | null> {
     if (!id) return null;
     let user = await this.usersRepository.findOneBy({ id: id });
@@ -35,6 +42,7 @@ export class UsersService {
       user.consumerId,
     );
     user.consumer.cart = await this.consumerService.getCart(user.consumerId);
+    user.author = await this.authorRepository.findOneBy({ id: user.authorId });
     return user;
   }
 

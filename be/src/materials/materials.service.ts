@@ -29,6 +29,7 @@ export class MaterialsService {
       .addSelect('material.stripe_price_id')
       .addSelect('material.thumbnail_path')
       .addSelect('material.date_published')
+      .addSelect('material.author_id')
       .getMany();
 
     return this.mapThumbnails(materials);
@@ -105,6 +106,8 @@ export class MaterialsService {
     material.preview_path = await this.imageService.createPreview(fileInfo);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
+    const user = await this.userService.findOneById(materialDto.userId);
+    material.author_id = user.authorId;
     return this.materialsRepository.save(material);
   }
 
@@ -225,4 +228,5 @@ class MaterialDtoIn {
   description: string;
   price: string;
   link: string;
+  userId: string;
 }

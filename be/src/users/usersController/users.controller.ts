@@ -14,4 +14,11 @@ export class UsersController {
     response.setHeader('content-type', 'image/png');
     response.sendFile(avatarPath, { root: './' });
   }
+
+  @Get('author/:id')
+  async getUserByAuthorId(@Param('id') authorId: string) {
+    console.log("authorID", authorId);
+    const user = await this.usersService.findOneByAuthorId(authorId);
+    return user;
+  }
 }

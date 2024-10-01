@@ -9,6 +9,7 @@ import { Author } from './author.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Cart } from '../cart/cart.entity';
 import { ConsumerModule } from '../consumer/consumer.module';
+import { AuthorController } from './author/author.controller';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { ConsumerModule } from '../consumer/consumer.module';
   ],
   providers: [UsersService, AuthorService, ConfigService],
   exports: [TypeOrmModule, UsersService],
-  controllers: [UsersController],
+  controllers: [UsersController, AuthorController],
 })
 export class UsersModule {}

@@ -45,4 +45,7 @@ export class User {
   @OneToOne((type) => Author)
   @JoinColumn()
   author: Author;
+
+  @RelationId((user: User) => user.author)
+  authorId: string;
 }

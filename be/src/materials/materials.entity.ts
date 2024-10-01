@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Material {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -11,7 +11,7 @@ export class Material {
   @Column()
   description: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   price: number;
 
   @Column({ nullable: true })
@@ -21,7 +21,7 @@ export class Material {
   stripe_price_id: string;
 
   @Column({ nullable: true })
-  file_path: string
+  file_path: string;
 
   @Column({ nullable: true })
   thumbnail_path: string;
@@ -32,5 +32,6 @@ export class Material {
   @Column()
   date_published: Date;
 
-
+  @Column({ nullable: true })
+  author_id: string;
 }

@@ -18,4 +18,12 @@ export default class CardService {
     });
     return images;
   }
+
+  public async getAuthor(authorId: string) {
+    const res = await fetch(`/api/users/author/${authorId}`, {
+      method: 'GET',
+    });
+    const json = await res.json();
+    return json;
+  }
 }

@@ -7,10 +7,14 @@ import { Author } from '../author.entity';
 export class AuthorService {
   constructor(
     @InjectRepository(Author)
-    private authorRepository: Repository<Author>) {}
+    private authorRepository: Repository<Author>,
+  ) {}
 
-    findAll(): Promise<Author[]> {
-      return this.authorRepository.find();
-    }
+  findAll(): Promise<Author[]> {
+    return this.authorRepository.find();
+  }
+
+  findOneById(id: string): Promise<Author> {
+    return this.authorRepository.findOneBy({ id: id });
+  }
 }
-

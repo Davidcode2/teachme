@@ -1,6 +1,6 @@
 import ActionButtons from "../action-buttons/action-buttons.tsx"
 import Author from "../author/author.tsx"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Preview from "../preview.tsx";
 import GradientGenerator from "../../services/gradientGenerator.ts";
 import CardService from "../../services/cardService.ts";
@@ -13,6 +13,7 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
   const [previewImage, setPreviewImage] = useState(['']);
   const cardService = new CardService();
   const gradient = new GradientGenerator().randomGradient();
+  const authorName = useRef(null);
 
   const image = materialWithThumbnail.thumbnail
     ? materialWithThumbnail.thumbnail.data
@@ -41,6 +42,18 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
     setEventListenerRegistered(true);
   }
 
+  useEffect(() => {
+    const getAuthor = async () => {
+      console.log(materialWithThumbnail.material);
+      const author = await cardService.getAuthor(materialWithThumbnail.material.author_id);
+      console.log(author);
+      authorName.current = author.email;
+    }
+    if (!authorName.current) {
+      getAuthor();
+    }
+  }, []);
+
   return (
     <>
       {showPreview && <Preview material={preview} images={previewImage} />}
@@ -57,7 +70,7 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
               <ActionButtons id={materialWithThumbnail.material.id} isMine={materialWithThumbnail.material.file_path}></ActionButtons>
             </div>
             <div className="ml-auto self-end">
-              <Author author={materialWithThumbnail.material.author} published={materialWithThumbnail.material.date_published} ></Author>
+              <Author author={authorName.current} published={materialWithThumbnail.material.date_published} ></Author>
             </div>
           </div>
         </div>

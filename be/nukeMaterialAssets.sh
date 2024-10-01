@@ -7,6 +7,7 @@ if [ -d "./assets" ]; then
     # Delete all the material assets in the ./assets directory
     rm -rfv ./assets/*
     echo -e "All material assets have been deleted. \n"
+    mkdir -v ./assets/avatars
     mkdir -v ./assets/materials
     mkdir -v ./assets/images
     mkdir -v ./assets/previews

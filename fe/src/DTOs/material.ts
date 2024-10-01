@@ -3,7 +3,7 @@ type Material = {
   title: string;
   description: string;
   price: number;
-  author: string;
+  author_id: string;
   date_published: Date;
   file_path: string;
 }
