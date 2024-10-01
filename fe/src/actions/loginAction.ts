@@ -8,30 +8,13 @@ import {
 import verifyCaptcha from '../services/reCaptchaService';
 
 export default async function handleSubmit({ request }: { request: Request }) {
-  await verifyCaptcha();
-  if (useLikelyHumanStore.getState().isLikelyHuman === false) {
-    return false;
-  }
-  useLikelyHumanStore.setState({ isLikelyHuman: false });
-  const formData = await request.formData();
-  const response = await fetch('/api/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      withCredentials: 'true',
-    },
-    body: JSON.stringify(Object.fromEntries(formData)),
-  });
+  if (!checkCaptchaAndResetLikelyHumanStore()) return false;
+  const response = await fetchLogin(request);
 
-  const responseData = await response.json();
-  if (JSON.stringify(responseData).includes('accessToken')) {
+  if (JSON.stringify(response).includes('accessToken')) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
-    setAccessToken(responseData.tokens.accessToken);
-    const setUser = useUserStore.getState().setUser;
-    const avatar = getAvatar(responseData.user.id);
-    const setAvatar = useAvatarStore.getState().setAvatar;
-    setAvatar(avatar);
-    setUser(responseData.user);
+    setAccessToken(response.tokens.accessToken);
+    setUserAndAvatar(response);
     return redirect('/materials');
   }
   return false;
@@ -46,4 +29,36 @@ async function getAvatar(userId: string) {
     },
   });
   return response.blob();
+}
+
+async function setUserAndAvatar(responseData: any) {
+  const setUser = useUserStore.getState().setUser;
+  const avatar = await getAvatar(responseData.user.id);
+  const setAvatar = useAvatarStore.getState().setAvatar;
+  setAvatar(avatar);
+  setUser(responseData.user);
+} 
+
+async function checkCaptchaAndResetLikelyHumanStore() {
+  await verifyCaptcha();
+  if (useLikelyHumanStore.getState().isLikelyHuman === false) {
+    return false;
+  }
+  // reset for next verification
+  useLikelyHumanStore.setState({ isLikelyHuman: false });
+  return true;
+}
+
+async function fetchLogin(request: Request) {
+  const formData = await request.formData();
+  const response = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      withCredentials: 'true',
+    },
+    body: JSON.stringify(Object.fromEntries(formData)),
+  });
+  const responseData = await response.json();
+  return responseData;
 }

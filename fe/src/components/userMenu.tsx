@@ -25,7 +25,7 @@ export default function UserMenu() {
   }
 
   const avatar = useAvatarStore.getState().avatar
-      ? URL.createObjectURL(useAvatarStore.getState().avatar)
+      ? URL.createObjectURL(useAvatarStore.getState().avatar, { type: 'image/png' })
       : null
 
   const toggleMenu = () => showMenu ? setShowMenu(false) : setShowMenu(true);
