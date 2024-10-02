@@ -38,6 +38,12 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
+  async findByCreator(userId: string): Promise<Material[]> {
+    const user = await this.userService.findOneById(userId);
+    console.log(user);
+    return user.author.materials;
+  }
+
   async findByUser(
     userId: string,
     searchString: string,
@@ -66,7 +72,7 @@ export class MaterialsService {
   }
 
   private searchMyMaterials(searchString: string, materials: Material[]) {
-    let filteredMaterials = materials.filter((material) =>
+    const filteredMaterials = materials.filter((material) =>
       material.title.includes(searchString),
     );
     return this.mapThumbnails(filteredMaterials);
@@ -118,6 +124,10 @@ export class MaterialsService {
     material.stripe_price_id = price.id;
     const user = await this.userService.findOneById(materialDto.userId);
     material.author_id = user.authorId;
+    console.log(user);
+    user.author.materials.push(material);
+    this.userService.update(user);
+    console.log(user);
     return this.materialsRepository.save(material);
   }
 

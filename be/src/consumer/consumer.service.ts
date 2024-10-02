@@ -15,6 +15,7 @@ export class ConsumerService {
 
   async create(): Promise<Consumer> {
     const consumer = new Consumer();
+    consumer.materials = [];
     await this.consumersRepository.save(consumer);
     return consumer;
   }

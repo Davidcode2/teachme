@@ -7,6 +7,7 @@ import { Material } from '../../materials/materials.entity';
 import { ConsumerService } from '../../consumer/consumer.service';
 const jdenticon = require('jdenticon');
 import * as fs from 'node:fs/promises';
+import { AuthorService } from '../author/author.service';
 
 @Injectable()
 export class UsersService {
@@ -16,6 +17,7 @@ export class UsersService {
     private consumerService: ConsumerService,
     @InjectRepository(Author)
     private authorRepository: Repository<Author>,
+    private authorService: AuthorService,
   ) {}
 
   findAll(): Promise<User[]> {
@@ -36,18 +38,22 @@ export class UsersService {
 
   async findOneById(id: string): Promise<User | null> {
     if (!id) return null;
-    let user = await this.usersRepository.findOneBy({ id: id });
+    const user = await this.usersRepository.findOneBy({ id: id });
+    if (!user) return null;
     user.consumer = await this.consumerService.findById(user.consumerId);
     user.consumer.materials = await this.consumerService.getMaterials(
       user.consumerId,
     );
     user.consumer.cart = await this.consumerService.getCart(user.consumerId);
     user.author = await this.authorRepository.findOneBy({ id: user.authorId });
+    user.author.materials = await this.authorService.getMaterials(
+      user.authorId,
+    );
     return user;
   }
 
   async create(email: string, hash: string): Promise<User> {
-    let user = new User();
+    const user = new User();
     const consumer = await this.consumerService.create();
     const author = await this.createAuthor();
     user.email = email;
@@ -94,6 +100,7 @@ export class UsersService {
 
   private async createAuthor(): Promise<Author> {
     const author = new Author();
+    author.materials = [];
     await this.authorRepository.save(author);
     return author;
   }

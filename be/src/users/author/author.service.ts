@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Author } from '../author.entity';
+import { Material } from 'src/materials/materials.entity';
 
 @Injectable()
 export class AuthorService {
@@ -16,5 +17,16 @@ export class AuthorService {
 
   findOneById(id: string): Promise<Author> {
     return this.authorRepository.findOneBy({ id: id });
+  }
+
+  async getMaterials(id: string): Promise<Material[]> {
+    const author = await this.findOneById(id);
+    const authorWithMaterials = await this.authorRepository
+      .createQueryBuilder('author')
+      .leftJoinAndSelect('author.materials', 'materials')
+      .where('author.id = :id', { id: author.id })
+      .getOneOrFail();
+
+    return authorWithMaterials.materials;
   }
 }

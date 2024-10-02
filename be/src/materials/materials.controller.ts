@@ -34,6 +34,11 @@ export class MaterialsController {
     return this.materialsService.findOneWithPreview(materialId);
   }
 
+  @Get('by/:userId')
+  findByAuthor(@Param('userId') userId: string) {
+    return this.materialsService.findByCreator(userId);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('user/:id')
   findByUser(
