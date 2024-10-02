@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ./be
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     image: backend
     container_name: backend
     restart: unless-stopped
@@ -16,7 +16,7 @@ services:
   frontend:
     build:
       context: ./fe
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     image: frontend
     container_name: frontend
     restart: unless-stopped
