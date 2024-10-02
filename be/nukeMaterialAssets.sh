@@ -3,8 +3,22 @@
 # This script will delete all the material assets in the ./assets directory
 
 # Check if the ./assets directory exists
+if [[ $(pwd) == *"teachme/be"* ]]; then
+  echo -e "You are in the correct directory (teachme/be). \n"
+else
+  echo -e "You are not in the correct directory. \n"
+  exit 1
+fi
+
+if [ ! $1 == "execute" ]; then
+  echo -e "Please provide the argument 'execute' to run the script. \n"
+  exit 1
+else
+  echo -e "The script will now run. \n"
+fi
+
 if [ -d "./assets" ]; then
-    # Delete all the material assets in the ./assets directory
+    Delete all the material assets in the ./assets directory
     rm -rfv ./assets/*
     echo -e "All material assets have been deleted. \n"
     mkdir -v ./assets/avatars
@@ -16,6 +30,7 @@ if [ -d "./assets" ]; then
 else
     echo -e "The ./assets directory does not exist. \n"
 fi
+
 
 echo -e "Deleting schema and recreating it in postgres database... \n"
 
