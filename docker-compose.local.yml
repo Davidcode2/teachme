@@ -16,9 +16,9 @@ services:
   frontend:
     build:
       context: ./fe
-      dockerfile: dockerfile.local
-    image: frontend
-    container_name: frontend
+      dockerfile: dockerfile.develop
+    image: frontend_local
+    container_name: frontend_local
     restart: unless-stopped
     ports:
       - '80:80'

@@ -13,7 +13,7 @@
     "@gsap/react": "^2.1.0",
     "@types/grecaptcha": "^3.0.9",
     "@types/react-google-recaptcha": "^2.1.9",
-    "caniuse-lite": "",
+    "caniuse-lite": "^1.0.30001666",
     "eslint-config-prettier": "^9.1.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",

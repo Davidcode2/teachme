@@ -12,5 +12,3 @@ COPY . .
 
 FROM base AS build
 RUN npm run build
-
-hello there
