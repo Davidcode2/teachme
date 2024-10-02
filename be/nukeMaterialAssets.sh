@@ -10,7 +10,7 @@ else
   exit 1
 fi
 
-if [ ! $1 == "execute" ]; then
+if [[ -z $1 || $1 != "execute" ]]; then
   echo -e "Please provide the argument 'execute' to run the script. \n"
   exit 1
 else
@@ -18,7 +18,7 @@ else
 fi
 
 if [ -d "./assets" ]; then
-    Delete all the material assets in the ./assets directory
+    echo -e "Delete all the material assets in the ./assets directory \n"
     rm -rfv ./assets/*
     echo -e "All material assets have been deleted. \n"
     mkdir -v ./assets/avatars
