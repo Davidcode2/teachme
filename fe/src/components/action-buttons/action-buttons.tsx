@@ -5,18 +5,22 @@ import EditIcon from '../../assets/icons/icons8-edit-48.png';
 import SpinnerGif from '../../assets/icons/icons8-spinner.gif';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
 import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
-import { useAccessTokenStore, useCartStore, useUserStore } from '../../store';
+import { useAccessTokenStore, useCartStore, useShowDeleteMaterialModal, useUserStore } from '../../store';
 import { useState } from 'react';
+import DeleteMaterialModal from './deleteMaterialModal';
 
 interface ActionButtonsProps {
   id: string;
   isMine: string;
   authorId: string;
+  title: string;
 }
 
-function ActionButtons({ id, isMine, authorId }: ActionButtonsProps) {
+function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
 
   const { user } = useUserStore();
   if (!user) return (
@@ -47,26 +51,24 @@ function ActionButtons({ id, isMine, authorId }: ActionButtonsProps) {
     }, 5000);
   }
 
-  const deleteMaterial = () => {
-    return async () => {
-      setLoading(true);
-      const res = await fetch(`/api/materials/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-        }
-      });
-      if (res.status === 200) {
-        setLoading(false);
-        window.location.reload();
-      }
-    }
+  const showDeleteMaterialModal = () => {
+    //useShowDeleteMaterialModal.setState({ showDeleteModal: true });
+    setShowDeleteModal(true);
+  }
+
+  if (!eventListenerRegistered && showDeleteModal === true) {
+    document.body.addEventListener('click', (e: any) => {
+      if (e.target.closest('#deleteMaterialButton')) return;
+      if (e.target.closest('#deleteModal')) return;
+      setShowDeleteModal(false);
+    });
+    setEventListenerRegistered(true);
   }
 
   return (
     <>
-      <div className="flex">
+      {showDeleteModal && <DeleteMaterialModal title={title} setLoading={setLoading} setShowDeleteModal={setShowDeleteModal} id={id} />}
+      <div id="main" className="flex">
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
           {!isMine && <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />}
         </div>
@@ -77,7 +79,7 @@ function ActionButtons({ id, isMine, authorId }: ActionButtonsProps) {
           {user.author && authorId === user.author.id
             && <div className="flex">
               <a href={`/api/materials/download?id=${id}`} download={id} className="hover:cursor-pointer hover:bg-gray-100 rounded-full"><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>
-              <button className="hover:cursor-pointer hover:bg-gray-100 rounded-full" onClick={deleteMaterial()}><img className="" src={TrashBin} width="30" alt="" /></button>
+              <button id="deleteMaterialButton" className="hover:cursor-pointer hover:bg-gray-100 rounded-full" onClick={showDeleteMaterialModal}><img className="" src={TrashBin} width="30" alt="" /></button>
               <NavLink to={`/materials/${id}/edit`}><img className="hover:cursor-pointer hover:bg-gray-100 rounded-full" src={EditIcon} width="30" alt="" /></NavLink>
             </div>}
         </div>
