@@ -10,7 +10,6 @@ type PropTypes = {
 export default function DeleteMaterialModal(props: PropTypes) {
 
   const deleteMaterial = () => {
-    console.log("deleteMaterial");
     return async () => {
       props.setLoading(true);
       const res = await fetch(`/api/materials/${props.id}`, {
