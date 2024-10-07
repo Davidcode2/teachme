@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png";
 import plus from "../../assets/addPlusGradient.png";
-import UserIcon from '../../assets/icons/icons8-user-32.png';
+import UserIcon from '../../assets/icons/icons8-user-48.png';
 import { useSearchState, useSidebarStore, useUserStore } from '../../store';
 import Nav from './nav';
 import UserMenu from '../userMenu';
