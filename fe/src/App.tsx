@@ -41,9 +41,9 @@ function App(): JSX.Element {
         </div>
       }
       <div className={loading ? "blur-sm" : ""}>
-          <Sidebar></Sidebar>
-          <Header></Header>
-          <Outlet />
+        <Sidebar></Sidebar>
+        <Header></Header>
+        <Outlet />
       </div>
     </div>
   )
