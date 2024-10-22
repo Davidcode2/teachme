@@ -1,13 +1,12 @@
 import { Logger } from '@nestjs/common';
 import * as fs from 'node:fs/promises';
 import { fromPath } from 'pdf2pic';
-import * as PDFParser from 'pdf2json';
 import { exec } from 'child_process';
 
 export class ImageService {
   public async createPreview(fileInfo: { fileName: string; filePath: string }) {
     fs.mkdir(`assets/previews/${fileInfo.fileName}`);
-    const options = this.createOptions(fileInfo.fileName);
+    const options = this.createOptions(fileInfo.fileName, 'preview');
 
     Logger.debug(
       `preview options: ${options.savePath}\n${options.saveFilename}`,
@@ -19,7 +18,6 @@ export class ImageService {
       Logger.debug(
         `trying to convert all pages to image, file path: ${fileInfo.filePath}`,
       );
-      Logger.debug(`number of pages: ${numberOfPages}`);
       if (!numberOfPages) {
         throw new Error('Number of pages is 0 or undefined');
       }
@@ -32,10 +30,8 @@ export class ImageService {
           numberOfPages,
         );
       }
-      Logger.debug(`got convert object, file path: ${fileInfo.filePath}`);
     } catch (error) {
-      Logger.debug(`catching... file path: ${fileInfo.filePath}`);
-      Logger.error(error);
+      Logger.error(`catching... file path: ${fileInfo.filePath}`, error);
     }
     return options.savePath;
   }
@@ -51,7 +47,6 @@ export class ImageService {
     pages: number,
   ) {
     const arr = this.pageNumberArray(pages);
-    Logger.debug(`array of pages: ${arr}`);
     await fromPath(path, options).bulk(arr, {
       responseType: 'image',
     });
@@ -66,23 +61,20 @@ export class ImageService {
   }
 
   public createThumbnail(fileInfo: { fileName: string; filePath: string }) {
-    const options = {
-      density: 100,
-      saveFilename: `${fileInfo.fileName}_thumbnail`,
-      savePath: 'assets/images',
-      format: 'png',
-      width: 800,
-      height: 600,
-    };
-
+    const options = this.createOptions(fileInfo.fileName, 'thumbnail');
+    Logger.debug(
+      `thumbnail options: ${options.savePath}\n saveFilename: ${options.saveFilename}`,
+    );
     const convert = fromPath(fileInfo.filePath, options);
     const pageToConvertAsImage = 1;
 
     try {
       convert(pageToConvertAsImage, { responseType: 'image' }).then(
         (resolve) => {
-          Logger.log('Page 1 is now converted as image');
           return resolve;
+        },
+        (reject) => {
+          Logger.error(reject);
         },
       );
     } catch (error) {
@@ -106,12 +98,10 @@ export class ImageService {
         reject(0);
       });
       pdfInfo.stdout.on('data', (metadata) => {
-        Logger.debug('metadata: ', metadata);
         const pagesString = metadata
           .toString()
           .split('\n')
-          .find((line) => line.includes('Pages'));
-        Logger.debug('pagesString: ', pagesString);
+          .find((line: string) => line.includes('Pages'));
         const pages = Number(pagesString.split(':')[1].trim());
         resolve(pages);
       });
@@ -119,41 +109,26 @@ export class ImageService {
     return pdfPagesPromise;
   }
 
-  private getNumberOfPagesViaPdf2Json(filePath: string): Promise<number> {
-    const pdfParser = new (PDFParser as any)();
-
-    const pdfPagesPromise = new Promise<number>((resolve, reject) => {
-      pdfParser.on('pdfParser_dataError', (errData) => {
-        Logger.error('pdfParser_dataError: ', errData.parserError);
-        reject(0);
-      });
-
-      pdfParser.on('readable', (meta) => {
-        Logger.log('readable meta: ', meta);
-        Logger.log('readable metadata: ', meta.Meta.Metadata);
-      });
-      pdfParser.on('pdfParser_dataReady', (pdfData) => {
-        const pages = pdfData.Pages.length;
-        Logger.log('meta from pdf: ', pdfData.Meta);
-        Logger.log('metadata from pdf: ', pdfData.Meta.Metadata);
-        fs.writeFile('pdfResult_pages', JSON.stringify(pdfData.Pages));
-        fs.writeFile('pdfResult', JSON.stringify(pdfData));
-        Logger.debug('Number of pages:', pages);
-        resolve(pages);
-      });
-      pdfParser.loadPDF(filePath);
-    });
-    return pdfPagesPromise;
-  }
-
-  private createOptions(path: string) {
+  private createOptions(path: string, type: string) {
+    let savePath: string;
+    console.log(type);
+    switch (type) {
+      case 'preview':
+        savePath = `assets/${type}s/${path}`;
+        break;
+      case 'thumbnail':
+        savePath = `assets/images`;
+        break;
+      default:
+        savePath = `assets/${type}s/${path}`;
+    }
     return {
       density: 100,
-      saveFilename: `${path}_preview`,
-      savePath: `assets/previews/${path}`,
+      saveFilename: `${path}_${type}`,
+      savePath: savePath,
       format: 'png',
       width: 800,
-      height: 600,
+      preserveAspectRatio: true,
     };
   }
 }
