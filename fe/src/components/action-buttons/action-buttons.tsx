@@ -65,6 +65,8 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
     setEventListenerRegistered(true);
   }
 
+  const isAuthor = user.author && authorId === user.author.id;
+
   return (
     <>
       {showDeleteModal && <DeleteMaterialModal title={title} setLoading={setLoading} setShowDeleteModal={setShowDeleteModal} id={id} />}
@@ -73,12 +75,12 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
           {!isMine && <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />}
         </div>
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-          {isMine && <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>}
+          {isMine && !isAuthor && <a href={`/api/materials/download?id=${id}`} download={id}><img className="" src={arrowIcon} width="30" alt="" /></a>}
         </div>
         <div className="">
-          {user.author && authorId === user.author.id
+          {isAuthor
             && <div className="flex">
-              <a href={`/api/materials/download?id=${id}`} download={id} className="hover:cursor-pointer hover:bg-gray-100 rounded-full"><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>
+              <a href={`/api/materials/download?id=${id}`} download={id} className="hover:cursor-pointer hover:bg-gray-100 rounded-full"><img className="" src={arrowIcon} width="30" alt="" /></a>
               <button id="deleteMaterialButton" className="hover:cursor-pointer hover:bg-gray-100 rounded-full" onClick={showDeleteMaterialModal}><img className="" src={TrashBin} width="30" alt="" /></button>
               <NavLink to={`/materials/${id}/edit`}><img className="hover:cursor-pointer hover:bg-gray-100 rounded-full" src={EditIcon} width="30" alt="" /></NavLink>
             </div>}

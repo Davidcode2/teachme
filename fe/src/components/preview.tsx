@@ -27,7 +27,7 @@ export default function Preview({ material, images }: PreviewProps) {
               </div>
               <div className="flex gap-x-10">
                 <p className="text-3xl text-emerald-500">{Number((material.material.price) / 100).toFixed(2)} €</p>
-                <ActionButtons id={material.material.id} authorId={material.material.author_id} isMine={material.material.file_path} />
+                <ActionButtons id={material.material.id} authorId={material.material.author_id} isMine={material.material.file_path} title={material.material.title} />
               </div>
             </div>
           </div>
