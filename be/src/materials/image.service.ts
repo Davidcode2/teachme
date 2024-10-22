@@ -31,9 +31,18 @@ export class ImageService {
         );
       }
     } catch (error) {
-      Logger.error(`catching... file path: ${fileInfo.filePath}`, error);
+      await this.handleError(error, options.savePath);
     }
     return options.savePath;
+  }
+
+  private async handleError(error: Error, path: string) {
+    Logger.error(
+      `rolling back failed preview...\n 
+        deleting file path: ${path}`,
+      error,
+    );
+    await fs.unlink(path);
   }
 
   private async createImageFromOnePage(path: string, options: object) {
