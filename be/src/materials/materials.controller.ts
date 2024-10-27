@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Query,
@@ -22,11 +23,15 @@ export class MaterialsController {
   constructor(private materialsService: MaterialsService) {}
 
   @Get()
-  findAll(@Query('search') searchString: string) {
+  findAll(
+    @Query('search') searchString: string,
+    @Query('offset') offset: number,
+  ) {
     if (searchString) {
       return this.materialsService.search(searchString);
     }
-    return this.materialsService.findAll();
+    Logger.debug(`offset: ${offset}`);
+    return this.materialsService.findAll(10, offset);
   }
 
   @Get('id/:id')

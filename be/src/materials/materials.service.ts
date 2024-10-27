@@ -18,7 +18,12 @@ export class MaterialsService {
     private imageService: ImageService,
   ) {}
 
-  async findAll(): Promise<{ material: Material; thumbnail: Buffer }[]> {
+  async findAll(
+    pageSize = 10,
+    offset = 0,
+  ): Promise<{ material: Material; thumbnail: Buffer }[]> {
+    Logger.debug(`pageSize: ${pageSize}, offset: ${offset}`);
+    const materialsCount = await this.materialsRepository.count();
     const materials = await this.materialsRepository
       .createQueryBuilder('material')
       .select('material.id')
@@ -29,6 +34,8 @@ export class MaterialsService {
       .addSelect('material.thumbnail_path')
       .addSelect('material.date_published')
       .addSelect('material.author_id')
+      .skip(materialsCount - offset > 0 ? offset : materialsCount - pageSize)
+      .take(pageSize)
       .getMany();
 
     return this.mapThumbnails(materials);
