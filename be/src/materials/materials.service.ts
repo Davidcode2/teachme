@@ -19,11 +19,17 @@ export class MaterialsService {
   ) {}
 
   async findAll(
-    pageSize = 10,
-    offset = 0,
+    pageSize: number = 10,
+    offset: number = 0,
+    limit: number = 0,
   ): Promise<{ material: Material; thumbnail: Buffer }[]> {
-    Logger.debug(`pageSize: ${pageSize}, offset: ${offset}`);
+    Logger.debug(`pageSize: ${pageSize}, offset: ${offset}, limit: ${limit}`);
     const materialsCount = await this.materialsRepository.count();
+    const take = this.amountToTake(materialsCount, pageSize, offset, limit);
+    if (take === null) {
+      return [];
+    }
+    Logger.debug(`take: ${take}, numberOfMaterials: ${materialsCount}`);
     const materials = await this.materialsRepository
       .createQueryBuilder('material')
       .select('material.id')
@@ -35,10 +41,28 @@ export class MaterialsService {
       .addSelect('material.date_published')
       .addSelect('material.author_id')
       .skip(materialsCount - offset > 0 ? offset : materialsCount - pageSize)
-      .take(pageSize)
+      .take(take)
       .getMany();
 
     return this.mapThumbnails(materials);
+  }
+
+  private amountToTake(
+    numberOfMaterials: number,
+    pageSize: number,
+    offset: number,
+    limit: number,
+  ) {
+    if (limit >= numberOfMaterials) {
+      return null;
+    }
+    if (offset >= numberOfMaterials) {
+      return null;
+    }
+    if (limit === 0) {
+      return pageSize;
+    }
+    return limit;
   }
 
   findOne(id: string): Promise<Material | null> {

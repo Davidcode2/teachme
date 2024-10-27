@@ -26,12 +26,15 @@ export class MaterialsController {
   findAll(
     @Query('search') searchString: string,
     @Query('offset') offset: number,
+    @Query('limit') limit: number,
   ) {
     if (searchString) {
       return this.materialsService.search(searchString);
     }
     Logger.debug(`offset: ${offset}`);
-    return this.materialsService.findAll(10, offset);
+    const offsetNum = Number(offset);
+    const limitNum = Number(limit);
+    return this.materialsService.findAll(10, offsetNum, limitNum);
   }
 
   @Get('id/:id')

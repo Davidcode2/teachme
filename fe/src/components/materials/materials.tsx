@@ -2,7 +2,7 @@ import { useSearchState, useUserStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from './noData';
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
 
 type MaterialWithThumbnail = {
@@ -13,15 +13,18 @@ type MaterialWithThumbnail = {
 function Materials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const [isFetching, setIsFetching] = useState(false);
+  const materialsLength = useRef(0);
   const offset = useRef(0);
+  const limit = useRef(0);
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
+  const pageSize = 10;
   const user = useUserStore(state => state.user);
 
 
-  const searchMaterials = async () => {
+  const searchMaterials = async (offset: number, limit: number) => {
     const baseUrl = getUrl();
-    const url = `${baseUrl}?search=${searchString}&offset=${offset.current}`;
+    const url = `${baseUrl}?search=${searchString}&offset=${offset}&limit=${limit}`;
     const json = await loadMaterials(url);
     setSearchResults(json);
     if (searchString !== "" && !onMinePage) {
@@ -29,7 +32,16 @@ function Materials() {
       setMaterials(materialsWithNullThumbnail);
       return;
     }
-    setMaterials(json);
+    if (limit === 0) {
+      setMaterials(json);
+      materialsLength.current = json.length;
+      console.log("setting materials", json.length);
+      return;
+    } else {
+      setMaterials(prevMaterials => [...prevMaterials, ...json]);
+      materialsLength.current += json.length;
+      console.log("setting materials add", json.length);
+    }
   };
 
   const setSearchResults = (materials: MaterialWithThumbnail[]) => {
@@ -54,23 +66,38 @@ function Materials() {
     return "api/materials";
   }
 
+  const storeSizeExceeded = () => {
+    const storeSize = pageSize * 3;
+    return materials.length >= storeSize;
+  }
+
+  const topScrollThreshold = () => {
+    return window.scrollY <= 20;
+  }
+
+  const bottomScrollThreshold = () => {
+    const differenceBottom = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollposition = document.documentElement.scrollTop;
+    return differenceBottom - scrollposition <= 2;
+  }
+
   useEffect(() => {
-    searchMaterials();
-    function handleScroll() {
-      setTimeout(() => {
-        console.log(window.scrollY);
-        const differenceTop = window.innerHeight - document.documentElement.scrollHeight;
-        const differenceBottom = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollposition = document.documentElement.scrollTop;
-        if (differenceBottom - scrollposition <= 2) {
-          offset.current += 10;
-          searchMaterials();
-        } else if (window.scrollY <= 20) {
+    searchMaterials(0,0);
+    console.log("searching materials");
+    async function handleScroll() {
+      if (isFetching) return;
+      setIsFetching(true);
+        if (bottomScrollThreshold()) {
+          limit.current = Math.round(pageSize / 3);
+          offset.current = materialsLength.current;
+          console.log("scrolling down, offset: ", offset.current, "limit: ", limit.current);
+          await searchMaterials(offset.current, limit.current);
+        } else if (topScrollThreshold()) {
           console.log("scrolling up");
-          offset.current -= offset.current >= 20 ? 10 : offset.current;
-          searchMaterials();
+          const minOffset = pageSize * 2;
+          offset.current -= offset.current >= minOffset ? 10 : offset.current;
+          //searchMaterials(pageSize);
         }
-      }, 1000);
     }
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
