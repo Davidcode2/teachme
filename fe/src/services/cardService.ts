@@ -8,6 +8,7 @@ export default class CardService {
     return json;
   }
 
+
   public getImages(imageBuffers: { data: number[] }[]) {
     const images: string[] = [];
     imageBuffers.forEach((img) => {

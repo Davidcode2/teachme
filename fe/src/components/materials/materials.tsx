@@ -4,6 +4,7 @@ import Material from '../../DTOs/material'
 import NoData from './noData';
 import { useEffect, useRef, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
+import PaginationService from '../../services/paginationService';
 
 type MaterialWithThumbnail = {
   material: Material,
@@ -13,18 +14,16 @@ type MaterialWithThumbnail = {
 function Materials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [scrollEvent, setScrollEvent] = useState(0);
+  const paginator = new PaginationService();
   const materialsLength = useRef(0);
-  const offset = useRef(0);
-  const limit = useRef(0);
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
-  const pageSize = 10;
   const user = useUserStore(state => state.user);
 
 
-  const searchMaterials = async (offset: number, limit: number) => {
-    const baseUrl = getUrl();
-    const url = `${baseUrl}?search=${searchString}&offset=${offset}&limit=${limit}`;
+  const searchMaterials = async () => {
+    const url = buildLoadMaterialsUrl();
     const json = await loadMaterials(url);
     setSearchResults(json);
     if (searchString !== "" && !onMinePage) {
@@ -32,17 +31,31 @@ function Materials() {
       setMaterials(materialsWithNullThumbnail);
       return;
     }
-    if (limit === 0) {
-      setMaterials(json);
-      materialsLength.current = json.length;
-      console.log("setting materials", json.length);
-      return;
-    } else {
-      setMaterials(prevMaterials => [...prevMaterials, ...json]);
-      materialsLength.current += json.length;
-      console.log("setting materials add", json.length);
-    }
+    setMaterials(json);
+    materialsLength.current = json.length;
+    console.log("setting materials", json.length);
+    return;
   };
+
+  const buildLoadMaterialsUrl = () => {
+    const baseUrl = getUrl();
+    const url = `${baseUrl}?search=${searchString}&offset=${materialsLength.current}&limit=${paginator.increment}`;
+    return url;
+  }
+
+  const loadMoreMaterials = async (scrollTopOrBottom: number) => {
+    let url = "";
+    if (scrollTopOrBottom === -1) {
+      url = buildLoadMaterialsUrl();
+    const json = await loadMaterials(url);
+    setMaterials(prevMaterials => [...prevMaterials, ...json]);
+    materialsLength.current += json.length;
+    console.log("setting materials add", json.length);
+    } else {
+    //  const numberOfItemsToShift = paginator.numberOfItemsToShift(materialsLength.current);
+    //  setMaterials(prevMaterials => prevMaterials.slice(0, numberOfItemsToShift));
+    }
+  }
 
   const setSearchResults = (materials: MaterialWithThumbnail[]) => {
     if (materials.length === 0) {
@@ -66,41 +79,26 @@ function Materials() {
     return "api/materials";
   }
 
-  const storeSizeExceeded = () => {
-    const storeSize = pageSize * 3;
-    return materials.length >= storeSize;
-  }
-
-  const topScrollThreshold = () => {
-    return window.scrollY <= 20;
-  }
-
-  const bottomScrollThreshold = () => {
-    const differenceBottom = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollposition = document.documentElement.scrollTop;
-    return differenceBottom - scrollposition <= 2;
+  const scrollEventSetter = (x: number) => {
+    console.log("setting scroll event", x);
+    setScrollEvent(x);
   }
 
   useEffect(() => {
-    searchMaterials(0,0);
-    console.log("searching materials");
-    async function handleScroll() {
-      if (isFetching) return;
+    if (!isFetching && scrollEvent !== 0) {
       setIsFetching(true);
-        if (bottomScrollThreshold()) {
-          limit.current = Math.round(pageSize / 3);
-          offset.current = materialsLength.current;
-          console.log("scrolling down, offset: ", offset.current, "limit: ", limit.current);
-          await searchMaterials(offset.current, limit.current);
-        } else if (topScrollThreshold()) {
-          console.log("scrolling up");
-          const minOffset = pageSize * 2;
-          offset.current -= offset.current >= minOffset ? 10 : offset.current;
-          //searchMaterials(pageSize);
-        }
+      console.log("got scroll event", scrollEvent);
+      loadMoreMaterials(scrollEvent);
+      setIsFetching(false);
     }
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  }, [scrollEvent]);
+
+  useEffect(() => {
+    searchMaterials();
+    console.log("searching materials");
+    const onScroll = paginator.handleScroll(scrollEventSetter);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, [searchString]);
 
   if (materials.length === 0) {
