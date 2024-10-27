@@ -29,15 +29,16 @@ function Materials() {
     setMaterials(json);
   };
 
-  const setSearchResults = (materials: any) => {
+  const setSearchResults = (materials: MaterialWithThumbnail[]) => {
     if (materials.length === 0) {
       useSearchState.setState({ searchResults: [] });
       return;
     }
-    let hasThumbnail = materials[0].thumbnail;
+    const hasThumbnail = materials[0].thumbnail;
+    let materialsWithoutThumbnails;
     if (hasThumbnail) {
-      materials = materials.map((el: { material: Material, thumbnail: any }) => { return el.material; });
-      useSearchState.setState({ searchResults: materials });
+      materialsWithoutThumbnails = materials.map((el: { material: Material, thumbnail: any }) => { return el.material; });
+      useSearchState.setState({ searchResults: materialsWithoutThumbnails });
     } else {
       useSearchState.setState({ searchResults: materials });
     }

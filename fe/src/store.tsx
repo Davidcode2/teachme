@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import Material from './DTOs/material'
+import { MaterialWithThumbnail } from './types/MaterialWithThumbnail'
 
 type AccessTokenState = {
   accessToken: string | null
@@ -79,7 +80,7 @@ export const useLikelyHumanStore = create<LikelyHuman>((set) => ({
 
 type SearchState = {
   searchString: string,
-  searchResults: Material[];
+  searchResults: Material[] | MaterialWithThumbnail[];
   setSearchString: (search: string) => void
   setSearchResults: (results: Material[]) => void
 }
