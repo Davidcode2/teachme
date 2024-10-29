@@ -16,10 +16,11 @@ function Materials() {
   const [isFetching, setIsFetching] = useState(false);
   const [scrollEvent, setScrollEvent] = useState(0);
   const paginator = new PaginationService();
-  const materialsLength = useRef(0);
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
   const user = useUserStore(state => state.user);
+  const lastMaterialIndex = useRef(0);
+  const slidingWindowHead = useRef(0);
 
 
   const searchMaterials = async () => {
@@ -32,28 +33,53 @@ function Materials() {
       return;
     }
     setMaterials(json);
-    materialsLength.current = json.length;
+    lastMaterialIndex.current = json.length;
     console.log("setting materials", json.length);
     return;
   };
 
-  const buildLoadMaterialsUrl = () => {
+  const buildLoadMaterialsUrl = (offset: number = lastMaterialIndex.current) => {
     const baseUrl = getUrl();
-    const url = `${baseUrl}?search=${searchString}&offset=${materialsLength.current}&limit=${paginator.increment}`;
+    const url = `${baseUrl}?search=${searchString}&offset=${offset}&limit=${paginator.increment}`;
     return url;
   }
 
-  const loadMoreMaterials = async (scrollTopOrBottom: number) => {
+  const loadMoreMaterials = async (scrollPosition: number) => {
     let url = "";
-    if (scrollTopOrBottom === -1) {
+    if (scrollPosition === -1) {
       url = buildLoadMaterialsUrl();
-    const json = await loadMaterials(url);
-    setMaterials(prevMaterials => [...prevMaterials, ...json]);
-    materialsLength.current += json.length;
-    console.log("setting materials add", json.length);
-    } else {
-    //  const numberOfItemsToShift = paginator.numberOfItemsToShift(materialsLength.current);
-    //  setMaterials(prevMaterials => prevMaterials.slice(0, numberOfItemsToShift));
+      const json = await loadMaterials(url);
+      if (materials.length + json.length >= paginator.slidingWindowSize) {
+        const shiftedMaterials = paginator.shiftMaterialsRight([...materials, ...json]);
+        setMaterials(prevMaterials => [...shiftedMaterials]);
+      } else {
+        setMaterials(prevMaterials => [...prevMaterials, ...json]);
+      }
+      slidingWindowHead.current += json.length;
+      lastMaterialIndex.current += json.length;
+      console.log("setting materials add", json.length);
+    } else if (scrollPosition === 1) {
+      if (lastMaterialIndex.current >= paginator.slidingWindowSize) {
+        let offset = slidingWindowHead.current - paginator.slidingWindowSize;
+        console.log("offset", offset);
+        if (offset < paginator.increment && offset > 0 ) {
+          offset = 0;
+        }
+        if (offset < 0) {
+          return;
+        }
+        url = buildLoadMaterialsUrl(offset > 0 ? offset : 0);
+        const json = await loadMaterials(url);
+        if (json.length + materials.length >= paginator.slidingWindowSize) {
+          console.log("shifting materials left");
+          const shiftedMaterials = paginator.shiftMaterialsLeft([...json, ...materials]);
+          setMaterials(prevMaterials => [...shiftedMaterials]);
+          lastMaterialIndex.current -= json.length;
+        } else {
+          setMaterials(prevMaterials => [...json, ...prevMaterials]);
+        }
+        slidingWindowHead.current -= json.length;
+      }
     }
   }
 
@@ -80,14 +106,12 @@ function Materials() {
   }
 
   const scrollEventSetter = (x: number) => {
-    console.log("setting scroll event", x);
     setScrollEvent(x);
   }
 
   useEffect(() => {
     if (!isFetching && scrollEvent !== 0) {
       setIsFetching(true);
-      console.log("got scroll event", scrollEvent);
       loadMoreMaterials(scrollEvent);
       setIsFetching(false);
     }
@@ -111,13 +135,17 @@ function Materials() {
 
   return (
     <>
-      <div>
-        {
-          materials.map((el: MaterialWithThumbnail) => {
-            return <Card key={el.material.id} material={el}></Card>
-          })
-        }
-      </div>
+      <div className="flex">
+        <div className="relative">
+          <div className="p-8 sticky top-20">{materials.length}</div>
+        </div>
+        <div>
+          {
+            materials.map((el: MaterialWithThumbnail) => {
+              return <Card key={el.material.id} material={el}></Card>
+            })
+          }
+        </div></div>
     </>
   )
 }

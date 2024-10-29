@@ -1,24 +1,39 @@
+import { MaterialWithThumbnail } from "../types/MaterialWithThumbnail";
+
 export default class PaginationService {
   private lastValue = 0;
-  private pageSize = 10;
-  public increment = Math.round(this.pageSize / 3);
+  public slidingWindowSize = 10;
+  public increment = 2;
 
-  public numberOfItemsToShift(numberOfStoredMaterials: number) {
-    return this.pageSize - numberOfStoredMaterials;
+  public calcNewSlidingWindowEnd(numberOfStoredMaterials: number) {
+    const slidingWindowEnd = Math.abs(numberOfStoredMaterials - this.slidingWindowSize);
+    console.log('slidingWindowEnd', slidingWindowEnd);
+    return slidingWindowEnd;
+  }
+
+  public shiftMaterialsLeft(materials: MaterialWithThumbnail[]) {
+    return materials.slice(
+      0,
+      this.slidingWindowSize,
+    );
+  }
+
+  public shiftMaterialsRight(materials: MaterialWithThumbnail[]) {
+    return materials.slice(
+      this.calcNewSlidingWindowEnd(materials.length),
+      materials.length,
+    );
   }
 
   handleScroll(callback: (x: number) => void): () => void {
     return () => {
       if (this.bottomScrollThreshold()) {
-        console.log('bottom');
         this.lastValue = -1;
         callback(-1);
       } else if (this.topScrollThreshold()) {
         callback(1);
         this.lastValue = 1;
-        console.log('top');
-      }
-      else if (this.lastValue === 1 || this.lastValue === -1) {
+      } else if (this.lastValue === 1 || this.lastValue === -1) {
         this.lastValue = 0;
         callback(0);
       }
