@@ -45,9 +45,15 @@ function Materials() {
   }
 
   const loadMoreMaterials = async (scrollPosition: number) => {
-    let url = "";
     if (scrollPosition === -1) {
-      url = buildLoadMaterialsUrl();
+      loadNextMaterials();
+    } else if (scrollPosition === 1) {
+      loadPreviousMaterials();
+    }
+  }
+
+  const loadNextMaterials = async () => {
+      const url = buildLoadMaterialsUrl();
       const json = await loadMaterials(url);
       if (materials.length + json.length >= paginator.slidingWindowSize) {
         const shiftedMaterials = paginator.shiftMaterialsRight([...materials, ...json]);
@@ -58,7 +64,9 @@ function Materials() {
       slidingWindowHead.current += json.length;
       lastMaterialIndex.current += json.length;
       console.log("setting materials add", json.length);
-    } else if (scrollPosition === 1) {
+  }
+
+  const loadPreviousMaterials = async () => {
       if (lastMaterialIndex.current >= paginator.slidingWindowSize) {
         let offset = slidingWindowHead.current - paginator.slidingWindowSize;
         console.log("offset", offset);
@@ -68,7 +76,7 @@ function Materials() {
         if (offset < 0) {
           return;
         }
-        url = buildLoadMaterialsUrl(offset > 0 ? offset : 0);
+        const url = buildLoadMaterialsUrl(offset > 0 ? offset : 0);
         const json = await loadMaterials(url);
         if (json.length + materials.length >= paginator.slidingWindowSize) {
           console.log("shifting materials left");
@@ -80,7 +88,7 @@ function Materials() {
         }
         slidingWindowHead.current -= json.length;
       }
-    }
+
   }
 
   const setSearchResults = (materials: MaterialWithThumbnail[]) => {
