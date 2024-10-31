@@ -13,6 +13,7 @@ type MaterialWithThumbnail = {
 
 function Materials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
+  const [searchResults, setSearchResults] = useState<MaterialWithThumbnail[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [scrollEvent, setScrollEvent] = useState(0);
   const paginator = new PaginationService();
@@ -21,28 +22,41 @@ function Materials() {
   const user = useUserStore(state => state.user);
   const lastMaterialIndex = useRef(0);
   const slidingWindowHead = useRef(0);
+  const runCount = useRef(0);
 
-
-  const searchMaterials = async () => {
-    const url = buildLoadMaterialsUrl();
-    const json = await loadMaterials(url);
-    setSearchResults(json);
-    if (searchString !== "" && !onMinePage) {
-      const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
-      setMaterials(materialsWithNullThumbnail);
-      return;
+  const getUrl = () => {
+    if (onMinePage) {
+      return `/api/materials/user/${user.id}`;
     }
-    setMaterials(json);
-    lastMaterialIndex.current = json.length;
-    console.log("setting materials", json.length);
-    return;
-  };
+    return "api/materials";
+  }
 
   const buildLoadMaterialsUrl = (offset: number = lastMaterialIndex.current) => {
     const baseUrl = getUrl();
     const url = `${baseUrl}?search=${searchString}&offset=${offset}&limit=${paginator.increment}`;
     return url;
   }
+
+  const setInitialMaterials = async () => {
+    const url = buildLoadMaterialsUrl();
+    const json = await loadMaterials(url);
+    lastMaterialIndex.current = json.length;
+    setMaterials(json);
+    runCount.current++;
+  }
+
+  const searchMaterials = async () => {
+    if (runCount.current === 0) return;
+    const url = buildLoadMaterialsUrl();
+    const json = await loadMaterials(url);
+    setSearchResults(json);
+    setSearchResultsGlobal(json);
+    if (searchString !== "" && !onMinePage) {
+      const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
+      setSearchResults(materialsWithNullThumbnail);
+      return;
+    }
+  };
 
   const loadMoreMaterials = async (scrollPosition: number) => {
     if (scrollPosition === -1) {
@@ -83,10 +97,10 @@ function Materials() {
       }
       slidingWindowHead.current -= json.length;
     }
-
   }
 
-  const setSearchResults = (materials: MaterialWithThumbnail[]) => {
+  const setSearchResultsGlobal = (materials: MaterialWithThumbnail[]) => {
+    console.log(materials);
     if (materials.length === 0) {
       useSearchState.setState({ searchResults: [] });
       return;
@@ -99,13 +113,7 @@ function Materials() {
     } else {
       useSearchState.setState({ searchResults: materials });
     }
-  }
-
-  const getUrl = () => {
-    if (onMinePage) {
-      return `/api/materials/user/${user.id}`;
-    }
-    return "api/materials";
+    useSearchState.setState({ searchResults: materials });
   }
 
   const scrollEventSetter = (x: number) => {
@@ -121,12 +129,18 @@ function Materials() {
   }, [scrollEvent]);
 
   useEffect(() => {
+    setInitialMaterials();
+  }, []);
+
+  useEffect(() => {
     searchMaterials();
-    console.log("searching materials");
+  }, [searchString]);
+
+  useEffect(() => {
     const onScroll = paginator.handleScroll(scrollEventSetter);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, [searchString]);
+  }, []);
 
   if (materials.length === 0) {
     return (
@@ -138,13 +152,16 @@ function Materials() {
 
   return (
     <>
-      <div>
-        {
+      {
+        searchResults.length > 0 ?
+          searchResults.map((el: MaterialWithThumbnail) => {
+            return <Card key={el.material.id} material={el} />
+          })
+          :
           materials.map((el: MaterialWithThumbnail) => {
             return <Card key={el.material.id} material={el}></Card>
           })
-        }
-      </div>
+      }
     </>
   )
 }

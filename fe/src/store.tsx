@@ -82,12 +82,12 @@ type SearchState = {
   searchString: string,
   searchResults: Material[] | MaterialWithThumbnail[];
   setSearchString: (search: string) => void
-  setSearchResults: (results: Material[]) => void
+  setSearchResults: (results: Material[] | MaterialWithThumbnail[]) => void
 }
 
 export const useSearchState = create<SearchState>((set) => ({
   searchString: '',
   searchResults: [],
   setSearchString: (search: string) => set({ searchString: search }),
-  setSearchResults: (results: Material[]) => set({ searchResults: results }),
+  setSearchResults: (results: Material[] | MaterialWithThumbnail[]) => set({ searchResults: results }),
 }));
