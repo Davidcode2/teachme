@@ -139,17 +139,13 @@ function Materials() {
 
   return (
     <>
-      <div className="flex">
-        <div className="relative">
-          <div className="p-8 sticky top-20">{materials.length}</div>
-        </div>
-        <div>
-          {
-            materials.map((el: MaterialWithThumbnail) => {
-              return <Card key={el.material.id} material={el}></Card>
-            })
-          }
-        </div></div>
+      <div>
+        {
+          materials.map((el: MaterialWithThumbnail) => {
+            return <Card key={el.material.id} material={el}></Card>
+          })
+        }
+      </div>
     </>
   )
 }
