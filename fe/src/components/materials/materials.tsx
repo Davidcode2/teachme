@@ -82,7 +82,6 @@ function Materials() {
         setMaterials(prevMaterials => [...json, ...prevMaterials]);
       }
       slidingWindowHead.current -= json.length;
-      window.scrollTo(0, 100);
     }
 
   }
