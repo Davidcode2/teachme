@@ -2,7 +2,7 @@ import { useSearchState, useUserStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from './noData';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
 
 type MaterialWithThumbnail = {
@@ -11,12 +11,10 @@ type MaterialWithThumbnail = {
 }
 
 function SearchResults() {
-  const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const [searchResults, setSearchResults] = useState<MaterialWithThumbnail[]>([]);
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
   const user = useUserStore(state => state.user);
-  const runCount = useRef(0);
 
   const getUrl = () => {
     if (onMinePage) {
@@ -32,22 +30,13 @@ function SearchResults() {
   }
 
   const searchMaterials = async () => {
-    if (runCount.current === 0) return;
-    console.log(searchString);
-    if (searchString !== "" && !onMinePage) {
+    if (searchString !== "") {
       const url = buildLoadMaterialsUrl();
       const json = await loadMaterials(url);
       setSearchResultsGlobal(json);
       const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
       setSearchResults(materialsWithNullThumbnail);
       return;
-    } else {
-      const url = buildLoadMaterialsUrl();
-      console.log(url);
-      const json = await loadMaterials(url);
-      console.log(json);
-      setSearchResults([]);
-      setMaterials(json);
     }
   };
 
@@ -69,22 +58,19 @@ function SearchResults() {
   }
 
   useEffect(() => {
+    console.log(searchString);
     searchMaterials();
   }, [searchString]);
 
-  if (materials.length === 0) {
-    return (
-      <>
-        <NoData />
-      </>
-    );
+  if (searchResults.length === 0) {
+    return <NoData />
   }
 
   return (
     <>
       {
         searchResults.map((el: MaterialWithThumbnail) => {
-          return <>hello<Card key={el.material.id} material={el} /></>
+          return <Card key={el.material.id} material={el} />
         })
       }
     </>

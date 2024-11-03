@@ -1,11 +1,10 @@
-import { useSearchState, useUserStore } from '../../store';
+import { useUserStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from './noData';
 import { useEffect, useRef, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
 import PaginationService from '../../services/paginationService';
-import SearchResults from './searchResults';
 
 type MaterialWithThumbnail = {
   material: Material,
@@ -113,10 +112,6 @@ function Materials() {
         <NoData />
       </>
     );
-  }
-
-  if (useSearchState.getState().searchString !== "") {
-    return <SearchResults />
   }
 
   return (

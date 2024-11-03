@@ -21,6 +21,7 @@ import sharedPreviewLoader from './loaders/sharedPreviewLoader.ts'
 import Workspace from './components/workspace/workspace.tsx'
 import Mine from './components/workspace/mine.tsx'
 import MyMaterials from './components/materials/myMaterials.tsx'
+import SearchResults from './components/materials/searchResults.tsx'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
       {
         path: "/materials",
         element: <Materials />,
+        errorElement: <NoData />,
+      },
+      {
+        path: "/search",
+        element: <SearchResults />,
         errorElement: <NoData />,
       },
       {
