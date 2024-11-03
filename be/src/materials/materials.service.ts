@@ -7,6 +7,7 @@ import { StripeService } from '../stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
 import { UsersService } from '../users/usersService/users.service';
 import { ImageService } from './image.service';
+import PaginationObject from 'src/shared/DTOs/paginationObject';
 
 @Injectable()
 export class MaterialsService {
@@ -19,13 +20,17 @@ export class MaterialsService {
   ) {}
 
   async findAll(
-    pageSize: number = 10,
-    offset: number = 0,
-    limit: number = 0,
+    pagination: PaginationObject,
   ): Promise<{ material: Material; thumbnail: Buffer }[]> {
-    Logger.debug(`pageSize: ${pageSize}, offset: ${offset}, limit: ${limit}`);
+    Logger.debug(
+      `pageSize: ${pagination.pageSize}, offset: ${pagination.offset}, limit: ${pagination.limit}`,
+    );
     const materialsCount = await this.materialsRepository.count();
-    const take = this.amountToTake(materialsCount, pageSize, offset, limit);
+    const take = this.amountToTake(materialsCount, pagination);
+    const skip =
+      materialsCount - pagination.offset > 0
+        ? pagination.offset
+        : materialsCount - pagination.pageSize;
     if (take === null) {
       return [];
     }
@@ -40,7 +45,7 @@ export class MaterialsService {
       .addSelect('material.thumbnail_path')
       .addSelect('material.date_published')
       .addSelect('material.author_id')
-      .skip(materialsCount - offset > 0 ? offset : materialsCount - pageSize)
+      .skip(skip)
       .take(take)
       .getMany();
 
@@ -49,20 +54,18 @@ export class MaterialsService {
 
   private amountToTake(
     numberOfMaterials: number,
-    pageSize: number,
-    offset: number,
-    limit: number,
+    pagination: PaginationObject,
   ) {
-    if (limit >= numberOfMaterials) {
+    if (pagination.limit >= numberOfMaterials) {
       return null;
     }
-    if (offset >= numberOfMaterials) {
+    if (pagination.offset >= numberOfMaterials) {
       return null;
     }
-    if (limit === 0) {
-      return pageSize;
+    if (pagination.limit === 0) {
+      return pagination.pageSize;
     }
-    return limit;
+    return pagination.limit;
   }
 
   findOne(id: string): Promise<Material | null> {
@@ -78,8 +81,15 @@ export class MaterialsService {
   async findByUser(
     userId: string,
     searchString: string,
+    pagination: PaginationObject,
   ): Promise<{ material: Material; thumbnail: Buffer }[]> {
-    const materials = await this.getMaterialsForUser(userId);
+    const materialsCount = await this.materialsRepository.count();
+    const take = this.amountToTake(materialsCount, pagination);
+    if (take === null) {
+      return [];
+    }
+
+    const materials = await this.getMaterialsForUser(userId, pagination);
     if (searchString) {
       return this.searchMyMaterials(searchString, materials);
     }
@@ -96,7 +106,7 @@ export class MaterialsService {
     return material;
   }
 
-  private async getMaterialsForUser(userId: string) {
+  private async getMaterialsForUser(userId: string, pagination: PaginationObject) {
     const user = await this.userService.findOneById(userId);
     const materials = user.consumer.materials;
     return materials;

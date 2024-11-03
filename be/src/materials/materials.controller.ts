@@ -17,6 +17,7 @@ import { MaterialsService } from './materials.service';
 import { Express } from 'express';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
+import PaginationObject from 'src/shared/DTOs/paginationObject';
 
 @Controller('materials')
 export class MaterialsController {
@@ -32,9 +33,8 @@ export class MaterialsController {
       return this.materialsService.search(searchString);
     }
     Logger.debug(`offset: ${offset}`);
-    const offsetNum = Number(offset);
-    const limitNum = Number(limit);
-    return this.materialsService.findAll(10, offsetNum, limitNum);
+    const pagination = new PaginationObject(10, Number(offset), Number(limit));
+    return this.materialsService.findAll(pagination);
   }
 
   @Get('id/:id')
@@ -52,8 +52,11 @@ export class MaterialsController {
   findByUser(
     @Param('id') userId: string,
     @Query('search') searchString: string,
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
   ) {
-    return this.materialsService.findByUser(userId, searchString);
+    const pagination = new PaginationObject(10, Number(offset), Number(limit));
+    return this.materialsService.findByUser(userId, searchString, pagination);
   }
 
   @UseGuards(JwtAuthGuard)
