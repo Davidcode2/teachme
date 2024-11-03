@@ -81,15 +81,8 @@ export class MaterialsService {
   async findByUser(
     userId: string,
     searchString: string,
-    pagination: PaginationObject,
   ): Promise<{ material: Material; thumbnail: Buffer }[]> {
-    const materialsCount = await this.materialsRepository.count();
-    const take = this.amountToTake(materialsCount, pagination);
-    if (take === null) {
-      return [];
-    }
-
-    const materials = await this.getMaterialsForUser(userId, pagination);
+    const materials = await this.getMaterialsForUser(userId);
     if (searchString) {
       return this.searchMyMaterials(searchString, materials);
     }
@@ -106,7 +99,7 @@ export class MaterialsService {
     return material;
   }
 
-  private async getMaterialsForUser(userId: string, pagination: PaginationObject) {
+  private async getMaterialsForUser(userId: string) {
     const user = await this.userService.findOneById(userId);
     const materials = user.consumer.materials;
     return materials;
