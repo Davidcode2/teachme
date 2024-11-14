@@ -13,16 +13,15 @@ type MaterialWithThumbnail = {
 export default function Workspace() {
 
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
-  let searchString = useSearchState((state) => state.searchString);
-  let onMinePage = document.location.pathname === "/materials/mine";
+  const searchString = useSearchState((state) => state.searchString);
   const user = useUserStore(state => state.user);
 
   const searchMaterials = async () => {
-    let baseUrl = getUrl();
+    const baseUrl = getUrl();
     const url = `${baseUrl}?search=${searchString}`;
     const json = await loadMaterials(url);
     setSearchResults(json);
-    if (searchString !== "" && !onMinePage) {
+    if (searchString !== "") {
       const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
       setMaterials(materialsWithNullThumbnail);
       return;
@@ -35,7 +34,7 @@ export default function Workspace() {
       useSearchState.setState({ searchResults: [] });
       return;
     }
-    let hasThumbnail = materials[0].thumbnail;
+    const hasThumbnail = materials[0].thumbnail;
     if (hasThumbnail) {
       materials = materials.map((el: { material: Material, thumbnail: any }) => { return el.material; });
       useSearchState.setState({ searchResults: materials });
@@ -45,10 +44,7 @@ export default function Workspace() {
   }
 
   const getUrl = () => {
-    if (onMinePage) {
-      return `/api/materials/user/${user.id}`;
-    }
-    return "/api/materials";
+    return `/api/materials/by/${user.id}`;
   }
 
   useEffect(() => {

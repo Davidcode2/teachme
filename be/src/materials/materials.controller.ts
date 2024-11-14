@@ -52,11 +52,8 @@ export class MaterialsController {
   findByUser(
     @Param('id') userId: string,
     @Query('search') searchString: string,
-    @Query('offset') offset: number,
-    @Query('limit') limit: number,
   ) {
-    const pagination = new PaginationObject(10, Number(offset), Number(limit));
-    return this.materialsService.findByUser(userId, searchString, pagination);
+    return this.materialsService.findByUser(userId, searchString);
   }
 
   @UseGuards(JwtAuthGuard)

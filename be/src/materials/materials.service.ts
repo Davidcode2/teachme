@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { Material } from './materials.entity';
 import * as fs from 'node:fs/promises';
 import { StripeService } from '../stripe/stripe.service';
@@ -35,19 +35,9 @@ export class MaterialsService {
       return [];
     }
     Logger.debug(`take: ${take}, numberOfMaterials: ${materialsCount}`);
-    const materials = await this.materialsRepository
-      .createQueryBuilder('material')
-      .select('material.id')
-      .addSelect('material.title')
-      .addSelect('material.description')
-      .addSelect('material.price')
-      .addSelect('material.stripe_price_id')
-      .addSelect('material.thumbnail_path')
-      .addSelect('material.date_published')
-      .addSelect('material.author_id')
-      .skip(skip)
-      .take(take)
-      .getMany();
+    const materialsQuery = this.createMaterialsQuery();
+    const paginatedQuery = materialsQuery.skip(skip).take(take);
+    const materials = await paginatedQuery.getMany();
 
     return this.mapThumbnails(materials);
   }
@@ -158,7 +148,6 @@ export class MaterialsService {
     material.stripe_price_id = price.id;
     const user = await this.userService.findOneById(materialDto.userId);
     material.author_id = user.authorId;
-    console.log(user);
     user.author.materials.push(material);
     this.userService.update(user);
     console.log(user);
@@ -213,25 +202,20 @@ export class MaterialsService {
     });
     return fileBuffers;
   }
-}
 
-class MaterialUnboughtDto {
-  title: string;
-  description: string;
-  price: number;
-  link: string;
-  id: string;
-  stripe_price_id: string;
-  thumbnail_path: string;
-  preview_path: string;
-  date_published: Date;
-}
+  private createMaterialsQuery(): SelectQueryBuilder<Material> {
+    const selectQueryBuilder = this.materialsRepository
+      .createQueryBuilder('material')
+      .select('material.id')
+      .addSelect('material.title')
+      .addSelect('material.description')
+      .addSelect('material.price')
+      .addSelect('material.stripe_price_id')
+      .addSelect('material.thumbnail_path')
+      .addSelect('material.date_published')
+      .addSelect('material.author_id');
 
-class MaterialDtoIn {
-  file: Express.Multer.File;
-  title: string;
-  description: string;
-  price: string;
-  link: string;
-  userId: string;
+    return selectQueryBuilder;
+  }
+
 }
