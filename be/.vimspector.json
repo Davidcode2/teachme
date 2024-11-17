@@ -1,0 +1,30 @@
+{
+  "configurations": {
+    "run": {
+      "adapter": "js-debug",
+      "filetypes": ["javascript", "typescript"],
+      "breakpoints": {
+        "exception": {
+          "all": "N",
+          "uncaught": "N"
+        }
+      },
+      "configuration": {
+        "request": "launch",
+        "protocol": "auto",
+        "stopOnEntry": false,
+        "console": "integratedTerminal",
+        "outDir": "${workspaceRoot}/dist/**.js",
+        "program": "${workspaceRoot}/src/main.ts",
+        "runtimeArgs": [
+          "--nolazy",
+          "-r",
+          "ts-node/register",
+          "-r",
+          "tsconfig-paths/register"
+        ],
+        "cwd": "${workspaceRoot}"
+      }
+    }
+  }
+}

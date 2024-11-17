@@ -1,4 +1,4 @@
-class MaterialUnboughtDto {
+export class MaterialUnboughtDto {
   title: string;
   description: string;
   price: number;

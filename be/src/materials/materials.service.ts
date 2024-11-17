@@ -7,7 +7,9 @@ import { StripeService } from '../stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
 import { UsersService } from '../users/usersService/users.service';
 import { ImageService } from './image.service';
+import { MaterialUnboughtDto } from 'src/shared/Models/MaterialsUnbought';
 import PaginationObject from 'src/shared/DTOs/paginationObject';
+import MaterialDtoIn from 'src/shared/Models/MaterialsIn';
 
 @Injectable()
 export class MaterialsService {
@@ -40,22 +42,6 @@ export class MaterialsService {
     const materials = await paginatedQuery.getMany();
 
     return this.mapThumbnails(materials);
-  }
-
-  private amountToTake(
-    numberOfMaterials: number,
-    pagination: PaginationObject,
-  ) {
-    if (pagination.limit >= numberOfMaterials) {
-      return null;
-    }
-    if (pagination.offset >= numberOfMaterials) {
-      return null;
-    }
-    if (pagination.limit === 0) {
-      return pagination.pageSize;
-    }
-    return pagination.limit;
   }
 
   findOne(id: string): Promise<Material | null> {
@@ -218,4 +204,19 @@ export class MaterialsService {
     return selectQueryBuilder;
   }
 
+  private amountToTake(
+    numberOfMaterials: number,
+    pagination: PaginationObject,
+  ) {
+    if (pagination.limit >= numberOfMaterials) {
+      return null;
+    }
+    if (pagination.offset >= numberOfMaterials) {
+      return null;
+    }
+    if (pagination.limit === 0) {
+      return pagination.pageSize;
+    }
+    return pagination.limit;
+  }
 }

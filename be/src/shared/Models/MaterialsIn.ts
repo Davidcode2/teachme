@@ -1,4 +1,4 @@
-class MaterialDtoIn {
+export default class MaterialDtoIn {
   file: Express.Multer.File;
   title: string;
   description: string;
