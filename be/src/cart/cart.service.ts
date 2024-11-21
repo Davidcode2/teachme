@@ -7,6 +7,7 @@ import { Material } from '../materials/materials.entity';
 import { MaterialsService } from '../materials/materials.service';
 import { StripeService } from '../stripe/stripe.service';
 import { CommonCartService } from '../common-cart/common-cart.service';
+import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
 
 @Injectable()
 export class CartService {
@@ -29,11 +30,11 @@ export class CartService {
     return cart;
   }
 
-  async getItems(id: string): Promise<Material[]> {
+  async getItems(id: string): Promise<MaterialWithThumbnail[]> {
     await this.createCartIfNotExists(id);
     const user = await this.userService.findOneById(id);
     const materials = user.consumer.cart.materials;
-    return materials;
+    return this.materialsService.mapThumbnails(materials);
   }
 
   async removeItem(id: string, materialId: string): Promise<Material[]> {

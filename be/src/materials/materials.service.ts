@@ -182,7 +182,7 @@ export class MaterialsService {
     return { fileName, filePath };
   }
 
-  private mapThumbnails(materials: Material[] | MaterialUnboughtDto[]) {
+  public mapThumbnails(materials: Material[] | MaterialUnboughtDto[]) {
     const materialsWithThumbnails = materials.map(async (material: any) => {
       const thumbnail = await fs.readFile(material.thumbnail_path);
       return { material, thumbnail };

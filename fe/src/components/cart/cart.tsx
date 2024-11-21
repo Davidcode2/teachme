@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
 import { useCartStore } from "../../store";
+import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
@@ -46,7 +47,7 @@ export default function Cart(): JSX.Element {
   }
   return (
     <div className="flex flex-col gap-4 md:max-w-[600px] ">
-      {cartItems && cartItems.map((item, index) => <div className="" key={index} ><CartItem item={item} cartService={cartService} setCartItems={setCartItems} /></div>)}
+      {cartItems && cartItems.map((item: MaterialWithThumbnail, index) => <div className="" key={index} ><CartItem item={item} cartService={cartService} setCartItems={setCartItems} /></div>)}
       <button onClick={() => toCheckout(cartItems.map((item: any) => item.id))} className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
     </div>
   )

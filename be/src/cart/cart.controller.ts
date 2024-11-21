@@ -15,6 +15,7 @@ import { Request, Response } from 'express';
 import { CartService } from './cart.service';
 import { Material } from '../materials/materials.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
 
 @Controller('cart')
 export class CartController {
@@ -33,7 +34,7 @@ export class CartController {
   getForUser(
     @Query('id') userId: string,
     @Req() req: Request,
-  ): Promise<Material[]> {
+  ): Promise<MaterialWithThumbnail[]> {
     const id = req.cookies.userId;
     const materials = this.cartService.getItems(id);
     return materials;
