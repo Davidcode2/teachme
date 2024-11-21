@@ -100,7 +100,7 @@ export class MaterialsService {
       const { file_path, ...unboughtMaterial } = material;
       return unboughtMaterial;
     });
-    return unboughtMaterials;
+    return this.mapThumbnails(unboughtMaterials);
   }
 
   async findOneWithPreview(

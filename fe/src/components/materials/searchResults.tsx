@@ -34,8 +34,7 @@ function SearchResults() {
       const url = buildLoadMaterialsUrl();
       const json = await loadMaterials(url);
       setSearchResultsGlobal(json);
-      const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
-      setSearchResults(materialsWithNullThumbnail);
+      setSearchResults(json);
       return;
     }
   };
