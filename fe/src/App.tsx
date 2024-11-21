@@ -6,6 +6,7 @@ import SpinnerGif from './assets/icons/icons8-spinner.gif'
 import { useEffect } from 'react';
 import { useAccessTokenStore, useGlobalLoadingStore } from './store';
 import { UserService } from './services/userService'
+import Skeleton from './components/card/skeleton'
 
 function App(): JSX.Element {
   const loading = useGlobalLoadingStore((state) => state.loading);
@@ -33,16 +34,18 @@ function App(): JSX.Element {
 
   return (
     <div>
-      {loading &&
-        <div className="font-bold fixed h-screen w-screen">
-          <div className="flex w-full h-full justify-center items-center">
-            <img className="" src={SpinnerGif} alt="" width="60" />
-          </div>
-        </div>
-      }
       <div>
         <Sidebar></Sidebar>
         <Header></Header>
+        {loading &&
+          <div className="font-bold">
+            <div className="">
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+            </div>
+          </div>
+        }
         <Outlet />
       </div>
     </div>
