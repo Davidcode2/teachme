@@ -65,6 +65,11 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
+  async updateWithAuthor(user: User): Promise<User> {
+    this.authorService.update(user.author);
+    return this.usersRepository.save(user);
+  }
+
   async update(user: User): Promise<User> {
     return this.usersRepository.save(user);
   }

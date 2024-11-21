@@ -10,6 +10,8 @@ import { ImageService } from './image.service';
 import { MaterialUnboughtDto } from 'src/shared/Models/MaterialsUnbought';
 import PaginationObject from 'src/shared/DTOs/paginationObject';
 import MaterialDtoIn from 'src/shared/Models/MaterialsIn';
+import { User } from 'src/users/user.entity';
+import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
 
 @Injectable()
 export class MaterialsService {
@@ -23,7 +25,7 @@ export class MaterialsService {
 
   async findAll(
     pagination: PaginationObject,
-  ): Promise<{ material: Material; thumbnail: Buffer }[]> {
+  ): Promise<MaterialWithThumbnail[]> {
     Logger.debug(
       `pageSize: ${pagination.pageSize}, offset: ${pagination.offset}, limit: ${pagination.limit}`,
     );
@@ -48,16 +50,17 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
-  async findByCreator(userId: string): Promise<Material[]> {
+  async findByCreator(userId: string): Promise<MaterialWithThumbnail[]> {
     const user = await this.userService.findOneById(userId);
     console.log(user);
-    return user.author.materials;
+    const materials = user.author.materials;
+    return this.mapThumbnails(materials);
   }
 
   async findByUser(
     userId: string,
     searchString: string,
-  ): Promise<{ material: Material; thumbnail: Buffer }[]> {
+  ): Promise<MaterialWithThumbnail[]> {
     const materials = await this.getMaterialsForUser(userId);
     if (searchString) {
       return this.searchMyMaterials(searchString, materials);
@@ -120,7 +123,21 @@ export class MaterialsService {
       .getMany();
   }
 
-  async create(materialDto: MaterialDtoIn): Promise<Material> {
+  async create(materialDto: MaterialDtoIn) {
+    const material = await this.populateMaterial(materialDto);
+    const user = await this.userService.findOneById(materialDto.userId);
+    material.author_id = user.authorId;
+    await this.materialsRepository.save(material);
+    this.addMaterialToAuthor(user, material);
+  }
+
+  private addMaterialToAuthor(user: User, material: Material) {
+    user.author.materials.push(material);
+    this.userService.updateWithAuthor(user);
+    console.log(user);
+  }
+
+  private async populateMaterial(materialDto: MaterialDtoIn) {
     const material = new Material();
     material.title = materialDto.title;
     material.description = materialDto.description;
@@ -132,12 +149,7 @@ export class MaterialsService {
     material.preview_path = await this.imageService.createPreview(fileInfo);
     const price = await this.stripeService.createProduct(material);
     material.stripe_price_id = price.id;
-    const user = await this.userService.findOneById(materialDto.userId);
-    material.author_id = user.authorId;
-    user.author.materials.push(material);
-    this.userService.update(user);
-    console.log(user);
-    return this.materialsRepository.save(material);
+    return material;
   }
 
   async remove(id: string): Promise<void> {

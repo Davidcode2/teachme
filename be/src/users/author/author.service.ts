@@ -19,6 +19,11 @@ export class AuthorService {
     return this.authorRepository.findOneBy({ id: id });
   }
 
+  async update(author: Author) {
+    this.authorRepository.save(author);
+    return author;
+  }
+
   async getMaterials(id: string): Promise<Material[]> {
     const author = await this.findOneById(id);
     const authorWithMaterials = await this.authorRepository
