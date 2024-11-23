@@ -1,10 +1,11 @@
-import { useUserStore } from '../../store';
+import { useUserStore, useGlobalLoadingStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from './noData';
 import { useEffect, useRef, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
 import PaginationService from '../../services/paginationService';
+import Skeleton from '../card/skeleton';
 
 type MaterialWithThumbnail = {
   material: Material,
@@ -15,6 +16,7 @@ function Materials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [scrollEvent, setScrollEvent] = useState(0);
+  const loading = useGlobalLoadingStore((state) => state.loading);
   const paginator = new PaginationService();
   const onMinePage = document.location.pathname === "/materials/mine";
   const user = useUserStore(state => state.user);
@@ -106,7 +108,7 @@ function Materials() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  if (materials.length === 0) {
+  if (!loading && materials.length === 0) {
     return (
       <>
         <NoData />
@@ -116,6 +118,7 @@ function Materials() {
 
   return (
     <>
+      {loading && <><Skeleton /><Skeleton/></>}
       {
         materials.map((el: MaterialWithThumbnail) => {
           return <Card key={el.material.id} material={el}></Card>

@@ -2,7 +2,6 @@ import './App.css'
 import Header from './components/header/header'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './components/sidebar/sidebar'
-import SpinnerGif from './assets/icons/icons8-spinner.gif'
 import { useEffect } from 'react';
 import { useAccessTokenStore, useGlobalLoadingStore } from './store';
 import { UserService } from './services/userService'
@@ -37,15 +36,6 @@ function App(): JSX.Element {
       <div>
         <Sidebar></Sidebar>
         <Header></Header>
-        {loading &&
-          <div className="font-bold">
-            <div className="">
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-            </div>
-          </div>
-        }
         <Outlet />
       </div>
     </div>

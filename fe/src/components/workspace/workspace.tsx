@@ -1,9 +1,10 @@
-import { useSearchState, useUserStore } from '../../store';
+import { useSearchState, useUserStore, useGlobalLoadingStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from '../materials/noData';
 import { useEffect, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
+import Skeleton from '../card/skeleton';
 
 type MaterialWithThumbnail = {
   material: Material,
@@ -14,6 +15,7 @@ export default function Workspace() {
 
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const searchString = useSearchState((state) => state.searchString);
+  const loading = useGlobalLoadingStore((state) => state.loading);
   const user = useUserStore(state => state.user);
 
   const searchMaterials = async () => {
@@ -51,7 +53,7 @@ export default function Workspace() {
     searchMaterials();
   }, [searchString]);
 
-  if (materials.length === 0) {
+  if (!loading && materials.length === 0) {
     return (
       <>
         <NoData />
@@ -61,6 +63,7 @@ export default function Workspace() {
 
   return (
     <>
+      {loading && <><Skeleton /><Skeleton/></>}
       <div>
         {
           materials.map((el: MaterialWithThumbnail) => {

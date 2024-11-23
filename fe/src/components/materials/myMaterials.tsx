@@ -1,10 +1,11 @@
-import { useSearchState, useUserStore } from '../../store';
+import { useSearchState, useUserStore, useGlobalLoadingStore } from '../../store';
 import Card from '../../components/card/card'
 import Material from '../../DTOs/material'
 import NoData from './noData';
 import { useEffect, useRef, useState } from 'react';
 import loadMaterials from '../../loaders/materialLoader';
 import PaginationService from '../../services/paginationService';
+import Skeleton from '../card/skeleton';
 
 type MaterialWithThumbnail = {
   material: Material,
@@ -14,6 +15,7 @@ type MaterialWithThumbnail = {
 function MyMaterials() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const [searchResults, setSearchResults] = useState<MaterialWithThumbnail[]>([]);
+  const loading = useGlobalLoadingStore((state) => state.loading);
   const paginator = new PaginationService();
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
@@ -83,7 +85,7 @@ function MyMaterials() {
     searchMaterials();
   }, [searchString]);
 
-  if (materials.length === 0) {
+  if (!loading && materials.length === 0) {
     return (
       <>
         <NoData />
@@ -93,6 +95,7 @@ function MyMaterials() {
 
   return (
     <>
+      {loading && <><Skeleton /><Skeleton/></>}
       {
         searchResults.length > 0 ?
           searchResults.map((el: MaterialWithThumbnail) => {
