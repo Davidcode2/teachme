@@ -77,7 +77,7 @@ function Materials() {
       const currentMaterialsLength = materials.length + json.length;
       if (currentMaterialsLength >= paginator.slidingWindowSize) {
         const shiftedMaterials = paginator.shiftMaterialsLeft([...json, ...materials]);
-        setMaterials(prevMaterials => [...shiftedMaterials]);
+        setMaterials(_ => [...shiftedMaterials]);
         lastMaterialIndex.current -= json.length;
       } else {
         setMaterials(prevMaterials => [...json, ...prevMaterials]);
