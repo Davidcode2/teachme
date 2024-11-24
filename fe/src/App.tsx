@@ -5,10 +5,8 @@ import Sidebar from './components/sidebar/sidebar'
 import { useEffect } from 'react';
 import { useAccessTokenStore, useGlobalLoadingStore } from './store';
 import { UserService } from './services/userService'
-import Skeleton from './components/card/skeleton'
 
 function App(): JSX.Element {
-  const loading = useGlobalLoadingStore((state) => state.loading);
 
   useEffect(() => {
     fetch('/api/auth/refresh', {

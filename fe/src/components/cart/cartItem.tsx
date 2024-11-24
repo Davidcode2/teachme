@@ -1,5 +1,4 @@
 import { useState } from "react";
-import sampleImage from "../../assets/exampleMaterialThumbnail.png"
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
 
 interface CartItemProps {
