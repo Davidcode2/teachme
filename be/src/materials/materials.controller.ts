@@ -26,8 +26,8 @@ export class MaterialsController {
   @Get()
   findAll(
     @Query('search') searchString: string,
-    @Query('offset') offset: number,
-    @Query('limit') limit: number,
+    @Query('offset') offset: number = 0,
+    @Query('limit') limit: number = 5,
   ) {
     if (searchString) {
       return this.materialsService.search(searchString);
