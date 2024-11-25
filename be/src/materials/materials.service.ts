@@ -138,18 +138,31 @@ export class MaterialsService {
   }
 
   private async populateMaterial(materialDto: MaterialDtoIn) {
-    const material = new Material();
-    material.title = materialDto.title;
-    material.description = materialDto.description;
-    material.date_published = new Date();
-    material.price = Number(materialDto.price);
-    const fileInfo = this.storeFile(materialDto.file);
-    material.file_path = fileInfo.filePath;
-    material.thumbnail_path = this.imageService.createThumbnail(fileInfo);
-    material.preview_path = await this.imageService.createPreview(fileInfo);
-    const price = await this.stripeService.createProduct(material);
-    material.stripe_price_id = price.id;
-    return material;
+    try {
+      const material = new Material();
+      material.title = materialDto.title;
+      material.description = materialDto.description;
+      material.date_published = new Date();
+      material.price = Number(materialDto.price);
+      const fileInfo = this.storeFile(materialDto.file);
+      material.file_path = fileInfo.filePath;
+      try {
+        material.thumbnail_path =
+          await this.imageService.createThumbnail(fileInfo);
+      } catch (error) {
+        throw new Error('thumbnail creation failed');
+      }
+      try {
+        material.preview_path = await this.imageService.createPreview(fileInfo);
+      } catch (error) {
+        throw new Error('preview creation failed');
+      }
+      const price = await this.stripeService.createProduct(material);
+      material.stripe_price_id = price.id;
+      return material;
+    } catch (error) {
+      throw new Error('material creation failed');
+    }
   }
 
   async remove(id: string): Promise<void> {

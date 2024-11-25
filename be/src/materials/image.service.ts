@@ -30,10 +30,11 @@ export class ImageService {
           numberOfPages,
         );
       }
+      return options.savePath;
     } catch (error) {
       await this.handleError(error, options.savePath);
+      throw new Error('Preview creation failed');
     }
-    return options.savePath;
   }
 
   private async handleError(error: Error, path: string) {
@@ -69,7 +70,10 @@ export class ImageService {
     return array;
   }
 
-  public createThumbnail(fileInfo: { fileName: string; filePath: string }) {
+  public async createThumbnail(fileInfo: {
+    fileName: string;
+    filePath: string;
+  }) {
     const options = this.createOptions(fileInfo.fileName, 'thumbnail');
     Logger.debug(
       `thumbnail options: ${options.savePath}\n saveFilename: ${options.saveFilename}`,
@@ -78,39 +82,37 @@ export class ImageService {
     const pageToConvertAsImage = 1;
 
     try {
-      convert(pageToConvertAsImage, { responseType: 'image' }).then(
-        (resolve) => {
-          return resolve;
-        },
-        (reject) => {
-          Logger.error(reject);
-        },
+      await convert(pageToConvertAsImage, { responseType: 'image' });
+      return (
+        options.savePath +
+        '/' +
+        options.saveFilename +
+        '.' +
+        '1.' +
+        options.format
       );
     } catch (error) {
-      Logger.error(error);
+      Logger.error('thumbnail creation failed with error: ', error);
+      throw new Error('thumbnail creation failed');
     }
-    return (
-      options.savePath +
-      '/' +
-      options.saveFilename +
-      '.' +
-      '1.' +
-      options.format
-    );
   }
 
   private async getNumberOfPages(filePath: string): Promise<number> {
-    const pdfInfo = exec(`pdfinfo ${filePath}`);
+    const pdfInfo = exec(`sh -c "pdfinfo ${filePath}"`);
     const pdfPagesPromise = new Promise<number>((resolve, reject) => {
       pdfInfo.stderr.on('data', (data) => {
         Logger.debug('pdfInfo failed: ', data);
         reject(0);
       });
       pdfInfo.stdout.on('data', (metadata) => {
+        Logger.debug('pdfInfo succeeded, metadata: ', metadata);
         const pagesString = metadata
           .toString()
           .split('\n')
           .find((line: string) => line.includes('Pages'));
+        if (!pagesString) {
+          reject(new Error('Pages not found in pdf metadata'));
+        }
         const pages = Number(pagesString.split(':')[1].trim());
         resolve(pages);
       });

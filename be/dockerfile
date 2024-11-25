@@ -1,10 +1,11 @@
-FROM node:22-alpine as base
+FROM node:22-alpine AS base
 
 RUN apk update
 
 RUN apk add --no-cache \
   ghostscript \
-  graphicsmagick
+  graphicsmagick \
+  poppler-utils
 
 WORKDIR /app
 
@@ -14,13 +15,15 @@ RUN npm install --omit=dev
 RUN npm install @nestjs/cli
 COPY . .
 
-FROM base as build 
+FROM base AS build 
 RUN npm run build
 
-FROM build as production
+FROM build AS production
 
 COPY --from=build /app/dist .
 RUN rm -rf /var/cache/apk/*
+
+ENV LANG=en_US.UTF-8
 CMD ["npm", "run", "start:prod"]
 
 EXPOSE 3000
