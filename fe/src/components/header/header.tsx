@@ -14,7 +14,7 @@ function Header() {
   const setSidebarShown = useSidebarStore((state) => state.toggleSidebar);
   const [showSearch, setShowSearch] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
-  let searchString = useSearchState((state: any) => state.searchString);
+  const searchString = useSearchState((state: any) => state.searchString);
   const searchService = new SearchService();
   const [scroll, setScroll] = useState(false)
 
