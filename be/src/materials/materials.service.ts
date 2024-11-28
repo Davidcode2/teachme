@@ -26,6 +26,7 @@ export class MaterialsService {
   async findAll(
     pagination: PaginationObject,
   ): Promise<MaterialWithThumbnail[]> {
+    Logger.log('Finding all materials');
     Logger.debug(
       `pageSize: ${pagination.pageSize}, offset: ${pagination.offset}, limit: ${pagination.limit}`,
     );
