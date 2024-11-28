@@ -1,4 +1,3 @@
-import SpinnerGif from '../../assets/icons/icons8-spinner.gif'
 import userIcon from '../../assets/icons/icons8-user-48.png'
 import { useEffect, useState } from 'react';
 import { UserService } from '../../services/userService';
