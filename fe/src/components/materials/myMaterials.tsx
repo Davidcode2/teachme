@@ -88,7 +88,7 @@ function MyMaterials() {
   if (!loading && materials.length === 0) {
     return (
       <>
-        <NoData />
+        <NoData message="Be an author!" showImage={false} />
       </>
     );
   }
