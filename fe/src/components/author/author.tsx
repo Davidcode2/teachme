@@ -37,7 +37,7 @@ function Author(props: AppProps) {
 
 
   if (loading) {
-    return <><img src={SpinnerGif} /></>
+    return <></>
   }
 
   return (
