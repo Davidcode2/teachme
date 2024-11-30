@@ -95,7 +95,12 @@ function MyMaterials() {
 
   return (
     <>
-      {loading && <><Skeleton /><Skeleton/></>}
+      {loading &&
+        <>
+          <Skeleton id={crypto.randomUUID()} />
+          <Skeleton id={crypto.randomUUID()} />
+        </>
+      }
       {
         searchResults.length > 0 ?
           searchResults.map((el: MaterialWithThumbnail) => {

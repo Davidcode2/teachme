@@ -118,9 +118,10 @@ function Materials() {
 
   return (
     <>
-      {loading && <>
-        <Skeleton id={Math.random.toString()}/>
-        <Skeleton id={Math.random.toString()}/>
+      {loading &&
+        <>
+          <Skeleton id={crypto.randomUUID()} />
+          <Skeleton id={crypto.randomUUID()} />
         </>
       }
       {

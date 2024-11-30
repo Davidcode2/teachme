@@ -63,7 +63,12 @@ export default function Workspace() {
 
   return (
     <>
-      {loading && <><Skeleton /><Skeleton/></>}
+      {loading &&
+        <>
+          <Skeleton id={crypto.randomUUID()} />
+          <Skeleton id={crypto.randomUUID()} />
+        </>
+      }
       <div>
         {
           materials.map((el: MaterialWithThumbnail) => {
