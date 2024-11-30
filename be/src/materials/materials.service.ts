@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { Material } from './materials.entity';
@@ -26,10 +26,6 @@ export class MaterialsService {
   async findAll(
     pagination: PaginationObject,
   ): Promise<MaterialWithThumbnail[]> {
-    Logger.log('Finding all materials');
-    Logger.debug(
-      `pageSize: ${pagination.pageSize}, offset: ${pagination.offset}, limit: ${pagination.limit}`,
-    );
     const materialsCount = await this.materialsRepository.count();
     const take = this.amountToTake(materialsCount, pagination);
     const skip =
@@ -39,7 +35,6 @@ export class MaterialsService {
     if (take === null) {
       return [];
     }
-    Logger.debug(`take: ${take}, numberOfMaterials: ${materialsCount}`);
     const materialsQuery = this.createMaterialsQuery();
     const paginatedQuery = materialsQuery.skip(skip).take(take);
     const materials = await paginatedQuery.getMany();
@@ -112,7 +107,6 @@ export class MaterialsService {
     });
     const { file_path, ...material } = completeMaterial;
     const previewPromises = await this.getPreview(material.preview_path);
-    Logger.debug(`material Preview Path ${material.preview_path}`);
     const preview = await Promise.all(previewPromises);
     return { material, preview };
   }

@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Post,
   Query,
@@ -32,7 +31,6 @@ export class MaterialsController {
     if (searchString) {
       return this.materialsService.search(searchString);
     }
-    Logger.debug(`offset: ${offset}`);
     const pagination = new PaginationObject(10, Number(offset), Number(limit));
     return this.materialsService.findAll(pagination);
   }
