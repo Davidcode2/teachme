@@ -1,6 +1,6 @@
 import ActionButtons from "../action-buttons/action-buttons.tsx"
 import Author from "../author/author.tsx"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Preview from "../preview.tsx";
 import GradientGenerator from "../../services/gradientGenerator.ts";
 import CardService from "../../services/cardService.ts";
@@ -41,10 +41,18 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
     setEventListenerRegistered(true);
   }
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const rootElement = document.getElementById(materialWithThumbnail.material.id.toString());
+      rootElement?.classList.add("opacity-100");
+    }, 50);
+    return () => { clearTimeout(timeout) }
+  }, []);
+
   return (
     <>
       {showPreview && <Preview material={preview} images={previewImage} />}
-      <div className="module-border-wrap m-4 md:mb-10 md:mx-10 rounded-lg flex flex-col md:flex-row shadow-lg">
+      <div id={materialWithThumbnail.material.id.toString()} className="module-border-wrap m-4 md:mb-10 md:mx-10 rounded-lg flex flex-col md:flex-row shadow-lg transition-opacity duration-700 opacity-0">
         <div className="bg-white">
           {imageElement}
         </div>

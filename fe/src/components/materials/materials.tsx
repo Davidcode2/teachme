@@ -118,7 +118,11 @@ function Materials() {
 
   return (
     <>
-      {loading && <><Skeleton /><Skeleton/></>}
+      {loading && <>
+        <Skeleton id={Math.random.toString()}/>
+        <Skeleton id={Math.random.toString()}/>
+        </>
+      }
       {
         materials.map((el: MaterialWithThumbnail) => {
           return <Card key={el.material.id} material={el}></Card>
