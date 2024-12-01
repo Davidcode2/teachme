@@ -44,7 +44,8 @@ function SignUpForm() {
   const toggleTimeline = (() => {
     tl.current.play();
   });
-
+  
+  const pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d !&quot;#$%&amp;&#39;()*+,\-./:;&lt;=&gt;?@[\\\]^_`{|}~äöüÄÖÜß§´]{6,150}$";
 
   return (
     <>
@@ -63,7 +64,11 @@ function SignUpForm() {
                 <img src={CheckMarkIcon} className={emailValid ? "absolute" : "hidden"} width="30" alt="" />
               </div>
               <label className="p-2" htmlFor="password">Password</label>
-              <input onChange={checkPasswordRequirements} className="p-2 rounded-md border-b" id="password" minLength={6} type="password" name="password" maxLength={20} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$" required />
+              <input
+                onChange={checkPasswordRequirements}
+                className="p-2 rounded-md border-b" id="password" minLength={6} type="password" name="password" maxLength={150}
+                pattern={pattern}
+                required />
               <div className="col-start-2 justify-self-end w-4 bottom-8 right-1 z-50 relative">
                 <img src={CheckMarkIcon} className={passwordValid ? "absolute" : "hidden"} width="30" alt="" />
               </div>
