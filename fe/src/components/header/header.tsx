@@ -1,17 +1,16 @@
 import { Link, NavLink } from 'react-router-dom';
-import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png";
 import plus from "../../assets/addPlusGradient.png";
 import UserIcon from '../../assets/icons/icons8-user-48.png';
-import { useSearchState, useSidebarStore, useUserStore } from '../../store';
+import { useSearchState, useUserStore } from '../../store';
 import Nav from './nav';
 import UserMenu from '../userMenu';
 import { useEffect, useState } from 'react';
 import Search from './search/search';
 import SearchService from '../../services/searchService';
+import ShoppingCartIcon from '../cart/shoppingCartIcon';
 
 function Header() {
   const user = useUserStore((state) => state.user);
-  const setSidebarShown = useSidebarStore((state) => state.toggleSidebar);
   const [showSearch, setShowSearch] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const searchString = useSearchState((state: any) => state.searchString);
@@ -69,7 +68,7 @@ function Header() {
               {user &&
                 <>
                   <UserMenu />
-                  <button className="" onClick={setSidebarShown}><img src={hamburgerIcon} width="30" alt="" /></button>
+                  <ShoppingCartIcon/>
                 </>
               }
             </div>

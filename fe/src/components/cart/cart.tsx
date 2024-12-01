@@ -17,6 +17,7 @@ export default function Cart(): JSX.Element {
       .then((data) => {
         setLoading(false);
         setCartItems(data);
+        useCartStore.setState({numberOfCartItems: data.length});
       });
   }
 

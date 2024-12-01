@@ -35,7 +35,8 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
     const data = await new CartService().addItem(id, user.id);
     setLoading(false);
     showSuccessIndication();
-    useCartStore.setState({ cart: data });
+    const numberOfCartItems = useCartStore.getState().numberOfCartItems;
+    useCartStore.setState({ numberOfCartItems: numberOfCartItems + 1 });
   }
 
   const showSuccessIndication = () => {
