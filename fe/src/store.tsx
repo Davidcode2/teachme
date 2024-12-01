@@ -50,12 +50,12 @@ export const useSidebarStore = create<SidebarState>((set) => ({
 
 type CartState = {
   cart: any
-  setCartItem: (item: any) => void
+  updateCart: (newCartData: any) => void
 }
 
 export const useCartStore = create<CartState>((set) => ({
   cart: null,
-  setCartItem: (item: any) => set({ cart: item }),
+  updateCart: (newCartData: any) => set({cart: newCartData }),
 }));
 
 type LoadingState = {

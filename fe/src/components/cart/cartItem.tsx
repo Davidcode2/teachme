@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
+import CartService from "../../services/cart.service";
+import { useCartStore } from "../../store";
 
 interface CartItemProps {
   item: MaterialWithThumbnail;
-  cartService: any;
-  setCartItems: any;
+  cartService: CartService;
 }
 
-export default function CartItem({ item, cartService, setCartItems }: CartItemProps) {
+export default function CartItem({ item, cartService }: CartItemProps) {
   const [loading, setLoading] = useState(false);
 
   const removeItem = async (id: string) => {
@@ -15,7 +16,7 @@ export default function CartItem({ item, cartService, setCartItems }: CartItemPr
     const res = await cartService.removeItem(id)
     const data = await res.json()
     setLoading(false);
-    setCartItems(data)
+    useCartStore.getState().updateCart(data);
   }
 
   if (loading) {
