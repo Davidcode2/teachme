@@ -46,7 +46,7 @@ function Header() {
   return (
     <>
       {showSearch && <div className="fixed w-screen h-screen backdrop-blur-sm"><Search setShowSearch={setShowSearch} /></div>}
-      <div className="sticky top-0 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
+      <div className="sticky z-50 top-0 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
         <div className={scroll ? "shadow-sm shadow-gray-100 p-4" : "p-4"}>
           <div className="flex justify-between gap-1">
             <div className="hidden md:flex items-center gap-2">
