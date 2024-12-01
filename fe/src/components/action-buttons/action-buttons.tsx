@@ -5,7 +5,7 @@ import EditIcon from '../../assets/icons/icons8-edit-48.png';
 import SpinnerGif from '../../assets/icons/icons8-spinner.gif';
 import addToShoppingCartIcon from '../../assets/icons/icons8-add-shopping-cart-50.png';
 import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
-import { useCartStore, useUserStore } from '../../store';
+import { useUserStore } from '../../store';
 import { useState } from 'react';
 import DeleteMaterialModal from './deleteMaterialModal';
 import CartService from '../../services/cart.service';
@@ -32,7 +32,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
 
   const addToShoppingCart = async () => {
     setLoading(true);
-    const data = await new CartService().addItem(id);
+    await new CartService().addItem(id);
     setLoading(false);
     showSuccessIndication();
   }

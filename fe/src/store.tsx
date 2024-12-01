@@ -57,7 +57,7 @@ type CartState = {
 export const useCartStore = create<CartState>((set) => ({
   numberOfCartItems: 0,
   cart: [],
-  updateNumberOfCartItems: (items: number) => set((state) => ({ numberOfCartItems: items })),
+  updateNumberOfCartItems: (items: number) => set({ numberOfCartItems: items }),
   updateCart: (cart: any) => set({ cart: cart }),
 }));
 

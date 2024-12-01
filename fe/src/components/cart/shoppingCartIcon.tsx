@@ -1,5 +1,4 @@
 import { useCartStore, useSidebarStore } from '../../store';
-import hamburgerIcon from "../../assets/icons/icons8-hamburger-50.png";
 import { useState } from 'react';
 
 function ShoppingCartIcon() {
