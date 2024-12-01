@@ -8,6 +8,7 @@ import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
 import { useCartStore, useUserStore } from '../../store';
 import { useState } from 'react';
 import DeleteMaterialModal from './deleteMaterialModal';
+import CartService from '../../services/cart.service';
 
 interface ActionButtonsProps {
   id: string;
@@ -31,14 +32,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
 
   const addToShoppingCart = async () => {
     setLoading(true);
-    const res = await fetch('/api/cart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 'userId': user.id, 'materialId': id })
-    });
-    const data = await res.json();
+    const data = await new CartService().addItem(id, user.id);
     setLoading(false);
     showSuccessIndication();
     useCartStore.setState({ cart: data });

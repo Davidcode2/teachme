@@ -25,6 +25,17 @@ class CartService {
     return res;
   }
 
+  addItem = async (id: string, userId: string) => {
+    const res = await fetch('/api/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 'userId': userId, 'materialId': id })
+    });
+    return res;
+  }
+
   buyMaterial = async (materialIds: string[]) => {
     const res = await fetch('/api/cart/buy', {
       method: 'POST',
