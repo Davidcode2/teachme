@@ -46,9 +46,6 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
 
   const showSuccessIndication = () => {
     setShowSuccess(true);
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 5000);
   }
 
   const showDeleteMaterialModal = () => {
