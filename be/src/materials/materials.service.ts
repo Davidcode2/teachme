@@ -228,9 +228,6 @@ export class MaterialsService {
     numberOfMaterials: number,
     pagination: PaginationObject,
   ) {
-    if (pagination.limit >= numberOfMaterials) {
-      return null;
-    }
     if (pagination.offset >= numberOfMaterials) {
       return null;
     }
