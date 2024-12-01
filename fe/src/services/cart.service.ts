@@ -36,7 +36,6 @@ class CartService {
       body: JSON.stringify({ 'userId': this.user.id, 'materialId': id })
     });
     const numberOfItems = await res.json();
-    console.log(numberOfItems);
     useCartStore.setState({ numberOfCartItems: numberOfItems  });
     return res;
   }
