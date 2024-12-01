@@ -32,11 +32,9 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
 
   const addToShoppingCart = async () => {
     setLoading(true);
-    const data = await new CartService().addItem(id, user.id);
+    const data = await new CartService().addItem(id);
     setLoading(false);
     showSuccessIndication();
-    const numberOfCartItems = useCartStore.getState().numberOfCartItems;
-    useCartStore.setState({ numberOfCartItems: numberOfCartItems + 1 });
   }
 
   const showSuccessIndication = () => {

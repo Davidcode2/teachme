@@ -5,6 +5,7 @@ import {
 } from '../store';
 import verifyCaptcha from '../services/reCaptchaService';
 import { UserService } from '../services/userService';
+import CartService from '../services/cart.service';
 
 export default async function handleSubmit({ request }: { request: Request }) {
   if (!checkCaptchaAndResetLikelyHumanStore()) return false;
@@ -13,7 +14,8 @@ export default async function handleSubmit({ request }: { request: Request }) {
   if (JSON.stringify(response).includes('accessToken')) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(response.tokens.accessToken);
-    UserService.setUserAndAvatar(response.user);
+    await UserService.setUserAndAvatar(response.user);
+    new CartService().getItems();
     return redirect('/materials');
   }
   return false;

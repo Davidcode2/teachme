@@ -11,14 +11,10 @@ export default function Cart(): JSX.Element {
   const cartService = new CartService();
   const { cart } = useCartStore();
 
-  const getItems = () => {
-    cartService.getItems()
-      .then((res) => res.json())
-      .then((data) => {
-        setLoading(false);
-        setCartItems(data);
-        useCartStore.setState({numberOfCartItems: data.length});
-      });
+  const getItems = async () => {
+    const data = await cartService.getItems();
+    setLoading(false);
+    setCartItems(data);
   }
 
   useEffect(() => {

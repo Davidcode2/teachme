@@ -5,27 +5,30 @@ import Sidebar from './components/sidebar/sidebar'
 import { useEffect } from 'react';
 import { useAccessTokenStore, useGlobalLoadingStore } from './store';
 import { UserService } from './services/userService'
+import CartService from './services/cart.service';
 
 function App(): JSX.Element {
 
   useEffect(() => {
-    fetch('/api/auth/refresh', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        useGlobalLoadingStore.setState({ loading: false });
-        if (data.tokens.accessToken) {
-          const setAccessToken = useAccessTokenStore.getState().setAccessToken;
-          setAccessToken(data.tokens.accessToken);
-        }
-        if (data.user) {
-          UserService.setUserAndAvatar(data.user);
-        }
-      });
+    async function fetchData() {
+      const res = await fetch('/api/auth/refresh', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      const data = await res.json()
+      useGlobalLoadingStore.setState({ loading: false });
+      if (data.tokens.accessToken) {
+        const setAccessToken = useAccessTokenStore.getState().setAccessToken;
+        setAccessToken(data.tokens.accessToken);
+      }
+      if (data.user) {
+        await UserService.setUserAndAvatar(data.user);
+        new CartService().getItems();
+      }
+    }
+    fetchData();
 
   }, []);
 

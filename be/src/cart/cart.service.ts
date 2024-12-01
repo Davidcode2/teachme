@@ -8,6 +8,7 @@ import { MaterialsService } from '../materials/materials.service';
 import { StripeService } from '../stripe/stripe.service';
 import { CommonCartService } from '../common-cart/common-cart.service';
 import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class CartService {
@@ -18,7 +19,7 @@ export class CartService {
     private materialsService: MaterialsService,
     private stripeService: StripeService,
     private commonCartService: CommonCartService,
-  ) { }
+  ) {}
 
   async create(userId: string): Promise<Cart> {
     const cart = new Cart();
@@ -45,9 +46,12 @@ export class CartService {
     await this.createCartIfNotExists(userId);
     const user = await this.userService.findOneById(userId);
     const material = await this.materialsService.findOne(materialId);
+    if (this.alreadyInCart(user, material)) {
+      return user.consumer.cart.materials.length;
+    }
     user.consumer.cart.materials.push(material);
-    this.userService.update(user);
-    return material;
+    await this.userService.update(user);
+    return user.consumer.cart.materials.length;
   }
 
   private async createCartIfNotExists(userId: string) {
@@ -57,10 +61,20 @@ export class CartService {
     }
   }
 
+  private alreadyInCart(user: User, material: Material) {
+    for (const m of user.consumer.cart.materials) {
+      if (m.id === material.id) {
+        return user.consumer.cart.materials.length;
+      }
+    }
+  }
+
   async buyMaterial(materialIds: string[], userId: string) {
     const materials = await this.materialsService.findMany(materialIds);
     const stripePriceIds = materials.map((m) => m.stripe_price_id);
-    const lineItems = stripePriceIds.map((m) => { return { "price": m, "quantity": 1 }});
+    const lineItems = stripePriceIds.map((m) => {
+      return { price: m, quantity: 1 };
+    });
     const session = await this.stripeService.createCheckoutSession(lineItems);
     this.stripeService.storeUserSession(userId, session.id);
     return session;
