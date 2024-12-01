@@ -45,7 +45,8 @@ function SignUpForm() {
     tl.current.play();
   });
   
-  const pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d !&quot;#$%&amp;&#39;()*+,\-./:;&lt;=&gt;?@[\\\]^_`{|}~äöüÄÖÜß§´]{6,150}$";
+  const pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,150}$";
+
 
   return (
     <>
