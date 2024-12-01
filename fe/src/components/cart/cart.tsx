@@ -1,4 +1,5 @@
 import bag from "../../assets/icons/icons8-bag-64.png"
+import arrowIcon from '../../assets/icons/icons8-arrow-50.png';
 import { useEffect, useState } from "react";
 import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
@@ -43,9 +44,13 @@ export default function Cart(): JSX.Element {
     )
   }
   return (
-    <div className="flex flex-col gap-4 md:max-w-[600px] ">
+    <div className="flex flex-col gap-4 md:max-w-[600px] m-10">
       {cartItems && cartItems.map((item: MaterialWithThumbnail, index) => <CartItem key={index} item={item} cartService={cartService} />)}
-      <button onClick={() => toCheckout(cartItems.map((item: any) => item.id))} className="border border-slate-200 rounded-md p-2 bg-fuchsia-100 hover:bg-fuchsia-200">Checkout</button>
+      <button
+        onClick={() => toCheckout(cartItems.map((item: any) => item.id))}
+        className="shadow-md rounded-md p-2 bg-emerald-500 hover:shadow-sm hover:bg-emerald-600 flex justify-center">
+        <img width="30" src={arrowIcon} />
+      </button>
     </div>
   )
 }
