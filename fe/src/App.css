@@ -1,3 +1,7 @@
+html {
+  scrollbar-gutter: stable;
+}
+
 .module-border-wrap {
   padding: 1rem;
   background: linear-gradient(to right, lightblue, purple);

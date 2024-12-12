@@ -9,7 +9,7 @@ interface NavProps {
 export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
   return (
     <>
-      <div className="flex gap-x-6 items-center">
+      <div className="z-40 flex gap-x-6 items-center">
         <NavLink to={materialsLink} end
           className={({ isActive, isPending }) =>
             isPending ? "animate-pulse" : isActive ? "" : "border-none"

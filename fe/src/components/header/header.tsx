@@ -40,6 +40,20 @@ function Header() {
       setEventListenerRegistered(true);
     });
   }
+  const searchBox = (
+    <div onClick={toggleSearch} className="grow col-start-2 2xl:col-start-3 searchBar flex rounded-full border border-slate-200 shadow-sm py-2 px-4 h-10 hover:cursor-text" >
+      <div className={showSearch ? "text-slate-300" : ""}>{searchString}</div>
+      {searchString && <div onClick={searchService.clearSearch} className="ml-auto cursor-pointer font-handwriting text-stone-500 text-xs self-center p-1 hover:text-stone-600">X<img src="" alt="" /></div>}
+    </div>
+  );
+
+  const addButton = (
+    <NavLink
+      className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg pl-2" : "border-none pl-2"}
+      to={user ? "materials/add" : "login"}>
+      <button className="border border-slate-200 shadow-sm rounded-lg flex"><div className="hover:scale-125 hover:brightness-110 transition px-4 py-2"><img src={plus} alt="" width="20" /></div></button>
+    </NavLink>
+  )
 
   const navigation = <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>;
 
@@ -52,23 +66,18 @@ function Header() {
             <div className="hidden md:flex items-center gap-2">
               {navigation}
             </div>
-            <div className="flex gap-2 items-center my-2">
-              <div onClick={toggleSearch} className="searchBar flex rounded-full border border-slate-200 shadow-sm py-2 px-4 h-full hover:cursor-text">
-                <div className="w-52 self-center">{searchString}</div>
-                {searchString && <div onClick={searchService.clearSearch} className="cursor-pointer font-handwriting text-stone-500 text-xs self-center p-1 hover:text-stone-600">X<img src="" alt="" /></div>}
+            <div className="grow md:left-0 md:absolute md:w-full md:m-auto md:mt-1">
+              <div className="md:grid flex grid-cols-3 2xl:grid-cols-5">
+                {searchBox}
+                {addButton}
               </div>
-              <NavLink
-                className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
-                to={user ? "materials/add" : "login"}>
-                <button className="border border-slate-200 shadow-sm rounded-lg flex"><div className="hover:scale-125 hover:brightness-110 transition px-4 py-2"><img src={plus} alt="" width="20" /></div></button>
-              </NavLink>
             </div>
             <div className="flex items-center gap-2">
               {!user && <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>}
               {user &&
                 <>
                   <UserMenu />
-                  <ShoppingCartIcon/>
+                  <ShoppingCartIcon />
                 </>
               }
             </div>
