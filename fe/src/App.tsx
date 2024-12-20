@@ -34,11 +34,9 @@ function App(): JSX.Element {
 
   return (
     <div>
-      <div>
-        <Sidebar></Sidebar>
-        <Header></Header>
-        <Outlet />
-      </div>
+      <Sidebar></Sidebar>
+      <Header></Header>
+      <Outlet />
     </div>
   )
 }

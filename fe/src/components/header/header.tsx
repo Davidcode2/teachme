@@ -58,14 +58,14 @@ function Header() {
           </div>
         </div>
       </NavLink>
-</div>
+    </div>
   )
 
   const navigation = <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>;
 
   return (
     <>
-      {showSearch && <div className="fixed w-screen h-screen backdrop-blur-sm"><Search setShowSearch={setShowSearch} /></div>}
+      {showSearch && <div className="z-50 fixed w-screen h-screen backdrop-blur-sm"><Search setShowSearch={setShowSearch} /></div>}
       <div className="sticky z-50 top-0 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
         <div className={scroll ? "shadow-sm shadow-gray-100 p-4" : "p-4"}>
           <div className="flex justify-between gap-1">
