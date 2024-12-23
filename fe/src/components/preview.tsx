@@ -1,4 +1,5 @@
 import ActionButtons from "./action-buttons/action-buttons"
+import SpinnerGif from '../assets/icons/icons8-spinner.gif';
 
 interface PreviewProps {
   material: any;
@@ -11,18 +12,18 @@ export default function Preview({ material, images }: PreviewProps) {
   return (
     <div className="fixed top-0 h-screen w-screen backdrop-blur-sm z-50">
       <div className="flex justify-center items-center h-full">
-        {!material && <div>lädt...</div>}
+        {!material && <div><img src={SpinnerGif} /></div>}
         {material &&
-          <div className="flex flex-col sm:flex-row bg-white p-2 md:p-10 border rounded-lg shadow-lg gap-5 mx-6 md:mx-10">
-            <div className="overflow-scroll h-[50vh] md:h-[75vh]">
+          <div className="flex flex-col sm:flex-row bg-white p-2 md:p-10 border rounded-lg shadow-lg gap-5 mx-6 md:mx-10 lg:max-w-[80vw]">
+            <div className="lg:w-1/2 overflow-scroll h-[50vh] md:h-[75vh]">
               {_images}
             </div>
-            <div className="flex flex-col gap-5">
+            <div className="lg:w-1/2 flex flex-col gap-5">
               <div className="xl:text-4xl text-2xl">
                 {material.material.title}
               </div>
               <hr />
-              <div>
+              <div className="max-h-20 lg:max-h-none overflow-auto">
                 {material.material.description}
               </div>
               <div className="flex gap-x-10">
