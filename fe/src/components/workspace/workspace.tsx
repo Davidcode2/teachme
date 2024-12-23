@@ -64,10 +64,10 @@ export default function Workspace() {
   return (
     <>
       {loading &&
-        <>
+        <div className="flex flex-col gap-10 m-4 md:mb-10 md:mx-10">
           <Skeleton id={crypto.randomUUID()} />
           <Skeleton id={crypto.randomUUID()} />
-        </>
+        </div>
       }
       <div>
         {

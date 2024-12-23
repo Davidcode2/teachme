@@ -88,7 +88,7 @@ function MyMaterials() {
   if (!loading && materials.length === 0) {
     return (
       <>
-        <NoData message="Be an author!" showImage={false} />
+        <NoData showImage={true} />
       </>
     );
   }
@@ -96,10 +96,10 @@ function MyMaterials() {
   return (
     <>
       {loading &&
-        <>
+        <div className="flex flex-col gap-10 m-4 md:mb-10 md:mx-10">
           <Skeleton id={crypto.randomUUID()} />
           <Skeleton id={crypto.randomUUID()} />
-        </>
+        </div>
       }
       {
         searchResults.length > 0 ?
