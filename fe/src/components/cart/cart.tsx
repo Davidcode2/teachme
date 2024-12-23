@@ -47,7 +47,7 @@ export default function Cart(): JSX.Element {
 
   return (
     <div className="flex flex-col gap-4 md:max-w-[600px] m-10">
-      {cartItems && cartItems.map((item: MaterialWithThumbnail, index) => <CartItem key={index} item={item} cartService={cartService} />)}
+      {cartItems && cartItems.map((item: MaterialWithThumbnail) => <CartItem key={item.material.id} item={item} cartService={cartService} />)}
       {cartItems.length > 0 &&
         <button
           onClick={() => toCheckout(cartItems.map((item: any) => item.id))}
