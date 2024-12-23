@@ -6,12 +6,12 @@ function Skeleton({ id }: { id: string}) {
     setTimeout(() => {
       const rootElement = document.getElementById(id);
       rootElement?.classList.add("opacity-100");
-    }, 100);
+    }, 10);
   }, []);
 
   return (
     <>
-      <div id={id} className="bg-white border-gray-300 border m-4 md:mb-10 md:mx-10 rounded-lg flex flex-col md:flex-row shadow-lg transition-opacity duration-700 opacity-0">
+      <div id={id} className="bg-white border-gray-300 border rounded-lg flex flex-col md:flex-row shadow-lg transition-opacity duration-700 opacity-0">
         <div className="md:w-[400px] lg:w-[600px] rounded-t-lg md:rounded-tr-none md:rounded-l-lg min-h-96 bg-gray-100 animate-pulse">
           <div className="h-full w-8 "></div>
         </div>

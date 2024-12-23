@@ -1,5 +1,5 @@
 import TrashBin from '../../assets/icons/icons8-trash-48.png';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
 import CartService from "../../services/cart.service";
 import { useCartStore } from "../../store";
@@ -19,6 +19,14 @@ export default function CartItem({ item, cartService }: CartItemProps) {
     setLoading(false);
     useCartStore.getState().updateCart(data);
   }
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const rootElement = document.getElementById(item.material.id.toString() + "-cart-item");
+      rootElement?.classList.add("opacity-100");
+    }, 100);
+    return () => { clearTimeout(timeout) }
+  }, []);
 
   if (loading) {
     return (
@@ -41,7 +49,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
     : <div className="bg-blue-400"></div>;
 
   return (
-    <div className="border border-slate-200 shadow-md rounded-lg">
+    <div id={item.material.id.toString() + '-cart-item'} className="border border-slate-200 shadow-md rounded-lg transition-opacity duration-700 opacity-0">
       <div className="grid grid-cols-2">
         <div className="m-10">
           <div>

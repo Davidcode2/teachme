@@ -5,12 +5,13 @@ import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
 import { useCartStore } from "../../store";
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
+import Skeleton from "../card/skeleton";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const cartService = new CartService();
-  const { cart } = useCartStore();
+  const { cart, numberOfCartItems  } = useCartStore();
 
   const getItems = async () => {
     const data = await cartService.getItems();
@@ -20,37 +21,40 @@ export default function Cart(): JSX.Element {
 
   useEffect(() => {
     getItems();
-  }, [cart]);
+  }, [cart, numberOfCartItems]);
 
 
   const toCheckout = (ids: string[]) => {
     cartService.buyMaterial(ids);
   }
 
+  const noItemsInCart = (
+    <>
+      <div className="m-10 flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">
+        <div>Noch nichts in der Tasche</div>
+        <img src={bag} alt="" width="30" />
+      </div>
+    </>
+  )
+
   if (loading) {
     return (
-      <div className="m-20 flex justify-center animate-pulse">
-        <img className="animate-spin" src={bag} alt="" />
-      </div>
+      <Skeleton id={crypto.randomUUID()} />
     )
-  } if (!cartItems || cartItems.length === 0) {
-    return (
-      <>
-        <div className="flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">
-          <div>Noch nichts in der Tasche</div>
-          <img src={bag} alt="" width="30" />
-        </div>
-      </>
-    )
+  } else if (!cartItems || cartItems.length === 0) {
+    return noItemsInCart
   }
+
   return (
     <div className="flex flex-col gap-4 md:max-w-[600px] m-10">
       {cartItems && cartItems.map((item: MaterialWithThumbnail, index) => <CartItem key={index} item={item} cartService={cartService} />)}
-      <button
-        onClick={() => toCheckout(cartItems.map((item: any) => item.id))}
-        className="shadow-md rounded-md p-2 bg-emerald-500 hover:shadow-sm hover:bg-emerald-600 flex justify-center">
-        <img width="30" src={arrowIcon} />
-      </button>
+      {cartItems.length > 0 &&
+        <button
+          onClick={() => toCheckout(cartItems.map((item: any) => item.id))}
+          className="shadow-md rounded-md p-2 bg-emerald-500 hover:shadow-sm hover:bg-emerald-600 flex justify-center">
+          <img width="30" src={arrowIcon} />
+        </button>
+      }
     </div>
   )
 }
