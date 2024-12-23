@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import userIcon from '../assets/icons/icons8-user-48.png';
+import ArrowIcon from '../assets/icons/icons8-logout-50.png';
+import ShuffleIcon from '../assets/icons/icons8-shuffle-48.png';
+import DarkModeIcon from '../assets/icons/icons8-dark-mode-48.png';
 import { useAccessTokenStore, useAvatarStore, useGlobalLoadingStore, useUserStore } from '../store';
 import { useState } from 'react';
 
@@ -25,8 +28,8 @@ export default function UserMenu() {
   }
 
   const avatar = useAvatarStore.getState().avatar
-      ? URL.createObjectURL(useAvatarStore.getState().avatar)
-      : null
+    ? URL.createObjectURL(useAvatarStore.getState().avatar)
+    : null
 
   const toggleMenu = () => showMenu ? setShowMenu(false) : setShowMenu(true);
 
@@ -54,10 +57,18 @@ export default function UserMenu() {
         <div className="userMenu relative">
           <div className="userMenu absolute bg-white border rounded-md shadow-md top-6 right-0">
             <div className="userMenu flex justify-center p-5">
-              <ul className="userMenu flex flex-col gap-y-2">
-                <li className="hover:text-sky-800 cursor-pointer" onClick={logout}>Logout</li>
-                <li className="hover:text-sky-800 cursor-pointer"><Link to="login">Nutzer&nbsp;wechseln</Link></li>
-                <li className="hover:text-sky-800 cursor-pointer">Dark Mode</li>
+              <ul className="userMenu flex flex-col gap-y-2 pr-4">
+                <li className="hover:text-sky-800 cursor-pointer flex gap-4" onClick={logout}>
+                  <img src={ArrowIcon} width="24" />
+                  <span>Logout</span>
+                </li>
+                <li className="hover:text-sky-800 cursor-pointer flex gap-4">
+                  <img src={ShuffleIcon} width="25" />
+                  <Link to="login">Nutzer&nbsp;wechseln</Link></li>
+                <li className="hover:text-sky-800 cursor-pointer flex gap-4">
+                  <img src={DarkModeIcon} width="25" />
+                  <span>Dark Mode</span>
+                </li>
               </ul>
             </div>
           </div>
