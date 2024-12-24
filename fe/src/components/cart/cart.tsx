@@ -54,7 +54,7 @@ export default function Cart(): JSX.Element {
       {cartItems && cartItems.map((item: MaterialWithThumbnail) => <CartItem key={item.material.id} item={item} cartService={cartService} />)}
       {cartItems.length > 0 &&
         <button
-          onClick={() => toCheckout(cartItems.map((item: any) => item.id))}
+          onClick={() => toCheckout(cartItems.map((item: MaterialWithThumbnail) => item.material.id.toString()))}
           className="shadow-md rounded-md p-2 bg-emerald-500 hover:shadow-sm hover:bg-emerald-600 flex justify-center">
           <img width="30" src={arrowIcon} />
         </button>

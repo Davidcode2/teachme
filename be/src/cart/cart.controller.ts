@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CartService } from './cart.service';
-import { Material } from '../materials/materials.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
 
