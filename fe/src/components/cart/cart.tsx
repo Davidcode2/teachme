@@ -15,12 +15,16 @@ export default function Cart(): JSX.Element {
 
   const getItems = async () => {
     const data = await cartService.getItems();
-    setLoading(false);
-    setCartItems(data);
+    return data;
   }
 
   useEffect(() => {
-    getItems();
+    const populateItems = async () => {
+      const items = await getItems();
+      setCartItems(items);
+      setLoading(false);
+    }
+    populateItems();
   }, [cart, numberOfCartItems]);
 
 
