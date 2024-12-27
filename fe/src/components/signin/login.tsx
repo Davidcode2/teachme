@@ -87,9 +87,9 @@ function LoginForm() {
             <button className="ml-auto p-4 invisible"><img src={ArrowIcon} width="30" alt="" /></button>
             <div className="grid grid-cols-[.2fr_1fr] gap-y-1 px-4 sm:px-10 2xl:px-20 py-4">
               <label className="p-2" htmlFor="email">E-Mail</label>
-              <input className=" p-2 rounded-md border-b" id="email" type="email" name="email" maxLength={80} required />
-              <label className="p-2" htmlFor="password">Password</label>
-              <input className="p-2 rounded-md border-b" id="password" type="password" name="password" minLength={6} maxLength={20} required />
+              <input className=" p-2 rounded-md border-b min-w-0" id="email" type="email" name="email" maxLength={80} required />
+              <label className="p-2" htmlFor="password">Passwort</label>
+              <input className="p-2 rounded-md border-b min-w-0" id="password" type="password" name="password" minLength={6} maxLength={20} required />
             </div>
             <div className="flex justify-center text-sm text-red-400">
               <div className={loginSuccess === false ? "flex textReplace" : "hidden"}>
@@ -106,7 +106,7 @@ function LoginForm() {
         </div>
       </div>
       <div className="flex justify-center my-10">
-        <Link to="../signup"><button>Not yet signed up? Join here!</button></Link>
+        <Link to="../signup"><button>Noch nicht registriert? Hier anmelden!</button></Link>
       </div>
     </>
   )

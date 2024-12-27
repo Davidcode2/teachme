@@ -60,14 +60,14 @@ function SignUpForm() {
             <button className="ml-auto p-4 invisible"><img src={ArrowIcon} width="30" alt="" /></button>
             <div className="grid grid-cols-[.2fr_1fr] gap-y-1 px-4 sm:px-10 2xl:px-20 py-4">
               <label className="p-2" htmlFor="email">E-Mail</label>
-              <input onChange={checkEmailRequirements} className="p-2 rounded-md border-b" id="email" type="email" name="email" maxLength={80} required />
+              <input onChange={checkEmailRequirements} className="p-2 rounded-md border-b min-w-0" id="email" type="email" name="email" maxLength={80} required />
               <div className="col-start-2 justify-self-end w-4 bottom-8 right-1 z-50 relative">
                 <img src={CheckMarkIcon} className={emailValid ? "absolute" : "hidden"} width="30" alt="" />
               </div>
-              <label className="p-2" htmlFor="password">Password</label>
+              <label className="p-2" htmlFor="password">Passwort</label>
               <input
                 onChange={checkPasswordRequirements}
-                className="p-2 rounded-md border-b" id="password" minLength={6} type="password" name="password" maxLength={150}
+                className="p-2 rounded-md border-b min-w-0" id="password" minLength={6} type="password" name="password" maxLength={150}
                 pattern={pattern}
                 required />
               <div className="col-start-2 justify-self-end w-4 bottom-8 right-1 z-50 relative">
@@ -85,7 +85,7 @@ function SignUpForm() {
         </div>
       </div>
       <div className="flex justify-center my-10">
-        <Link to="../login"><button>Already Signed up? Login here!</button></Link>
+        <Link to="../login"><button>Bereits angemeldet? Hier einloggen!</button></Link>
       </div>
     </>
   )
