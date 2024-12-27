@@ -69,7 +69,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         <div className="">
           {isAuthor
             && <div className="flex">
-              <a href={`/api/materials/download?id=${id}`} download={id} className="hover:cursor-pointer hover:bg-gray-100 rounded-full"><img className="" src={arrowIcon} width="30" alt="" /></a>
+              <a href={`/api/materials/download?id=${id}`} download={id} className="hover:cursor-pointer hover:bg-gray-100 rounded-full rotate-90"><img className="" src={arrowIcon} width="30" alt="" /></a>
               <button id="deleteMaterialButton" className="hover:cursor-pointer hover:bg-gray-100 rounded-full" onClick={showDeleteMaterialModal}><img className="" src={TrashBin} width="30" alt="" /></button>
               <NavLink to={`/materials/${id}/edit`}><img className="hover:cursor-pointer hover:bg-gray-100 rounded-full" src={EditIcon} width="30" alt="" /></NavLink>
             </div>}
