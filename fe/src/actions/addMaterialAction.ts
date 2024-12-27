@@ -3,6 +3,8 @@ import { useAccessTokenStore, useUserStore } from "../store";
 
 export default async function addMaterialAction({request}: { request: Request }) {
   const formData = await request.formData();
+  const price = formData.get('price');
+  formData.set('price', price.toString().replace(/,/g, ''));
   formData.append('userId', useUserStore.getState().user.id);
   await fetch('/api/materials', {
     method: 'POST',
@@ -13,4 +15,3 @@ export default async function addMaterialAction({request}: { request: Request })
   });
   return redirect("/materials");
 }
-
