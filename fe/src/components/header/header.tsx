@@ -42,9 +42,9 @@ function Header() {
     });
   }
   const searchBox = (
-    <button onClick={toggleSearch} className="grow col-start-2 2xl:col-start-3 searchBar flex rounded-full border border-slate-200 shadow-sm py-2 px-4 hover:cursor-text" >
-      <div className={showSearch ? "text-slate-300" : ""}>{searchString}</div>
-      {searchString && <button onClick={searchService.clearSearch} className="ml-auto cursor-pointer font-handwriting text-stone-500 text-xs self-center p-1 hover:text-stone-600">X<img src="" alt="" /></button>}
+    <button onClick={toggleSearch} className="relative max-w-60 sm:max-w-96 lg:max-w-none grow col-start-2 2xl:col-start-3 searchBar flex rounded-full border border-slate-200 shadow-sm py-2 px-4 hover:cursor-text overflow-hidden max-h-10" >
+      <div className={`truncate mr-4 ${showSearch ? "text-slate-300" : ""}`}>{searchString}</div>
+      {searchString && <button onClick={searchService.clearSearch} className="absolute right-4 cursor-pointer font-handwriting text-stone-500 text-xs self-center p-1 hover:text-stone-600">X<img src="" alt="" /></button>}
     </button>
   );
 
