@@ -24,13 +24,11 @@ export default async function handleSubmit({ request }: { request: Request }) {
 
   const contentType = response.headers.get('Content-Type') || '';
   if (!contentType.includes('application/json')) {
-    console.log('Response is not JSON');
     const pushError = useErrorStore.getState().pushError;
     pushError({ message: 'Response is not JSON', code: 500});
     return null;
   }
   const responseData = await response.json();
-  console.log(responseData);
   if (JSON.stringify(responseData).includes('accessToken')) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(responseData.tokens.accessToken);
