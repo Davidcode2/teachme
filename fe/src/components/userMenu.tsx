@@ -6,7 +6,7 @@ import DarkModeIcon from '../assets/icons/icons8-dark-mode-48.png';
 import { useAccessTokenStore, useAvatarStore, useGlobalLoadingStore, useUserStore } from '../store';
 import { useState } from 'react';
 
-export default function UserMenu({sidebarShown=false}: {sidebarShown: boolean}) {
+export default function UserMenu({sidebarShown=false}: {sidebarShown?: boolean}) {
   const user = useUserStore((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
 

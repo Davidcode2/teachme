@@ -64,7 +64,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
           {!isMine && <img className="" onClick={addToShoppingCart} src={addToShoppingCartIcon} width="30" alt="" />}
         </div>
         <div className="hover:cursor-pointer hover:bg-gray-100 rounded-full">
-          {isMine && !isAuthor && <a href={`/api/materials/download?id=${id}`} download={id}><img className="" src={arrowIcon} width="30" alt="" /></a>}
+          {isMine && !isAuthor && <a href={`/api/materials/download?id=${id}`} download={id}><img className="rotate-90" src={arrowIcon} width="30" alt="" /></a>}
         </div>
         <div className="">
           {isAuthor

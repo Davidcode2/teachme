@@ -1,7 +1,6 @@
 import { useSidebarStore } from "../../store";
 import Cart from "../cart/cart";
 import { gsap } from 'gsap';
-import UserMenu from "../userMenu";
 
 export default function Sidebar() {
   const sidebarShown = useSidebarStore((state) => state.isShown);

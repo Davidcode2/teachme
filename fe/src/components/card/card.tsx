@@ -51,7 +51,7 @@ function Card({ material: materialWithThumbnail }: { material: MaterialWithThumb
 
   return (
     <>
-      {showPreview && <Preview material={preview} images={previewImage} />}
+      {showPreview && <Preview material={preview} images={previewImage} setShowPreview={setShowPreview} />}
       <div id={materialWithThumbnail.material.id.toString()} className="module-border-wrap m-4 md:mb-10 md:mx-10 rounded-lg flex flex-col md:flex-row shadow-lg transition-opacity duration-700 opacity-0">
         <div className="bg-white rounded-lg">
           {imageElement}

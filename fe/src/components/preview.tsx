@@ -4,9 +4,10 @@ import SpinnerGif from '../assets/icons/icons8-spinner.gif';
 interface PreviewProps {
   material: any;
   images: string[];
+  setShowPreview: (show: boolean) => void;
 }
 
-export default function Preview({ material, images }: PreviewProps) {
+export default function Preview({ material, images, setShowPreview }: PreviewProps) {
   const _images = images.map((img, index) => <img src={img} alt="" key={index} />)
 
   return (
@@ -14,7 +15,10 @@ export default function Preview({ material, images }: PreviewProps) {
       <div className="flex justify-center items-center h-full">
         {!material && <div><img src={SpinnerGif} /></div>}
         {material &&
-          <div className="flex flex-col sm:flex-row bg-white p-2 md:p-10 border rounded-lg shadow-lg gap-5 mx-6 md:mx-10 lg:max-w-[80vw]">
+          <div className="relative flex flex-col sm:flex-row bg-white p-2 md:p-10 border rounded-lg shadow-lg gap-5 mx-6 md:mx-10 lg:max-w-[80vw]">
+            <button className="absolute right-0 top-2 rounded-lg px-4" onClick={() => setShowPreview(false)}>
+              <div className="">X</div>
+            </button>
             <div className="lg:w-1/2 overflow-scroll h-[50vh] md:h-[75vh]">
               {_images}
             </div>
