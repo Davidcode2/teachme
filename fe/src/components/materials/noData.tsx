@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import meow_cat from '../../assets/white_cat_happy_transparent.webp';
-export default function NoData({ message, showImage }: { message?: string, showImage?: boolean }) {
+export default function NoData({ message, showImage=true }: { message?: string, showImage?: boolean }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {

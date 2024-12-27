@@ -56,7 +56,7 @@ export default function Workspace() {
   if (!loading && materials.length === 0) {
     return (
       <>
-        <NoData />
+        <NoData message="Werde Autor!" />
       </>
     );
   }
