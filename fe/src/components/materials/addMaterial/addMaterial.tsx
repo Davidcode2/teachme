@@ -1,4 +1,5 @@
 import { Form } from 'react-router-dom'
+import Price from './price'
 
 function AddMaterials() {
   return (
@@ -6,15 +7,15 @@ function AddMaterials() {
       <Form className="flex flex-col gap-4" method="post" encType="multipart/form-data">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="shadow-sm border border-slate-200 rounded-lg md:w-52 lg:w-auto">
-            <input type="file" name="file" />
+            <input className="min-w-0" type="file" name="file" />
           </div>
           <div className="flex-1 flex flex-col md:grid grid-cols-[.2fr_1fr] md:gap-10">
             <label className="p-2" htmlFor="title">Titel</label>
-            <input id="title" className="rounded-md border border-slate-200 shadow-sm py-2 px-4" type="text" name="title" />
+            <input id="title" className="rounded-md border border-slate-200 shadow-sm py-2 px-4 min-w-0" type="text" name="title" />
             <label className="p-2" htmlFor="description">Beschreibung</label>
-            <textarea id="description" className="p-2 rounded-md border border-slate-200 shadow-sm" name="description" />
+            <textarea id="description" className="p-2 rounded-md border border-slate-200 shadow-sm min-w-0" name="description" />
             <label className="p-2" htmlFor="price">Preis</label>
-            <input id="price" className="rounded-md border border-slate-200 shadow-sm py-2 px-4" type="number" name="price" />
+            <Price/>
           </div>
         </div>
         <button className="ml-auto border border-slate-200 shadow-sm rounded-lg px-4 py-2" type="submit">Erstellen</button>
