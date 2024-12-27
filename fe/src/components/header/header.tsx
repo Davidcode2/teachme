@@ -92,7 +92,8 @@ function Header() {
             </div>
           </div>
           <div className="flex md:hidden mt-4 gap-2">
-            {!sidebarShown ? navigation : <UserMenu />}
+            {!sidebarShown ? navigation : 
+              <div className="ml-auto"><UserMenu sidebarShown={sidebarShown} /></div>}
           </div>
         </div>
       </div>

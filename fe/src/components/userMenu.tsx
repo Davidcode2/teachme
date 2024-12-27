@@ -6,7 +6,7 @@ import DarkModeIcon from '../assets/icons/icons8-dark-mode-48.png';
 import { useAccessTokenStore, useAvatarStore, useGlobalLoadingStore, useUserStore } from '../store';
 import { useState } from 'react';
 
-export default function UserMenu() {
+export default function UserMenu({sidebarShown=false}: {sidebarShown: boolean}) {
   const user = useUserStore((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -49,7 +49,7 @@ export default function UserMenu() {
 
   return (
     <div className="flex items-center">
-      <div className="text-slate-400 mr-2 hidden lg:block">{email}</div>
+      <div className={sidebarShown ? "text-slate-400 mr-2" : "lg:block hidden text-slate-400 mr-2"}>{email}</div>
       <button className="userMenu hover:cursor-pointer" onClick={toggleMenu} >
         <img className="userMenu min-w-5 rounded-full" src={avatar ? avatar : userIcon} width="30" alt="User" />
       </button>
