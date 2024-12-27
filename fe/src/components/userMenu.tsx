@@ -49,7 +49,7 @@ export default function UserMenu({sidebarShown=false}: {sidebarShown: boolean}) 
 
   return (
     <div className="flex items-center">
-      <div className={sidebarShown ? "text-slate-400 mr-2" : "lg:block hidden text-slate-400 mr-2"}>{email}</div>
+      <div className={`text-slate-400 mr-2 ${sidebarShown ? "block" : "hidden lg:block"}`}>{email}</div>
       <button className="userMenu hover:cursor-pointer" onClick={toggleMenu} >
         <img className="userMenu min-w-5 rounded-full" src={avatar ? avatar : userIcon} width="30" alt="User" />
       </button>
