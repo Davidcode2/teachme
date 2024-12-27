@@ -6,6 +6,9 @@ import {
   UseGuards,
   Res,
   ForbiddenException,
+  Logger,
+  HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { LocalAuthGuard } from './local-auth.guard';
@@ -23,11 +26,7 @@ export class AuthController {
       req.body.email,
       req.body.password,
     );
-    response.cookie('refresh_token', login.tokens.refreshToken, {
-      secure: true,
-      httpOnly: true,
-    });
-    response.cookie('userId', login.user.id, { secure: true, httpOnly: true });
+    this.setCookies(login, response);
     return login;
   }
 
@@ -61,13 +60,36 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signup(@Request() req) {
-    return this.authService.signUp(req.body.email, req.body.password);
+  async signup(@Request() req, @Res({ passthrough: true }) response: Response) {
+    try {
+      const signUp = await this.authService.signUp(
+        req.body.email,
+        req.body.password,
+      );
+      if (!signUp) return false;
+      const login = await this.authService.login(
+        req.body.email,
+        req.body.password,
+      );
+      this.setCookies(login, response);
+      return login;
+    } catch (e) {
+      Logger.error(e.message);
+      throw new HttpException(e.message, HttpStatus.NOT_MODIFIED);
+    }
   }
 
   @Post('recaptcha/verify')
   async verifyRecaptcha(@Request() req) {
     const res = await this.authService.verifyRecaptcha(req.body.value);
     return res;
+  }
+
+  setCookies(login: any, response: Response) {
+    response.cookie('refresh_token', login.tokens.refreshToken, {
+      secure: true,
+      httpOnly: true,
+    });
+    response.cookie('userId', login.user.id, { secure: true, httpOnly: true });
   }
 }

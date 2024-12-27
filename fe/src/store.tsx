@@ -94,3 +94,18 @@ export const useSearchState = create<SearchState>((set) => ({
   setSearchString: (search: string) => set({ searchString: search }),
   setSearchResults: (results: Material[] | MaterialWithThumbnail[]) => set({ searchResults: results }),
 }));
+
+type ErrorStore = {
+  errors: CustomError[],
+  pushError: (error: CustomError) => void
+}
+
+export const useErrorStore = create<ErrorStore>((set) => ({
+  errors: [],
+  pushError: (error: CustomError) => set((state) => ({ errors: [...state.errors, error] })),
+}));
+
+type CustomError = {
+  message: string,
+  code: number
+}

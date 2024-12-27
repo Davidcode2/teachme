@@ -1,6 +1,12 @@
 import { redirect } from 'react-router-dom';
-import { useLikelyHumanStore } from '../store';
+import {
+  useAccessTokenStore,
+  useLikelyHumanStore,
+  useErrorStore,
+} from '../store';
 import verifyCaptcha from '../services/reCaptchaService';
+import { UserService } from '../services/userService';
+import CartService from '../services/cart.service';
 
 export default async function handleSubmit({ request }: { request: Request }) {
   await verifyCaptcha();
@@ -11,14 +17,28 @@ export default async function handleSubmit({ request }: { request: Request }) {
   const response = await fetch('api/auth/signup', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(Object.fromEntries(formData))
+    body: JSON.stringify(Object.fromEntries(formData)),
   });
 
-  const responseData = await response.json();
-  if (responseData === true) {
-    return redirect('/login');
+  const contentType = response.headers.get('Content-Type') || '';
+  if (!contentType.includes('application/json')) {
+    console.log('Response is not JSON');
+    const pushError = useErrorStore.getState().pushError;
+    pushError({ message: 'Response is not JSON', code: 500});
+    return null;
   }
-  return false;
-};
+  const responseData = await response.json();
+  console.log(responseData);
+  if (JSON.stringify(responseData).includes('accessToken')) {
+    const setAccessToken = useAccessTokenStore.getState().setAccessToken;
+    setAccessToken(responseData.tokens.accessToken);
+    await UserService.setUserAndAvatar(responseData.user);
+    new CartService().getItems();
+    return redirect('/materials');
+  }
+  const pushError = useErrorStore.getState().pushError;
+  pushError(responseData.message);
+  return null;
+}

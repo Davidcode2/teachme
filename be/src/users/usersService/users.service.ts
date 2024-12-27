@@ -53,6 +53,8 @@ export class UsersService {
   }
 
   async create(email: string, hash: string): Promise<User> {
+    const isDuplicate = await this.usersRepository.existsBy({ email: email });
+    if (isDuplicate) throw new Error('Email address is already in use');
     const user = new User();
     const consumer = await this.consumerService.create();
     const author = await this.createAuthor();
