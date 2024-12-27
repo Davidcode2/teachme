@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import plus from "../../assets/addPlusGradient.png";
 import UserIcon from '../../assets/icons/icons8-user-48.png';
-import { useSearchState, useUserStore } from '../../store';
+import { useSearchState, useUserStore, useSidebarStore } from '../../store';
 import Nav from './nav';
 import UserMenu from '../userMenu';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const searchString = useSearchState((state: any) => state.searchString);
+  const sidebarShown = useSidebarStore((state) => state.isShown);
   const searchService = new SearchService();
   const [scroll, setScroll] = useState(false)
 
@@ -68,7 +69,7 @@ function Header() {
       {showSearch && <div className="z-50 fixed w-screen h-screen backdrop-blur-sm"><Search setShowSearch={setShowSearch} /></div>}
       <div className="sticky z-50 top-0 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
         <div className={scroll ? "shadow-sm shadow-gray-100 p-4" : "p-4"}>
-          <div className="flex justify-between gap-1">
+          <div className="flex justify-between gap-3">
             <div className="hidden md:flex items-center gap-2">
               {navigation}
             </div>
@@ -82,14 +83,16 @@ function Header() {
               {!user && <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>}
               {user &&
                 <>
-                  <UserMenu />
+                  <div className="hidden md:flex">
+                    < UserMenu />
+                  </div>
                   <ShoppingCartIcon />
                 </>
               }
             </div>
           </div>
           <div className="flex md:hidden mt-4 gap-2">
-            {navigation}
+            {!sidebarShown ? navigation : <UserMenu />}
           </div>
         </div>
       </div>

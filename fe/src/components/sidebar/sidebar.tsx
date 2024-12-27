@@ -1,6 +1,7 @@
 import { useSidebarStore } from "../../store";
 import Cart from "../cart/cart";
 import { gsap } from 'gsap';
+import UserMenu from "../userMenu";
 
 export default function Sidebar() {
   const sidebarShown = useSidebarStore((state) => state.isShown);
@@ -12,13 +13,13 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar z-50 fixed right-0 w-screen md:w-[500px]">
-      {sidebarShown ?
-        <div className="p-4 bg-white shadow-md overflow-y-auto md:w-[500px] pt-40 md:pt-24 h-screen z-50">
+      {sidebarShown &&
+        <div className="p-4 bg-white shadow-md overflow-y-auto md:w-[500px] pt-20 md:pt-24 h-screen z-50">
           <div className="flex flex-col gap-4">
             <Cart />
           </div>
         </div>
-        : <></>}
+      }
     </div>
   )
 }

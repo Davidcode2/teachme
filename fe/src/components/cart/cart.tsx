@@ -34,7 +34,7 @@ export default function Cart(): JSX.Element {
 
   const noItemsInCart = (
     <>
-      <div className="m-10 flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">
+      <div className="m-0 mt-10 sm:m-10 flex flex-col items-center gap-4 border border-slate-200 rounded-lg p-10 justify-center">
         <div>Noch nichts in der Tasche</div>
         <img src={bag} alt="" width="30" />
       </div>
@@ -50,7 +50,7 @@ export default function Cart(): JSX.Element {
   }
 
   return (
-    <div className="flex flex-col gap-4 md:max-w-[600px] m-10">
+    <div className="flex flex-col gap-4 md:max-w-[600px] m-0 mt-10 sm:m-10">
       {cartItems && cartItems.map((item: MaterialWithThumbnail) => <CartItem key={item.material.id} item={item} cartService={cartService} />)}
       {cartItems.length > 0 &&
         <button

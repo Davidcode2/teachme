@@ -49,8 +49,8 @@ export default function UserMenu() {
 
   return (
     <div className="flex items-center">
-      <div className="text-slate-400 hidden sm:block mr-2">{email}</div>
-      <button className="hidden sm:block userMenu hover:cursor-pointer" onClick={toggleMenu} >
+      <div className="text-slate-400 mr-2 hidden lg:block">{email}</div>
+      <button className="userMenu hover:cursor-pointer" onClick={toggleMenu} >
         <img className="userMenu min-w-5 rounded-full" src={avatar ? avatar : userIcon} width="30" alt="User" />
       </button>
       {showMenu ?
