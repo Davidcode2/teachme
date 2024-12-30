@@ -14,7 +14,7 @@ export default function Price() {
   };
 
   return (
-    <div className="flex min-w-0 w-[38%]">
+    <div className="flex min-w-0">
       <input id="price-field" onChange={handleChange} className="grow min-w-0 rounded-md border border-slate-200 shadow-sm py-2 px-4 text-5xl" name="price" type="decimal" placeholder="0,00" value={formatCurrency(value)} />
       <div className="text-5xl self-end py-4 mx-4">€</div>
     </div>
