@@ -6,13 +6,14 @@ function AddMaterials() {
     <div className="my-10 md:my-40 mx-4 sm:mx-32 xl:mx-60">
       <Form className="flex flex-col gap-4" method="post" encType="multipart/form-data">
         <div className="flex flex-col gap-8 w-full md:w-96 mx-auto">
-          <div className="relative md:mb-10">
+          <div className="relative md:mb-10 mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-emerald-500 to-purple-800 animate-gradient rounded-full blur-md" />
-            <div className="relative shadow-sm border border-slate-200 rounded-lg bg-white p-4">
+            <div className="relative flex items-center h-64 w-64 shadow-sm border border-slate-200 rounded-full bg-white p-4">
               <input
-                className="w-full py-2 px-4 rounded-md border border-slate-200 min-w-0"
+                className="w-full h-fit py-2 px-4 rounded-md border border-slate-200 min-w-0"
                 type="file"
                 name="file"
+                accept="application/pdf"
               />
             </div>
           </div>
