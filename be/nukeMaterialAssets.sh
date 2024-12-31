@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # This script will delete all the material assets in the ./assets directory
+# and recreate the directory structure. 
+# It will also delete the schema in the postgres database and recreate it.
 
 # Check if the ./assets directory exists
 if [[ $(pwd) == *"teachme/be"* ]]; then
