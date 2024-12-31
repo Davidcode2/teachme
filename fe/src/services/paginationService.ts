@@ -1,7 +1,7 @@
 import { MaterialWithThumbnail } from "../types/MaterialWithThumbnail";
 
 export default class PaginationService {
-  private TOP_SCROLL_THRESHOLD = 200; 
+  private TOP_SCROLL_THRESHOLD = 200;
   private BOTTOM_SCROLL_THRESHOLD = 200;
   private lastValue = 0;
 
@@ -9,16 +9,15 @@ export default class PaginationService {
   public increment = 2;
 
   public calcNewSlidingWindowEnd(numberOfStoredMaterials: number) {
-    const slidingWindowEnd = Math.abs(numberOfStoredMaterials - this.slidingWindowSize);
-    console.log('slidingWindowEnd', slidingWindowEnd);
+    const slidingWindowEnd = Math.abs(
+      numberOfStoredMaterials - this.slidingWindowSize,
+    );
+    console.log("slidingWindowEnd", slidingWindowEnd);
     return slidingWindowEnd;
   }
 
   public shiftMaterialsLeft(materials: MaterialWithThumbnail[]) {
-    return materials.slice(
-      0,
-      this.slidingWindowSize,
-    );
+    return materials.slice(0, this.slidingWindowSize);
   }
 
   public shiftMaterialsRight(materials: MaterialWithThumbnail[]) {

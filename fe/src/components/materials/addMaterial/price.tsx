@@ -4,8 +4,11 @@ export default function Price() {
   const [value, setValue] = useState("");
 
   const formatCurrency = (value: string) => {
-    if (!value)  return "0,00";
-    return ((Number(value) / 100).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    if (!value) return "0,00";
+    return (Number(value) / 100).toLocaleString("de-DE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,8 +18,16 @@ export default function Price() {
 
   return (
     <div className="flex min-w-0">
-      <input id="price-field" onChange={handleChange} className="grow min-w-0 rounded-md border border-slate-200 shadow-sm py-2 px-4 text-5xl" name="price" type="decimal" placeholder="0,00" value={formatCurrency(value)} />
-      <div className="text-5xl self-end py-4 mx-4">€</div>
+      <input
+        id="price-field"
+        onChange={handleChange}
+        className="min-w-0 grow rounded-md border border-slate-200 px-4 py-2 text-5xl shadow-sm"
+        name="price"
+        type="decimal"
+        placeholder="0,00"
+        value={formatCurrency(value)}
+      />
+      <div className="mx-4 self-end py-4 text-5xl">€</div>
     </div>
-  )
+  );
 }

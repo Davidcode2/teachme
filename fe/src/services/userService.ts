@@ -1,4 +1,4 @@
-import { useAccessTokenStore, useAvatarStore, useUserStore } from '../store';
+import { useAccessTokenStore, useAvatarStore, useUserStore } from "../store";
 
 export const UserService = {
   setUserAndAvatar: async function (user: any) {
@@ -11,10 +11,10 @@ export const UserService = {
 
   getAvatar: async function (userId: string) {
     const response = await fetch(`/api/users/avatar/${userId}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     return response.blob();

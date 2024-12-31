@@ -1,22 +1,19 @@
-import { redirect } from 'react-router-dom';
-import {
-  useAccessTokenStore,
-  useLikelyHumanStore,
-} from '../store';
-import verifyCaptcha from '../services/reCaptchaService';
-import { UserService } from '../services/userService';
-import CartService from '../services/cart.service';
+import { redirect } from "react-router-dom";
+import { useAccessTokenStore, useLikelyHumanStore } from "../store";
+import verifyCaptcha from "../services/reCaptchaService";
+import { UserService } from "../services/userService";
+import CartService from "../services/cart.service";
 
 export default async function handleSubmit({ request }: { request: Request }) {
   if (!checkCaptchaAndResetLikelyHumanStore()) return false;
   const response = await fetchLogin(request);
 
-  if (JSON.stringify(response).includes('accessToken')) {
+  if (JSON.stringify(response).includes("accessToken")) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(response.tokens.accessToken);
     await UserService.setUserAndAvatar(response.user);
     new CartService().getItems();
-    return redirect('/materials');
+    return redirect("/materials");
   }
   return false;
 }
@@ -33,11 +30,11 @@ async function checkCaptchaAndResetLikelyHumanStore() {
 
 async function fetchLogin(request: Request) {
   const formData = await request.formData();
-  const response = await fetch('/api/auth/login', {
-    method: 'POST',
+  const response = await fetch("/api/auth/login", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      withCredentials: 'true',
+      "Content-Type": "application/json",
+      withCredentials: "true",
     },
     body: JSON.stringify(Object.fromEntries(formData)),
   });

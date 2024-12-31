@@ -1,33 +1,35 @@
-import { useSearchState, useUserStore } from '../../store';
-import Card from '../../components/card/card'
-import Material from '../../DTOs/material'
-import NoData from './noData';
-import { useEffect, useState } from 'react';
-import loadMaterials from '../../loaders/materialLoader';
+import { useSearchState, useUserStore } from "../../store";
+import Card from "../../components/card/card";
+import Material from "../../DTOs/material";
+import NoData from "./noData";
+import { useEffect, useState } from "react";
+import loadMaterials from "../../loaders/materialLoader";
 
 type MaterialWithThumbnail = {
-  material: Material,
-  thumbnail: any
-}
+  material: Material;
+  thumbnail: any;
+};
 
 function SearchResults() {
-  const [searchResults, setSearchResults] = useState<MaterialWithThumbnail[]>([]);
+  const [searchResults, setSearchResults] = useState<MaterialWithThumbnail[]>(
+    [],
+  );
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
 
   const getUrl = () => {
     if (onMinePage) {
       return `/api/materials/user/${user.id}`;
     }
     return "api/materials";
-  }
+  };
 
   const buildLoadMaterialsUrl = () => {
     const baseUrl = getUrl();
     const url = `${baseUrl}?search=${searchString}`;
     return url;
-  }
+  };
 
   const searchMaterials = async () => {
     if (searchString !== "") {
@@ -48,13 +50,17 @@ function SearchResults() {
     const hasThumbnail = materials[0].thumbnail;
     let materialsWithoutThumbnails;
     if (hasThumbnail) {
-      materialsWithoutThumbnails = materials.map((el: { material: Material, thumbnail: any }) => { return el.material; });
+      materialsWithoutThumbnails = materials.map(
+        (el: { material: Material; thumbnail: any }) => {
+          return el.material;
+        },
+      );
       useSearchState.setState({ searchResults: materialsWithoutThumbnails });
     } else {
       useSearchState.setState({ searchResults: materials });
     }
     useSearchState.setState({ searchResults: materials });
-  }
+  };
 
   useEffect(() => {
     console.log(searchString);
@@ -62,18 +68,16 @@ function SearchResults() {
   }, [searchString]);
 
   if (searchResults.length === 0) {
-    return <NoData />
+    return <NoData />;
   }
 
   return (
     <>
-      {
-        searchResults.map((el: MaterialWithThumbnail) => {
-          return <Card key={el.material.id} material={el} />
-        })
-      }
+      {searchResults.map((el: MaterialWithThumbnail) => {
+        return <Card key={el.material.id} material={el} />;
+      })}
     </>
-  )
+  );
 }
 
-export default SearchResults
+export default SearchResults;

@@ -1,4 +1,4 @@
-import TrashBin from '../../assets/icons/icons8-trash-48.png';
+import TrashBin from "../../assets/icons/icons8-trash-48.png";
 import { useEffect, useState } from "react";
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
 import CartService from "../../services/cart.service";
@@ -14,62 +14,84 @@ export default function CartItem({ item, cartService }: CartItemProps) {
 
   const removeItem = async (id: string) => {
     setLoading(true);
-    const res = await cartService.removeItem(id)
-    const data = await res.json()
+    const res = await cartService.removeItem(id);
+    const data = await res.json();
     setLoading(false);
     useCartStore.getState().updateCart(data);
-  }
+  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const rootElement = document.getElementById(item.material.id.toString() + "-cart-item");
+      const rootElement = document.getElementById(
+        item.material.id.toString() + "-cart-item",
+      );
       rootElement?.classList.add("opacity-100");
     }, 100);
-    return () => { clearTimeout(timeout) }
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   if (loading) {
     return (
-      <div className="border border-slate-200 rounded-lg">
-        <div className="p-28 flex justify-center">
-          <div className="animate-spin w-20">|</div>
+      <div className="rounded-lg border border-slate-200">
+        <div className="flex justify-center p-28">
+          <div className="w-20 animate-spin">|</div>
         </div>
       </div>
-    )
+    );
   }
 
   const image = item.thumbnail
     ? item.thumbnail.data
-      ? URL.createObjectURL(new Blob([new Uint8Array(item.thumbnail.data)], { type: 'image/png' }))
+      ? URL.createObjectURL(
+          new Blob([new Uint8Array(item.thumbnail.data)], {
+            type: "image/png",
+          }),
+        )
       : null
     : null;
 
-  const imageElement = image
-    ? <img src={image} className="" alt="Thumbnail" />
-    : <div className="bg-blue-400"></div>;
+  const imageElement = image ? (
+    <img src={image} className="" alt="Thumbnail" />
+  ) : (
+    <div className="bg-blue-400"></div>
+  );
 
   return (
-    <div id={item.material.id.toString() + '-cart-item'} className="border border-slate-200 shadow-md rounded-lg transition-opacity duration-700 opacity-0">
+    <div
+      id={item.material.id.toString() + "-cart-item"}
+      className="rounded-lg border border-slate-200 opacity-0 shadow-md transition-opacity duration-700"
+    >
       <div className="grid grid-cols-2">
         <div className="m-10">
           <div>
             Material: <p className="text-2xl">{item.material.title}</p>
           </div>
           <div>
-            Preis: <p className="text-3xl text-emerald-500">{Number((item.material.price) / 100).toFixed(2)} €</p>
+            Preis:{" "}
+            <p className="text-3xl text-emerald-500">
+              {Number(item.material.price / 100).toFixed(2)} €
+            </p>
           </div>
         </div>
-        <div className="m-4">
-          {imageElement}
-        </div>
+        <div className="m-4">{imageElement}</div>
       </div>
-      <div className="flex my-2">
+      <div className="my-2 flex">
         <div className="ml-auto">
-          <button onClick={() => removeItem(item.material.id.toString())} className="mr-2 border-slate-200 rounded-md px-2 hover:bg-red-400">
-            <img src={TrashBin} alt="Trash Bin" width="25" className="opacity-70" />
+          <button
+            onClick={() => removeItem(item.material.id.toString())}
+            className="mr-2 rounded-md border-slate-200 px-2 hover:bg-red-400"
+          >
+            <img
+              src={TrashBin}
+              alt="Trash Bin"
+              width="25"
+              className="opacity-70"
+            />
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

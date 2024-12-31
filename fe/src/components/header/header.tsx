@@ -1,13 +1,13 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink } from "react-router-dom";
 import plus from "../../assets/addPlusGradient.png";
-import UserIcon from '../../assets/icons/icons8-user-48.png';
-import { useSearchState, useUserStore, useSidebarStore } from '../../store';
-import Nav from './nav';
-import UserMenu from '../userMenu';
-import { useEffect, useState } from 'react';
-import Search from './search/search';
-import SearchService from '../../services/searchService';
-import ShoppingCartIcon from '../cart/shoppingCartIcon';
+import UserIcon from "../../assets/icons/icons8-user-48.png";
+import { useSearchState, useUserStore, useSidebarStore } from "../../store";
+import Nav from "./nav";
+import UserMenu from "../userMenu";
+import { useEffect, useState } from "react";
+import Search from "./search/search";
+import SearchService from "../../services/searchService";
+import ShoppingCartIcon from "../cart/shoppingCartIcon";
 
 function Header() {
   const user = useUserStore((state) => state.user);
@@ -16,89 +16,129 @@ function Header() {
   const searchString = useSearchState((state: any) => state.searchString);
   const sidebarShown = useSidebarStore((state) => state.isShown);
   const searchService = new SearchService();
-  const [scroll, setScroll] = useState(false)
+  const [scroll, setScroll] = useState(false);
 
   const toggleSearch = () => {
     if (!showSearch) {
       setShowSearch(true);
     }
-  }
+  };
 
   useEffect(() => {
     document.addEventListener("scroll", () => {
-      const scrollCheck = window.scrollY > 20
+      const scrollCheck = window.scrollY > 20;
       if (scrollCheck !== scroll) {
-        setScroll(scrollCheck)
+        setScroll(scrollCheck);
       }
-    })
-  })
+    });
+  });
 
   if (!eventListenerRegistered) {
-    document.body.addEventListener('click', function(event: any) {
-      if (event.target.closest('.searchBar')) return;
-      if (event.target.closest('.searchBox')) return;
+    document.body.addEventListener("click", function (event: any) {
+      if (event.target.closest(".searchBar")) return;
+      if (event.target.closest(".searchBox")) return;
       setShowSearch(false);
       setEventListenerRegistered(true);
     });
   }
   const searchBox = (
-    <button onClick={toggleSearch} className="relative max-w-60 sm:max-w-96 lg:max-w-none grow col-start-2 2xl:col-start-3 searchBar flex rounded-full border border-slate-200 shadow-sm py-2 px-4 hover:cursor-text overflow-hidden max-h-10" >
-      <div className={`truncate mr-4 ${showSearch ? "text-slate-300" : ""}`}>{searchString}</div>
-      {searchString && <button onClick={searchService.clearSearch} className="absolute right-4 cursor-pointer font-handwriting text-stone-500 text-xs self-center p-1 hover:text-stone-600">X<img src="" alt="" /></button>}
+    <button
+      onClick={toggleSearch}
+      className="searchBar relative col-start-2 flex max-h-10 max-w-60 grow overflow-hidden rounded-full border border-slate-200 px-4 py-2 shadow-sm hover:cursor-text sm:max-w-96 lg:max-w-none 2xl:col-start-3"
+    >
+      <div className={`mr-4 truncate ${showSearch ? "text-slate-300" : ""}`}>
+        {searchString}
+      </div>
+      {searchString && (
+        <button
+          onClick={searchService.clearSearch}
+          className="absolute right-4 cursor-pointer self-center p-1 font-handwriting text-xs text-stone-500 hover:text-stone-600"
+        >
+          X<img src="" alt="" />
+        </button>
+      )}
     </button>
   );
 
   const addButton = (
     <div className="flex">
       <NavLink
-        className={({ isActive }) => isActive ? "text-blue-400 border-blue-400 border rounded-lg" : "border-none"}
-        to={user ? "materials/add" : "login"}>
-        <div className="border border-slate-200 shadow-sm rounded-lg">
-          <div className="hover:scale-125 hover:brightness-110 transition px-4 py-2">
+        className={({ isActive }) =>
+          isActive
+            ? "rounded-lg border border-blue-400 text-blue-400"
+            : "border-none"
+        }
+        to={user ? "materials/add" : "login"}
+      >
+        <div className="rounded-lg border border-slate-200 shadow-sm">
+          <div className="px-4 py-2 transition hover:scale-125 hover:brightness-110">
             <img src={plus} alt="" width="20" />
           </div>
         </div>
       </NavLink>
     </div>
-  )
+  );
 
-  const navigation = <Nav materialsLink="materials" myMaterialsLink={user ? "materials/mine" : "login"}></Nav>;
+  const navigation = (
+    <Nav
+      materialsLink="materials"
+      myMaterialsLink={user ? "materials/mine" : "login"}
+    ></Nav>
+  );
 
   return (
     <>
-      {showSearch && <div className="z-50 fixed w-screen h-screen backdrop-blur-sm"><Search setShowSearch={setShowSearch} /></div>}
-      <div className="sticky z-50 top-0 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
-        <div className={scroll ? "shadow-sm shadow-gray-100 p-4" : "p-4"}>
+      {showSearch && (
+        <div className="fixed z-50 h-screen w-screen backdrop-blur-sm">
+          <Search setShowSearch={setShowSearch} />
+        </div>
+      )}
+      <div className="sticky top-0 z-50 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
+        <div className={scroll ? "p-4 shadow-sm shadow-gray-100" : "p-4"}>
           <div className="flex justify-between gap-3">
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden items-center gap-2 md:flex">
               {navigation}
             </div>
-            <div className="grow md:left-0 md:absolute md:w-full md:m-auto md:mt-1 z-30">
-              <div className="md:grid flex grid-cols-3 2xl:grid-cols-5 gap-x-2">
+            <div className="z-30 grow md:absolute md:left-0 md:m-auto md:mt-1 md:w-full">
+              <div className="flex grid-cols-3 gap-x-2 md:grid 2xl:grid-cols-5">
                 {searchBox}
                 {addButton}
               </div>
             </div>
-            <div className="flex items-center gap-2 z-40">
-              {!user && <Link to="login" className="" ><img className="min-w-5" src={UserIcon} width="30" alt="User" /></Link>}
-              {user &&
+            <div className="z-40 flex items-center gap-2">
+              {!user && (
+                <Link to="login" className="">
+                  <img
+                    className="min-w-5"
+                    src={UserIcon}
+                    width="30"
+                    alt="User"
+                  />
+                </Link>
+              )}
+              {user && (
                 <>
                   <div className="hidden md:flex">
-                    < UserMenu />
+                    <UserMenu />
                   </div>
                   <ShoppingCartIcon />
                 </>
-              }
+              )}
             </div>
           </div>
-          <div className="flex md:hidden mt-4 gap-2">
-            {!sidebarShown ? navigation : 
-              <div className="ml-auto"><UserMenu sidebarShown={sidebarShown} /></div>}
+          <div className="mt-4 flex gap-2 md:hidden">
+            {!sidebarShown ? (
+              navigation
+            ) : (
+              <div className="ml-auto">
+                <UserMenu sidebarShown={sidebarShown} />
+              </div>
+            )}
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default Header;

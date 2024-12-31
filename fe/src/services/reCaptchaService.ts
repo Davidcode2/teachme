@@ -1,9 +1,9 @@
-import { useLikelyHumanStore } from '../store';
+import { useLikelyHumanStore } from "../store";
 
 export default async function verifyCaptcha() {
   const token = await generateRecaptchaToken();
   const riskAnalysis = await checkCaptcha(token);
-  return riskAnalysis
+  return riskAnalysis;
 }
 
 const generateRecaptchaToken = async (): Promise<string> =>
@@ -12,8 +12,8 @@ const generateRecaptchaToken = async (): Promise<string> =>
       () =>
         void (async () => {
           const token = await grecaptcha.enterprise.execute(
-            '6LeuYlMqAAAAAAS88977iQmCAxq8coWUbe4Z436W',
-            { action: 'LOGIN' },
+            "6LeuYlMqAAAAAAS88977iQmCAxq8coWUbe4Z436W",
+            { action: "LOGIN" },
           );
 
           resolve(token);
@@ -30,10 +30,10 @@ async function checkCaptcha(token: string) {
 }
 
 async function verifyCaptchaValue(value: string) {
-  const res = await fetch('/api/auth/recaptcha/verify', {
-    method: 'POST',
+  const res = await fetch("/api/auth/recaptcha/verify", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ value }),
   });

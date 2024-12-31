@@ -6,6 +6,6 @@ type Material = {
   author_id: string;
   date_published: Date;
   file_path: string;
-}
+};
 
 export default Material;

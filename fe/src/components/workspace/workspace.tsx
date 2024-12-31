@@ -1,22 +1,25 @@
-import { useSearchState, useUserStore, useGlobalLoadingStore } from '../../store';
-import Card from '../../components/card/card'
-import Material from '../../DTOs/material'
-import NoData from '../materials/noData';
-import { useEffect, useState } from 'react';
-import loadMaterials from '../../loaders/materialLoader';
-import Skeleton from '../card/skeleton';
+import {
+  useSearchState,
+  useUserStore,
+  useGlobalLoadingStore,
+} from "../../store";
+import Card from "../../components/card/card";
+import Material from "../../DTOs/material";
+import NoData from "../materials/noData";
+import { useEffect, useState } from "react";
+import loadMaterials from "../../loaders/materialLoader";
+import Skeleton from "../card/skeleton";
 
 type MaterialWithThumbnail = {
-  material: Material,
-  thumbnail: any
-}
+  material: Material;
+  thumbnail: any;
+};
 
 export default function Workspace() {
-
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const searchString = useSearchState((state) => state.searchString);
   const loading = useGlobalLoadingStore((state) => state.loading);
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
 
   const searchMaterials = async () => {
     const baseUrl = getUrl();
@@ -24,7 +27,9 @@ export default function Workspace() {
     const json = await loadMaterials(url);
     setSearchResults(json);
     if (searchString !== "") {
-      const materialsWithNullThumbnail = json.map((el: Material) => { return { material: el, thumbnail: null } });
+      const materialsWithNullThumbnail = json.map((el: Material) => {
+        return { material: el, thumbnail: null };
+      });
       setMaterials(materialsWithNullThumbnail);
       return;
     }
@@ -38,16 +43,20 @@ export default function Workspace() {
     }
     const hasThumbnail = materials[0].thumbnail;
     if (hasThumbnail) {
-      materials = materials.map((el: { material: Material, thumbnail: any }) => { return el.material; });
+      materials = materials.map(
+        (el: { material: Material; thumbnail: any }) => {
+          return el.material;
+        },
+      );
       useSearchState.setState({ searchResults: materials });
     } else {
       useSearchState.setState({ searchResults: materials });
     }
-  }
+  };
 
   const getUrl = () => {
     return `/api/materials/by/${user.id}`;
-  }
+  };
 
   useEffect(() => {
     searchMaterials();
@@ -63,20 +72,17 @@ export default function Workspace() {
 
   return (
     <>
-      {loading &&
-        <div className="flex flex-col gap-10 m-4 md:mb-10 md:mx-10">
+      {loading && (
+        <div className="m-4 flex flex-col gap-10 md:mx-10 md:mb-10">
           <Skeleton id={crypto.randomUUID()} />
           <Skeleton id={crypto.randomUUID()} />
         </div>
-      }
+      )}
       <div>
-        {
-          materials.map((el: MaterialWithThumbnail) => {
-            return <Card key={el.material.id} material={el}></Card>
-          })
-        }
+        {materials.map((el: MaterialWithThumbnail) => {
+          return <Card key={el.material.id} material={el}></Card>;
+        })}
       </div>
     </>
-  )
+  );
 }
-

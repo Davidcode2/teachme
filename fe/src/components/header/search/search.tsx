@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import SearchService from '../../../services/searchService';
-import { useSearchState } from '../../../store'
-import SearchResultsPreview from './searchResultsPreview'
+import { useNavigate } from "react-router-dom";
+import SearchService from "../../../services/searchService";
+import { useSearchState } from "../../../store";
+import SearchResultsPreview from "./searchResultsPreview";
 
 export default function Search({ setShowSearch }: { setShowSearch: any }) {
   const searchResults = useSearchState((state: any) => state.searchResults);
@@ -18,30 +18,44 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
     console.log(searchString);
     setSearchString(searchString);
     if (searchString.length > 0) {
-      navigate('/search');
+      navigate("/search");
     } else {
-      navigate('/');
+      navigate("/");
     }
-  }
+  };
 
   const onCloseButton = (e: any) => {
-    if (e.key === 'Enter'
-      || e.keyCode == keyCodeEnter
-      || e.keyCode == keycodeEscape
+    if (
+      e.key === "Enter" ||
+      e.keyCode == keyCodeEnter ||
+      e.keyCode == keycodeEscape
     ) {
       setShowSearch(false);
     }
-  }
+  };
 
-  document.body.addEventListener('keydown', onCloseButton);
+  document.body.addEventListener("keydown", onCloseButton);
 
   return (
     <div className="flex h-full w-full justify-center">
-      <div className="searchBox lg:w-[800px] sm:w-[600px] w-4/5 self-center">
-        <div className="z-50 searchBox border border-fuchsia-200 bg-white shadow-2xl shadow-fuchsia-900 rounded-lg p-10 blur-none flex flex-col">
+      <div className="searchBox w-4/5 self-center sm:w-[600px] lg:w-[800px]">
+        <div className="searchBox z-50 flex flex-col rounded-lg border border-fuchsia-200 bg-white p-10 shadow-2xl shadow-fuchsia-900 blur-none">
           <div className="flex">
-            <textarea value={searchString} onChange={changeSearchString} onKeyDown={onCloseButton} autoFocus={true} className="w-full grow border border-fuchsia-200 searchBox p-4 rounded-3xl focus:outline-none focus:outline-purple-300 focus:shadow-lg focus:shadow-purple-200 focus:border-none" />
-            {searchString && <div onClick={clearSearch} className="absolute right-12 hover:text-stone-600 cursor-pointer font-handwriting text-stone-500 text-xs self-center p-4">X</div>}
+            <textarea
+              value={searchString}
+              onChange={changeSearchString}
+              onKeyDown={onCloseButton}
+              autoFocus={true}
+              className="searchBox w-full grow rounded-3xl border border-fuchsia-200 p-4 focus:border-none focus:shadow-lg focus:shadow-purple-200 focus:outline-none focus:outline-purple-300"
+            />
+            {searchString && (
+              <div
+                onClick={clearSearch}
+                className="absolute right-12 cursor-pointer self-center p-4 font-handwriting text-xs text-stone-500 hover:text-stone-600"
+              >
+                X
+              </div>
+            )}
           </div>
           <ul className="searchBox flex flex-col gap-2">
             <SearchResultsPreview searchResults={searchResults} />
@@ -49,5 +63,5 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

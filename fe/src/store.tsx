@@ -1,24 +1,24 @@
-import { create } from 'zustand'
-import Material from './DTOs/material'
-import { MaterialWithThumbnail } from './types/MaterialWithThumbnail'
+import { create } from "zustand";
+import Material from "./DTOs/material";
+import { MaterialWithThumbnail } from "./types/MaterialWithThumbnail";
 
 type AccessTokenState = {
-  accessToken: string | null
-  setAccessToken: (token: string) => void
-  removeAccessToken: () => void
-}
+  accessToken: string | null;
+  setAccessToken: (token: string) => void;
+  removeAccessToken: () => void;
+};
 
 export const useAccessTokenStore = create<AccessTokenState>((set) => ({
   accessToken: null,
   setAccessToken: (token: string) => set(() => ({ accessToken: token })),
   removeAccessToken: () => set({ accessToken: null }),
-}))
+}));
 
 type UserState = {
-  user: any
-  setUser: (user: any) => void
-  removeUser: () => void
-}
+  user: any;
+  setUser: (user: any) => void;
+  removeUser: () => void;
+};
 
 export const useUserStore = create<UserState>((set) => ({
   user: null,
@@ -27,11 +27,11 @@ export const useUserStore = create<UserState>((set) => ({
 }));
 
 type AvatarState = {
-  avatar: any
-  setAvatar: (avatar: any) => void
-  removeAvatar: () => void
-}
-  
+  avatar: any;
+  setAvatar: (avatar: any) => void;
+  removeAvatar: () => void;
+};
+
 export const useAvatarStore = create<AvatarState>((set) => ({
   avatar: null,
   setAvatar: (avatar: any) => set({ avatar }),
@@ -39,9 +39,9 @@ export const useAvatarStore = create<AvatarState>((set) => ({
 }));
 
 type SidebarState = {
-  isShown: boolean
-  toggleSidebar: () => void
-}
+  isShown: boolean;
+  toggleSidebar: () => void;
+};
 
 export const useSidebarStore = create<SidebarState>((set) => ({
   isShown: false,
@@ -49,10 +49,10 @@ export const useSidebarStore = create<SidebarState>((set) => ({
 }));
 
 type CartState = {
-  numberOfCartItems: number,
-  cart: any
-  updateCart: (newCartData: any) => void
-}
+  numberOfCartItems: number;
+  cart: any;
+  updateCart: (newCartData: any) => void;
+};
 
 export const useCartStore = create<CartState>((set) => ({
   numberOfCartItems: 0,
@@ -62,9 +62,9 @@ export const useCartStore = create<CartState>((set) => ({
 }));
 
 type LoadingState = {
-  loading: boolean,
-  setLoading: (loading: boolean) => void
-}
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+};
 
 export const useGlobalLoadingStore = create<LoadingState>((set) => ({
   loading: true,
@@ -72,9 +72,9 @@ export const useGlobalLoadingStore = create<LoadingState>((set) => ({
 }));
 
 type LikelyHuman = {
-  isLikelyHuman: boolean,
-  setIsLikelyHuman: (loading: boolean) => void
-}
+  isLikelyHuman: boolean;
+  setIsLikelyHuman: (loading: boolean) => void;
+};
 
 export const useLikelyHumanStore = create<LikelyHuman>((set) => ({
   isLikelyHuman: false,
@@ -82,30 +82,32 @@ export const useLikelyHumanStore = create<LikelyHuman>((set) => ({
 }));
 
 type SearchState = {
-  searchString: string,
+  searchString: string;
   searchResults: Material[] | MaterialWithThumbnail[];
-  setSearchString: (search: string) => void
-  setSearchResults: (results: Material[] | MaterialWithThumbnail[]) => void
-}
+  setSearchString: (search: string) => void;
+  setSearchResults: (results: Material[] | MaterialWithThumbnail[]) => void;
+};
 
 export const useSearchState = create<SearchState>((set) => ({
-  searchString: '',
+  searchString: "",
   searchResults: [],
   setSearchString: (search: string) => set({ searchString: search }),
-  setSearchResults: (results: Material[] | MaterialWithThumbnail[]) => set({ searchResults: results }),
+  setSearchResults: (results: Material[] | MaterialWithThumbnail[]) =>
+    set({ searchResults: results }),
 }));
 
 type ErrorStore = {
-  errors: CustomError[],
-  pushError: (error: CustomError) => void
-}
+  errors: CustomError[];
+  pushError: (error: CustomError) => void;
+};
 
 export const useErrorStore = create<ErrorStore>((set) => ({
   errors: [],
-  pushError: (error: CustomError) => set((state) => ({ errors: [...state.errors, error] })),
+  pushError: (error: CustomError) =>
+    set((state) => ({ errors: [...state.errors, error] })),
 }));
 
 type CustomError = {
-  message: string,
-  code: number
-}
+  message: string;
+  code: number;
+};

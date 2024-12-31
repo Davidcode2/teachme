@@ -1,5 +1,5 @@
-import { useAccessTokenStore } from '../store';
-import { useUserStore } from '../store';
+import { useAccessTokenStore } from "../store";
+import { useUserStore } from "../store";
 
 export default async function loadMyMaterials() {
   const user = useUserStore.getState().user;
@@ -7,10 +7,10 @@ export default async function loadMyMaterials() {
     return [];
   }
   const response = await fetch(`/api/users/${user.id}/materials`, {
-    method: 'GET',
+    method: "GET",
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 

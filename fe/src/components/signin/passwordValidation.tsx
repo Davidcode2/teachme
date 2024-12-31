@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import CheckMarkIcon from '../../assets/icons/icons8-checkmark-48.png';
+import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
 
 export default function PasswordValidation({ password }: { password: string }) {
-  const [passwordLengthRequirementMet, setPasswordLengthRequirementMet] = useState(false);
-  const [passwordUppercaseRequirementMet, setPasswordUppercaseRequirementMet] = useState(false);
-  const [passwordLowercaseRequirementMet, setPasswordLowercaseRequirementMet] = useState(false);
-  const [passwordNumberRequirementMet, setPasswordNumberRequirementMet] = useState(false);
+  const [passwordLengthRequirementMet, setPasswordLengthRequirementMet] =
+    useState(false);
+  const [passwordUppercaseRequirementMet, setPasswordUppercaseRequirementMet] =
+    useState(false);
+  const [passwordLowercaseRequirementMet, setPasswordLowercaseRequirementMet] =
+    useState(false);
+  const [passwordNumberRequirementMet, setPasswordNumberRequirementMet] =
+    useState(false);
 
   useEffect(() => {
     checkPasswordRequirements();
@@ -17,7 +21,7 @@ export default function PasswordValidation({ password }: { password: string }) {
     checkPasswordUpperCaseRequirement(current);
     checkPasswordLowerCaseRequirement(current);
     checkPasswordNumberRequirement(current);
-  }
+  };
 
   const checkPasswordNumberRequirement = (password: string) => {
     if (password.match(/.*[\d].*/)) {
@@ -25,7 +29,7 @@ export default function PasswordValidation({ password }: { password: string }) {
     } else {
       setPasswordNumberRequirementMet(false);
     }
-  }
+  };
 
   const checkPasswordLowerCaseRequirement = (password: string) => {
     if (password.match(/.*[a-z].*/)) {
@@ -33,7 +37,7 @@ export default function PasswordValidation({ password }: { password: string }) {
     } else {
       setPasswordLowercaseRequirementMet(false);
     }
-  }
+  };
 
   const checkPasswordUpperCaseRequirement = (password: string) => {
     if (password.match(/.*[A-Z].*/)) {
@@ -41,7 +45,7 @@ export default function PasswordValidation({ password }: { password: string }) {
     } else {
       setPasswordUppercaseRequirementMet(false);
     }
-  }
+  };
 
   const checkPasswordLengthRequirement = (password: string) => {
     if (password.length >= 6) {
@@ -49,30 +53,54 @@ export default function PasswordValidation({ password }: { password: string }) {
     } else {
       setPasswordLengthRequirementMet(false);
     }
-  }
+  };
 
   return (
     <div className="col-start-2 mt-2">
-      <ul className="flex sm:flex-row flex-col text-xs gap-x-2">
-        <li className={passwordNumberRequirementMet ? "text-green-600" : "text-gray-400 grayscale"}>
+      <ul className="flex flex-col gap-x-2 text-xs sm:flex-row">
+        <li
+          className={
+            passwordNumberRequirementMet
+              ? "text-green-600"
+              : "text-gray-400 grayscale"
+          }
+        >
           <div className="flex items-center gap-1">
             <img src={CheckMarkIcon} width="15" alt="" />
             Zahl
           </div>
         </li>
-        <li className={passwordUppercaseRequirementMet ? "text-green-600" : "text-gray-400 grayscale"}>
+        <li
+          className={
+            passwordUppercaseRequirementMet
+              ? "text-green-600"
+              : "text-gray-400 grayscale"
+          }
+        >
           <div className="flex items-center gap-1">
             <img src={CheckMarkIcon} width="15" alt="" />
             Großbuchstabe
           </div>
         </li>
-        <li className={passwordLowercaseRequirementMet ? "text-green-600" : "text-gray-400 grayscale"}>
+        <li
+          className={
+            passwordLowercaseRequirementMet
+              ? "text-green-600"
+              : "text-gray-400 grayscale"
+          }
+        >
           <div className="flex items-center gap-1">
             <img src={CheckMarkIcon} width="15" alt="" />
             Kleinbuchstabe
           </div>
         </li>
-        <li className={passwordLengthRequirementMet ? "text-green-600" : "text-gray-400 grayscale"}>
+        <li
+          className={
+            passwordLengthRequirementMet
+              ? "text-green-600"
+              : "text-gray-400 grayscale"
+          }
+        >
           <div className="flex items-center gap-1">
             <img src={CheckMarkIcon} width="15" alt="" />
             &ge; 6 Zeichen
@@ -80,5 +108,5 @@ export default function PasswordValidation({ password }: { password: string }) {
         </li>
       </ul>
     </div>
-  )
+  );
 }

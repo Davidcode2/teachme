@@ -1,9 +1,8 @@
 export default async function sharedPreviewLoader(id: string | undefined) {
-
   const response = await fetch(`/api/materials/id/${id}`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 

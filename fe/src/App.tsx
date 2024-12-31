@@ -1,23 +1,22 @@
-import './App.css'
-import Header from './components/header/header'
-import { Outlet } from 'react-router-dom'
-import Sidebar from './components/sidebar/sidebar'
-import { useEffect } from 'react';
-import { useAccessTokenStore, useGlobalLoadingStore } from './store';
-import { UserService } from './services/userService'
-import CartService from './services/cart.service';
+import "./App.css";
+import Header from "./components/header/header";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./components/sidebar/sidebar";
+import { useEffect } from "react";
+import { useAccessTokenStore, useGlobalLoadingStore } from "./store";
+import { UserService } from "./services/userService";
+import CartService from "./services/cart.service";
 
 function App(): JSX.Element {
-
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch('/api/auth/refresh', {
-        method: 'GET',
+      const res = await fetch("/api/auth/refresh", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-      })
-      const data = await res.json()
+      });
+      const data = await res.json();
       useGlobalLoadingStore.setState({ loading: false });
       if (data.tokens.accessToken) {
         const setAccessToken = useAccessTokenStore.getState().setAccessToken;
@@ -29,7 +28,6 @@ function App(): JSX.Element {
       }
     }
     fetchData();
-
   }, []);
 
   return (
@@ -38,7 +36,7 @@ function App(): JSX.Element {
       <Header></Header>
       <Outlet />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

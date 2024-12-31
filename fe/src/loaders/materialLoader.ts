@@ -1,12 +1,12 @@
-import { useAccessTokenStore, useGlobalLoadingStore } from '../store';
+import { useAccessTokenStore, useGlobalLoadingStore } from "../store";
 
 export default async function loadMaterials(url: string) {
   useGlobalLoadingStore.setState({ loading: true });
   const response = await fetch(url, {
-    method: 'GET',
+    method: "GET",
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
   useGlobalLoadingStore.setState({ loading: false });

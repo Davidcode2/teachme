@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 export default function Mine() {
-
   useEffect(() => {
     setTimeout(() => {
       const rootElement = document.getElementById("fade_in_element");
@@ -12,16 +11,26 @@ export default function Mine() {
 
   return (
     <>
-      <div id="fade_in_element" className="border border-gray-200 mx-4 md:mx-0 md:ml-8 pt-8 bg-slate-100 rounded-md md:rounded-none md:rounded-l-md shadow-xl min-h-screen transition-opacity duration-700 opacity-0">
-        <nav className="px-10 pb-4 gap-x-10 flex text-lg text-black ">
-          <NavLink className="font-handwriting decoration-wavy hover:underline decoration-gray-500 hover:text-emerald-600 underline-offset-4 decoration-1"
-            to={"/materials/mine"}>Gekauft</NavLink>
-          <NavLink to={"/materials/mine/workspace"} className="font-handwriting decoration-wavy hover:underline decoration-gray-500 hover:text-emerald-600 underline-offset-4 decoration-1">Erstellt</NavLink>
-        </nav >
+      <div
+        id="fade_in_element"
+        className="mx-4 min-h-screen rounded-md border border-gray-200 bg-slate-100 pt-8 opacity-0 shadow-xl transition-opacity duration-700 md:mx-0 md:ml-8 md:rounded-none md:rounded-l-md"
+      >
+        <nav className="flex gap-x-10 px-10 pb-4 text-lg text-black ">
+          <NavLink
+            className="font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline"
+            to={"/materials/mine"}
+          >
+            Gekauft
+          </NavLink>
+          <NavLink
+            to={"/materials/mine/workspace"}
+            className="font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline"
+          >
+            Erstellt
+          </NavLink>
+        </nav>
         <Outlet />
-      </div >
+      </div>
     </>
-  )
-
+  );
 }
-
