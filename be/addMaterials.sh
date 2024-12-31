@@ -29,16 +29,10 @@ USER_RESPONSE=$(curl -s -X POST \
 # Extract the user ID using jq
 USER_ID=$(echo "$USER_RESPONSE" | jq -r '.user.id')
 
-# create new user
-#curl -X POST \
-#  -H "Content-Type: application/json" \
-#  -d '{"email": "robo@teachly.store", "password": "password"}' \
-#  http://localhost:3000/auth/signup
-
 for pdf_file in "${pdf_files[@]}"; do 
   echo "Processing $pdf_file"
 
-    # Generate random values for additional fields
+  # Generate random values for additional fields
   title="Title $(basename "$pdf_file" .pdf)"
   description="This is a description for $(basename "$pdf_file")."
   price=$((RANDOM % 1000 + 100)) # Random price between $1.00 (100) and $10.00 (1000)
