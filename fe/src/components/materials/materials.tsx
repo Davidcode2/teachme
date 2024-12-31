@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import loadMaterials from "../../loaders/materialLoader";
 import PaginationService from "../../services/paginationService";
 import Skeleton from "../card/skeleton";
+import useDebouncedValue from "../../hooks/useDebouncedValue";
 
 type MaterialWithThumbnail = {
   material: Material;
@@ -23,6 +24,7 @@ function Materials() {
   const lastMaterialIndex = useRef(0);
   const slidingWindowHead = useRef(0);
   const runCount = useRef(0);
+  const debouncedScrollEvent = useDebouncedValue(scrollEvent, 100);
 
   const getUrl = () => {
     if (onMinePage) {
@@ -48,6 +50,7 @@ function Materials() {
   };
 
   const loadMoreMaterials = async (scrollPosition: number) => {
+    console.log("fethcing");
     if (scrollPosition === -1) {
       loadNextMaterials();
     } else if (scrollPosition === 1) {
@@ -99,12 +102,16 @@ function Materials() {
   };
 
   useEffect(() => {
-    if (!isFetching && scrollEvent !== 0) {
-      setIsFetching(true);
-      loadMoreMaterials(scrollEvent);
-      setIsFetching(false);
-    }
-  }, [scrollEvent]);
+    const execute = async () => {
+      if (!isFetching && debouncedScrollEvent !== 0) {
+        setIsFetching(true);
+        await loadMoreMaterials(debouncedScrollEvent);
+        setIsFetching(false);
+      }
+    };
+
+    execute();
+  }, [debouncedScrollEvent]);
 
   useEffect(() => {
     setInitialMaterials();
