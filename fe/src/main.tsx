@@ -9,6 +9,7 @@ import loginAction from "./actions/loginAction.ts";
 import LoginForm from "./components/signin/login.tsx";
 import Materials from "./components/materials/materials.tsx";
 import AddMaterial from "./components/materials/addMaterial/addMaterial.tsx";
+import AddMaterialSuccess from "./components/materials/addMaterial/addSuccess.tsx";
 import addMaterialAction from "./actions/addMaterialAction.ts";
 import ErrorPage from "./error-page.tsx";
 import NoData from "./components/materials/noData.tsx";
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
         path: "/materials/add",
         element: <AddMaterial />,
         action: addMaterialAction,
+      },
+      {
+        path: "/materials/add/success",
+        element: <AddMaterialSuccess />,
       },
       {
         path: "/materials/id/:id",

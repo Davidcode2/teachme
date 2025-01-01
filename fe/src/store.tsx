@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import Material from "./DTOs/material";
 import { MaterialWithThumbnail } from "./types/MaterialWithThumbnail";
+import { User } from "./DTOs/user";
 
 type AccessTokenState = {
   accessToken: string | null;
@@ -15,7 +16,7 @@ export const useAccessTokenStore = create<AccessTokenState>((set) => ({
 }));
 
 type UserState = {
-  user: any;
+  user: User | null;
   setUser: (user: any) => void;
   removeUser: () => void;
 };

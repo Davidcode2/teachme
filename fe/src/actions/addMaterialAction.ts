@@ -17,5 +17,5 @@ export default async function addMaterialAction({
     },
     body: formData,
   });
-  return redirect("/materials");
+  return redirect("/materials/add/success");
 }

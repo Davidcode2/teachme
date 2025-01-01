@@ -3,7 +3,7 @@ type PropType = {
     file: string | null;
   };
   setFormState: any;
-}
+};
 
 export default function FileInput({ formState, setFormState }: PropType) {
   return (

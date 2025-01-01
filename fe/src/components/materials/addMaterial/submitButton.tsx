@@ -46,13 +46,13 @@ export default function SubmitButton({ formState }: PropType) {
         disabled={navigation.state === "submitting" || !enableSubmitButton()}
       >
         <div
-          className={`relative py-2 ${completion >= 1 ? "rounded-l-lg bg-emerald-500" : ""}`}
+          className={`h-full ${completion >= 1 ? "rounded-l-lg bg-emerald-500" : ""}`}
         ></div>
         <div className={`py-2 ${completion >= 2 ? "bg-emerald-500" : ""}`}>
           {navigation.state === "submitting" ? "Erstelle..." : "Erstellen"}
         </div>
         <div
-          className={`py-2 ${completion >= 3 ? "rounded-r-lg bg-emerald-500" : ""}`}
+          className={`h-full ${completion >= 3 ? "rounded-r-lg bg-emerald-500" : ""}`}
         ></div>
       </button>
     </>
