@@ -50,7 +50,6 @@ function Materials() {
   };
 
   const loadMoreMaterials = async (scrollPosition: number) => {
-    console.log("fethcing");
     if (scrollPosition === -1) {
       loadNextMaterials();
     } else if (scrollPosition === 1) {
@@ -109,7 +108,6 @@ function Materials() {
         setIsFetching(false);
       }
     };
-
     execute();
   }, [debouncedScrollEvent]);
 
