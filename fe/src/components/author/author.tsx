@@ -18,7 +18,7 @@ function Author(props: AppProps) {
     const getAuthor = async () => {
       const authorIn = await cardService.getAuthor(props.authorId);
       await getAvatar(authorIn.id);
-      setAuthor(authorIn.email);
+      setAuthor(authorIn.displayName);
     };
     if (!author) {
       getAuthor();

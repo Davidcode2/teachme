@@ -56,11 +56,11 @@ export default function UserMenu({
     }
   });
 
-  let email = "";
-  if (user.email) {
-    email = user.email;
+  let displayName = "";
+  if (user!.displayName) {
+    displayName = user!.displayName;
   } else {
-    email = "";
+    displayName = "";
   }
 
   return (
@@ -68,7 +68,7 @@ export default function UserMenu({
       <div
         className={`mr-2 text-slate-400 ${sidebarShown ? "block" : "hidden lg:block"}`}
       >
-        {email}
+        {displayName}
       </div>
       <button className="userMenu hover:cursor-pointer" onClick={toggleMenu}>
         <img
