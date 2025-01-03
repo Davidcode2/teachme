@@ -48,7 +48,6 @@ export class MaterialsService {
 
   async findByCreator(userId: string): Promise<MaterialWithThumbnail[]> {
     const user = await this.userService.findOneById(userId);
-    console.log(user);
     const materials = user.author.materials;
     return this.mapThumbnails(materials);
   }
@@ -129,7 +128,6 @@ export class MaterialsService {
   private addMaterialToAuthor(user: User, material: Material) {
     user.author.materials.push(material);
     this.userService.updateWithAuthor(user);
-    console.log(user);
   }
 
   private async populateMaterial(materialDto: MaterialDtoIn) {

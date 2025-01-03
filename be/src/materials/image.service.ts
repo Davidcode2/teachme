@@ -122,7 +122,6 @@ export class ImageService {
 
   private createOptions(path: string, type: string) {
     let savePath: string;
-    console.log(type);
     switch (type) {
       case 'preview':
         savePath = `assets/${type}s/${path}`;
