@@ -21,6 +21,9 @@ export class User {
   hash: string;
 
   @Column({ nullable: true })
+  displayName: string;
+
+  @Column({ nullable: true })
   firstName: string;
 
   @Column({ nullable: true })

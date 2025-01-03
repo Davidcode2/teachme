@@ -20,6 +20,7 @@ import Workspace from "./components/workspace/workspace.tsx";
 import Mine from "./components/workspace/mine.tsx";
 import MyMaterials from "./components/materials/myMaterials.tsx";
 import SearchResults from "./components/materials/searchResults.tsx";
+import addUsernameAction from "./actions/addUsernameAction.ts";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
       {
         path: "/materials/add/success",
         element: <AddMaterialSuccess />,
+        action: addUsernameAction,
       },
       {
         path: "/materials/id/:id",

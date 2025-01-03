@@ -8,6 +8,7 @@ import { ConsumerService } from '../../consumer/consumer.service';
 const jdenticon = require('jdenticon');
 import * as fs from 'node:fs/promises';
 import { AuthorService } from '../author/author.service';
+import { UpdateUserDto } from 'src/shared/DTOs/updatedUserDto';
 
 @Injectable()
 export class UsersService {
@@ -74,6 +75,15 @@ export class UsersService {
 
   async update(user: User): Promise<User> {
     return this.usersRepository.save(user);
+  }
+
+  async partialUpdate(
+    userId: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    const user = await this.findOneById(userId);
+    const updatedUser = this.usersRepository.merge(user, updateUserDto);
+    return this.usersRepository.save(updatedUser);
   }
 
   async updateRefreshToken(id: string, refreshToken: string): Promise<User> {
