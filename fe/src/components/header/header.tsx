@@ -41,6 +41,13 @@ function Header() {
       setEventListenerRegistered(true);
     });
   }
+
+  const closeSidebar = () => {
+    if (sidebarShown) {
+      useSidebarStore.getState().hide();
+    }
+  }
+
   const searchBox = (
     <button
       onClick={toggleSearch}
@@ -69,6 +76,7 @@ function Header() {
             : "border-none"
         }
         to={user ? "materials/add" : "login"}
+        onClick={closeSidebar}
       >
         <div className="rounded-lg border border-slate-200 shadow-sm">
           <div className="px-4 py-2 transition hover:scale-125 hover:brightness-110">
