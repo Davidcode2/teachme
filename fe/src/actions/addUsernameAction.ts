@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import { useAccessTokenStore, useUserStore } from "../store";
+import { useAccessTokenStore } from "../store";
 
 export default async function addUsernameAction({
   request,
@@ -7,9 +7,8 @@ export default async function addUsernameAction({
   request: Request;
 }) {
   const formData = await request.formData();
-  const userId = useUserStore.getState().user!.id;
   const jsonData = formDataToJson<{ displayName: string }>(formData);
-  await fetch(`/api/users/${userId}`, {
+  await fetch(`/api/users`, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

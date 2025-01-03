@@ -1,6 +1,5 @@
 import {
   useSearchState,
-  useUserStore,
   useGlobalLoadingStore,
 } from "../../store";
 import Card from "../../components/card/card";
@@ -19,7 +18,6 @@ export default function Workspace() {
   const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
   const searchString = useSearchState((state) => state.searchString);
   const loading = useGlobalLoadingStore((state) => state.loading);
-  const user = useUserStore((state) => state.user);
 
   const searchMaterials = async () => {
     const baseUrl = getUrl();
@@ -55,7 +53,7 @@ export default function Workspace() {
   };
 
   const getUrl = () => {
-    return `/api/materials/by/${user.id}`;
+    return `/api/materials/by`;
   };
 
   useEffect(() => {

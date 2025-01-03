@@ -1,4 +1,4 @@
-import { useSearchState, useUserStore } from "../../store";
+import { useSearchState } from "../../store";
 import Card from "../../components/card/card";
 import Material from "../../DTOs/material";
 import NoData from "./noData";
@@ -16,11 +16,10 @@ function SearchResults() {
   );
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
-  const user = useUserStore((state) => state.user);
 
   const getUrl = () => {
     if (onMinePage) {
-      return `/api/materials/user/${user.id}`;
+      return `/api/materials/user`;
     }
     return "api/materials";
   };

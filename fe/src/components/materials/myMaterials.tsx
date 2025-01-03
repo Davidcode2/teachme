@@ -1,6 +1,5 @@
 import {
   useSearchState,
-  useUserStore,
   useGlobalLoadingStore,
 } from "../../store";
 import Card from "../../components/card/card";
@@ -25,13 +24,12 @@ function MyMaterials() {
   const paginator = new PaginationService();
   const searchString = useSearchState((state) => state.searchString);
   const onMinePage = document.location.pathname === "/materials/mine";
-  const user = useUserStore((state) => state.user);
   const lastMaterialIndex = useRef(0);
   const runCount = useRef(0);
 
   const getUrl = () => {
     if (onMinePage) {
-      return `/api/materials/user/${user.id}`;
+      return `/api/materials/user`;
     }
     return "api/materials";
   };

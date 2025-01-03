@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Request,
   Delete,
   Get,
   Param,
@@ -40,17 +41,16 @@ export class MaterialsController {
     return this.materialsService.findOneWithPreview(materialId);
   }
 
-  @Get('by/:userId')
-  findByAuthor(@Param('userId') userId: string) {
+  @Get('by')
+  findByAuthor(@Request() req) {
+    const userId = req.cookies.userId;
     return this.materialsService.findByCreator(userId);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('user/:id')
-  findByUser(
-    @Param('id') userId: string,
-    @Query('search') searchString: string,
-  ) {
+  @Get('user')
+  findByUser(@Request() req, @Query('search') searchString: string) {
+    const userId = req.cookies.userId;
     return this.materialsService.findByUser(userId, searchString);
   }
 
