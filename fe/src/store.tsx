@@ -42,11 +42,13 @@ export const useAvatarStore = create<AvatarState>((set) => ({
 type SidebarState = {
   isShown: boolean;
   toggleSidebar: () => void;
+  hide: () => void;
 };
 
 export const useSidebarStore = create<SidebarState>((set) => ({
   isShown: false,
   toggleSidebar: () => set((state) => ({ isShown: !state.isShown })),
+  hide: () => set({ isShown: false }),
 }));
 
 type CartState = {

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/teachly_logo_color_gradient_bg_transparent.png";
+import { useSidebarStore } from "../../store";
 
 interface NavProps {
   materialsLink: string;
@@ -7,6 +8,12 @@ interface NavProps {
 }
 
 export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
+
+  const closeOpenedMenus = () => {
+    const hideSidebar = useSidebarStore.getState().hide;
+    hideSidebar();
+  };
+
   return (
     <>
       <div className="z-40 flex items-center gap-x-6">
@@ -16,11 +23,12 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
           className={({ isActive, isPending }) =>
             isPending ? "animate-pulse" : isActive ? "" : "border-none"
           }
+          onClick={closeOpenedMenus}
         >
           <img
             className="transition hover:scale-105 hover:brightness-125"
             src={logo}
-            alt=""
+            alt="Teachly Logo"
             width="100"
           />
         </NavLink>
