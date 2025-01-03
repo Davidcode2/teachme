@@ -9,7 +9,7 @@ import {
   useGlobalLoadingStore,
   useUserStore,
 } from "../store";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -18,6 +18,7 @@ export default function UserMenu({
 }) {
   const user = useUserStore((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   const logout = () => {
     useGlobalLoadingStore.setState({ loading: true });
@@ -37,7 +38,7 @@ export default function UserMenu({
   };
 
   useEffect(() => {
-    const contextMenu = document.getElementById("context-menu");
+    const contextMenu = userMenuRef.current;
     showMenu ? contextMenu?.classList.add("open") : contextMenu?.classList.remove("open");
   }, [showMenu]);
 
@@ -48,7 +49,7 @@ export default function UserMenu({
   const toggleMenu = () => (showMenu ? setShowMenu(false) : setShowMenu(true));
 
   document.body.addEventListener("click", (e: any) => {
-    const contextMenu = document.getElementById("context-menu");
+    const contextMenu = userMenuRef.current;
     if (e.target.classList.contains("userMenu")) return;
     if (showMenu) {
       setShowMenu(false);
@@ -78,7 +79,7 @@ export default function UserMenu({
           alt="User"
         />
       </button>
-        <div id="context-menu"  className="context-menu userMenu relative">
+        <div ref={userMenuRef} className="context-menu userMenu relative">
           <div className="userMenu absolute right-0 top-6 rounded-md border bg-white shadow-md">
             <div className="userMenu flex justify-center p-5">
               <ul className="userMenu flex flex-col gap-y-2 pr-4">
