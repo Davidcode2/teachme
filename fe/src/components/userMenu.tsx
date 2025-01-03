@@ -9,7 +9,7 @@ import {
   useGlobalLoadingStore,
   useUserStore,
 } from "../store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -36,6 +36,11 @@ export default function UserMenu({
     });
   };
 
+  useEffect(() => {
+    const contextMenu = document.getElementById("context-menu");
+    showMenu ? contextMenu?.classList.add("open") : contextMenu?.classList.remove("open");
+  }, [showMenu]);
+
   const avatar = useAvatarStore.getState().avatar
     ? URL.createObjectURL(useAvatarStore.getState().avatar)
     : null;
@@ -43,9 +48,11 @@ export default function UserMenu({
   const toggleMenu = () => (showMenu ? setShowMenu(false) : setShowMenu(true));
 
   document.body.addEventListener("click", (e: any) => {
+    const contextMenu = document.getElementById("context-menu");
     if (e.target.classList.contains("userMenu")) return;
     if (showMenu) {
       setShowMenu(false);
+      contextMenu?.classList.remove("open");
     }
   });
 
@@ -71,8 +78,7 @@ export default function UserMenu({
           alt="User"
         />
       </button>
-      {showMenu ? (
-        <div className="userMenu relative">
+        <div id="context-menu"  className="context-menu userMenu relative">
           <div className="userMenu absolute right-0 top-6 rounded-md border bg-white shadow-md">
             <div className="userMenu flex justify-center p-5">
               <ul className="userMenu flex flex-col gap-y-2 pr-4">
@@ -95,9 +101,6 @@ export default function UserMenu({
             </div>
           </div>
         </div>
-      ) : (
-        <></>
-      )}
     </div>
   );
 }
