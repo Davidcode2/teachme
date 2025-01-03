@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import { useAccessTokenStore, useUserStore } from "../store";
+import { useAccessTokenStore } from "../store";
 
 export default async function addMaterialAction({
   request,
@@ -9,7 +9,6 @@ export default async function addMaterialAction({
   const formData = await request.formData();
   const price = formData.get("price");
   formData.set("price", price!.toString().replace(/,/g, ""));
-  formData.append("userId", useUserStore.getState().user.id);
   await fetch("/api/materials", {
     method: "POST",
     headers: {

@@ -57,7 +57,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
     setEventListenerRegistered(true);
   }
 
-  const isAuthor = user.author && authorId === user.author.id;
+  const isAuthor = user && authorId === user.authorId;
 
   return (
     <>

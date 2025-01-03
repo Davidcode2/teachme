@@ -31,7 +31,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
+  @Patch()
   async update(@Request() req: any, @Body() body: UpdateUserDto) {
     const userId = req.cookies.userId;
     const updatedUser = await this.usersService.partialUpdate(userId, body);

@@ -1,4 +1,4 @@
-import { useUserStore, useGlobalLoadingStore } from "../../store";
+import { useGlobalLoadingStore } from "../../store";
 import Card from "../../components/card/card";
 import Material from "../../DTOs/material";
 import NoData from "./noData";
@@ -20,7 +20,6 @@ function Materials() {
   const loading = useGlobalLoadingStore((state) => state.loading);
   const paginator = new PaginationService();
   const onMinePage = document.location.pathname === "/materials/mine";
-  const user = useUserStore((state) => state.user);
   const lastMaterialIndex = useRef(0);
   const slidingWindowHead = useRef(0);
   const runCount = useRef(0);
@@ -28,7 +27,7 @@ function Materials() {
 
   const getUrl = () => {
     if (onMinePage) {
-      return `/api/materials/user/${user.id}`;
+      return `/api/materials/user`;
     }
     return "api/materials";
   };

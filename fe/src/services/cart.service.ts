@@ -10,12 +10,12 @@ class CartService {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: this.user.id }),
+      body: JSON.stringify({ userId: this.user?.id }),
     });
   }
 
   async getItems() {
-    const res = await fetch(`/api/cart?id=${this.user.id}`, {
+    const res = await fetch(`/api/cart?id=${this.user?.id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
@@ -33,7 +33,7 @@ class CartService {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: this.user.id, materialId: id }),
+      body: JSON.stringify({ userId: this.user?.id, materialId: id }),
     });
     const numberOfItems = await res.json();
     useCartStore.setState({ numberOfCartItems: numberOfItems });
