@@ -13,7 +13,7 @@ import AddMaterialSuccess from "./components/materials/addMaterial/addSuccess.ts
 import addMaterialAction from "./actions/addMaterialAction.ts";
 import ErrorPage from "./error-page.tsx";
 import NoData from "./components/materials/noData.tsx";
-import SuccessPage from "./components/successPage.tsx";
+import SuccessPage from "./components/successPage/successPage.tsx";
 import SharedPreview from "./components/sharedPreview.tsx";
 import sharedPreviewLoader from "./loaders/sharedPreviewLoader.ts";
 import Workspace from "./components/workspace/workspace.tsx";

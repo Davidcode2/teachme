@@ -1,5 +1,6 @@
 import { Form, NavLink } from "react-router-dom";
 import { useUserStore } from "../../../store";
+import ChevronIcon from "../../../assets/icons/icons8-chevron-24.png";
 
 export default function AddMaterialSuccess() {
   const userStore = useUserStore();
@@ -11,7 +12,7 @@ export default function AddMaterialSuccess() {
         Damit dein Material von anderen Nutzern gefunden werden kann, füge bitte
         einen Nutzernamen hinzu.
       </p>
-      <Form method="patch"> 
+      <Form method="patch">
         <input
           className="mx-auto my-8 min-w-0 rounded-md border border-slate-200 px-4 py-2 shadow-sm"
           type="text"
@@ -33,12 +34,32 @@ export default function AddMaterialSuccess() {
           <p>Dein Material wurde erfolgreich hinzugefügt.</p>
           {!hasDisplayName && getUsername}
           <div className="flex flex-col">
-            <NavLink to="/materials/add" className="text-blue-800">
-              Weiteres Material hinzufügen
-            </NavLink>
-            <NavLink to="/materials/mine/workspace" className="text-blue-800">
-              Dein Werk bewundern
-            </NavLink>
+            <div className="group flex items-center">
+              <img
+                className="transition:opacity scale-0 w-0 h-4 rotate-180 opacity-0 duration-200 ease-in-out group-hover:block group-hover:opacity-100 group-hover:w-4 group-hover:scale-100"
+                src={ChevronIcon}
+                alt=""
+              />
+              <NavLink
+                to="/materials/add"
+                className="text-blue-600 duration-200 ease-in-out hover:translate-x-[1px] hover:text-blue-800 hover:transition-transform"
+              >
+                Weiteres Material hinzufügen
+              </NavLink>
+            </div>
+            <div className="group flex items-center">
+              <img
+                className="transition:opacity scale-0 w-0 h-4 rotate-180 opacity-0 duration-200 ease-in-out group-hover:block group-hover:opacity-100 group-hover:w-4 group-hover:scale-100"
+                src={ChevronIcon}
+                alt=""
+              />
+              <NavLink
+                to="/materials/mine/workspace"
+                className="text-blue-600 duration-200 ease-in-out hover:translate-x-[1px] hover:text-blue-800 hover:transition-transform"
+              >
+                Dein Werk bewundern
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>
