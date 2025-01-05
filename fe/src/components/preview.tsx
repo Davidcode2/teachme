@@ -27,10 +27,10 @@ export default function Preview({
         {material && (
           <div className="relative mx-6 flex flex-col gap-5 rounded-lg border bg-white p-2 shadow-lg sm:flex-row md:mx-10 md:p-10 lg:max-w-[80vw]">
             <button
-              className="absolute right-0 top-2 rounded-lg px-4"
+              className="absolute right-0 top-2 rounded-lg px-4 hover:text-red-600 text-slate-500"
               onClick={() => setShowPreview(false)}
             >
-              <div className="">X</div>
+              <div className="font-handwriting text-sm">X</div>
             </button>
             <div className="h-[50vh] overflow-scroll md:h-[75vh] lg:w-1/2">
               {_images}
