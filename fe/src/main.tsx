@@ -65,6 +65,10 @@ const router = createBrowserRouter([
         element: <SharedPreview />,
         loader: ({ params }) => sharedPreviewLoader(params.id),
       },
+      {
+        path: "/success",
+        element: <SuccessPage />,
+      },
     ],
   },
   {
@@ -76,10 +80,6 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <SignUpForm />,
     action: signUpAction,
-  },
-  {
-    path: "/success",
-    element: <SuccessPage />,
   },
 ]);
 

@@ -40,7 +40,9 @@ export class StripeService {
     this.sessions[sessionId] = userId;
   }
 
-  public async createCheckoutSession(items: { price: string, quantity: number}[]) {
+  public async createCheckoutSession(
+    items: { price: string; quantity: number }[],
+  ) {
     const session = await this.stripe.checkout.sessions.create({
       line_items: items,
       mode: 'payment',
@@ -79,7 +81,7 @@ export class StripeService {
     );
     const lineItems = sessionWithLineItems.line_items;
 
-    console.log("fulfilling order...");
+    console.log('fulfilling order...');
     this.fulfillOrder(lineItems, checkoutId);
   }
 
@@ -92,7 +94,8 @@ export class StripeService {
   private async fulfillOrder(lineItems: any, checkoutId: string) {
     const userId = this.popSession(checkoutId);
     const priceIds = lineItems.data.map((lineItem) => lineItem.price.id);
-    const materials = await this.materialFinderService.findByStripePriceIds(priceIds);
+    const materials =
+      await this.materialFinderService.findByStripePriceIds(priceIds);
     await this.userService.addMaterials(materials, userId);
     for (const material of materials) {
       this.commonCartService.removeItem(userId, material.id);

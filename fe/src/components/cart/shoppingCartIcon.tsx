@@ -13,7 +13,7 @@ function ShoppingCartIcon() {
 
   return (
     <>
-      <button className="" onClick={toggleMenu}>
+      <button className="py-2" onClick={toggleMenu}>
         {numberOfCartItems > 0 && (
           <div className="absolute right-2 top-5 z-20 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">
             {numberOfCartItems}

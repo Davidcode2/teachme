@@ -30,9 +30,26 @@ export class ConsumerService {
 
   async addMaterials(materials: Material[], consumerId: string) {
     const consumer = await this.getConsumerWithMaterials(consumerId);
-    consumer.materials.push(...materials);
+    const addedMaterials = this.findNewMaterials(consumer.materials, materials);
+    if (addedMaterials.length === 0) {
+      return consumer;
+    }
+    consumer.materials.push(...addedMaterials);
     this.consumersRepository.save(consumer);
     return consumer;
+  }
+
+  private findNewMaterials(
+    existingMaterials: Material[],
+    newMaterials: Material[],
+  ) {
+    const deduplicated = newMaterials.filter(
+      (material: Material) =>
+        !existingMaterials.some(
+          (existing: Material) => existing.id === material.id,
+        ),
+    );
+    return deduplicated;
   }
 
   private async getConsumerWithMaterials(id: string) {
