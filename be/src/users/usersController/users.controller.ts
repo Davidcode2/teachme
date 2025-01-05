@@ -30,6 +30,7 @@ export class UsersController {
     return user;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('stats')
   async getStats(@Request() req: any) {
     const userId = req.cookies.userId;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
 import StatsCard from "./statsCard";
+import { useAccessTokenStore } from "../../store";
 
 type Stats = {
   numberOfBoughtMaterials: number;
@@ -11,6 +12,7 @@ type Stats = {
 export default function SuccessPage() {
   const [_, setSessionStatus] = useState("idle");
   const [stats, setStats] = useState<Stats>({} as Stats);
+  const accessToken = useAccessTokenStore.getState().accessToken;
 
   const getSessionStatus = async () => {
     const queryString = window.location.search;
@@ -24,7 +26,11 @@ export default function SuccessPage() {
   };
 
   const fetchStats = async () => {
-    const response = await fetch("api/users/stats");
+    const response = await fetch("api/users/stats", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     const json: Stats = await response.json();
     setStats(json);
     console.log(json);
@@ -32,8 +38,12 @@ export default function SuccessPage() {
 
   useEffect(() => {
     getSessionStatus();
-    fetchStats();
   }, []);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    fetchStats();
+  }, [accessToken]);
 
   return (
     <>
