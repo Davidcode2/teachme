@@ -39,32 +39,6 @@ export class ConsumerService {
     return consumer;
   }
 
-  private findNewMaterials(
-    existingMaterials: Material[],
-    newMaterials: Material[],
-  ) {
-    const deduplicated = newMaterials.filter(
-      (material: Material) =>
-        !existingMaterials.some(
-          (existing: Material) => existing.id === material.id,
-        ),
-    );
-    return deduplicated;
-  }
-
-  private async getConsumerWithMaterials(id: string) {
-    const consumer = await this.consumersRepository
-      .createQueryBuilder('consumer')
-      .leftJoinAndSelect('consumer.materials', 'materials')
-      .where('consumer.id = :id', { id })
-      .getOneOrFail();
-    if (!consumer.materials) {
-      consumer.materials = [];
-      this.consumersRepository.save(consumer);
-    }
-    return consumer;
-  }
-
   async getMaterials(id: string): Promise<Material[]> {
     const consumer = await this.findById(id);
     const consumerWithMaterials = await this.consumersRepository
@@ -104,5 +78,36 @@ export class ConsumerService {
       .leftJoinAndSelect('cart.materials', 'materials')
       .getOneOrFail();
     return consumer.cart;
+  }
+
+  async getNumberOfMaterials(id: string): Promise<number> {
+    const consumer = await this.getConsumerWithMaterials(id);
+    return consumer.materials.length;
+  }
+
+  private async getConsumerWithMaterials(id: string) {
+    const consumer = await this.consumersRepository
+      .createQueryBuilder('consumer')
+      .leftJoinAndSelect('consumer.materials', 'materials')
+      .where('consumer.id = :id', { id })
+      .getOneOrFail();
+    if (!consumer.materials) {
+      consumer.materials = [];
+      this.consumersRepository.save(consumer);
+    }
+    return consumer;
+  }
+
+  private findNewMaterials(
+    existingMaterials: Material[],
+    newMaterials: Material[],
+  ) {
+    const deduplicated = newMaterials.filter(
+      (material: Material) =>
+        !existingMaterials.some(
+          (existing: Material) => existing.id === material.id,
+        ),
+    );
+    return deduplicated;
   }
 }

@@ -110,6 +110,21 @@ export class UsersService {
     this.usersRepository.save(user);
   }
 
+  async getStatistics(userId: string) {
+    const user = await this.findOneById(userId);
+    const consumerId = user.consumerId;
+    const numberOfBoughtMaterials =
+      await this.consumerService.getNumberOfMaterials(consumerId);
+    const authorId = user.authorId;
+    const numberOfCreatedMaterials = (
+      await this.authorService.getMaterials(authorId)
+    ).length;
+    return {
+      numberOfBoughtMaterials,
+      numberOfCreatedMaterials,
+    };
+  }
+
   async getAvatarPath(userId: string): Promise<string> {
     const user = await this.findOneById(userId);
     return user.avatar;

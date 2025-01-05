@@ -30,6 +30,12 @@ export class UsersController {
     return user;
   }
 
+  @Get('stats')
+  async getStats(@Request() req: any) {
+    const userId = req.cookies.userId;
+    return this.usersService.getStatistics(userId);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Patch()
   async update(@Request() req: any, @Body() body: UpdateUserDto) {
