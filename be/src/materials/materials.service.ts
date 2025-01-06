@@ -42,6 +42,13 @@ export class MaterialsService {
     return this.mapThumbnails(materials);
   }
 
+  async findOneWithThumbnail(
+    id: string,
+  ): Promise<MaterialWithThumbnail[] | null> {
+    const material = await this.materialsRepository.findOneBy({ id: id });
+    return this.mapThumbnails([material]);
+  }
+
   findOne(id: string): Promise<Material | null> {
     return this.materialsRepository.findOneBy({ id: id });
   }

@@ -38,9 +38,14 @@ export class MaterialsController {
     return this.materialsService.findAll(pagination);
   }
 
-  @Get('id/:id')
+  @Get(':id/preview')
   findOne(@Param('id') materialId: string) {
     return this.materialsService.findOneWithPreview(materialId);
+  }
+
+  @Get(':id/thumbnail')
+  findOneThumbnail(@Param('id') materialId: string) {
+    return this.materialsService.findOneWithThumbnail(materialId);
   }
 
   @Get('by-user')

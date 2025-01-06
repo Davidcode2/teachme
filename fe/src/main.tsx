@@ -21,6 +21,7 @@ import Mine from "./components/workspace/mine.tsx";
 import MyMaterials from "./components/materials/myMaterials.tsx";
 import SearchResults from "./components/materials/searchResults.tsx";
 import addUsernameAction from "./actions/addUsernameAction.ts";
+import EditMaterial from "./components/card/edit_card.tsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
         path: "/materials",
         element: <Materials />,
         errorElement: <NoData />,
+      },
+      { 
+        path: "/materials/:id/edit",
+        element: <EditMaterial />,
       },
       {
         path: "/search",

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export default function Price() {
-  const [value, setValue] = useState("");
+export default function Price({initialValue}: { initialValue?: string }) {
+  const [value, setValue] = useState(initialValue);
 
   const formatCurrency = (value: string) => {
     if (!value) return "0,00";
@@ -25,7 +25,7 @@ export default function Price() {
         name="price"
         type="decimal"
         placeholder="0,00"
-        value={formatCurrency(value)}
+        value={formatCurrency(value!)}
       />
       <div className="mx-4 self-end py-4 text-5xl">€</div>
     </div>
