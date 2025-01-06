@@ -1,5 +1,5 @@
-import ActionButtons from "../action-buttons/action-buttons.tsx";
-import Author from "../author/author.tsx";
+import ActionButtons from "./action-buttons/action-buttons.tsx";
+import Author from "./author/author.tsx";
 import { useEffect, useState } from "react";
 import Preview from "../preview.tsx";
 import GradientGenerator from "../../services/gradientGenerator.ts";

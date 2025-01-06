@@ -1,7 +1,7 @@
-import userIcon from "../../assets/icons/icons8-user-48.png";
+import userIcon from "../../../assets/icons/icons8-user-48.png";
 import { useEffect, useState } from "react";
-import { UserService } from "../../services/userService";
-import CardService from "../../services/cardService";
+import { UserService } from "../../../services/userService";
+import CardService from "../../../services/cardService";
 
 type AppProps = {
   authorId: string;

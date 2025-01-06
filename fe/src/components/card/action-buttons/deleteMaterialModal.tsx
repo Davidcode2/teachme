@@ -1,4 +1,4 @@
-import { useAccessTokenStore } from "../../store";
+import { useAccessTokenStore } from "../../../store";
 
 type PropTypes = {
   title: string;

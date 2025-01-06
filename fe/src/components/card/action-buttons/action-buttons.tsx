@@ -1,14 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
-import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
-import TrashBin from "../../assets/icons/icons8-trash-48.png";
-import EditIcon from "../../assets/icons/icons8-edit-48.png";
-import SpinnerGif from "../../assets/icons/icons8-spinner.gif";
-import addToShoppingCartIcon from "../../assets/icons/icons8-add-shopping-cart-50.png";
-import arrowIcon from "../../assets/icons/icons8-arrow-50.png";
-import { useUserStore } from "../../store";
+import CheckMarkIcon from "../../../assets/icons/icons8-checkmark-48.png";
+import TrashBin from "../../../assets/icons/icons8-trash-48.png";
+import EditIcon from "../../../assets/icons/icons8-edit-48.png";
+import SpinnerGif from "../../../assets/icons/icons8-spinner.gif";
+import addToShoppingCartIcon from "../../../assets/icons/icons8-add-shopping-cart-50.png";
+import arrowIcon from "../../../assets/icons/icons8-arrow-50.png";
+import { useUserStore } from "../../../store";
 import { useState } from "react";
 import DeleteMaterialModal from "./deleteMaterialModal";
-import CartService from "../../services/cart.service";
+import CartService from "../../../services/cart.service";
 
 interface ActionButtonsProps {
   id: string;
