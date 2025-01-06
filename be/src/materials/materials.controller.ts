@@ -57,9 +57,14 @@ export class MaterialsController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  create(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
+  create(
+    @Request() req,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: any,
+  ) {
     const materialDto = { file, ...body };
-    return this.materialsService.create(materialDto);
+    const userId = req.cookies.userId;
+    return this.materialsService.create(userId, materialDto);
   }
 
   @UseGuards(JwtAuthGuard)

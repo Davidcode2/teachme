@@ -117,9 +117,9 @@ export class MaterialsService {
       .getMany();
   }
 
-  async create(materialDto: MaterialDtoIn) {
+  async create(userId: string, materialDto: MaterialDtoIn) {
     const material = await this.populateMaterial(materialDto);
-    const user = await this.userService.findOneById(materialDto.userId);
+    const user = await this.userService.findOneById(userId);
     material.author_id = user.authorId;
     await this.materialsRepository.save(material);
     this.addMaterialToAuthor(user, material);
