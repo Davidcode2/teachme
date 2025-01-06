@@ -53,7 +53,7 @@ export default function Workspace() {
   };
 
   const getUrl = () => {
-    return `/api/materials/by`;
+    return `/api/materials/by-user`;
   };
 
   useEffect(() => {

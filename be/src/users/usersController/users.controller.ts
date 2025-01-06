@@ -19,7 +19,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get('avatar/:id')
+  @Get(':id/avatar')
   async avatar(@Param('id') userId: string, @Res() response: Response) {
     const avatarPath = await this.usersService.getAvatarPath(userId);
     response.setHeader('content-type', 'image/png');

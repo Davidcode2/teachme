@@ -27,7 +27,7 @@ function Materials() {
 
   const getUrl = () => {
     if (onMinePage) {
-      return `/api/materials/user`;
+      return `/api/materials/own`;
     }
     return "api/materials";
   };

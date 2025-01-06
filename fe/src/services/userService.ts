@@ -10,7 +10,7 @@ export const UserService = {
   },
 
   getAvatar: async function (userId: string) {
-    const response = await fetch(`/api/users/avatar/${userId}`, {
+    const response = await fetch(`/api/users/${userId}/avatar`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

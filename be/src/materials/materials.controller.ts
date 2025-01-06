@@ -43,14 +43,14 @@ export class MaterialsController {
     return this.materialsService.findOneWithPreview(materialId);
   }
 
-  @Get('by')
+  @Get('by-user')
   findByAuthor(@Request() req) {
     const userId = req.cookies.userId;
     return this.materialsService.findByCreator(userId);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('user')
+  @Get('own')
   findByUser(@Request() req, @Query('search') searchString: string) {
     const userId = req.cookies.userId;
     return this.materialsService.findByUser(userId, searchString);

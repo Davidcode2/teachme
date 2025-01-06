@@ -1,9 +1,4 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class AppService {
-  getHello(): object {
-    return { message: 'Hello from Nest.js Backend!' };
-  }
-
-}
+export class AppService {}
