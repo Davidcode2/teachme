@@ -21,8 +21,8 @@ async function bootstrap() {
   );
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Teach Me API')
-    .setDescription('The Teach Me API description')
+    .setTitle('Teachly API')
+    .setDescription('The teachly API description')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);

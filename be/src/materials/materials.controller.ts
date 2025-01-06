@@ -18,7 +18,9 @@ import { Express } from 'express';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import PaginationObject from 'src/shared/DTOs/paginationObject';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('materials')
 @Controller('materials')
 export class MaterialsController {
   constructor(private materialsService: MaterialsService) {}

@@ -11,7 +11,9 @@ import {
 import { Request, Response } from 'express';
 import { StripeService } from '../stripe/stripe.service';
 import Stripe from 'stripe';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('stripe')
 @Controller('stripe')
 export class StripeController {
   constructor(private stripeService: StripeService) {}

@@ -12,7 +12,9 @@ import { UsersService } from '../usersService/users.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Response } from 'express';
 import { UpdateUserDto } from 'src/shared/DTOs/updatedUserDto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}

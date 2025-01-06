@@ -15,7 +15,9 @@ import { Request, Response } from 'express';
 import { CartService } from './cart.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('cart')
 @Controller('cart')
 export class CartController {
   constructor(private cartService: CartService) {}
