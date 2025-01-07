@@ -17,16 +17,7 @@ function Card({
   const [previewImage, setPreviewImage] = useState([""]);
   const cardService = new CardService();
   const gradient = new GradientGenerator().randomGradient();
-
-  const image = materialWithThumbnail.thumbnail
-    ? materialWithThumbnail.thumbnail.data
-      ? URL.createObjectURL(
-          new Blob([new Uint8Array(materialWithThumbnail.thumbnail.data)], {
-            type: "image/png",
-          }),
-        )
-      : null
-    : null;
+  const image = cardService.getImages([materialWithThumbnail.thumbnail])[0];
 
   const togglePreview = async () => {
     setShowPreview(true);

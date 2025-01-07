@@ -1,3 +1,5 @@
+import { MaterialWithThumbnail } from "../types/MaterialWithThumbnail";
+
 export default class CardService {
   public async getPreview(materialId: string) {
     const res = await fetch(`/api/materials/${materialId}/preview`, {
