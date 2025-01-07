@@ -12,6 +12,7 @@ import PaginationObject from 'src/shared/DTOs/paginationObject';
 import MaterialDtoIn from 'src/shared/Models/MaterialsIn';
 import { User } from 'src/users/user.entity';
 import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
+import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
 
 @Injectable()
 export class MaterialsService {
@@ -130,6 +131,19 @@ export class MaterialsService {
     material.author_id = user.authorId;
     await this.materialsRepository.save(material);
     this.addMaterialToAuthor(user, material);
+  }
+
+  async update(id: string, materialDto: UpdateMaterialDto) {
+    const material = await this.materialsRepository.findOneBy({ id: id });
+    if (!material) {
+      return null;
+    }
+    const updatedMaterial = this.materialsRepository.merge(
+      material,
+      materialDto,
+    );
+    await this.materialsRepository.save(updatedMaterial);
+    return updatedMaterial;
   }
 
   private addMaterialToAuthor(user: User, material: Material) {

@@ -11,6 +11,7 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  Patch,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { MaterialsService } from './materials.service';
@@ -19,6 +20,7 @@ import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import PaginationObject from 'src/shared/DTOs/paginationObject';
 import { ApiTags } from '@nestjs/swagger';
+import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
 
 @ApiTags('materials')
 @Controller('materials')
@@ -72,6 +74,12 @@ export class MaterialsController {
     const materialDto = { file, ...body };
     const userId = req.cookies.userId;
     return this.materialsService.create(userId, materialDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  update(@Param('id') materialId: string, @Body() body: UpdateMaterialDto) {
+    return this.materialsService.update(materialId, body);
   }
 
   @UseGuards(JwtAuthGuard)

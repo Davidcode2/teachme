@@ -22,6 +22,7 @@ import MyMaterials from "./components/materials/myMaterials.tsx";
 import SearchResults from "./components/materials/searchResults.tsx";
 import addUsernameAction from "./actions/addUsernameAction.ts";
 import EditMaterial from "./components/card/edit_card.tsx";
+import editMaterialAction from "./actions/editMaterialAction.ts";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { 
         path: "/materials/:id/edit",
         element: <EditMaterial />,
+        action: editMaterialAction,
       },
       {
         path: "/search",

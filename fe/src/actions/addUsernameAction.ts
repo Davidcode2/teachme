@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 import { useAccessTokenStore } from "../store";
+import SharedService from "../services/sharedService";
 
 export default async function addUsernameAction({
   request,
@@ -7,7 +8,7 @@ export default async function addUsernameAction({
   request: Request;
 }) {
   const formData = await request.formData();
-  const jsonData = formDataToJson<{ displayName: string }>(formData);
+  const jsonData = SharedService.formDataToJson<{ displayName: string }>(formData);
   await fetch(`/api/users`, {
     method: "PATCH",
     headers: {
@@ -19,15 +20,3 @@ export default async function addUsernameAction({
   return redirect("/materials/add/success");
 }
 
-function formDataToJson<T extends Record<string, any>>(formData: FormData): T {
-  const obj: Record<string, any> = {};
-  formData.forEach((value, key) => {
-    if (obj[key]) {
-      // If the key already exists, convert it to an array or push the value
-      obj[key] = Array.isArray(obj[key]) ? [...obj[key], value] : [obj[key], value];
-    } else {
-      obj[key] = value;
-    }
-  });
-  return obj as T;
-}
