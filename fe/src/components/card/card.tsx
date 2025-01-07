@@ -33,7 +33,7 @@ function Card({
     <img
       src={image}
       onClick={togglePreview}
-      className="thumbnail rounded-t-lg md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]"
+      className="thumbnail rounded-t-lg md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px] hover:scale-105 transition-transform duration-300 cursor-pointer"
       alt="Thumbnail"
     />
   ) : (
@@ -77,7 +77,7 @@ function Card({
         id={materialWithThumbnail.material.id.toString()}
         className="module-border-wrap m-4 flex flex-col rounded-lg opacity-0 shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10 md:flex-row"
       >
-        <div className="rounded-lg bg-white">{imageElement}</div>
+        <div className="rounded-t-lg md:rounded-l-lg md:rounded-r-none bg-white overflow-hidden">{imageElement}</div>
         <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
           <div className="flex flex-col">
             <div className="text-2xl">
