@@ -28,7 +28,7 @@ function EditMaterial(): JSX.Element {
   const imageElement = image && (
     <img
       src={image}
-      className="thumbnail rounded-t-lg md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]"
+      className="thumbnail cursor-pointer rounded-t-lg transition-transform duration-300 hover:scale-105 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]"
       alt="Thumbnail"
     />
   );
@@ -40,14 +40,22 @@ function EditMaterial(): JSX.Element {
       ) : (
         <div
           id={materialWithThumbnail.material.id.toString()}
-          className="module-border-wrap m-4 flex flex-col rounded-lg shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10 md:flex-row"
+          className="module-border-wrap m-4 rounded-lg shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
         >
-          <div className="rounded-lg bg-white md:rounded-r-none">
-            {imageElement}
-          </div>
-          <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
-            <Form method="patch">
-              <div className="flex flex-col gap-2 mb-10">
+          <Form method="patch" className="flex flex-col md:flex-row">
+            <div className="overflow-hidden rounded-lg bg-white md:rounded-r-none">
+              <label htmlFor="file-edit-input">{imageElement}</label>
+              <input
+                id="file-edit-input"
+                className="hidden h-fit w-full min-w-0 rounded-md border border-slate-200 px-4 py-2"
+                type="file"
+                name="file"
+                accept="application/pdf"
+                required
+              />
+            </div>
+            <div className="flex-1 gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
+              <div className="mb-10 flex flex-col gap-2">
                 <input
                   className="hidden"
                   name="id"
@@ -86,8 +94,8 @@ function EditMaterial(): JSX.Element {
                   ></Author>
                 </div>
               </div>
-            </Form>
-          </div>
+            </div>
+          </Form>
         </div>
       )}
     </>
