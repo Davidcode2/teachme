@@ -1,6 +1,6 @@
 import catSticker from "./assets/catSticker.jpg";
 import ChevronIcon from "./assets/icons/icons8-chevron-24.png";
-import { Link, useRouteError } from "react-router-dom";
+import { Link, useRouteError } from "react-router";
 
 export default function ErrorPage() {
   const error: any = useRouteError();
