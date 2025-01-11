@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import plus from "../../assets/addPlusGradient.png";
 import UserIcon from "../../assets/icons/icons8-user-48.png";
 import { useSearchState, useUserStore, useSidebarStore } from "../../store";

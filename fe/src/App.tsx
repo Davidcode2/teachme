@@ -1,6 +1,6 @@
 import "./App.css";
 import Header from "./components/header/header";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import Sidebar from "./components/sidebar/sidebar";
 import { useEffect } from "react";
 import { useAccessTokenStore, useGlobalLoadingStore } from "./store";

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import SearchService from "../../../services/searchService";
 import { useSearchState } from "../../../store";
 import SearchResultsPreview from "./searchResultsPreview";

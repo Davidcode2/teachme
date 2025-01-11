@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
 import StatsCard from "./statsCard";
 import { useAccessTokenStore } from "../../store";

@@ -1,7 +1,7 @@
 import ArrowIcon from "../../assets/icons/icons8-logout-50.png";
 import PaperPlane from "../../assets/icons/icons8-paper-plane-64.png";
 import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
-import { Form, Link, useActionData, useNavigation } from "react-router-dom";
+import { Form, Link, useActionData, useNavigation } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";

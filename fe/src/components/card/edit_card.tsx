@@ -1,7 +1,7 @@
 import Author from "./author/author.tsx";
 import { useEffect, useState } from "react";
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail.ts";
-import { Form, useParams } from "react-router-dom";
+import { Form, useParams } from "react-router";
 import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
 import CardService from "../../services/cardService.ts";
 import SpinnerGif from "../../assets/icons/icons8-spinner.gif";

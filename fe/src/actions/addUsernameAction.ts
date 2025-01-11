@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+import { redirect } from "react-router";
 import { useAccessTokenStore } from "../store";
 import SharedService from "../services/sharedService";
 

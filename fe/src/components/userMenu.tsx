@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import userIcon from "../assets/icons/icons8-user-48.png";
 import ArrowIcon from "../assets/icons/icons8-logout-50.png";
 import ShuffleIcon from "../assets/icons/icons8-shuffle-48.png";

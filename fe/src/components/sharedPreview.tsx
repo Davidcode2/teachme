@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router";
 import ActionButtons from "./card/action-buttons/action-buttons";
 import CardService from "../services/cardService";
 

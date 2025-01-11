@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+import { redirect } from "react-router";
 import { useAccessTokenStore, useLikelyHumanStore } from "../store";
 import verifyCaptcha from "../services/reCaptchaService";
 import { UserService } from "../services/userService";

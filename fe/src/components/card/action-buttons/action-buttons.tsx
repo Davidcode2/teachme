@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import CheckMarkIcon from "../../../assets/icons/icons8-checkmark-48.png";
 import TrashBin from "../../../assets/icons/icons8-trash-48.png";
 import EditIcon from "../../../assets/icons/icons8-edit-48.png";

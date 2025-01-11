@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import logo from "../../assets/teachly_logo_color_gradient_bg_transparent.png";
 import { useSidebarStore } from "../../store";
 

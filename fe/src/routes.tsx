@@ -66,7 +66,7 @@ const routes = [
       {
         path: "/materials/id/:id",
         element: <SharedPreview />,
-        loader: ({ params }) => sharedPreviewLoader(params.id),
+        loader: ({ params }: any) => sharedPreviewLoader(params.id),
       },
       {
         path: "/success",
