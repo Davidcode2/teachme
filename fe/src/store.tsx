@@ -107,8 +107,10 @@ type ErrorStore = {
 
 export const useErrorStore = create<ErrorStore>((set) => ({
   errors: [],
-  pushError: (error: CustomError) =>
-    set((state) => ({ errors: [...state.errors, error] })),
+  pushError: (error: CustomError) => {
+    set((state) => ({ errors: [...state.errors, error] }));
+    console.error(error);
+  },
   pop: () =>
     set((state) => ({
       errors: state.errors.slice(0, state.errors.length - 1),

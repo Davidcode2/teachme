@@ -1,5 +1,5 @@
 import { redirect } from "react-router";
-import { useAccessTokenStore } from "../store";
+import { useAccessTokenStore, useErrorStore, useUserStore } from "../store";
 import SharedService from "../services/sharedService";
 
 export default async function addUsernameAction({
@@ -8,8 +8,11 @@ export default async function addUsernameAction({
   request: Request;
 }) {
   const formData = await request.formData();
-  const jsonData = SharedService.formDataToJson<{ displayName: string }>(formData);
-  await fetch(`/api/users`, {
+  useUserStore.getState().setUser({ displayName: formData.get("displayName") });
+  const jsonData = SharedService.formDataToJson<{ displayName: string }>(
+    formData,
+  );
+  const res = await fetch(`/api/users`, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
@@ -17,6 +20,11 @@ export default async function addUsernameAction({
     },
     body: JSON.stringify(jsonData),
   });
-  return redirect("/materials/add/success");
-}
 
+  if (!res.ok) {
+    useErrorStore
+      .getState()
+      .pushError({ code: res.status, message: res.statusText });
+  }
+  return await res.json();
+}

@@ -44,6 +44,6 @@ export class UsersController {
   async update(@Request() req: any, @Body() body: UpdateUserDto) {
     const userId = req.cookies.userId;
     const updatedUser = await this.usersService.partialUpdate(userId, body);
-    return updatedUser;
+    return updatedUser.displayName;
   }
 }
