@@ -11,6 +11,7 @@ function EditMaterial(): JSX.Element {
   const [materialWithThumbnail, setMaterialWithThumbnail] =
     useState<MaterialWithThumbnail>({} as MaterialWithThumbnail);
   const [image, setImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const { id } = useParams();
   const cardService = new CardService();
 
@@ -25,12 +26,48 @@ function EditMaterial(): JSX.Element {
     fetchMaterial();
   }, []);
 
-  const imageElement = image && (
-    <img
-      src={image}
-      className="thumbnail cursor-pointer rounded-t-lg transition-transform duration-300 hover:scale-105 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]"
-      alt="Thumbnail"
-    />
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFile(file);
+    }
+  };
+
+  const fileSelectedElement = (
+    <div className="mx-4">
+      <div className="relative bottom-6 text-center text-xl font-bold text-stone-500">
+        Du hast eine neue Datei zum Hochladen ausgewählt
+      </div>
+      <div className="mx-auto flex w-fit cursor-pointer justify-between gap-5 rounded-lg border border-slate-100 bg-white/20 p-2">
+        <div className="p-1">{file?.name}</div>
+        <button
+          className="p-1 font-handwriting text-slate-500 hover:text-red-500"
+          onClick={() => setFile(null)}
+        >
+          X
+        </button>
+      </div>
+    </div>
+  );
+
+  const noFileSelectedElement = (
+    <div className="flex cursor-pointer justify-between gap-5 rounded-lg border border-slate-100 bg-white/30 p-4 text-center text-xl font-bold text-stone-500 hover:bg-white/50">
+      Wähle hier eine neue Datei aus
+    </div>
+  );
+
+  const fileSelectedImageElement = image && (
+    <div className="group relative flex items-center justify-center">
+      <div className="absolute z-10">
+        {!file?.name && noFileSelectedElement}
+        {file?.name && fileSelectedElement}
+      </div>
+      <img
+        src={image}
+        className={`thumbnail cursor-pointer rounded-t-lg transition-transform duration-300 group-hover:scale-105 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px] ${file?.name ? "blur-xl" : "blur-sm"}`}
+        alt="Thumbnail"
+      />
+    </div>
   );
 
   return (
@@ -42,14 +79,17 @@ function EditMaterial(): JSX.Element {
           id={materialWithThumbnail.material.id.toString()}
           className="module-border-wrap m-4 rounded-lg shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
         >
-          <Form method="patch" className="flex flex-col md:flex-row">
-            <div className="overflow-hidden rounded-lg bg-white md:rounded-r-none">
-              <label htmlFor="file-edit-input">{imageElement}</label>
+          <Form method="patch" encType="multipart/form-data" className="flex flex-col md:flex-row">
+            <div className="overflow-hidden rounded-t-lg bg-white md:rounded-l-lg md:rounded-r-none">
+              <label htmlFor="file-edit-input">
+                {fileSelectedImageElement}
+              </label>
               <input
                 id="file-edit-input"
                 className="hidden h-fit w-full min-w-0 rounded-md border border-slate-200 px-4 py-2"
                 type="file"
                 name="file"
+                onChange={handleFileChange}
                 accept="application/pdf"
                 required
               />
