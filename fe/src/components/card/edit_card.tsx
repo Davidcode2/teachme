@@ -99,8 +99,8 @@ function EditMaterial(): JSX.Element {
                 accept="application/pdf"
               />
             </div>
-            <div className="flex-1 gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
-              <div className="mb-10 flex flex-col gap-2">
+            <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
+              <div className="flex flex-col gap-2">
                 <input
                   className="hidden"
                   name="id"
