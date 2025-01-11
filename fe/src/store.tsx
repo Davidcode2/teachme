@@ -102,12 +102,17 @@ export const useSearchState = create<SearchState>((set) => ({
 type ErrorStore = {
   errors: CustomError[];
   pushError: (error: CustomError) => void;
+  pop: () => void;
 };
 
 export const useErrorStore = create<ErrorStore>((set) => ({
   errors: [],
   pushError: (error: CustomError) =>
     set((state) => ({ errors: [...state.errors, error] })),
+  pop: () =>
+    set((state) => ({
+      errors: state.errors.slice(0, state.errors.length - 1),
+    })),
 }));
 
 type CustomError = {

@@ -6,6 +6,7 @@ import { useEffect, type JSX } from "react";
 import { useAccessTokenStore, useGlobalLoadingStore } from "./store";
 import { UserService } from "./services/userService";
 import CartService from "./services/cart.service";
+import { ErrorOverlay } from "./components/errorOverlay";
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App(): JSX.Element {
 
   return (
     <div>
+      <ErrorOverlay />
       <Sidebar></Sidebar>
       <Header></Header>
       <Outlet />
