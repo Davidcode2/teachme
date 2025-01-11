@@ -73,13 +73,19 @@ function EditMaterial(): JSX.Element {
   return (
     <>
       {!materialWithThumbnail.material ? (
-        <img src={SpinnerGif} />
+        <div className="flex h-screen w-screen items-center justify-center">
+          <img src={SpinnerGif} />
+        </div>
       ) : (
         <div
           id={materialWithThumbnail.material.id.toString()}
           className="module-border-wrap m-4 rounded-lg shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
         >
-          <Form method="patch" encType="multipart/form-data" className="flex flex-col md:flex-row">
+          <Form
+            method="patch"
+            encType="multipart/form-data"
+            className="flex flex-col md:flex-row"
+          >
             <div className="overflow-hidden rounded-t-lg bg-white md:rounded-l-lg md:rounded-r-none">
               <label htmlFor="file-edit-input">
                 {fileSelectedImageElement}
