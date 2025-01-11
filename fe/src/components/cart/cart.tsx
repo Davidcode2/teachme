@@ -1,6 +1,6 @@
 import bag from "../../assets/icons/icons8-bag-64.png";
 import arrowIcon from "../../assets/icons/icons8-arrow-50.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
 import { useCartStore } from "../../store";

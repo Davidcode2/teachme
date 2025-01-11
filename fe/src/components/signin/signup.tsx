@@ -15,7 +15,7 @@ function SignUpForm() {
   const [password, setPassword] = useState("");
   const [passwordValid, setPasswordValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
-  const tl: any = useRef();
+  const tl: any = useRef(undefined);
   const navigation = useNavigation();
 
   const checkPasswordRequirements = (e: any) => {

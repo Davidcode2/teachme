@@ -12,8 +12,8 @@ function LoginForm() {
   const [showPlane, setShowPlane] = useState(false);
   const navigation = useNavigation();
   const loginSuccess = useActionData();
-  const loopTween: any = useRef();
-  const failTween: any = useRef();
+  const loopTween: any = useRef(undefined);
+  const failTween: any = useRef(undefined);
   gsap.registerPlugin(TextPlugin);
   gsap.registerPlugin(MotionPathPlugin);
 

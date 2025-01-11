@@ -2,7 +2,7 @@ import "./App.css";
 import Header from "./components/header/header";
 import { Outlet } from "react-router";
 import Sidebar from "./components/sidebar/sidebar";
-import { useEffect } from "react";
+import { useEffect, type JSX } from "react";
 import { useAccessTokenStore, useGlobalLoadingStore } from "./store";
 import { UserService } from "./services/userService";
 import CartService from "./services/cart.service";

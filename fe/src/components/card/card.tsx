@@ -1,6 +1,6 @@
 import ActionButtons from "./action-buttons/action-buttons.tsx";
 import Author from "./author/author.tsx";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import Preview from "../preview.tsx";
 import GradientGenerator from "../../services/gradientGenerator.ts";
 import CardService from "../../services/cardService.ts";
