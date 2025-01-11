@@ -4,7 +4,7 @@ import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail.ts";
 import { Form, useParams } from "react-router-dom";
 import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
 import CardService from "../../services/cardService.ts";
-import NoData from "../materials/noData.tsx";
+import SpinnerGif from "../../assets/icons/icons8-spinner.gif";
 import Price from "../materials/addMaterial/price.tsx";
 
 function EditMaterial(): JSX.Element {
@@ -73,7 +73,7 @@ function EditMaterial(): JSX.Element {
   return (
     <>
       {!materialWithThumbnail.material ? (
-        <NoData />
+        <img src={SpinnerGif} />
       ) : (
         <div
           id={materialWithThumbnail.material.id.toString()}
@@ -91,7 +91,6 @@ function EditMaterial(): JSX.Element {
                 name="file"
                 onChange={handleFileChange}
                 accept="application/pdf"
-                required
               />
             </div>
             <div className="flex-1 gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">

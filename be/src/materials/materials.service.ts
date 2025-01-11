@@ -133,10 +133,20 @@ export class MaterialsService {
     this.addMaterialToAuthor(user, material);
   }
 
-  async update(id: string, materialDto: UpdateMaterialDto) {
+  async update(
+    id: string,
+    materialDto: UpdateMaterialDto,
+    file: Express.Multer.File,
+  ) {
     const material = await this.materialsRepository.findOneBy({ id: id });
     if (!material) {
       return null;
+    }
+    if (file) {
+      const filePaths = await this.saveFile(file);
+      materialDto.file_path = filePaths.file_path;
+      materialDto.thumbnail_path = filePaths.thumbnail_path;
+      materialDto.preview_path = filePaths.preview_path;
     }
     const updatedMaterial = this.materialsRepository.merge(
       material,
@@ -158,25 +168,34 @@ export class MaterialsService {
       material.description = materialDto.description;
       material.date_published = new Date();
       material.price = Number(materialDto.price);
-      const fileInfo = this.storeFile(materialDto.file);
-      material.file_path = fileInfo.filePath;
-      try {
-        material.thumbnail_path =
-          await this.imageService.createThumbnail(fileInfo);
-      } catch (error) {
-        throw new Error('thumbnail creation failed');
-      }
-      try {
-        material.preview_path = await this.imageService.createPreview(fileInfo);
-      } catch (error) {
-        throw new Error('preview creation failed');
-      }
+      const filePaths = await this.saveFile(materialDto.file);
+      material.file_path = filePaths.file_path;
+      material.thumbnail_path = filePaths.thumbnail_path;
+      material.preview_path = filePaths.preview_path;
       const price = await this.stripeService.createProduct(material);
       material.stripe_price_id = price.id;
       return material;
     } catch (error) {
       throw new Error('material creation failed');
     }
+  }
+
+  private async saveFile(file: Express.Multer.File) {
+    const fileInfo = this.storeFile(file);
+    const file_path = fileInfo.filePath;
+    let thumbnail_path = '';
+    let preview_path = '';
+    try {
+      thumbnail_path = await this.imageService.createThumbnail(fileInfo);
+    } catch (error) {
+      throw new Error('thumbnail creation failed');
+    }
+    try {
+      preview_path = await this.imageService.createPreview(fileInfo);
+    } catch (error) {
+      throw new Error('preview creation failed');
+    }
+    return { file_path, thumbnail_path, preview_path };
   }
 
   async remove(id: string): Promise<void> {

@@ -78,8 +78,13 @@ export class MaterialsController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(@Param('id') materialId: string, @Body() body: UpdateMaterialDto) {
-    return this.materialsService.update(materialId, body);
+  @UseInterceptors(FileInterceptor('file'))
+  update(
+    @Param('id') materialId: string,
+    @Body() materialDto: UpdateMaterialDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.materialsService.update(materialId, materialDto, file);
   }
 
   @UseGuards(JwtAuthGuard)
