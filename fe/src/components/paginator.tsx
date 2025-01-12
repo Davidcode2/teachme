@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ChevronIcon from "../assets/icons/icons8-chevron-24.png";
 
 export default function Paginator({
@@ -12,7 +11,7 @@ export default function Paginator({
 }) {
   const pageButton = (index: number) => (
     <button
-      className={`px-4 py-2 font-bold text-stone-200 hover:text-purple-400 hover:-translate-y-1 transition-transform duration-200 ${page === index ? "" : ""}`}
+      className={`px-4 py-2 font-bold text-stone-200 hover:text-purple-400 hover:-translate-y-1 transition-transform duration-200 ${page === index ? "text-green-500" : ""}`}
       key={index}
       onClick={() => setPage(index)}
     >
@@ -54,7 +53,7 @@ export default function Paginator({
 
   return (
     <div className="mb-5 mt-10 flex items-center justify-center">
-      <div className="bg-black rounded-full flex">
+      <div className="bg-black rounded-full flex shadow">
         {incrementButton("down")}
         {pageNumberButtons()}
         {incrementButton()}

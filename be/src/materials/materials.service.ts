@@ -24,26 +24,7 @@ export class MaterialsService {
     private imageService: ImageService,
   ) {}
 
-  async findAll(
-    pagination: PaginationObject,
-  ): Promise<MaterialWithThumbnail[]> {
-    const materialsCount = await this.materialsRepository.count();
-    const take = this.amountToTake(materialsCount, pagination);
-    const skip =
-      materialsCount - pagination.offset > 0
-        ? pagination.offset
-        : materialsCount - pagination.pageSize;
-    if (take === null) {
-      return [];
-    }
-    const materialsQuery = this.createMaterialsQuery();
-    const paginatedQuery = materialsQuery.skip(skip).take(take);
-    const materials = await paginatedQuery.getMany();
-
-    return this.mapThumbnails(materials);
-  }
-
-  async findAllPaginated(page: number, pageSize: number) {
+  async findPaginated(page: number, pageSize: number) {
     const materials = await this.materialsRepository.find({
       skip: page * pageSize,
       take: pageSize,

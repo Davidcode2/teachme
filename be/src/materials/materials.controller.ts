@@ -18,7 +18,6 @@ import { MaterialsService } from './materials.service';
 import { Express } from 'express';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import PaginationObject from 'src/shared/DTOs/paginationObject';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
 
@@ -28,24 +27,15 @@ export class MaterialsController {
   constructor(private materialsService: MaterialsService) {}
 
   @Get()
-  findAll(
+  findAllPaginated(
     @Query('search') searchString: string,
-    @Query('offset') offset: number = 0,
-    @Query('limit') limit: number = 5,
+    @Query('page') page: number = 0,
+    @Query('pageSize') pageSize: number = 5,
   ) {
     if (searchString) {
       return this.materialsService.search(searchString);
     }
-    const pagination = new PaginationObject(10, Number(offset), Number(limit));
-    return this.materialsService.findAll(pagination);
-  }
-
-  @Get('page')
-  findAllPaginated(
-    @Query('page') page: number = 0,
-    @Query('pageSize') pageSize: number = 5,
-  ) {
-    return this.materialsService.findAllPaginated(page, pageSize);
+    return this.materialsService.findPaginated(page, pageSize);
   }
 
   @Get('total')
