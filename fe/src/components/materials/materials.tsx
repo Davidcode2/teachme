@@ -2,11 +2,9 @@ import { useGlobalLoadingStore } from "../../store";
 import Card from "../../components/card/card";
 import Material from "../../DTOs/material";
 import NoData from "./noData";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import loadMaterials, { getTotalMaterials } from "../../loaders/materialLoader";
-import PaginationService from "../../services/paginationService";
 import Skeleton from "../card/skeleton";
-import useDebouncedValue from "../../hooks/useDebouncedValue";
 import Paginator from "../paginator";
 
 type MaterialWithThumbnail = {
@@ -19,7 +17,7 @@ function Materials() {
   const loading = useGlobalLoadingStore((state) => state.loading);
   const onMinePage = document.location.pathname === "/materials/mine";
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(2);
+  const pageSize = 2;
   const [totalPages, setTotalPages] = useState(0);
 
   const getUrl = () => {
@@ -33,19 +31,19 @@ function Materials() {
     const totalMaterialsCount = await getTotalMaterials();
     const totalPages = Math.ceil(totalMaterialsCount / pageSize);
     setTotalPages(totalPages);
-  }
+  };
 
   const buildPaginatedMaterialsUrl = (page: number = 0, pageSize: number) => {
     const baseUrl = getUrl();
     const url = `${baseUrl}/?page=${page}&pageSize=${pageSize}`;
     return url;
-  }
+  };
 
   const setPaginatedMaterials = async (page: number, pageSize: number) => {
     const url = buildPaginatedMaterialsUrl(page, pageSize);
     const json = await loadMaterials(url);
     setMaterials(json);
-  }
+  };
 
   useEffect(() => {
     setPaginatedMaterials(page, pageSize);
@@ -74,7 +72,7 @@ function Materials() {
       {materials.map((el: MaterialWithThumbnail) => {
         return <Card key={el.material.id} material={el}></Card>;
       })}
-      <Paginator setPage={setPage} page={page} totalPages={totalPages}/>
+      <Paginator setPage={setPage} page={page} totalPages={totalPages} />
     </>
   );
 }

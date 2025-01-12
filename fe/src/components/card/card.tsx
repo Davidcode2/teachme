@@ -34,7 +34,7 @@ function Card({
     <img
       src={image}
       onClick={togglePreview}
-      className="thumbnail cursor-pointer rounded-t-lg transition-transform duration-300 hover:scale-105 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]"
+      className="thumbnail lg:object-top h-[40vh] cursor-pointer rounded-t-lg lg:object-cover transition-transform duration-300 hover:scale-105 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]"
       alt="Thumbnail"
     />
   ) : (

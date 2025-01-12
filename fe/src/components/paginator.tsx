@@ -38,21 +38,21 @@ export default function Paginator({
       : () => setPage(page + 1);
     return (
       <button
-        className={`font-bold text-gray-800 px-2 transition-transform duration-200 ${page === limit ? "hidden" : ""} ${decrement ? "rounded-l-full hover:-translate-x-1" : "rounded-r-full hover:translate-x-1"}`}
+        className={`px-2 transition-transform duration-200 ${page === limit ? "hidden" : "block"} ${decrement ? "rounded-l-full hover:-translate-x-1" : "rounded-r-full hover:translate-x-1"}`}
         onClick={handleClick}
         disabled={page === limit}
       >
         <img
           src={ChevronIcon}
           alt="chevron"
-          className={`${decrement ? "" : "rotate-180"} invert`}
+          className={`invert ${decrement ? "" : "rotate-180"}`}
         />
       </button>
     );
   };
 
   return (
-    <div className="mb-5 mt-10 flex items-center justify-center">
+    <div className="mb-5 flex items-center justify-center">
       <div className="bg-black rounded-full flex shadow">
         {incrementButton("down")}
         {pageNumberButtons()}
