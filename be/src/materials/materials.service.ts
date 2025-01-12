@@ -8,7 +8,6 @@ import { randomUUID } from 'node:crypto';
 import { UsersService } from '../users/usersService/users.service';
 import { ImageService } from './image.service';
 import { MaterialUnboughtDto } from 'src/shared/Models/MaterialsUnbought';
-import PaginationObject from 'src/shared/DTOs/paginationObject';
 import MaterialDtoIn from 'src/shared/Models/MaterialsIn';
 import { User } from 'src/users/user.entity';
 import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
@@ -25,10 +24,9 @@ export class MaterialsService {
   ) {}
 
   async findPaginated(page: number, pageSize: number) {
-    const materials = await this.materialsRepository.find({
-      skip: page * pageSize,
-      take: pageSize,
-    });
+    const materialsQuery = this.createMaterialsQuery();
+    const paginatedQuery = materialsQuery.skip(page * pageSize).take(pageSize);
+    const materials = await paginatedQuery.getMany();
     return this.mapThumbnails(materials);
   }
 
@@ -253,18 +251,5 @@ export class MaterialsService {
       .addSelect('material.author_id');
 
     return selectQueryBuilder;
-  }
-
-  private amountToTake(
-    numberOfMaterials: number,
-    pagination: PaginationObject,
-  ) {
-    if (pagination.offset >= numberOfMaterials) {
-      return null;
-    }
-    if (pagination.limit === 0) {
-      return pagination.pageSize;
-    }
-    return pagination.limit;
   }
 }
