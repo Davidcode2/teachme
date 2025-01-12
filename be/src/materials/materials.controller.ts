@@ -40,6 +40,19 @@ export class MaterialsController {
     return this.materialsService.findAll(pagination);
   }
 
+  @Get('page')
+  findAllPaginated(
+    @Query('page') page: number = 0,
+    @Query('pageSize') pageSize: number = 5,
+  ) {
+    return this.materialsService.findAllPaginated(page, pageSize);
+  }
+
+  @Get('total')
+  async getTotal() {
+    return this.materialsService.getTotal();
+  }
+
   @Get(':id/preview')
   findOne(@Param('id') materialId: string) {
     return this.materialsService.findOneWithPreview(materialId);

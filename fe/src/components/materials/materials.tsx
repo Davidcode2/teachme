@@ -3,10 +3,11 @@ import Card from "../../components/card/card";
 import Material from "../../DTOs/material";
 import NoData from "./noData";
 import { useEffect, useRef, useState } from "react";
-import loadMaterials from "../../loaders/materialLoader";
+import loadMaterials, { getTotalMaterials } from "../../loaders/materialLoader";
 import PaginationService from "../../services/paginationService";
 import Skeleton from "../card/skeleton";
 import useDebouncedValue from "../../hooks/useDebouncedValue";
+import Paginator from "../paginator";
 
 type MaterialWithThumbnail = {
   material: Material;
@@ -24,6 +25,9 @@ function Materials() {
   const slidingWindowHead = useRef(0);
   const runCount = useRef(0);
   const debouncedScrollEvent = useDebouncedValue(scrollEvent, 100);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(2);
+  const [totalPages, setTotalPages] = useState(0);
 
   const getUrl = () => {
     if (onMinePage) {
@@ -39,6 +43,24 @@ function Materials() {
     const url = `${baseUrl}?offset=${offset}&limit=${paginator.increment}`;
     return url;
   };
+
+  const getTotalPages = async () => {
+    const totalMaterialsCount = await getTotalMaterials();
+    const totalPages = Math.ceil(totalMaterialsCount / pageSize);
+    setTotalPages(totalPages);
+  }
+
+  const buildPaginatedMaterialsUrl = (page: number = 0, pageSize: number) => {
+    const baseUrl = getUrl();
+    const url = `${baseUrl}/page?page=${page}&pageSize=${pageSize}`;
+    return url;
+  }
+
+  const setPaginatedMaterials = async (page: number, pageSize: number) => {
+    const url = buildPaginatedMaterialsUrl(page, pageSize);
+    const json = await loadMaterials(url);
+    setMaterials(json);
+  }
 
   const setInitialMaterials = async () => {
     const url = buildLoadMaterialsUrl();
@@ -100,18 +122,23 @@ function Materials() {
   };
 
   useEffect(() => {
-    const execute = async () => {
-      if (!isFetching && debouncedScrollEvent !== 0) {
-        setIsFetching(true);
-        await loadMoreMaterials(debouncedScrollEvent);
-        setIsFetching(false);
-      }
-    };
-    execute();
+   // const execute = async () => {
+   //   if (!isFetching && debouncedScrollEvent !== 0) {
+   //     setIsFetching(true);
+   //     await loadMoreMaterials(debouncedScrollEvent);
+   //     setIsFetching(false);
+   //   }
+   // };
+   // execute();
   }, [debouncedScrollEvent]);
 
   useEffect(() => {
-    setInitialMaterials();
+    //setInitialMaterials();
+    setPaginatedMaterials(page, pageSize);
+  }, [page, pageSize]);
+
+  useEffect(() => {
+    getTotalPages();
   }, []);
 
   useEffect(() => {
@@ -139,6 +166,7 @@ function Materials() {
       {materials.map((el: MaterialWithThumbnail) => {
         return <Card key={el.material.id} material={el}></Card>;
       })}
+      <Paginator setPage={setPage} page={page} totalPages={totalPages}/>
     </>
   );
 }

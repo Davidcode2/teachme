@@ -43,6 +43,18 @@ export class MaterialsService {
     return this.mapThumbnails(materials);
   }
 
+  async findAllPaginated(page: number, pageSize: number) {
+    const materials = await this.materialsRepository.find({
+      skip: page * pageSize,
+      take: pageSize,
+    });
+    return this.mapThumbnails(materials);
+  }
+
+  async getTotal() {
+    return this.materialsRepository.count();
+  }
+
   async findOneWithThumbnail(
     id: string,
   ): Promise<MaterialWithThumbnail[] | null> {

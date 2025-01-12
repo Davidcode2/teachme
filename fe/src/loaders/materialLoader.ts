@@ -14,3 +14,16 @@ export default async function loadMaterials(url: string) {
   const responseData = await response.json();
   return responseData;
 }
+
+export async function getTotalMaterials() {
+  const response = await fetch("api/materials/total", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const responseData = await response.json();
+  return responseData;
+}
