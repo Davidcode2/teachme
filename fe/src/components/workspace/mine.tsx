@@ -13,7 +13,7 @@ export default function Mine() {
     <>
       <div
         id="fade_in_element"
-        className="mx-4 min-h-screen rounded-md border border-gray-200 bg-slate-100 pt-8 opacity-0 shadow-xl transition-opacity duration-700 md:mx-0 md:ml-8 md:rounded-none md:rounded-l-md"
+        className="sm:mx-4 min-h-screen rounded-md border border-gray-200 bg-slate-100 pt-8 opacity-0 shadow-xl transition-opacity duration-700 md:mx-0 md:ml-8 md:rounded-none md:rounded-l-md"
       >
         <nav className="flex gap-x-10 px-10 pb-4 text-lg text-black ">
           <NavLink
