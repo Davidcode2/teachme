@@ -101,8 +101,8 @@ function Header() {
           <Search setShowSearch={setShowSearch} />
         </div>
       )}
-      <div className="sticky top-0 z-50 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
-        <div className={scroll ? "p-4 shadow-sm shadow-gray-100" : "p-4"}>
+      <div className="md:sticky top-0 z-50 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
+        <div className={scroll ? "p-4 md:shadow-sm shadow-gray-100" : "p-4"}>
           <div className="flex justify-between gap-3">
             <div className="hidden items-center gap-2 md:flex">
               {navigation}

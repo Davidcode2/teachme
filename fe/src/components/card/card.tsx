@@ -34,7 +34,7 @@ function Card({
     <img
       src={image}
       onClick={togglePreview}
-      className="thumbnail lg:object-top h-[40vh] cursor-pointer rounded-t-lg lg:object-cover transition-transform duration-300 hover:scale-105 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]"
+      className="thumbnail object-top h-[40vh] cursor-pointer rounded-t-lg object-cover transition-transform duration-300 hover:scale-105 md:w-[400px] rounded-l-lg lg:w-[600px]"
       alt="Thumbnail"
     />
   ) : (
@@ -79,18 +79,18 @@ function Card({
         id={materialWithThumbnail.material.id.toString()}
       >
         <BorderColorBlur>
-          <div className="flex flex-col md:flex-row">
-            <div className="overflow-hidden rounded-t-lg bg-white md:rounded-l-lg md:rounded-r-none">
+          <div className="grid grid-cols-2 text-sm">
+            <div className="overflow-hidden rounded-t-lg bg-white rounded-l-lg rounded-r-none">
               {imageElement}
             </div>
-            <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
+            <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 rounded-r-lg rounded-bl-none border-l md:border-t-0">
               <div className="flex flex-col">
-                <div className="text-2xl">
+                <div className="text-lg md:text-2xl">
                   {materialWithThumbnail.material.title}
                 </div>
                 <div>{materialWithThumbnail.material.description}</div>
               </div>
-              <p className="text-3xl text-emerald-500">
+              <p className="md:text-3xl text-emerald-500">
                 {Number(materialWithThumbnail.material.price / 100).toFixed(2)}{" "}
                 €
               </p>
