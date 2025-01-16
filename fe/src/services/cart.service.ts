@@ -56,7 +56,7 @@ class CartService {
     });
     const body = await res.json();
     if (body && body.url) {
-      this.navigateToStripeCheckout(body);
+      this.navigateToStripeCheckout(body.url);
     } else {
       useErrorStore
         .getState()
