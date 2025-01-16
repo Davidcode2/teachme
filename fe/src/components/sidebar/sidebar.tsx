@@ -17,7 +17,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <div className="sidebar fixed right-0 z-50 w-screen md:w-[500px]">
+    <div className="sidebar fixed right-0 z-40 w-screen md:w-[500px]">
       {sidebarShown && (
         <div className="z-50 h-screen overflow-y-auto bg-white p-4 pt-24 shadow-md md:w-[500px]">
           <div className="flex flex-col gap-4">

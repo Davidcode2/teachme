@@ -1,4 +1,4 @@
-import { useAccessTokenStore, useCartStore, useUserStore } from "../store";
+import { useAccessTokenStore, useCartStore, useErrorStore, useUserStore } from "../store";
 
 class CartService {
   user = useUserStore.getState().user;
@@ -50,7 +50,11 @@ class CartService {
       body: JSON.stringify({ materialId: materialIds }),
     });
     const body = await res.json();
-    window.location.href = body.url;
+    if (body && body.url) {
+      window.location.href = body.url;
+    } else {
+      useErrorStore.getState().pushError({message: "Etwas ist schief gelaufen", code: 400});
+    }
   };
 }
 
