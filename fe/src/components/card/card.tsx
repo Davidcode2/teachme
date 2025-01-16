@@ -34,12 +34,12 @@ function Card({
     <img
       src={image}
       onClick={togglePreview}
-      className="thumbnail object-top h-[40vh] cursor-pointer rounded-t-lg object-cover transition-transform duration-300 hover:scale-105 md:w-[400px] rounded-l-lg lg:w-[600px]"
+      className="thumbnail object-top h-[40vh] cursor-pointer object-cover transition-transform duration-300 hover:scale-105 md:w-[400px] rounded-l-lg lg:w-[600px]"
       alt="Thumbnail"
     />
   ) : (
     <div
-      className={`thumbnail h-[400px] rounded-lg md:w-[400px] lg:w-[600px] lg:rounded-r-none`}
+      className={`thumbnail h-[400px] rounded-l-lg md:w-[400px] lg:w-[600px]`}
       style={{ backgroundImage: gradient }}
     ></div>
   );
@@ -80,10 +80,10 @@ function Card({
       >
         <BorderColorBlur>
           <div className="grid sm:grid-cols-2 grid-cols-[30%_auto] text-sm">
-            <div className="overflow-hidden rounded-t-lg bg-white rounded-l-lg rounded-r-none">
+            <div className="overflow-hidden bg-white rounded-l-lg ">
               {imageElement}
             </div>
-            <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-4 sm:p-10 rounded-r-lg rounded-bl-none border-l md:border-t-0">
+            <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-r-lg border-t border-slate-100 bg-white p-4 sm:p-10 border-l md:border-t-0">
               <div className="flex flex-col">
                 <div className="text-lg md:text-2xl">
                   {materialWithThumbnail.material.title}
