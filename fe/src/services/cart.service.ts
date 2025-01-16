@@ -1,4 +1,9 @@
-import { useAccessTokenStore, useCartStore, useErrorStore, useUserStore } from "../store";
+import {
+  useAccessTokenStore,
+  useCartStore,
+  useErrorStore,
+  useUserStore,
+} from "../store";
 
 class CartService {
   user = useUserStore.getState().user;
@@ -51,10 +56,16 @@ class CartService {
     });
     const body = await res.json();
     if (body && body.url) {
-      window.location.href = body.url;
+      this.navigateToStripeCheckout(body);
     } else {
-      useErrorStore.getState().pushError({message: "Etwas ist schief gelaufen", code: 400});
+      useErrorStore
+        .getState()
+        .pushError({ message: "Etwas ist schief gelaufen", code: 400 });
     }
+  };
+
+  navigateToStripeCheckout = (url: string) => {
+    window.location.href = url;
   };
 }
 
