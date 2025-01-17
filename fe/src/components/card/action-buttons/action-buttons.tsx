@@ -70,21 +70,21 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         />
       )}
       <div id="main" className="flex">
-        <div className="rounded-full hover:cursor-pointer hover:bg-gray-100">
+        <div className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer">
           {!isMine && (
             <img
               className=""
               onClick={addToShoppingCart}
               src={addToShoppingCartIcon}
-              width="30"
+              width="25"
               alt=""
             />
           )}
         </div>
-        <div className="rounded-full hover:cursor-pointer hover:bg-gray-100">
+        <div className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer">
           {isMine && !isAuthor && (
             <a href={`/api/materials/download?id=${id}`} download={id}>
-              <img className="rotate-90" src={arrowIcon} width="30" alt="" />
+              <img className="rotate-90" src={arrowIcon} width="25" alt="" />
             </a>
           )}
         </div>
@@ -94,22 +94,22 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
               <a
                 href={`/api/materials/download?id=${id}`}
                 download={id}
-                className="rotate-90 rounded-full hover:cursor-pointer hover:bg-gray-100"
+                className="hover:-translate-y-1 transition-transform ease-in rotate-90 rounded-full hover:cursor-pointer"
               >
-                <img className="" src={arrowIcon} width="30" alt="" />
+                <img className="" src={arrowIcon} width="25" alt="" />
               </a>
               <button
                 id="deleteMaterialButton"
-                className="rounded-full hover:cursor-pointer hover:bg-gray-100"
+                className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer"
                 onClick={showDeleteMaterialModal}
               >
-                <img className="" src={TrashBin} width="30" alt="" />
+                <img className="" src={TrashBin} width="25" alt="" />
               </button>
               <NavLink to={`/materials/${id}/edit`}>
                 <img
-                  className="rounded-full hover:cursor-pointer hover:bg-gray-100"
+                  className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer"
                   src={EditIcon}
-                  width="30"
+                  width="25"
                   alt=""
                 />
               </NavLink>
@@ -119,12 +119,12 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         <div className="mx-2">
           {loading && (
             <div className="">
-              <img src={SpinnerGif} alt="" width="30" />
+              <img src={SpinnerGif} alt="" width="25" />
             </div>
           )}
           {showSuccess && (
             <div className="">
-              <img src={CheckMarkIcon} alt="" width="30" />
+              <img src={CheckMarkIcon} alt="" width="25" />
             </div>
           )}
         </div>
