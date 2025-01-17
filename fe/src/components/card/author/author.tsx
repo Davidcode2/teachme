@@ -41,7 +41,7 @@ function Author(props: AppProps) {
       <img src={avatar ? avatar : userIcon} alt="" width="40" />
       <div>
         <div className="font-bold">{author}</div>
-        <div>
+        <div className="text-xs sm:text-sm">
           {new Date(props.published).toLocaleString("de-DE", {
             year: "numeric",
             month: "long",
