@@ -27,7 +27,7 @@ export default function Preview({
         {material && (
           <div className="relative mx-6 flex flex-col gap-5 rounded-lg border bg-white p-2 shadow-lg sm:flex-row md:mx-10 md:p-10 lg:max-w-[80vw]">
             <button
-              className="absolute right-0 top-2 rounded-lg px-4 hover:text-red-600 text-slate-500"
+              className="absolute right-0 top-2 rounded-lg px-4 text-slate-500 hover:text-red-600"
               onClick={() => setShowPreview(false)}
             >
               <div className="font-handwriting text-sm">X</div>
@@ -43,7 +43,7 @@ export default function Preview({
               <div className="max-h-20 overflow-auto lg:max-h-none">
                 {material.material.description}
               </div>
-              <div className="flex gap-x-10">
+              <div className="flex items-center gap-x-10">
                 <p className="text-3xl text-emerald-500">
                   {Number(material.material.price / 100).toFixed(2)} €
                 </p>

@@ -29,7 +29,7 @@ export default function SharedPreview() {
               <div className="text-2xl xl:text-4xl">{data.material.title}</div>
               <hr />
               <div>{data.material.description}</div>
-              <div className="flex gap-x-10">
+              <div className="flex items-center gap-x-10">
                 <p className="text-3xl text-emerald-500">
                   {Number(data.material.price / 100).toFixed(2)} €
                 </p>
