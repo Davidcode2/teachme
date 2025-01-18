@@ -34,7 +34,7 @@ function Card({
     <img
       src={image}
       onClick={togglePreview}
-      className="thumbnail h-[20vh] sm:h-[40vh] cursor-pointer object-cover object-top transition-transform duration-300 hover:scale-105 md:w-[400px] lg:w-[600px]"
+      className="thumbnail sm:h-full cursor-pointer object-cover object-top transition-transform duration-300 hover:scale-105 md:w-[400px] lg:w-[600px]"
       alt="Thumbnail"
     />
   ) : (
@@ -79,7 +79,7 @@ function Card({
         id={materialWithThumbnail.material.id.toString()}
       >
         <BorderColorBlur>
-          <div className="overflow-hidden grid md:grid-cols-[2fr_3fr] grid-cols-[40%_auto] text-sm sm:grid-cols-2 bg-white rounded-lg">
+          <div className="h-[25vh] sm:h-[45vh] overflow-hidden grid md:grid-cols-[2fr_3fr] grid-cols-[40%_auto] text-sm sm:grid-cols-2 bg-white rounded-lg">
             <div className="overflow-hidden border-r sm:row-span-2">
               {imageElement}
             </div>
@@ -88,7 +88,7 @@ function Card({
                 <div className="text-lg md:text-2xl">
                   {materialWithThumbnail.material.title}
                 </div>
-                <div>{materialWithThumbnail.material.description}</div>
+                <div className="md:text-base">{materialWithThumbnail.material.description}</div>
               </div>
               <p className="text-emerald-500 md:text-3xl">
                 {Number(materialWithThumbnail.material.price / 100).toFixed(2)}{" "}
