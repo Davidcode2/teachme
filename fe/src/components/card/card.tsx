@@ -79,7 +79,7 @@ function Card({
         id={materialWithThumbnail.material.id.toString()}
       >
         <BorderColorBlur>
-          <div className="h-[25vh] sm:h-[45vh] overflow-hidden grid md:grid-cols-[2fr_3fr] grid-cols-[40%_auto] text-sm sm:grid-cols-2 bg-white rounded-lg">
+          <div className="h-[25vh] sm:h-[45vh] overflow-hidden grid grid-rows-[1fr_auto] md:grid-cols-[2fr_3fr] grid-cols-[40%_auto] text-sm sm:grid-cols-2 bg-white rounded-lg">
             <div className="overflow-hidden border-r sm:row-span-2">
               {imageElement}
             </div>
