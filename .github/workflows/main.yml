@@ -20,7 +20,7 @@ jobs:
         TARGET: /root/teachme
         SCRIPT_AFTER: |
           cd /root/teachme
-          docker-compose down
-          docker-compose build
-          docker-compose up -d
+          docker compose down
+          docker compose build
+          docker compose up -d
         SCRIPT_AFTER_REQUIRED: true
