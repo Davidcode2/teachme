@@ -11,7 +11,7 @@ export default function Paginator({
 }) {
   const pageButton = (index: number) => (
     <button
-      className={`px-4 py-2 font-bold text-stone-200 hover:text-purple-400 hover:-translate-y-1 transition-transform duration-200 ${page === index ? "text-green-500" : ""}`}
+      className={`px-4 py-2 font-bold text-stone-200 hover:text-purple-400 hover:-translate-y-1 transition-transform duration-200 ${page === index ? "text-purple-600" : ""}`}
       key={index}
       onClick={() => setPage(index)}
     >

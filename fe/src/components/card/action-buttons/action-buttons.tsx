@@ -26,9 +26,9 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
   const { user } = useUserStore();
   if (!user)
     return (
-      <div className="flex">
+      <div className="flex hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer">
         <Link to="/login">
-          <img src={addToShoppingCartIcon} width="30" alt="" />
+          <img src={addToShoppingCartIcon} width="25" alt="" />
         </Link>
       </div>
     );
@@ -70,7 +70,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         />
       )}
       <div id="main" className="flex">
-        <div className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer">
+        <div className="hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer">
           {!isMine && (
             <img
               className=""
@@ -81,7 +81,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
             />
           )}
         </div>
-        <div className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer">
+        <div className="hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer">
           {isMine && !isAuthor && (
             <a href={`/api/materials/download?id=${id}`} download={id}>
               <img className="rotate-90" src={arrowIcon} width="25" alt="" />
@@ -94,20 +94,20 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
               <a
                 href={`/api/materials/download?id=${id}`}
                 download={id}
-                className="hover:-translate-y-1 transition-transform ease-in rotate-90 rounded-full hover:cursor-pointer"
+                className="hover:-translate-y-1 transition-transform ease-in duration-100 rotate-90 rounded-full hover:cursor-pointer"
               >
                 <img className="" src={arrowIcon} width="25" alt="" />
               </a>
               <button
                 id="deleteMaterialButton"
-                className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer"
+                className="hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer"
                 onClick={showDeleteMaterialModal}
               >
                 <img className="" src={TrashBin} width="25" alt="" />
               </button>
               <NavLink to={`/materials/${id}/edit`}>
                 <img
-                  className="hover:-translate-y-1 transition-transform ease-in rounded-full hover:cursor-pointer"
+                  className="hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer"
                   src={EditIcon}
                   width="25"
                   alt=""
