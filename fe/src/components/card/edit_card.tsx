@@ -57,7 +57,7 @@ function EditMaterial(): JSX.Element {
   );
 
   const fileSelectedImageElement = image && (
-    <div className="group relative flex items-center justify-center">
+    <div className="group max-h-[250px] md:max-h-none relative flex items-center justify-center">
       <div className="absolute z-10">
         {!file?.name && noFileSelectedElement}
         {file?.name && fileSelectedElement}
