@@ -33,11 +33,11 @@ export class MaterialsController {
   @Get()
   findAllPaginated(
     @Query('search') searchString: string,
-    @Query('page') page: number = 0,
-    @Query('pageSize') pageSize: number = 5,
-    @Request() req,
+    @Query('page') page: string,
+    @Query('pageSize') pageSize: string,
   ) {
-    this.logger.log(`query: ${req.query}`);
+    const pageInt = parseInt(page);
+    const pageSizeInt = parseInt(pageSize);
     if (searchString) {
       this.logger.log(
         `searching for materials\n searchString: ${searchString}\n page: ${page}\n pageSize: ${pageSize}`,
@@ -47,7 +47,7 @@ export class MaterialsController {
     this.logger.log(
       `returning paginated:\n page: ${page}\n pageSize: ${pageSize}`,
     );
-    return this.materialsService.findPaginated(page, pageSize);
+    return this.materialsService.findPaginated(pageInt, pageSizeInt);
   }
 
   @Get('total')

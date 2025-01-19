@@ -17,7 +17,7 @@ function Materials() {
   const loading = useGlobalLoadingStore((state) => state.loading);
   const onMinePage = document.location.pathname === "/materials/mine";
   const [page, setPage] = useState(0);
-  const pageSize = 2;
+  const pageSize = 3;
   const [totalPages, setTotalPages] = useState(0);
 
   const getUrl = () => {
