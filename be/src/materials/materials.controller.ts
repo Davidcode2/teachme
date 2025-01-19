@@ -13,7 +13,6 @@ import {
   UseInterceptors,
   Patch,
   Logger,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { MaterialsService } from './materials.service';
@@ -32,19 +31,11 @@ export class MaterialsController {
   });
 
   @Get()
-  findAllPaginated(
-    @Query('search') searchString: string,
-    @Query('page') page: string,
-    @Query('pageSize') pageSize: string,
-  ) {
+  findAllPaginated(@Request() req) {
+    const { page, pageSize } = req.query;
+    Logger.log(`page: ${page}, pageSize: ${pageSize}`);
     const pageInt = parseInt(page, 10);
     const pageSizeInt = parseInt(pageSize, 10);
-    if (searchString) {
-      this.logger.log(
-        `searching for materials\n searchString: ${searchString}\n page: ${page}\n pageSize: ${pageSize}`,
-      );
-      return this.materialsService.search(searchString);
-    }
     this.logger.log(
       `returning paginated:\n page: ${pageInt}\n pageSize: ${pageSizeInt}`,
     );
