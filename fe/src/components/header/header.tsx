@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import plus from "../../assets/addPlusGradient.png";
 import UserIcon from "../../assets/icons/icons8-user-48.png";
 import { useSearchState, useUserStore, useSidebarStore } from "../../store";
@@ -16,7 +16,9 @@ function Header() {
   const searchString = useSearchState((state: any) => state.searchString);
   const sidebarShown = useSidebarStore((state) => state.isShown);
   const searchService = new SearchService();
+  const [onAddPage, setOnAddPage] = useState(false);
   const [scroll, setScroll] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSearch = () => {
     if (!showSearch) {
@@ -34,7 +36,7 @@ function Header() {
   });
 
   if (!eventListenerRegistered) {
-    document.body.addEventListener("click", function (event: any) {
+    document.body.addEventListener("click", function(event: any) {
       if (event.target.closest(".searchBar")) return;
       if (event.target.closest(".searchBox")) return;
       setShowSearch(false);
@@ -42,11 +44,15 @@ function Header() {
     });
   }
 
-  const closeSidebar = () => {
+  const toggleAddMaterial = () => {
+    if (onAddPage) {
+      navigate("materials");
+    }
+    setOnAddPage(!onAddPage);
     if (sidebarShown) {
       useSidebarStore.getState().hide();
     }
-  }
+  };
 
   const searchBox = (
     <button
@@ -68,22 +74,22 @@ function Header() {
   );
 
   const addButton = (
-    <div className="flex">
-      <NavLink
-        className={({ isActive }) =>
-          isActive
-            ? "rounded-lg border border-blue-400 text-blue-400"
-            : "border-none"
-        }
-        to={user ? "materials/add" : "login"}
-        onClick={closeSidebar}
+    <div className="rounded-lg border border-slate-200 shadow-sm">
+      <div
+        className={`px-4 py-2 transition hover:scale-125 hover:brightness-110 ${onAddPage ? "rotate-45 transition-transform" : ""}`}
       >
-        <div className="rounded-lg border border-slate-200 shadow-sm">
-          <div className="px-4 py-2 transition hover:scale-125 hover:brightness-110">
-            <img src={plus} alt="" width="20" />
-          </div>
-        </div>
-      </NavLink>
+        <img src={plus} alt="" width="20" />
+      </div>
+    </div>
+  );
+
+  const addButtonContainer = (
+    <div className="flex">
+        <NavLink
+          className={`${onAddPage ? "rounded-lg border border-blue-400 text-blue-400" : "border-none"}`}
+          to={!onAddPage ? (user ? "materials/add" : "login") : "materials" }
+          onClick={toggleAddMaterial}
+        >{addButton}</NavLink>
     </div>
   );
 
@@ -101,8 +107,8 @@ function Header() {
           <Search setShowSearch={setShowSearch} />
         </div>
       )}
-      <div className="md:sticky relative top-0 z-50 bg-gradient-to-b from-white from-70% via-white/95 to-white/85">
-        <div className={scroll ? "p-4 md:shadow-sm shadow-gray-100" : "p-4"}>
+      <div className="relative top-0 z-50 bg-gradient-to-b from-white from-70% via-white/95 to-white/85 md:sticky">
+        <div className={scroll ? "p-4 shadow-gray-100 md:shadow-sm" : "p-4"}>
           <div className="flex justify-between gap-3">
             <div className="hidden items-center gap-2 md:flex">
               {navigation}
@@ -110,7 +116,7 @@ function Header() {
             <div className="z-30 grow md:absolute md:left-0 md:m-auto md:mt-1 md:w-full">
               <div className="flex grid-cols-3 gap-x-2 md:grid 2xl:grid-cols-5">
                 {searchBox}
-                {addButton}
+                {addButtonContainer}
               </div>
             </div>
             <div className="z-40 flex items-center gap-2">
