@@ -48,7 +48,7 @@ export class MaterialsController {
     this.logger.log(
       `returning paginated:\n page: ${pageInt}\n pageSize: ${pageSizeInt}`,
     );
-    return this.materialsService.findPaginated(page, pageSize);
+    return this.materialsService.findPaginated(pageInt, pageSizeInt);
   }
 
   @Get('total')
