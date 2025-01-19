@@ -34,11 +34,11 @@ export class MaterialsController {
   @Get()
   findAllPaginated(
     @Query('search') searchString: string,
-    @Query('page', new ParseIntPipe({ errorHttpStatusCode: 400 }))
-    page: number,
-    @Query('pageSize', new ParseIntPipe({ errorHttpStatusCode: 400 }))
-    pageSize: number,
+    @Query('page') page: string,
+    @Query('pageSize') pageSize: string,
   ) {
+    const pageInt = parseInt(page, 10);
+    const pageSizeInt = parseInt(pageSize, 10);
     if (searchString) {
       this.logger.log(
         `searching for materials\n searchString: ${searchString}\n page: ${page}\n pageSize: ${pageSize}`,
@@ -46,7 +46,7 @@ export class MaterialsController {
       return this.materialsService.search(searchString);
     }
     this.logger.log(
-      `returning paginated:\n page: ${page}\n pageSize: ${pageSize}`,
+      `returning paginated:\n page: ${pageInt}\n pageSize: ${pageSizeInt}`,
     );
     return this.materialsService.findPaginated(page, pageSize);
   }
