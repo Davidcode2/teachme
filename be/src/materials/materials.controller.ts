@@ -13,6 +13,7 @@ import {
   UseInterceptors,
   Patch,
   Logger,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { MaterialsService } from './materials.service';
@@ -33,8 +34,10 @@ export class MaterialsController {
   @Get()
   findAllPaginated(
     @Query('search') searchString: string,
-    @Query('page') page: number = 0,
-    @Query('pageSize') pageSize: number = 5,
+    @Query('page', new ParseIntPipe({ errorHttpStatusCode: 400 }))
+    page: number,
+    @Query('pageSize', new ParseIntPipe({ errorHttpStatusCode: 400 }))
+    pageSize: number,
   ) {
     if (searchString) {
       this.logger.log(
