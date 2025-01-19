@@ -35,7 +35,7 @@ function Materials() {
 
   const buildPaginatedMaterialsUrl = (page: number = 0, pageSize: number) => {
     const baseUrl = getUrl();
-    const url = `${baseUrl}/?page=${page}&pageSize=${pageSize}`;
+    const url = `${baseUrl}?page=${page}&pageSize=${pageSize}`;
     return url;
   };
 

@@ -12,6 +12,7 @@ import {
   UseGuards,
   UseInterceptors,
   Patch,
+  Logger,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { MaterialsService } from './materials.service';
@@ -25,6 +26,9 @@ import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
 @Controller('materials')
 export class MaterialsController {
   constructor(private materialsService: MaterialsService) {}
+  private readonly logger = new Logger(MaterialsController.name, {
+    timestamp: true,
+  });
 
   @Get()
   findAllPaginated(
@@ -33,8 +37,14 @@ export class MaterialsController {
     @Query('pageSize') pageSize: number = 5,
   ) {
     if (searchString) {
+      this.logger.log(
+        `searching for materials\n searchString: ${searchString}\n page: ${page}\n pageSize: ${pageSize}`,
+      );
       return this.materialsService.search(searchString);
     }
+    this.logger.log(
+      `returning paginated:\n page: ${page}\n pageSize: ${pageSize}`,
+    );
     return this.materialsService.findPaginated(page, pageSize);
   }
 
