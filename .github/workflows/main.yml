@@ -18,6 +18,7 @@ jobs:
         REMOTE_USER: ${{ secrets.USER_NAME }}
         REMOTE_PORT: 22
         TARGET: /root/teachme
+        EXCLUDE: /.git/
         SCRIPT_AFTER: |
           cd /root/teachme
           docker compose down

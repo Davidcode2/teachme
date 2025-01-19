@@ -35,7 +35,9 @@ export class MaterialsController {
     @Query('search') searchString: string,
     @Query('page') page: number = 0,
     @Query('pageSize') pageSize: number = 5,
+    @Request() req,
   ) {
+    this.logger.log(`query: ${req.query}`);
     if (searchString) {
       this.logger.log(
         `searching for materials\n searchString: ${searchString}\n page: ${page}\n pageSize: ${pageSize}`,
