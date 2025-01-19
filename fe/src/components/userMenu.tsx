@@ -18,6 +18,7 @@ export default function UserMenu({
 }) {
   const user = useUserStore((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
+  const [avatar, setAvatar] = useState<string | null>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const logout = () => {
@@ -39,12 +40,18 @@ export default function UserMenu({
 
   useEffect(() => {
     const contextMenu = userMenuRef.current;
-    showMenu ? contextMenu?.classList.add("open") : contextMenu?.classList.remove("open");
+    showMenu
+      ? contextMenu?.classList.add("open")
+      : contextMenu?.classList.remove("open");
   }, [showMenu]);
 
-  const avatar = useAvatarStore.getState().avatar
-    ? URL.createObjectURL(useAvatarStore.getState().avatar)
-    : null;
+  useEffect(() => {
+    setAvatar(
+      useAvatarStore.getState().avatar
+        ? URL.createObjectURL(useAvatarStore.getState().avatar)
+        : null,
+    );
+  }, []);
 
   const toggleMenu = () => (showMenu ? setShowMenu(false) : setShowMenu(true));
 
@@ -79,29 +86,29 @@ export default function UserMenu({
           alt="User"
         />
       </button>
-        <div ref={userMenuRef} className="context-menu userMenu relative">
-          <div className="userMenu absolute right-0 top-6 rounded-md border bg-white shadow-md">
-            <div className="userMenu flex justify-center p-5">
-              <ul className="userMenu flex flex-col gap-y-2 pr-4">
-                <li
-                  className="flex cursor-pointer gap-4 hover:text-sky-800"
-                  onClick={logout}
-                >
-                  <img src={ArrowIcon} width="24" />
-                  <span>Logout</span>
-                </li>
-                <li className="flex cursor-pointer gap-4 hover:text-sky-800">
-                  <img src={ShuffleIcon} width="25" />
-                  <Link to="login">Nutzer&nbsp;wechseln</Link>
-                </li>
-                <li className="flex cursor-pointer gap-4 hover:text-sky-800">
-                  <img src={DarkModeIcon} width="25" />
-                  <span>Dark Mode</span>
-                </li>
-              </ul>
-            </div>
+      <div ref={userMenuRef} className="context-menu userMenu relative">
+        <div className="userMenu absolute right-0 top-6 rounded-md border bg-white shadow-md">
+          <div className="userMenu flex justify-center p-5">
+            <ul className="userMenu flex flex-col gap-y-2 pr-4">
+              <li
+                className="flex cursor-pointer gap-4 hover:text-sky-800"
+                onClick={logout}
+              >
+                <img src={ArrowIcon} width="24" />
+                <span>Logout</span>
+              </li>
+              <li className="flex cursor-pointer gap-4 hover:text-sky-800">
+                <img src={ShuffleIcon} width="25" />
+                <Link to="login">Nutzer&nbsp;wechseln</Link>
+              </li>
+              <li className="flex cursor-pointer gap-4 hover:text-sky-800">
+                <img src={DarkModeIcon} width="25" />
+                <span>Dark Mode</span>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
     </div>
   );
 }

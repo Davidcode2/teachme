@@ -6,7 +6,6 @@ import {
   Header,
   Param,
   Post,
-  Query,
   Req,
   Res,
   UseGuards,
@@ -32,10 +31,7 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getForUser(
-    @Query('id') userId: string,
-    @Req() req: Request,
-  ): Promise<MaterialWithThumbnail[]> {
+  getForUser(@Req() req: Request): Promise<MaterialWithThumbnail[]> {
     const id = req.cookies.userId;
     const materials = this.cartService.getItems(id);
     return materials;

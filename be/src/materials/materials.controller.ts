@@ -31,15 +31,28 @@ export class MaterialsController {
   });
 
   @Get()
-  findAllPaginated(@Request() req) {
-    const { page, pageSize } = req.query;
-    Logger.log(`page: ${page}, pageSize: ${pageSize}`);
+  findAllPaginated(
+    @Query('search') searchString: string,
+    @Query('page') page: string = '0',
+    @Query('pageSize') pageSize: string = '4',
+  ) {
     const pageInt = parseInt(page, 10);
     const pageSizeInt = parseInt(pageSize, 10);
+    if (searchString) {
+      this.logger.log(
+        `searching for materials\n searchString: ${searchString}\n page: ${page}\n pageSize: ${pageSize}`,
+      );
+      return this.materialsService.search(searchString);
+    }
     this.logger.log(
       `returning paginated:\n page: ${pageInt}\n pageSize: ${pageSizeInt}`,
     );
     return this.materialsService.findPaginated(pageInt, pageSizeInt);
+  }
+
+  @Get('test-query')
+  async testQuery(@Query('search') searchString: string) {
+    this.logger.log(`searchString: ${searchString}`);
   }
 
   @Get('total')
