@@ -25,19 +25,20 @@ import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
 @ApiTags('materials')
 @Controller('materials')
 export class MaterialsController {
-  constructor(private materialsService: MaterialsService) { }
+  constructor(private materialsService: MaterialsService) {}
   private readonly logger = new Logger(MaterialsController.name, {
     timestamp: true,
   });
 
   @Get()
-  findAllPaginated(@Request() req) {
-    const page = req.query['page'];
-    const pageSize = req.query['pageSize'];
-    const searchString = req.query['searchString'];
-    const pageInt = parseInt(req.query['page'], 10);
-    const pageSizeInt = parseInt(req.query['pageSize'], 10);
-    if (req.query['searchString']) {
+  findAllPaginated(
+    @Query('search') searchString: string,
+    @Query('page') page: string = '0',
+    @Query('pageSize') pageSize: string = '4',
+  ) {
+    const pageInt = parseInt(page, 10);
+    const pageSizeInt = parseInt(pageSize, 10);
+    if (searchString) {
       this.logger.log(
         `searching for materials\n searchString: ${searchString}\n page: ${page}\n pageSize: ${pageSize}`,
       );
@@ -47,17 +48,6 @@ export class MaterialsController {
       `returning paginated:\n page: ${pageInt}\n pageSize: ${pageSizeInt}`,
     );
     return this.materialsService.findPaginated(pageInt, pageSizeInt);
-  }
-
-  @Get('test-query')
-  async testQuery(@Query('search') searchString: string) {
-    this.logger.log(`searchString: ${searchString}`);
-  }
-
-  @Get('test')
-  async test(@Query('id') materialId: string, @Res() response: Response) {
-    this.logger.log(`id: ${materialId}`);
-    response.send(`test id ${materialId}`);
   }
 
   @Get('total')
