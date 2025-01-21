@@ -14,19 +14,21 @@ function Author(props: AppProps) {
   const [author, setAuthor] = useState<string | null>(null);
   const cardService = new CardService();
 
+  const getAvatar = async (userId: string) => {
+    const avatarData = await UserService.getAvatar(userId!);
+    setAvatar(avatarData ? URL.createObjectURL(avatarData) : null);
+  };
+
   useEffect(() => {
     const getAuthor = async () => {
       const authorIn = await cardService.getAuthor(props.authorId);
       await getAvatar(authorIn.id);
       setAuthor(authorIn.displayName);
+      setLoading(false);
     };
     if (!author) {
       getAuthor();
     }
-    const getAvatar = async (userId: string) => {
-      const avatarData = await UserService.getAvatar(userId!);
-      setAvatar(avatarData ? URL.createObjectURL(avatarData) : null);
-    };
     if (author) {
       setLoading(false);
     }
@@ -38,7 +40,7 @@ function Author(props: AppProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <img src={avatar ? avatar : userIcon} alt="" width="40" />
+      <img className="w-7 sm:w-9" src={avatar ? avatar : userIcon} alt="" />
       <div>
         <div className="font-bold">{author}</div>
         <div className="text-xs sm:text-sm">

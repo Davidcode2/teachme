@@ -1,4 +1,5 @@
-import { Link } from "react-router";
+import { Form, Link } from "react-router";
+import CheckMarkIcon from "../assets/icons/icons8-checkmark-48.png";
 import userIcon from "../assets/icons/icons8-user-48.png";
 import ArrowIcon from "../assets/icons/icons8-logout-50.png";
 import ShuffleIcon from "../assets/icons/icons8-shuffle-48.png";
@@ -19,6 +20,7 @@ export default function UserMenu({
   const user = useUserStore((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const [avatar, setAvatar] = useState<string | null>(null);
+  const [editUserName, setEditUserName] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const logout = () => {
@@ -71,12 +73,38 @@ export default function UserMenu({
     displayName = "";
   }
 
+  const handleDisplayNameSubmit = async (e: any) => {
+    setEditUserName(false);
+    const res = await fetch("/api/users", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
+      },
+      body: JSON.stringify({ displayName: e.target.displayName.value }),
+    });
+    if (res.status === 200) {
+      useUserStore.getState().setUser({
+        ...user,
+        displayName: e.target.displayName.value,
+      });
+    }
+  };
+
+  const changeDisplayNameForm = (
+    <Form className="flex gap-1" onSubmit={handleDisplayNameSubmit} >
+      <input className="text-sm text-stone-900 p-1 rounded-lg border border-slate-200 shadow-sm min-w-0 max-w-40" type="text" placeholder={displayName || "Dein Name hier! Wow!"} name="displayName" />
+      <button className="p-1 rounded-lg border border-slate-200 shadow-sm min-w-0 bg-green-200 hover:bg-green-300" type="submit"><img src={CheckMarkIcon} width="20"/></button>
+      <button className="p-1 rounded-lg border border-slate-200 shadow-sm min-w-0 font-handwriting px-2 bg-red-200 hover:bg-red-300" onClick={() => setEditUserName(false)}>X</button>
+    </Form>
+  )
+
   return (
     <div className="flex items-center">
       <div
         className={`mr-2 text-slate-400 ${sidebarShown ? "block" : "hidden lg:block"}`}
       >
-        {displayName}
+        {editUserName ? changeDisplayNameForm : displayName}
       </div>
       <button className="userMenu hover:cursor-pointer" onClick={toggleMenu}>
         <img
@@ -104,6 +132,13 @@ export default function UserMenu({
               <li className="flex cursor-pointer gap-4 hover:text-sky-800">
                 <img src={DarkModeIcon} width="25" />
                 <span>Dark Mode</span>
+              </li>
+              <li
+                onClick={() => setEditUserName(true)}
+                className="flex cursor-pointer gap-4 hover:text-sky-800"
+              >
+                <img src={ShuffleIcon} width="25" />
+                <button>Name&nbsp;ändern</button>
               </li>
             </ul>
           </div>
