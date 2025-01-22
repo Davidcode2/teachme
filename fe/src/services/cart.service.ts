@@ -27,6 +27,12 @@ class CartService {
         "Content-Type": "application/json",
       },
     });
+    if (res.status === 401) {
+      useErrorStore
+        .getState()
+        .pushError({ message: "Nicht authorisiert. Laden Sie die Seite neu", code: 401 });
+      return;
+    }
     const data = await res.json();
     useCartStore.setState({ numberOfCartItems: data.length });
     return data;
