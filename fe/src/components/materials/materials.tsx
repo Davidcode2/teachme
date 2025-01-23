@@ -7,10 +7,6 @@ import loadMaterials, { getTotalMaterials } from "../../loaders/materialLoader";
 import Skeleton from "../card/skeleton";
 import Paginator from "../paginator";
 
-type MaterialWithThumbnail = {
-  material: Material;
-};
-
 function Materials() {
   const [materials, setMaterials] = useState<Material[]>([]);
   const loading = useGlobalLoadingStore((state) => state.loading);

@@ -34,7 +34,7 @@ export default function DeleteMaterialModal(props: PropTypes) {
             id="deleteModal"
             className="flex flex-row gap-5 rounded-lg border bg-white p-10 shadow-lg"
           >
-            <div className="h-[25vh] overflow-scroll"></div>
+            <div className="h-[25vh]"></div>
             <div className="flex flex-col justify-between">
               <div className="text-2xl xl:text-4xl">
                 Sind Sie sicher, dass Sie
