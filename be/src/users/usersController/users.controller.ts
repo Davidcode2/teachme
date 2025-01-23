@@ -29,7 +29,8 @@ export class UsersController {
   @Get('author/:id')
   async getUserByAuthorId(@Param('id') authorId: string) {
     const user = await this.usersService.findOneByAuthorId(authorId);
-    return user;
+    const userOutDto = { id: user.id, displayName: user.displayName };
+    return userOutDto;
   }
 
   @UseGuards(JwtAuthGuard)

@@ -12,6 +12,7 @@ export class AuthorController {
   @Get(':id')
   async GetById(@Param('id') authorId: string) {
     const author = await this.authorService.findOneById(authorId);
-    return author;
+    const authorOutDto = { id: author.id };
+    return authorOutDto;
   }
 }

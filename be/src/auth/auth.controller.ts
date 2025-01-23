@@ -58,7 +58,12 @@ export class AuthController {
       secure: true,
       httpOnly: true,
     });
-    return { user, tokens };
+    const userOutDto = {
+      displayName: user.displayName,
+      id: user.id,
+      authorId: user.authorId,
+    };
+    return { user: userOutDto, accessToken: tokens.accessToken };
   }
 
   @Post('signup')

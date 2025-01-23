@@ -7,8 +7,8 @@ import { Material } from '../materials/materials.entity';
 import { MaterialsService } from '../materials/materials.service';
 import { StripeService } from '../stripe/stripe.service';
 import { CommonCartService } from '../common-cart/common-cart.service';
-import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
 import { User } from 'src/users/user.entity';
+import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
 
 @Injectable()
 export class CartService {
@@ -31,11 +31,22 @@ export class CartService {
     return cart;
   }
 
-  async getItems(id: string): Promise<MaterialWithThumbnail[]> {
+  async getItems(id: string): Promise<MaterialOutDto[]> {
     await this.createCartIfNotExists(id);
     const user = await this.userService.findOneById(id);
     const materials = user.consumer.cart.materials;
-    return this.materialsService.mapThumbnails(materials);
+    const materialsWithThumbnails =
+      await this.materialsService.mapThumbnails(materials);
+    const materialsOutDto = materialsWithThumbnails.map((m) => {
+      return {
+        id: m.material.id,
+        title: m.material.title,
+        description: m.material.description,
+        price: m.material.price,
+        thumbnail: m.thumbnail,
+      };
+    });
+    return materialsOutDto;
   }
 
   async removeItem(id: string, materialId: string): Promise<Material[]> {

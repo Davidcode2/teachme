@@ -27,7 +27,21 @@ export class MaterialsService {
     const materialsQuery = this.createMaterialsQuery();
     const paginatedQuery = materialsQuery.skip(page * pageSize).take(pageSize);
     const materials = await paginatedQuery.getMany();
-    return this.mapThumbnails(materials);
+    console.log(materials);
+    const withThumbnails = await this.mapThumbnails(materials);
+    const materialsOutDto = withThumbnails.map((m: MaterialWithThumbnail) => {
+      return {
+        id: m.material.id,
+        title: m.material.title,
+        description: m.material.description,
+        price: m.material.price,
+        file_path: m.material.file_path,
+        date_published: m.material.date_published,
+        author_id: m.material.author_id,
+        thumbnail: m.thumbnail,
+      };
+    });
+    return materialsOutDto;
   }
 
   async getTotal() {

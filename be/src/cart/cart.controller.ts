@@ -13,8 +13,8 @@ import {
 import { Request, Response } from 'express';
 import { CartService } from './cart.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
 import { ApiTags } from '@nestjs/swagger';
+import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
 
 @ApiTags('cart')
 @Controller('cart')
@@ -31,7 +31,7 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getForUser(@Req() req: Request): Promise<MaterialWithThumbnail[]> {
+  getForUser(@Req() req: Request): Promise<MaterialOutDto[]> {
     const id = req.cookies.userId;
     const materials = this.cartService.getItems(id);
     return materials;

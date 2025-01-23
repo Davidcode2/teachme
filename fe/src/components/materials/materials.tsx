@@ -9,11 +9,10 @@ import Paginator from "../paginator";
 
 type MaterialWithThumbnail = {
   material: Material;
-  thumbnail: any;
 };
 
 function Materials() {
-  const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
+  const [materials, setMaterials] = useState<Material[]>([]);
   const loading = useGlobalLoadingStore((state) => state.loading);
   const onMinePage = document.location.pathname === "/materials/mine";
   const [page, setPage] = useState(0);
@@ -69,8 +68,8 @@ function Materials() {
           <Skeleton id={crypto.randomUUID()} />
         </div>
       )}
-      {materials.map((el: MaterialWithThumbnail) => {
-        return <Card key={el.material.id} material={el}></Card>;
+      {materials.map((el: Material) => {
+        return <Card key={el.id} material={el}></Card>;
       })}
       <Paginator setPage={setPage} page={page} totalPages={totalPages} />
     </>

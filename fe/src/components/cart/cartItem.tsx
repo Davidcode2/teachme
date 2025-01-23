@@ -1,11 +1,11 @@
 import TrashBin from "../../assets/icons/icons8-trash-48.png";
 import { useEffect, useState } from "react";
-import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
 import CartService from "../../services/cart.service";
 import { useCartStore } from "../../store";
+import MaterialInDto from "../../DTOs/materialInDto";
 
 interface CartItemProps {
-  item: MaterialWithThumbnail;
+  item: MaterialInDto;
   cartService: CartService;
 }
 
@@ -23,7 +23,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       const rootElement = document.getElementById(
-        item.material.id.toString() + "-cart-item",
+        item.id.toString() + "-cart-item",
       );
       rootElement?.classList.add("opacity-100");
     }, 100);
@@ -60,18 +60,18 @@ export default function CartItem({ item, cartService }: CartItemProps) {
 
   return (
     <div
-      id={item.material.id.toString() + "-cart-item"}
+      id={item.id.toString() + "-cart-item"}
       className="rounded-lg border border-slate-200 opacity-0 shadow-md transition-opacity duration-700"
     >
       <div className="grid grid-cols-2">
         <div className="m-10">
           <div>
-            Material: <p className="text-2xl">{item.material.title}</p>
+            Material: <p className="text-2xl">{item.title}</p>
           </div>
           <div>
             Preis:{" "}
             <p className="text-3xl text-emerald-500">
-              {Number(item.material.price / 100).toFixed(2)} €
+              {Number(item.price / 100).toFixed(2)} €
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
       <div className="my-2 flex">
         <div className="ml-auto">
           <button
-            onClick={() => removeItem(item.material.id.toString())}
+            onClick={() => removeItem(item.id.toString())}
             className="mr-2 rounded-md border-slate-200 px-2 hover:bg-red-400"
           >
             <img

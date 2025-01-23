@@ -4,13 +4,13 @@ import { useEffect, useState, type JSX } from "react";
 import Preview from "../preview.tsx";
 import GradientGenerator from "../../services/gradientGenerator.ts";
 import CardService from "../../services/cardService.ts";
-import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail.ts";
 import BorderColorBlur from "../styling/borderColorBlur.tsx";
+import Material from "../../DTOs/material.ts";
 
 function Card({
   material: materialWithThumbnail,
 }: {
-  material: MaterialWithThumbnail;
+  material: Material;
 }): JSX.Element {
   const [showPreview, setShowPreview] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
@@ -23,7 +23,7 @@ function Card({
   const togglePreview = async () => {
     setShowPreview(true);
     const json = await cardService.getPreview(
-      materialWithThumbnail.material.id.toString(),
+      materialWithThumbnail.id.toString(),
     );
     const images = cardService.getImages(json.preview);
     setPreviewImage(images);
@@ -56,7 +56,7 @@ function Card({
   useEffect(() => {
     const timeout = setTimeout(() => {
       const rootElement = document.getElementById(
-        materialWithThumbnail.material.id.toString(),
+        materialWithThumbnail.id.toString(),
       );
       rootElement?.classList.add("opacity-100");
     }, 50);
@@ -76,7 +76,7 @@ function Card({
       )}
       <div
         className="m-4 rounded-lg opacity-0 shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
-        id={materialWithThumbnail.material.id.toString()}
+        id={materialWithThumbnail.id.toString()}
       >
         <BorderColorBlur>
           <div className="h-[250px] sm:h-[450px] overflow-hidden grid grid-rows-[1fr_auto] md:grid-cols-[2fr_3fr] grid-cols-[40%_auto] text-sm sm:grid-cols-2 bg-white rounded-lg">
@@ -86,28 +86,28 @@ function Card({
             <div className="flex flex-1 flex-col gap-4 overflow-hidden rounded-r-lg border-slate-100 bg-white p-4 md:p-10 md:border-t-0">
               <div className="flex flex-col overflow-auto">
                 <div className="text-lg md:text-2xl">
-                  {materialWithThumbnail.material.title}
+                  {materialWithThumbnail.title}
                 </div>
-                <div className="md:text-base line-clamp-5 sm:line-clamp-none">{materialWithThumbnail.material.description}</div>
+                <div className="md:text-base line-clamp-5 sm:line-clamp-none">{materialWithThumbnail.description}</div>
               </div>
               <p className="text-emerald-500 md:text-3xl">
-                {Number(materialWithThumbnail.material.price / 100).toFixed(2)}{" "}
+                {Number(materialWithThumbnail.price / 100).toFixed(2)}{" "}
                 €
               </p>
             </div>
             <div className="col-span-2 border-t sm:border-none sm:col-start-2 px-4 p-2 md:p-10 mt-auto flex">
               <div className="self-center">
                 <ActionButtons
-                  id={materialWithThumbnail.material.id.toString()}
-                  title={materialWithThumbnail.material.title}
-                  authorId={materialWithThumbnail.material.author_id}
-                  isMine={materialWithThumbnail.material.file_path}
+                  id={materialWithThumbnail.id.toString()}
+                  title={materialWithThumbnail.title}
+                  authorId={materialWithThumbnail.author_id}
+                  isMine={materialWithThumbnail.file_path}
                 ></ActionButtons>
               </div>
               <div className="ml-auto self-end">
                 <Author
-                  authorId={materialWithThumbnail.material.author_id}
-                  published={materialWithThumbnail.material.date_published}
+                  authorId={materialWithThumbnail.author_id}
+                  published={materialWithThumbnail.date_published}
                 ></Author>
               </div>
             </div>

@@ -19,9 +19,9 @@ function App(): JSX.Element {
       });
       const data = await res.json();
       useGlobalLoadingStore.setState({ loading: false });
-      if (data.tokens.accessToken) {
+      if (data.accessToken) {
         const setAccessToken = useAccessTokenStore.getState().setAccessToken;
-        setAccessToken(data.tokens.accessToken);
+        setAccessToken(data.accessToken);
       }
       if (data.user) {
         await UserService.setUserAndAvatar(data.user);

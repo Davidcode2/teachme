@@ -6,6 +6,7 @@ import CartItem from "./cartItem";
 import { useCartStore } from "../../store";
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
 import Skeleton from "../card/skeleton";
+import MaterialInDto from "../../DTOs/materialInDto";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
@@ -49,9 +50,9 @@ export default function Cart(): JSX.Element {
   return (
     <div className="m-0 mt-10 flex flex-col gap-4 sm:m-10 md:max-w-[600px]">
       {cartItems &&
-        cartItems.map((item: MaterialWithThumbnail) => (
+        cartItems.map((item: MaterialInDto) => (
           <CartItem
-            key={item.material.id}
+            key={item.id}
             item={item}
             cartService={cartService}
           />
