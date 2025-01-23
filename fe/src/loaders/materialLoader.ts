@@ -1,8 +1,9 @@
+import { customFetch } from "../actions/customFetch";
 import { useAccessTokenStore, useGlobalLoadingStore } from "../store";
 
 export default async function loadMaterials(url: string) {
   useGlobalLoadingStore.setState({ loading: true });
-  const response = await fetch(url, {
+  const response = await customFetch(url, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
@@ -16,7 +17,7 @@ export default async function loadMaterials(url: string) {
 }
 
 export async function getTotalMaterials() {
-  const response = await fetch("api/materials/total", {
+  const response = await customFetch("api/materials/total", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

@@ -1,6 +1,8 @@
+import { customFetch } from "../actions/customFetch";
+
 export default class CardService {
   public async getPreview(materialId: string) {
-    const res = await fetch(`/api/materials/${materialId}/preview`, {
+    const res = await customFetch(`/api/materials/${materialId}/preview`, {
       method: "GET",
     });
     const json = await res.json();
@@ -8,7 +10,7 @@ export default class CardService {
   }
 
   public async getMaterialWithThumbnail(id: string) {
-    const res = await fetch(`/api/materials/${id}/thumbnail`, {
+    const res = await customFetch(`/api/materials/${id}/thumbnail`, {
       method: "GET",
     });
     const json = await res.json();

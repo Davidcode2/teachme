@@ -1,3 +1,4 @@
+import { customFetch } from "../actions/customFetch";
 import {
   useAccessTokenStore,
   useCartStore,
@@ -20,19 +21,19 @@ class CartService {
   }
 
   async getItems() {
-    const res = await fetch(`/api/cart?id=${this.user?.id}`, {
+    const res = await customFetch(`/api/cart?id=${this.user?.id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         "Content-Type": "application/json",
       },
     });
-    if (res.status === 401) {
-      useErrorStore
-        .getState()
-        .pushError({ message: "Nicht authorisiert. Laden Sie die Seite neu", code: 401 });
-      return;
-    }
+//    if (res.status === 401) {
+//      useErrorStore
+//        .getState()
+//        .pushError({ message: "Nicht authorisiert. Laden Sie die Seite neu", code: 401 });
+//      return;
+//    }
     const data = await res.json();
     useCartStore.setState({ numberOfCartItems: data.length });
     return data;

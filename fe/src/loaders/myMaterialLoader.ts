@@ -1,3 +1,4 @@
+import { customFetch } from "../actions/customFetch";
 import { useAccessTokenStore } from "../store";
 import { useUserStore } from "../store";
 
@@ -6,7 +7,7 @@ export default async function loadMyMaterials() {
   if (!user) {
     return [];
   }
-  const response = await fetch(`/api/users/${user.id}/materials`, {
+  const response = await customFetch(`/api/users/${user.id}/materials`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
