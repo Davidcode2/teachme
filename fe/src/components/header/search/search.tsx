@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router";
 import SearchService from "../../../services/searchService";
 import { useSearchState } from "../../../store";
-import SearchResultsPreview from "./searchResultsPreview";
 
 export default function Search({ setShowSearch }: { setShowSearch: any }) {
-  const searchResults = useSearchState((state: any) => state.searchResults);
   const searchString = useSearchState((state: any) => state.searchString);
   const setSearchString = useSearchState((state: any) => state.setSearchString);
   const clearSearch = new SearchService().clearSearch;
@@ -49,17 +47,18 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
               className="searchBox w-full grow rounded-3xl border border-fuchsia-200 p-4 focus:border-none focus:shadow-lg focus:shadow-purple-200 focus:outline-none focus:outline-purple-300"
             />
             {searchString && (
-              <div
-                onClick={clearSearch}
-                className="absolute right-12 cursor-pointer self-center p-4 font-handwriting text-xs text-stone-500 hover:text-stone-600"
-              >
-                X
+              <div className="justify-end">
+                <div className="absolute">
+                  <div
+                    onClick={clearSearch}
+                    className="relative right-12 top-4 cursor-pointer self-center p-4 font-handwriting text-xs text-stone-500 hover:text-stone-600"
+                  >
+                    X
+                  </div>
+                </div>
               </div>
             )}
           </div>
-          <ul className="searchBox flex flex-col gap-2">
-            <SearchResultsPreview searchResults={searchResults} />
-          </ul>
         </div>
       </div>
     </div>

@@ -9,13 +9,8 @@ import { useEffect, useState } from "react";
 import loadMaterials from "../../loaders/materialLoader";
 import Skeleton from "../card/skeleton";
 
-type MaterialWithThumbnail = {
-  material: Material;
-  thumbnail: any;
-};
-
 export default function Workspace() {
-  const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
+  const [materials, setMaterials] = useState<Material[]>([]);
   const searchString = useSearchState((state) => state.searchString);
   const loading = useGlobalLoadingStore((state) => state.loading);
 
@@ -77,8 +72,8 @@ export default function Workspace() {
         </div>
       )}
       <div>
-        {materials.map((el: MaterialWithThumbnail) => {
-          return <Card key={el.material.id} material={el}></Card>;
+        {materials.map((el: Material) => {
+          return <Card key={el.id} material={el}></Card>;
         })}
       </div>
     </>

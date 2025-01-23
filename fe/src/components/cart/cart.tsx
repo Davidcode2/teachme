@@ -4,9 +4,9 @@ import { useEffect, useState, type JSX } from "react";
 import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
 import { useCartStore } from "../../store";
-import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail";
 import Skeleton from "../card/skeleton";
 import MaterialInDto from "../../DTOs/materialInDto";
+import Material from "../../DTOs/material";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
@@ -61,8 +61,8 @@ export default function Cart(): JSX.Element {
         <button
           onClick={() =>
             toCheckout(
-              cartItems.map((item: MaterialWithThumbnail) =>
-                item.material.id.toString(),
+              cartItems.map((item: Material) =>
+                item.id.toString(),
               ),
             )
           }

@@ -12,6 +12,7 @@ import MaterialDtoIn from 'src/shared/Models/MaterialsIn';
 import { User } from 'src/users/user.entity';
 import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
 import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
+import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
 
 @Injectable()
 export class MaterialsService {
@@ -27,19 +28,9 @@ export class MaterialsService {
     const materialsQuery = this.createMaterialsQuery();
     const paginatedQuery = materialsQuery.skip(page * pageSize).take(pageSize);
     const materials = await paginatedQuery.getMany();
-    console.log(materials);
     const withThumbnails = await this.mapThumbnails(materials);
     const materialsOutDto = withThumbnails.map((m: MaterialWithThumbnail) => {
-      return {
-        id: m.material.id,
-        title: m.material.title,
-        description: m.material.description,
-        price: m.material.price,
-        file_path: m.material.file_path,
-        date_published: m.material.date_published,
-        author_id: m.material.author_id,
-        thumbnail: m.thumbnail,
-      };
+      return this.createOutDto(m);
     });
     return materialsOutDto;
   }
@@ -59,21 +50,21 @@ export class MaterialsService {
     return this.materialsRepository.findOneBy({ id: id });
   }
 
-  async findByCreator(userId: string): Promise<MaterialWithThumbnail[]> {
+  async findByCreator(userId: string): Promise<MaterialOutDto[]> {
     const user = await this.userService.findOneById(userId);
     const materials = user.author.materials;
-    return this.mapThumbnails(materials);
+    return this.toMaterialsOutDto(materials);
   }
 
   async findByUser(
     userId: string,
     searchString: string,
-  ): Promise<MaterialWithThumbnail[]> {
+  ): Promise<MaterialOutDto[]> {
     const materials = await this.getMaterialsForUser(userId);
     if (searchString) {
       return this.searchMyMaterials(searchString, materials);
     }
-    return this.mapThumbnails(materials);
+    return this.toMaterialsOutDto(materials);
   }
 
   async delete(id: string) {
@@ -92,11 +83,11 @@ export class MaterialsService {
     return materials;
   }
 
-  private searchMyMaterials(searchString: string, materials: Material[]) {
+  private async searchMyMaterials(searchString: string, materials: Material[]) {
     const filteredMaterials = materials.filter((material) =>
       material.title.includes(searchString),
     );
-    return this.mapThumbnails(filteredMaterials);
+    return this.toMaterialsOutDto(filteredMaterials);
   }
 
   async search(term: string) {
@@ -108,7 +99,11 @@ export class MaterialsService {
       const { file_path, ...unboughtMaterial } = material;
       return unboughtMaterial;
     });
-    return this.mapThumbnails(unboughtMaterials);
+    const withThumbnails = await this.mapThumbnails(unboughtMaterials);
+    const materialsOutDto = withThumbnails.map((m: MaterialWithThumbnail) => {
+      return this.createOutDto(m);
+    });
+    return materialsOutDto;
   }
 
   async findOneWithPreview(
@@ -265,5 +260,28 @@ export class MaterialsService {
       .addSelect('material.author_id');
 
     return selectQueryBuilder;
+  }
+
+  private async toMaterialsOutDto(
+    materials: Material[],
+  ): Promise<MaterialOutDto[]> {
+    const withThumbnails = await this.mapThumbnails(materials);
+    const materialsOutDto = withThumbnails.map((m: MaterialWithThumbnail) => {
+      return this.createOutDto(m);
+    });
+    return materialsOutDto;
+  }
+
+  private createOutDto(m: MaterialWithThumbnail) {
+    return {
+      id: m.material.id,
+      title: m.material.title,
+      description: m.material.description,
+      price: m.material.price,
+      file_path: m.material.file_path,
+      date_published: m.material.date_published,
+      author_id: m.material.author_id,
+      thumbnail: m.thumbnail,
+    };
   }
 }

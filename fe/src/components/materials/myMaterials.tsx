@@ -16,8 +16,8 @@ type MaterialWithThumbnail = {
 };
 
 function MyMaterials() {
-  const [materials, setMaterials] = useState<MaterialWithThumbnail[]>([]);
-  const [searchResults, setSearchResults] = useState<MaterialWithThumbnail[]>(
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [searchResults, setSearchResults] = useState<Material[]>(
     [],
   );
   const loading = useGlobalLoadingStore((state) => state.loading);
@@ -114,11 +114,11 @@ function MyMaterials() {
         </div>
       )}
       {searchResults.length > 0
-        ? searchResults.map((el: MaterialWithThumbnail) => {
-            return <Card key={el.material.id} material={el} />;
+        ? searchResults.map((el: Material) => {
+            return <Card key={el.id} material={el} />;
           })
-        : materials.map((el: MaterialWithThumbnail) => {
-            return <Card key={el.material.id} material={el}></Card>;
+        : materials.map((el: Material) => {
+            return <Card key={el.id} material={el}></Card>;
           })}
     </>
   );

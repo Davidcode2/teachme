@@ -11,7 +11,7 @@ type MaterialWithThumbnail = {
 };
 
 function SearchResults() {
-  const [searchResults, setSearchResults] = useState<MaterialWithThumbnail[]>(
+  const [searchResults, setSearchResults] = useState<Material[]>(
     [],
   );
   const searchString = useSearchState((state) => state.searchString);
@@ -72,8 +72,8 @@ function SearchResults() {
 
   return (
     <>
-      {searchResults.map((el: MaterialWithThumbnail) => {
-        return <Card key={el.material.id} material={el} />;
+      {searchResults.map((el: Material) => {
+        return <Card key={el.id} material={el} />;
       })}
     </>
   );
