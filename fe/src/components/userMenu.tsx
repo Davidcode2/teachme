@@ -3,6 +3,7 @@ import CheckMarkIcon from "../assets/icons/icons8-checkmark-48.png";
 import userIcon from "../assets/icons/icons8-user-48.png";
 import ArrowIcon from "../assets/icons/icons8-logout-50.png";
 import ShuffleIcon from "../assets/icons/icons8-shuffle-48.png";
+import EditIcon from "../assets/icons/icons8-edit-48.png";
 import DarkModeIcon from "../assets/icons/icons8-dark-mode-48.png";
 import {
   useAccessTokenStore,
@@ -137,7 +138,7 @@ export default function UserMenu({
                 onClick={() => setEditUserName(true)}
                 className="flex cursor-pointer gap-4 hover:text-sky-800"
               >
-                <img src={ShuffleIcon} width="25" />
+                <img src={EditIcon} width="25" />
                 <button>Name&nbsp;ändern</button>
               </li>
             </ul>

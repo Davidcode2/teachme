@@ -46,7 +46,12 @@ const routes = [
         path: "/materials/mine",
         element: <Mine />,
         children: [
-          { index: true, element: <MyMaterials /> },
+          { index: true,
+            element: <MyMaterials /> 
+          },
+          { path: "bought/", 
+            element: <MyMaterials /> 
+          },
           {
             path: "workspace/",
             element: <Workspace />,

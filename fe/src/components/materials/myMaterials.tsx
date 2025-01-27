@@ -23,7 +23,7 @@ function MyMaterials() {
   const loading = useGlobalLoadingStore((state) => state.loading);
   const paginator = new PaginationService();
   const searchString = useSearchState((state) => state.searchString);
-  const onMinePage = document.location.pathname === "/materials/mine";
+  const onMinePage = document.location.pathname === "/materials/mine" || document.location.pathname === "/materials/mine/bought";
   const lastMaterialIndex = useRef(0);
   const runCount = useRef(0);
 

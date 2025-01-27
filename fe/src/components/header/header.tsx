@@ -96,7 +96,7 @@ function Header() {
   const navigation = (
     <Nav
       materialsLink="materials"
-      myMaterialsLink={user ? "materials/mine" : "login"}
+      myMaterialsLink={user ? "materials/mine/bought" : "login"}
     ></Nav>
   );
 
