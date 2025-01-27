@@ -57,7 +57,7 @@ export default function SuccessPage() {
               <br />
               deiner Sammlung hinzugefügt.
             </div>
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col md:flex-row justify-center gap-4">
               <StatsCard
                 name="gekauft"
                 amount={stats!.numberOfBoughtMaterials}
