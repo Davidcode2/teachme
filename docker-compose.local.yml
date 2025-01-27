@@ -36,16 +36,22 @@ services:
       dockerfile: dockerfile
     image: keycloak_local
     container_name: my_keycloak_local
-    environment:
-      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
-      - KC_BOOTSTRAP_ADMIN_PASSWORD=change_me
+    env_file: "./keycloak/.env"
     ports:
       - '8443:8443'
       - '9000:9000'
-   command: 
+    command: 
       - "start"
       - "--optimized"
       - "--hostname=localhost"
+
+  keycloak_db:
+    image: postgres
+    container_name: keycloak_db
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    env_file: "./keycloak/.db.env"
 
 volumes:
   assets:

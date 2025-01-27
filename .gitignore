@@ -30,6 +30,7 @@ packages/*/*.wasm
 *.a
 profile.json
 
+.*.env
 .env
 node_modules
 .envrc
