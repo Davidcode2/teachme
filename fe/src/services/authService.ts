@@ -56,5 +56,4 @@ const handleAuthentication = async (token: string, state: string, userId: string
       client_id: "teachly",
     }),
   });
-  }
 }
