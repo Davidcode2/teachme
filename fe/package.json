@@ -15,6 +15,7 @@
     "@types/react-google-recaptcha": "^2.1.9",
     "caniuse-lite": "^1.0.30001692",
     "eslint-config-prettier": "^9.1.0",
+    "jwt-decode": "^4.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^8.0.0",
     "oidc-client-ts": "^3.1.0",

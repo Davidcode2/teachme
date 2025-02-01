@@ -1,19 +1,17 @@
-import { Link, NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import plus from "../../assets/addPlusGradient.png";
 import UserIcon from "../../assets/icons/icons8-user-48.png";
-import { useSearchState, useUserStore, useSidebarStore } from "../../store";
+import { useSearchState, useSidebarStore } from "../../store";
 import Nav from "./nav";
 import UserMenu from "../userMenu";
 import { useEffect, useState } from "react";
 import Search from "./search/search";
 import SearchService from "../../services/searchService";
 import ShoppingCartIcon from "../cart/shoppingCartIcon";
-import { redirectToKeycloakLogin } from "../../services/authService";
 import { useAuth } from "react-oidc-context";
 import { User } from "oidc-client-ts";
 
 function Header() {
-  const user = useUserStore((state) => state.user);
   const [showSearch, setShowSearch] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
   const searchString = useSearchState((state: any) => state.searchString);
@@ -40,7 +38,7 @@ function Header() {
   });
 
   if (!eventListenerRegistered) {
-    document.body.addEventListener("click", function(event: any) {
+    document.body.addEventListener("click", function (event: any) {
       if (event.target.closest(".searchBar")) return;
       if (event.target.closest(".searchBox")) return;
       setShowSearch(false);
@@ -49,7 +47,6 @@ function Header() {
   }
 
   const toggleAddMaterial = () => {
-    redirectToKeycloakLogin();
     if (onAddPage) {
       navigate("materials");
     }
@@ -90,33 +87,31 @@ function Header() {
 
   const addButtonContainer = (
     <div className="flex">
-        <NavLink
-          className={`${onAddPage ? "rounded-lg border border-blue-400 text-blue-400" : "border-none"}`}
-          to={!onAddPage ? (user ? "materials/add" : "login") : "materials" }
-          onClick={toggleAddMaterial}
-        >{addButton}</NavLink>
+      <NavLink
+        className={`${onAddPage ? "rounded-lg border border-blue-400 text-blue-400" : "border-none"}`}
+        to={!onAddPage ? (auth?.user ? "materials/add" : "login") : "materials"}
+        onClick={toggleAddMaterial}
+      >
+        {addButton}
+      </NavLink>
     </div>
   );
 
   const navigation = (
     <Nav
       materialsLink="materials"
-      myMaterialsLink={user ? "materials/mine/bought" : "login"}
+      myMaterialsLink={auth?.user ? "materials/mine/bought" : "login"}
     ></Nav>
   );
 
-    const onSigninCallback = (_user: User | void): void => {
-          window.history.replaceState(
-              {},
-              document.title,
-              window.location.pathname
-          )
-      }
+  const onSigninCallback = (_user: User | void): void => {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  };
+
   const signIn = async () => {
-    const res = await auth.signinRedirect();
-    window.location.pathname = "/";
-    console.log(window.location.pathname);
-  }
+    auth.signinRedirect();
+    console.log(auth?.user);
+  };
 
   return (
     <>
@@ -138,7 +133,7 @@ function Header() {
               </div>
             </div>
             <div className="z-40 flex items-center gap-2">
-              {!user && (
+              {!auth?.user && (
                 <button onClick={signIn} className="">
                   <img
                     className="min-w-5"
@@ -148,7 +143,7 @@ function Header() {
                   />
                 </button>
               )}
-              {user && (
+              {auth?.user && (
                 <>
                   <div className="hidden md:flex">
                     <UserMenu />

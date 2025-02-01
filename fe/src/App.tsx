@@ -11,27 +11,23 @@ import { AuthProvider } from "react-oidc-context";
 import { oidcConfig } from "./services/authService";
 
 function App(): JSX.Element {
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("/api/auth/refresh", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      useGlobalLoadingStore.setState({ loading: false });
-      if (data.accessToken) {
-        const setAccessToken = useAccessTokenStore.getState().setAccessToken;
-        setAccessToken(data.accessToken);
-      }
-      if (data.user) {
-        await UserService.setUserAndAvatar(data.user);
-        new CartService().getItems();
-      }
-    }
-    fetchData();
-  }, []);
+
+//  useEffect(() => {
+//    const setData = async () => {
+//    if (!auth.isLoading) {
+//      useGlobalLoadingStore.setState({ loading: false });
+//      if (auth.user?.access_token) {
+//        const setAccessToken = useAccessTokenStore.getState().setAccessToken;
+//        setAccessToken(auth.user?.access_token);
+//      }
+//      if (auth.user) {
+//        await UserService.setUserAndAvatar(auth.user);
+//        console.log(auth.user);
+//        new CartService().getItems();
+//      }
+//    }}
+//    setData();
+//  }, []);
 
   return (
     <AuthProvider {...oidcConfig}>

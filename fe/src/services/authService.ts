@@ -1,4 +1,5 @@
 import { useAccessTokenStore, useGlobalLoadingStore } from "../store";
+import { jwtDecode } from "jwt-decode";
 
 export default class AuthService {
   refresh = async () => {
@@ -17,49 +18,34 @@ export default class AuthService {
   };
 }
 
+interface CustomTokenPayload {
+  iss: string;
+  exp: number;
+  iat: number;
+  aud: string;
+  sub: string; 
+  // Add other custom claims here
+  preferred_username: string; 
+}
+
+export const parseIdJwt = (idToken: string) => {
+  try {
+    const decodedToken: CustomTokenPayload = jwtDecode(idToken);
+    const userId = decodedToken.sub; // Assuming 'sub' claim contains user ID
+    const preferredUsername = decodedToken.preferred_username;
+    console.log(Object.entries(decodedToken));
+    console.log(decodedToken.preferred_username);
+
+    // Use the decoded user information
+    console.log("User ID:", userId);
+    return { userId, preferredUsername }
+  } catch (error) {
+    console.error("Error decoding ID Token:", error);
+  }
+};
+
 export const oidcConfig = {
   authority: "https://localhost:8443/realms/Teachly/",
   client_id: "teachly",
   redirect_uri: "http://localhost:5173",
-}
-
-export const redirectToKeycloakLogin = () => {
-  const KEYCLOAK_REALM = "Teachly";
-  const KEYCLOAK_CLIENT_ID = "teachly";
-  const KEYCLOAK_AUTH_URL = `https://localhost:8443/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth`;
-  const REDIRECT_URI = "http://localhost:5173/auth/callback";
-
-  const authorizationUrl = new URL(KEYCLOAK_AUTH_URL);
-
-  authorizationUrl.searchParams.append("client_id", KEYCLOAK_CLIENT_ID);
-  authorizationUrl.searchParams.append("redirect_uri", REDIRECT_URI);
-  authorizationUrl.searchParams.append("response_type", "code"); // Authorization code flow
-  authorizationUrl.searchParams.append("scope", "openid profile email"); // Request scopes (adjust as needed)
-  authorizationUrl.searchParams.append("state", generateRandomString()); // Recommended for security (CSRF protection)
-  authorizationUrl.searchParams.append("nonce", generateRandomString()); // Recommended for security (replay attack protection)
-
-  window.location.href = authorizationUrl.toString();
 };
-
-const generateRandomString = () => {
-  const randomArray = new Uint8Array(16);
-  window.crypto.getRandomValues(randomArray);
-  return Array.from(randomArray, (byte) =>
-    byte.toString(16).padStart(2, "0"),
-  ).join("");
-};
-
-export const handleAuthentication = async (token: string, state: string, userId: string) => {
-  fetch("localhost:8443/realms/Teachly/protocol/openid-connect/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: JSON.stringify({
-      grant_type: "authorization_code",
-      code: token,
-      redirect_uri: "http://localhost:5173/auth/callback",
-      client_id: "teachly",
-    }),
-  });
-}

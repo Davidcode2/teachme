@@ -1,13 +1,13 @@
+import { useAuth } from "react-oidc-context";
 import { customFetch } from "../actions/customFetch";
 import {
   useAccessTokenStore,
   useCartStore,
   useErrorStore,
-  useUserStore,
 } from "../store";
 
 class CartService {
-  user = useUserStore.getState().user;
+  user = useAuth()?.user;
 
   removeItem(id: string) {
     return fetch(`/api/cart/${id}`, {
@@ -21,7 +21,7 @@ class CartService {
   }
 
   async getItems() {
-    const res = await customFetch(`/api/cart?id=${this.user?.id}`, {
+    const res = await customFetch(`/api/cart?id=${this.user}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,

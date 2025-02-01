@@ -12,14 +12,17 @@ import {
   useUserStore,
 } from "../store";
 import { useEffect, useRef, useState } from "react";
-import { redirectToKeycloakLogin } from "../services/authService";
+import { useAuth } from "react-oidc-context";
+import { parseIdJwt } from "../services/authService";
 
 export default function UserMenu({
   sidebarShown = false,
 }: {
   sidebarShown?: boolean;
 }) {
-  const user = useUserStore((state) => state.user);
+  const auth = useAuth();
+  const user = auth?.user;
+  const stuff = parseIdJwt(user?.id_token!);
   const [showMenu, setShowMenu] = useState(false);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [editUserName, setEditUserName] = useState(false);
@@ -129,7 +132,7 @@ export default function UserMenu({
               </li>
               <li className="flex cursor-pointer gap-4 hover:text-sky-800">
                 <img src={ShuffleIcon} width="25" />
-                <button onClick={redirectToKeycloakLogin}>Nutzer&nbsp;wechseln</button>
+                <button onClick={() => auth.signinRedirect()}>Nutzer&nbsp;wechseln</button>
               </li>
               <li className="flex cursor-pointer gap-4 hover:text-sky-800">
                 <img src={DarkModeIcon} width="25" />

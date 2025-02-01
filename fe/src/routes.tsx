@@ -81,16 +81,6 @@ const routes = [
     ],
   },
   {
-    path: "/login",
-    element: <LoginForm />,
-    action: loginAction,
-  },
-  {
-    path: "/signup",
-    element: <SignUpForm />,
-    action: signUpAction,
-  },
-  {
     path: "/auth/callback",
     element: <AuthCallback/>,
   },
