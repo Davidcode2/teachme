@@ -17,6 +17,12 @@ export default class AuthService {
   };
 }
 
+export const oidcConfig = {
+  authority: "https://localhost:8443/realms/Teachly/",
+  client_id: "teachly",
+  redirect_uri: "http://localhost:5173",
+}
+
 export const redirectToKeycloakLogin = () => {
   const KEYCLOAK_REALM = "Teachly";
   const KEYCLOAK_CLIENT_ID = "teachly";
@@ -43,7 +49,7 @@ const generateRandomString = () => {
   ).join("");
 };
 
-const handleAuthentication = async (token: string, state: string, userId: string) => {
+export const handleAuthentication = async (token: string, state: string, userId: string) => {
   fetch("localhost:8443/realms/Teachly/protocol/openid-connect/token", {
     method: "POST",
     headers: {

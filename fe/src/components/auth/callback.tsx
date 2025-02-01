@@ -1,5 +1,6 @@
 import { useLocation } from "react-router"
 import { useUserStore } from "../../store";
+import { handleAuthentication } from "../../services/authService";
 
 export default function AuthCallback() {
   const userId = useUserStore((state) => state?.user?.id);

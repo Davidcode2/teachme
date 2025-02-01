@@ -9,6 +9,8 @@ import Search from "./search/search";
 import SearchService from "../../services/searchService";
 import ShoppingCartIcon from "../cart/shoppingCartIcon";
 import { redirectToKeycloakLogin } from "../../services/authService";
+import { useAuth } from "react-oidc-context";
+import { User } from "oidc-client-ts";
 
 function Header() {
   const user = useUserStore((state) => state.user);
@@ -20,6 +22,7 @@ function Header() {
   const [onAddPage, setOnAddPage] = useState(false);
   const [scroll, setScroll] = useState(false);
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const toggleSearch = () => {
     if (!showSearch) {
@@ -46,6 +49,7 @@ function Header() {
   }
 
   const toggleAddMaterial = () => {
+    redirectToKeycloakLogin();
     if (onAddPage) {
       navigate("materials");
     }
@@ -101,6 +105,19 @@ function Header() {
     ></Nav>
   );
 
+    const onSigninCallback = (_user: User | void): void => {
+          window.history.replaceState(
+              {},
+              document.title,
+              window.location.pathname
+          )
+      }
+  const signIn = async () => {
+    const res = await auth.signinRedirect();
+    window.location.pathname = "/";
+    console.log(window.location.pathname);
+  }
+
   return (
     <>
       {showSearch && (
@@ -122,7 +139,7 @@ function Header() {
             </div>
             <div className="z-40 flex items-center gap-2">
               {!user && (
-                <button onClick={redirectToKeycloakLogin} className="">
+                <button onClick={signIn} className="">
                   <img
                     className="min-w-5"
                     src={UserIcon}

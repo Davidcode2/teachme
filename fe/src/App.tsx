@@ -7,6 +7,8 @@ import { useAccessTokenStore, useGlobalLoadingStore } from "./store";
 import { UserService } from "./services/userService";
 import CartService from "./services/cart.service";
 import { ErrorOverlay } from "./components/errorOverlay";
+import { AuthProvider } from "react-oidc-context";
+import { oidcConfig } from "./services/authService";
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -32,12 +34,12 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <div>
+    <AuthProvider {...oidcConfig}>
       <ErrorOverlay />
       <Sidebar></Sidebar>
       <Header></Header>
       <Outlet />
-    </div>
+    </AuthProvider>
   );
 }
 
