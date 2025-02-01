@@ -1,7 +1,6 @@
-import ArrowIcon from "../../assets/icons/icons8-logout-50.png";
 import PaperPlane from "../../assets/icons/icons8-paper-plane-64.png";
 import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
-import { Form, Link, useActionData, useNavigation } from "react-router";
+import { Link, useActionData, useNavigate, useNavigation } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
@@ -11,6 +10,7 @@ import { useRef, useState } from "react";
 function LoginForm() {
   const [showPlane, setShowPlane] = useState(false);
   const navigation = useNavigation();
+  const navigate = useNavigate();
   const loginSuccess = useActionData();
   const loopTween: any = useRef(undefined);
   const failTween: any = useRef(undefined);
@@ -92,54 +92,6 @@ function LoginForm() {
             Schön, dass du wieder da bist
           </h1>
         </div>
-        <div className="m-4 rounded-xl border border-slate-400 shadow-md md:m-20 xl:w-[30vw]">
-          <Form
-            onSubmit={toggleTimeline}
-            method="post"
-            className="flex flex-col"
-          >
-            <button className="invisible ml-auto p-4">
-              <img src={ArrowIcon} width="30" alt="" />
-            </button>
-            <div className="grid grid-cols-[.2fr_1fr] gap-y-1 px-4 py-4 sm:px-10 2xl:px-20">
-              <label className="p-2" htmlFor="email">
-                E-Mail
-              </label>
-              <input
-                className=" min-w-0 rounded-md border-b p-2"
-                id="email"
-                type="email"
-                name="email"
-                maxLength={80}
-                required
-              />
-              <label className="p-2" htmlFor="password">
-                Passwort
-              </label>
-              <input
-                className="min-w-0 rounded-md border-b p-2"
-                id="password"
-                type="password"
-                name="password"
-                minLength={6}
-                maxLength={20}
-                required
-              />
-            </div>
-            <div className="flex justify-center text-sm text-red-400">
-              <div
-                className={
-                  loginSuccess === false ? "textReplace flex" : "hidden"
-                }
-              >
-                Ups, das hat nicht geklappt
-              </div>
-            </div>
-            <button type="submit" className="ml-auto p-4">
-              <img src={ArrowIcon} width="30" alt="" />
-            </button>
-          </Form>
-        </div>
         <div className="flex">
           <div className={showPlane ? "block" : "hidden"}>
             <img
@@ -150,11 +102,6 @@ function LoginForm() {
             />
           </div>
         </div>
-      </div>
-      <div className="my-10 flex justify-center">
-        <Link to="../signup">
-          <button>Noch nicht registriert? Hier anmelden!</button>
-        </Link>
       </div>
     </>
   );

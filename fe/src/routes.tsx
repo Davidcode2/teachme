@@ -19,6 +19,7 @@ import addUsernameAction from "./actions/addUsernameAction.ts";
 import EditMaterial from "./components/card/edit_card.tsx";
 import editMaterialAction from "./actions/editMaterialAction.ts";
 import App from "./App.tsx";
+import AuthCallback from "./components/auth/callback.tsx";
 
 const routes = [
   {
@@ -88,6 +89,10 @@ const routes = [
     path: "/signup",
     element: <SignUpForm />,
     action: signUpAction,
+  },
+  {
+    path: "/auth/callback",
+    element: <AuthCallback/>,
   },
 ];
 

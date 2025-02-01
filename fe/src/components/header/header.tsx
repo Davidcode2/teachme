@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Search from "./search/search";
 import SearchService from "../../services/searchService";
 import ShoppingCartIcon from "../cart/shoppingCartIcon";
+import { redirectToKeycloakLogin } from "../../services/authService";
 
 function Header() {
   const user = useUserStore((state) => state.user);
@@ -121,14 +122,14 @@ function Header() {
             </div>
             <div className="z-40 flex items-center gap-2">
               {!user && (
-                <Link to="login" className="">
+                <button onClick={redirectToKeycloakLogin} className="">
                   <img
                     className="min-w-5"
                     src={UserIcon}
                     width="30"
                     alt="User"
                   />
-                </Link>
+                </button>
               )}
               {user && (
                 <>

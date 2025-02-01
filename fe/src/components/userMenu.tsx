@@ -12,6 +12,7 @@ import {
   useUserStore,
 } from "../store";
 import { useEffect, useRef, useState } from "react";
+import { redirectToKeycloakLogin } from "../services/authService";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -128,7 +129,7 @@ export default function UserMenu({
               </li>
               <li className="flex cursor-pointer gap-4 hover:text-sky-800">
                 <img src={ShuffleIcon} width="25" />
-                <Link to="login">Nutzer&nbsp;wechseln</Link>
+                <button onClick={redirectToKeycloakLogin}>Nutzer&nbsp;wechseln</button>
               </li>
               <li className="flex cursor-pointer gap-4 hover:text-sky-800">
                 <img src={DarkModeIcon} width="25" />
