@@ -5,8 +5,10 @@ import {
   useCartStore,
   useErrorStore,
 } from "../store";
+import { parseIdJwt } from "./authService";
 
 class CartService {
+  auth = useAuth();
   user = useAuth()?.user;
 
   removeItem(id: string) {
@@ -16,15 +18,16 @@ class CartService {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: this.user?.id }),
+      body: JSON.stringify({ userId: this.user?.profile.sub }),
     });
   }
 
   async getItems() {
-    const res = await customFetch(`/api/cart?id=${this.user}`, {
+    const userObject = parseIdJwt(this.user?.id_token!);
+    const res = await customFetch(`/api/cart?id=${userObject?.userId}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
+        Authorization: `Bearer ${this.auth.user?.access_token}`,
         "Content-Type": "application/json",
       },
     });

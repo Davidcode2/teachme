@@ -47,11 +47,13 @@ const routes = [
         path: "/materials/mine",
         element: <Mine />,
         children: [
-          { index: true,
-            element: <MyMaterials /> 
+          {
+            index: true,
+            element: <MyMaterials />
           },
-          { path: "bought/", 
-            element: <MyMaterials /> 
+          {
+            path: "bought/",
+            element: <MyMaterials />
           },
           {
             path: "workspace/",
@@ -78,11 +80,11 @@ const routes = [
         path: "/success",
         element: <SuccessPage />,
       },
+      {
+        path: "/auth/callback",
+        element: <AuthCallback />,
+      },
     ],
-  },
-  {
-    path: "/auth/callback",
-    element: <AuthCallback/>,
   },
 ];
 

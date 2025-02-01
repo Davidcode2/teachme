@@ -1,13 +1,11 @@
-import {
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/user.entity';
 import { UsersService } from '../users/usersService/users.service';
+const fetch = require('node-fetch');
+const https = require('https');
 const bcrypt = require('bcrypt');
+const jwkToPem = require('jwk-to-pem');
 
 @Injectable()
 export class AuthService {
@@ -17,21 +15,19 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
-  async login(email: string, password: string) {
-    const user = await this.findUserBy(email);
-    const validated = await this.validateUser(email, password);
-    if (!validated) {
-      throw new UnauthorizedException();
+  async login(userId: string, preferredUsername: string) {
+    console.log('trying to log in user: ', userId);
+    const user = await this.usersService.findOneById(userId);
+    if (!user && userId) {
+      console.log('no user user, trying to register');
+      console.log('userId: ', userId);
+      console.log('preferredUsername: ', preferredUsername);
+      this.register(userId, preferredUsername);
     }
-    const { hash, ...userData } = user;
-    const tokens = await this.makeTokens(user.id, user.email);
-    await this.updateRefreshToken(user.id, tokens.refreshToken);
-    return { user: userData, tokens };
   }
 
-  async signUp(email: string, password: string): Promise<any> {
-    const hash = await this.hashData(password);
-    const user = await this.usersService.create(email, hash);
+  async register(userId: string, preferredUsername: string): Promise<any> {
+    const user = await this.usersService.create(userId, preferredUsername);
     const tokens = await this.makeTokens(user.id, user.email);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
     return true;
@@ -43,25 +39,18 @@ export class AuthService {
     this.usersService.update(user);
   }
 
-  async validateUser(email: string, password: string): Promise<User> {
-    const user = await this.findUserBy(email);
-    if (!user) return null;
-    const result = await bcrypt.compare(password, user.hash);
-    return result;
-  }
-
-  async refreshTokens(userId: string, refreshToken: string) {
-    const { hash, ...user } = await this.usersService.findOneById(userId);
-    if (!user || !user.refreshToken)
-      throw new ForbiddenException('Access Denied');
-    const refreshTokenMatches = await this.checkRefreshToken(
-      user.refreshToken,
-      refreshToken,
+  async getPublicKey() {
+    const response = await fetch(
+      `${this.configService.get<string>('KEYCLOAK_REALM_URL')}/protocol/openid-connect/certs`,
+      {
+        agent: new https.Agent({ rejectUnauthorized: false }),
+      },
     );
-    if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
-    const tokens = await this.makeTokens(user.id, user.email);
-    await this.updateRefreshToken(user.id, tokens.refreshToken);
-    return { user, tokens };
+    const data = await response.json();
+    const jwk = data.keys[0]; // Assuming you only have one key. Adapt if needed.
+
+    const pem = jwkToPem(jwk);
+    return pem;
   }
 
   private makeRequestBody(token: string) {
@@ -88,17 +77,6 @@ export class AuthService {
     );
     const data = await response.json();
     return data;
-  }
-
-  private async checkRefreshToken(
-    userRefreshToken: string,
-    refreshToken: string,
-  ) {
-    return await bcrypt.compare(refreshToken, userRefreshToken);
-  }
-
-  private async findUserBy(email: string): Promise<User> {
-    return this.usersService.findOneByEmail(email);
   }
 
   private async hashData(inputString: string) {

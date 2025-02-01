@@ -5,7 +5,6 @@ import {
   Post,
   UseGuards,
   Res,
-  ForbiddenException,
   Logger,
   HttpStatus,
   HttpException,
@@ -21,14 +20,13 @@ import { ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
+  //@UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req, @Res({ passthrough: true }) response: Response) {
+  async login(@Request() req) {
     const login = await this.authService.login(
-      req.body.email,
-      req.body.password,
+      req.body.userId,
+      req.body.preferredUsername,
     );
-    this.setCookies(login, response);
     return login;
   }
 
@@ -42,34 +40,10 @@ export class AuthController {
     return true;
   }
 
-  @Get('refresh')
-  async refresh(
-    @Request() req,
-    @Res({ passthrough: true }) response: Response,
-  ) {
-    const refreshToken = req.cookies.refresh_token;
-    const userId = req.cookies.userId;
-    if (!userId || !refreshToken) throw new ForbiddenException('Access Denied');
-    const { user, tokens } = await this.authService.refreshTokens(
-      userId,
-      refreshToken,
-    );
-    response.cookie('refresh_token', tokens.refreshToken, {
-      secure: true,
-      httpOnly: true,
-    });
-    const userOutDto = {
-      displayName: user.displayName,
-      id: user.id,
-      authorId: user.authorId,
-    };
-    return { user: userOutDto, accessToken: tokens.accessToken };
-  }
-
   @Post('signup')
   async signup(@Request() req, @Res({ passthrough: true }) response: Response) {
     try {
-      const signUp = await this.authService.signUp(
+      const signUp = await this.authService.register(
         req.body.email,
         req.body.password,
       );

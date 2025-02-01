@@ -1,4 +1,4 @@
-import { Form, Link } from "react-router";
+import { Form } from "react-router";
 import CheckMarkIcon from "../assets/icons/icons8-checkmark-48.png";
 import userIcon from "../assets/icons/icons8-user-48.png";
 import ArrowIcon from "../assets/icons/icons8-logout-50.png";
@@ -13,7 +13,7 @@ import {
 } from "../store";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "react-oidc-context";
-import { parseIdJwt } from "../services/authService";
+import { parseIdJwt, switchUser } from "../services/authService";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -21,8 +21,7 @@ export default function UserMenu({
   sidebarShown?: boolean;
 }) {
   const auth = useAuth();
-  const user = auth?.user;
-  const stuff = parseIdJwt(user?.id_token!);
+  const user = parseIdJwt(auth.user?.id_token!);
   const [showMenu, setShowMenu] = useState(false);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [editUserName, setEditUserName] = useState(false);
@@ -72,8 +71,8 @@ export default function UserMenu({
   });
 
   let displayName = "";
-  if (user!.displayName) {
-    displayName = user!.displayName;
+  if (user!.preferredUsername) {
+    displayName = user!.preferredUsername;
   } else {
     displayName = "";
   }
@@ -125,14 +124,14 @@ export default function UserMenu({
             <ul className="userMenu flex flex-col gap-y-2 pr-4">
               <li
                 className="flex cursor-pointer gap-4 hover:text-sky-800"
-                onClick={logout}
+                onClick={() => auth.signoutRedirect()}
               >
                 <img src={ArrowIcon} width="24" />
                 <span>Logout</span>
               </li>
               <li className="flex cursor-pointer gap-4 hover:text-sky-800">
                 <img src={ShuffleIcon} width="25" />
-                <button onClick={() => auth.signinRedirect()}>Nutzer&nbsp;wechseln</button>
+                <button onClick={() => switchUser(auth)}>Nutzer&nbsp;wechseln</button>
               </li>
               <li className="flex cursor-pointer gap-4 hover:text-sky-800">
                 <img src={DarkModeIcon} width="25" />

@@ -14,11 +14,8 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
-
-  @Column()
-  hash: string;
 
   @Column({ nullable: true })
   displayName: string;

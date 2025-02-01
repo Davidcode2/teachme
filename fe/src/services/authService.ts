@@ -31,13 +31,8 @@ interface CustomTokenPayload {
 export const parseIdJwt = (idToken: string) => {
   try {
     const decodedToken: CustomTokenPayload = jwtDecode(idToken);
-    const userId = decodedToken.sub; // Assuming 'sub' claim contains user ID
+    const userId = decodedToken.sub;
     const preferredUsername = decodedToken.preferred_username;
-    console.log(Object.entries(decodedToken));
-    console.log(decodedToken.preferred_username);
-
-    // Use the decoded user information
-    console.log("User ID:", userId);
     return { userId, preferredUsername }
   } catch (error) {
     console.error("Error decoding ID Token:", error);
@@ -47,5 +42,21 @@ export const parseIdJwt = (idToken: string) => {
 export const oidcConfig = {
   authority: "https://localhost:8443/realms/Teachly/",
   client_id: "teachly",
-  redirect_uri: "http://localhost:5173",
+  redirect_uri: "http://localhost:5173/auth/callback",
 };
+
+export const handleSignIn = async (userId: string, preferredUsername: string) => {
+  fetch("/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      withCredentials: "true",
+    },
+    body: JSON.stringify({ userId: userId, preferredUsername: preferredUsername}),
+  });
+}
+
+export const switchUser = async (auth: any) => {
+  await auth.signoutSilent();
+  await auth.signinRedirect();
+}

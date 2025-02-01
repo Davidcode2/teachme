@@ -32,8 +32,9 @@ export class CartController {
   @UseGuards(JwtAuthGuard)
   @Get()
   getForUser(@Req() req: Request): Promise<MaterialOutDto[]> {
-    const id = req.cookies.userId;
-    const materials = this.cartService.getItems(id);
+    const user = req.user;
+    console.log(user);
+    const materials = this.cartService.getItems('');
     return materials;
   }
 

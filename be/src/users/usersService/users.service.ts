@@ -53,18 +53,16 @@ export class UsersService {
     return user;
   }
 
-  async create(email: string, hash: string): Promise<User> {
-    const isDuplicate = await this.usersRepository.existsBy({ email: email });
-    if (isDuplicate) throw new Error('Email address is already in use');
+  async create(userId: string, preferredUsername: string): Promise<User> {
+    const isDuplicate = await this.usersRepository.existsBy({ id: userId });
+    if (isDuplicate) throw new Error('UserId is already in use');
     const user = new User();
     const consumer = await this.consumerService.create();
     const author = await this.createAuthor();
-    user.email = email;
-    user.hash = hash;
     user.signUpDate = new Date();
     user.author = author;
     user.consumer = consumer;
-    user.avatar = this.createAvatar(email);
+    user.avatar = this.createAvatar(preferredUsername);
     return this.usersRepository.save(user);
   }
 
@@ -88,12 +86,6 @@ export class UsersService {
 
   async updateRefreshToken(id: string, refreshToken: string): Promise<User> {
     return this.usersRepository.save({ id: id, refreshToken: refreshToken });
-  }
-
-  async findHash(email: string): Promise<string | null> {
-    return this.usersRepository.findOneBy({ email: email }).then((user) => {
-      return user.hash;
-    });
   }
 
   async remove(id: string): Promise<void> {
