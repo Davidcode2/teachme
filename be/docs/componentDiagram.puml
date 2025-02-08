@@ -1,0 +1,15 @@
+@startuml
+
+component Keycloak
+component Frontend
+component Backend {
+  storage assets
+}
+database postgres
+
+Frontend -0)- Backend
+Frontend -0)- Keycloak
+Backend -0)- Keycloak
+Backend -> postgres
+
+@enduml

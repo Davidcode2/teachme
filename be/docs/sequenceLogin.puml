@@ -1,0 +1,41 @@
+@startuml
+actor user as user
+
+user -> Frontend: click login
+activate Frontend
+Frontend --> user: redirect to IdP 
+user -> Keycloak: provide credentials
+
+activate Keycloak
+Keycloak --> Frontend: send code
+Frontend -> Keycloak: request access token with code
+Keycloak --> Frontend: send access token
+deactivate Keycloak
+
+Frontend -> Backend: request protected resource
+
+alt happy path
+
+  activate Backend
+  Backend --> Keycloak: verify access token 
+  Keycloak -> Backend: is valid
+  Backend --> Frontend: send 200 resource
+  deactivate Backend
+
+else invalid audience
+
+  Backend --> Keycloak: verify access token 
+  Keycloak -> Backend: audience is invalid 
+  Backend --> Frontend: send 401
+
+else expired token
+
+  Backend --> Keycloak: verify access token 
+  Keycloak -> Backend: token expired
+  Backend --> Frontend: send 401
+ 
+end
+
+deactivate Frontend
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+skinparam roundCorner 10
+
+artifact "docker-compose.yml"
+
+cloud DigitalOcean {
+  component certbot
+  component nginx
+  component Frontend
+  component Backend
+  database postgres
+  file TODO #palegreen;line:green;line.dashed;text:green {
+  component Keycloak
+  }
+}
+
+nginx == Frontend
+Backend -- postgres
+
+@enduml
