@@ -1,0 +1,26 @@
+@startuml
+
+component cartService as cart
+component authorService as author
+component userService as user
+component consumerService as consumer
+component stripeService as stripe
+component paymentService as payment
+component materialService as material
+component imageService as image
+component authService as auth
+
+stripe <- payment 
+user -> consumer
+author <- user
+user --> auth
+
+payment <-- cart
+cart --> material
+
+material --> user
+material --> payment
+
+material -> image
+
+@enduml

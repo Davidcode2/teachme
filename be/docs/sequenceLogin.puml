@@ -14,7 +14,7 @@ deactivate Keycloak
 
 Frontend -> Backend: request protected resource
 
-alt happy path
+alt#Gold #LightBlue happy path
 
   activate Backend
   Backend --> Keycloak: verify access token 

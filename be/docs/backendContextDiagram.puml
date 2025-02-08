@@ -1,0 +1,17 @@
+@startuml
+!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(pA, "User", $sprite="person")
+System(backend, "Backend")
+Container(assets, "Assets")
+Container(postgres, "Postgres")
+Container(api, "API")
+Container(keycloak, "Keycloak")
+
+postgres <- backend 
+assets <- backend
+backend -- api : provides
+backend -> keycloak
+
+
+@enduml
