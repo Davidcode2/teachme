@@ -17,7 +17,7 @@ export class AuthService {
 
   async login(userId: string, preferredUsername: string) {
     console.log('trying to log in user: ', userId);
-    const user = await this.usersService.findOneById(userId);
+    const user = await this.usersService.findOneByIdpId(userId);
     if (!user && userId) {
       console.log('no user user, trying to register');
       console.log('userId: ', userId);
@@ -28,6 +28,7 @@ export class AuthService {
 
   async register(userId: string, preferredUsername: string): Promise<any> {
     const user = await this.usersService.create(userId, preferredUsername);
+    console.log('user created: ', user);
     const tokens = await this.makeTokens(user.id, user.email);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
     return true;
@@ -39,15 +40,27 @@ export class AuthService {
     this.usersService.update(user);
   }
 
+  async verifyTokenWithKeycloak(token: string) {
+    const userInfoEndpoint =
+      'https://localhost:8443/realms/Teachly/protocol/openid-connect/userinfo';
+    const res = await fetch(userInfoEndpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+  }
+
   async getPublicKey() {
     const response = await fetch(
       `${this.configService.get<string>('KEYCLOAK_REALM_URL')}/protocol/openid-connect/certs`,
       {
-        agent: new https.Agent({ rejectUnauthorized: false }),
+        agent: new https.Agent({ rejectUnauthorized: false }), // because of self-signed certificate
       },
     );
     const data = await response.json();
-    const jwk = data.keys[0]; // Assuming you only have one key. Adapt if needed.
+    const jwk = data.keys[0];
 
     const pem = jwkToPem(jwk);
     return pem;

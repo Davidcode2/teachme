@@ -15,6 +15,9 @@ export class User {
   id: string;
 
   @Column({ nullable: true })
+  idpUserId: string;
+
+  @Column({ nullable: true })
   email: string;
 
   @Column({ nullable: true })

@@ -18,13 +18,12 @@ class CartService {
         Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: this.user?.profile.sub }),
     });
   }
 
   async getItems() {
-    const userObject = parseIdJwt(this.user?.id_token!);
-    const res = await customFetch(`/api/cart?id=${userObject?.userId}`, {
+    const userId = this.user?.profile.sub;
+    const res = await fetch(`/api/cart?id=${userId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${this.auth.user?.access_token}`,

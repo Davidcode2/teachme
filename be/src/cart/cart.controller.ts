@@ -34,7 +34,8 @@ export class CartController {
   getForUser(@Req() req: Request): Promise<MaterialOutDto[]> {
     const user = req.user;
     console.log(user);
-    const materials = this.cartService.getItems('');
+    console.log(user['id']);
+    const materials = this.cartService.getItems(user['id']);
     return materials;
   }
 

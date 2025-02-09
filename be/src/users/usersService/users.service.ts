@@ -37,6 +37,22 @@ export class UsersService {
     return null;
   }
 
+  async findOneByIdpId(id: string): Promise<User | null> {
+    if (!id) return null;
+    const user = await this.usersRepository.findOneBy({ idpUserId: id });
+    if (!user) return null;
+    user.consumer = await this.consumerService.findById(user.consumerId);
+    user.consumer.materials = await this.consumerService.getMaterials(
+      user.consumerId,
+    );
+    user.consumer.cart = await this.consumerService.getCart(user.consumerId);
+    user.author = await this.authorRepository.findOneBy({ id: user.authorId });
+    user.author.materials = await this.authorService.getMaterials(
+      user.authorId,
+    );
+    return user;
+  }
+
   async findOneById(id: string): Promise<User | null> {
     if (!id) return null;
     const user = await this.usersRepository.findOneBy({ id: id });
@@ -57,6 +73,7 @@ export class UsersService {
     const isDuplicate = await this.usersRepository.existsBy({ id: userId });
     if (isDuplicate) throw new Error('UserId is already in use');
     const user = new User();
+    user.idpUserId = userId;
     const consumer = await this.consumerService.create();
     const author = await this.createAuthor();
     user.signUpDate = new Date();
