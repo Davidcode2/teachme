@@ -55,7 +55,7 @@ export class CartService {
 
   async addItem(userId: string, materialId: string) {
     await this.createCartIfNotExists(userId);
-    const user = await this.userService.findOneById(userId);
+    const user = await this.userService.findOneByIdpId(userId);
     const material = await this.materialsService.findOne(materialId);
     if (this.alreadyInCart(user, material)) {
       return user.consumer.cart.materials.length;

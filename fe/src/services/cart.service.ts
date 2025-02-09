@@ -8,8 +8,6 @@ import {
 import { parseIdJwt } from "./authService";
 
 class CartService {
-  auth = useAuth();
-  user = useAuth()?.user;
 
   removeItem(id: string) {
     return fetch(`/api/cart/${id}`, {
@@ -21,33 +19,32 @@ class CartService {
     });
   }
 
-  async getItems() {
-    const userId = this.user?.profile.sub;
+  async getItems(userId: string, access_token: string) {
     const res = await fetch(`/api/cart?id=${userId}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${this.auth.user?.access_token}`,
+        Authorization: `Bearer ${access_token}`,
         "Content-Type": "application/json",
       },
     });
-//    if (res.status === 401) {
-//      useErrorStore
-//        .getState()
-//        .pushError({ message: "Nicht authorisiert. Laden Sie die Seite neu", code: 401 });
-//      return;
-//    }
+    if (res.status === 401) {
+      useErrorStore
+        .getState()
+        .pushError({ message: "Nicht authorisiert. Laden Sie die Seite neu", code: 401 });
+      return;
+    }
     const data = await res.json();
     useCartStore.setState({ numberOfCartItems: data.length });
     return data;
   }
 
-  addItem = async (id: string) => {
+  addItem = async (id: string, access_token: string, userId: string) => {
     const res = await fetch("/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: this.user?.id, materialId: id }),
+      body: JSON.stringify({ userId: userId, materialId: id }),
     });
     const numberOfItems = await res.json();
     useCartStore.setState({ numberOfCartItems: numberOfItems });

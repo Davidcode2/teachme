@@ -9,6 +9,7 @@ import { useUserStore } from "../../../store";
 import { useState } from "react";
 import DeleteMaterialModal from "./deleteMaterialModal";
 import CartService from "../../../services/cart.service";
+import { useAuth } from "react-oidc-context";
 
 interface ActionButtonsProps {
   id: string;
@@ -22,9 +23,9 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
+  const auth = useAuth();
 
-  const { user } = useUserStore();
-  if (!user)
+  if (!auth.isAuthenticated)
     return (
       <div className="flex hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer">
         <Link to="/login">
@@ -35,7 +36,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
 
   const addToShoppingCart = async () => {
     setLoading(true);
-    await new CartService().addItem(id);
+    await new CartService().addItem(id, auth.user?.access_token, auth.user?.profile.sub);
     setLoading(false);
     showSuccessIndication();
   };
@@ -57,7 +58,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
     setEventListenerRegistered(true);
   }
 
-  const isAuthor = user && authorId === user.authorId;
+  const isAuthor = auth.isAuthenticated && authorId === auth.user?.profile.sub;
 
   return (
     <>

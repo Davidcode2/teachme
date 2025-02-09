@@ -7,15 +7,17 @@ import { useCartStore } from "../../store";
 import Skeleton from "../card/skeleton";
 import MaterialInDto from "../../DTOs/materialInDto";
 import Material from "../../DTOs/material";
+import { useAuth } from "react-oidc-context";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const cartService = new CartService();
   const { cart, numberOfCartItems } = useCartStore();
+  const auth = useAuth();
 
   const getItems = async () => {
-    const data = await cartService.getItems();
+    const data = await cartService.getItems(auth.user?.profile?.sub!, auth.user?.access_token!);
     return data;
   };
 
