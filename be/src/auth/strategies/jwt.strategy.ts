@@ -27,7 +27,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         }
         return done(null, publicKey);
       },
-      //const publicKey = await this.authService.getPublicKey();
     });
   }
 
@@ -49,6 +48,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         publicKey = this.publicKeyCache[kid];
         return publicKey;
       }
+
+      return publicKey;
     } catch (error) {
       console.error('Error getting public key:', error);
       return null;
