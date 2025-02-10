@@ -1,3 +1,4 @@
+import { User } from "oidc-client-ts";
 import { useAccessTokenStore, useGlobalLoadingStore } from "../store";
 import { jwtDecode } from "jwt-decode";
 
@@ -24,7 +25,6 @@ interface CustomTokenPayload {
   iat: number;
   aud: string;
   sub: string; 
-  // Add other custom claims here
   preferred_username: string; 
 }
 
@@ -59,4 +59,13 @@ export const handleSignIn = async (userId: string, preferredUsername: string) =>
 export const switchUser = async (auth: any) => {
   await auth.signoutSilent();
   await auth.signinRedirect();
+}
+
+export function getUser() {
+    const oidcStorage = sessionStorage.getItem(`oidc.user:https://localhost:8443/realms/Teachly/:teachly`)
+    if (!oidcStorage) {
+        return null;
+    }
+
+    return User.fromStorageString(oidcStorage);
 }

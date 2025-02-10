@@ -37,7 +37,7 @@ export class UsersService {
     return null;
   }
 
-  async findOneByIdpId(id: string): Promise<User | null> {
+  async findOneById(id: string): Promise<User | null> {
     if (!id) return null;
     const user = await this.usersRepository.findOneBy({ idpUserId: id });
     if (!user) return null;
@@ -53,7 +53,7 @@ export class UsersService {
     return user;
   }
 
-  async findOneById(id: string): Promise<User | null> {
+  async findOneById_bak(id: string): Promise<User | null> {
     if (!id) return null;
     const user = await this.usersRepository.findOneBy({ id: id });
     if (!user) return null;

@@ -23,7 +23,7 @@ export class CartService {
 
   async create(userId: string): Promise<Cart> {
     const cart = new Cart();
-    const user = await this.userService.findOneByIdpId(userId);
+    const user = await this.userService.findOneById(userId);
     user.consumer.cart = cart;
     user.consumer.cart.materials = [];
     this.cartRepository.save(cart);
@@ -33,7 +33,7 @@ export class CartService {
 
   async getItems(id: string): Promise<MaterialOutDto[]> {
     await this.createCartIfNotExists(id);
-    const user = await this.userService.findOneByIdpId(id);
+    const user = await this.userService.findOneById(id);
     const materials = user.consumer.cart.materials;
     const materialsWithThumbnails =
       await this.materialsService.mapThumbnails(materials);
@@ -55,7 +55,7 @@ export class CartService {
 
   async addItem(userId: string, materialId: string) {
     await this.createCartIfNotExists(userId);
-    const user = await this.userService.findOneByIdpId(userId);
+    const user = await this.userService.findOneById(userId);
     const material = await this.materialsService.findOne(materialId);
     if (this.alreadyInCart(user, material)) {
       return user.consumer.cart.materials.length;
@@ -66,7 +66,7 @@ export class CartService {
   }
 
   private async createCartIfNotExists(userId: string) {
-    const user = await this.userService.findOneByIdpId(userId);
+    const user = await this.userService.findOneById(userId);
     if (!user.consumer.cart) {
       await this.create(userId);
     }

@@ -62,14 +62,15 @@ export class MaterialsController {
   @UseGuards(JwtAuthGuard)
   @Get('by-user')
   findByAuthor(@Request() req) {
-    const userId = req.cookies.userId;
+    const userId = req.user['id'];
     return this.materialsService.findByCreator(userId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('own')
   findByUser(@Request() req, @Query('search') searchString: string) {
-    const userId = req.cookies.userId;
+    const user = req.user;
+    const userId = user['id'];
     return this.materialsService.findByUser(userId, searchString);
   }
 
@@ -77,12 +78,12 @@ export class MaterialsController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   create(
-    @Request() req,
+    @Request() req: any,
     @UploadedFile() file: Express.Multer.File,
     @Body() body: any,
   ) {
     const materialDto = { file, ...body };
-    const userId = req.cookies.userId;
+    const userId = req.user['id'];
     return this.materialsService.create(userId, materialDto);
   }
 
