@@ -6,11 +6,11 @@ import {
   Res,
   Patch,
   Body,
-  Request,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from '../usersService/users.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { UpdateUserDto } from 'src/shared/DTOs/updatedUserDto';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -34,15 +34,23 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('authorId')
+  async getAuthorId(@Req() req: Request) {
+    const userId = req.user['id'];
+    const authorId = await this.usersService.getAuthorId(userId);
+    return { data: authorId };
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('stats')
-  async getStats(@Request() req: any) {
+  async getStats(@Req() req: Request) {
     const userId = req.user['id'];
     return this.usersService.getStatistics(userId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch()
-  async update(@Request() req: any, @Body() body: UpdateUserDto) {
+  async update(@Req() req: Request, @Body() body: UpdateUserDto) {
     const userId = req.user['id'];
     const updatedUser = await this.usersService.partialUpdate(userId, body);
     return updatedUser.displayName;

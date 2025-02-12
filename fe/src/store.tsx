@@ -17,13 +17,17 @@ export const useAccessTokenStore = create<AccessTokenState>((set) => ({
 
 type UserState = {
   user: User | null;
+  authorId: string | null;
   setUser: (user: any) => void;
+  setAuthor: (authorId: any) => void;
   removeUser: () => void;
 };
 
 export const useUserStore = create<UserState>((set) => ({
   user: null,
+  authorId: null,
   setUser: (user: any) => set({ user }),
+  setAuthor: (authorId: any) => set({ authorId }),
   removeUser: () => set({ user: null }),
 }));
 

@@ -1,5 +1,6 @@
 import { useAccessTokenStore, useErrorStore, useUserStore } from "../store";
 import SharedService from "../services/sharedService";
+import { customFetch } from "./customFetch";
 
 export default async function addUsernameAction({
   request,
@@ -11,12 +12,8 @@ export default async function addUsernameAction({
   const jsonData = SharedService.formDataToJson<{ displayName: string }>(
     formData,
   );
-  const res = await fetch(`/api/users`, {
+  const res = await customFetch(`/api/users`, {
     method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(jsonData),
   });
 

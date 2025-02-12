@@ -69,6 +69,11 @@ export class UsersService {
     return user;
   }
 
+  async getAuthorId(userId: string): Promise<string> {
+    const user = await this.findOneById(userId);
+    return user.authorId;
+  }
+
   async create(userId: string, preferredUsername: string): Promise<User> {
     const isDuplicate = await this.usersRepository.existsBy({ id: userId });
     if (isDuplicate) throw new Error('UserId is already in use');

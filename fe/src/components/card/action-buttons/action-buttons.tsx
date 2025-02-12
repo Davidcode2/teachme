@@ -23,6 +23,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
+  const userStore = useUserStore();
   const auth = useAuth();
 
   if (!auth.isAuthenticated)
@@ -58,7 +59,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
     setEventListenerRegistered(true);
   }
 
-  const isAuthor = auth.isAuthenticated && authorId === auth.user?.profile.sub;
+  const isAuthor = auth.isAuthenticated && authorId === userStore.authorId;
 
   return (
     <>
