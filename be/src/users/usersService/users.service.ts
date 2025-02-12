@@ -53,7 +53,7 @@ export class UsersService {
     return user;
   }
 
-  async findOneById_bak(id: string): Promise<User | null> {
+  async findOneByInternalId(id: string): Promise<User | null> {
     if (!id) return null;
     const user = await this.usersRepository.findOneBy({ id: id });
     if (!user) return null;
@@ -135,7 +135,7 @@ export class UsersService {
   }
 
   async getAvatarPath(userId: string): Promise<string> {
-    const user = await this.findOneById(userId);
+    const user = await this.findOneByInternalId(userId);
     return user.avatar;
   }
 

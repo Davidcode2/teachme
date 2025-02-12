@@ -21,10 +21,14 @@ import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
 export class CartController {
   constructor(private cartService: CartService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async addItem(@Body() requestBody: { userId: string; materialId: string }) {
+  async addItem(
+    @Body() requestBody: { materialId: string },
+    @Req() req: Request,
+  ) {
     return await this.cartService.addItem(
-      requestBody.userId,
+      req.user['id'],
       requestBody.materialId,
     );
   }
@@ -33,8 +37,6 @@ export class CartController {
   @Get()
   getForUser(@Req() req: Request): Promise<MaterialOutDto[]> {
     const user = req.user;
-    console.log(user);
-    console.log(user['id']);
     const materials = this.cartService.getItems(user['id']);
     return materials;
   }
@@ -42,12 +44,14 @@ export class CartController {
   @UseGuards(JwtAuthGuard)
   @Delete(':materialId')
   async removeItem(
-    @Body() requestBody: { userId: string },
+    @Req() req: Request,
     @Param('materialId') materialId: string,
   ) {
-    return this.cartService.removeItem(requestBody.userId, materialId);
+    const user = req.user;
+    return this.cartService.removeItem(user['id'], materialId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('buy')
   @Header('mode', 'no-cors')
   async buyMaterial(
@@ -55,7 +59,7 @@ export class CartController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const userId = req.cookies.userId;
+    const userId = req.user['id'];
     const session = await this.cartService.buyMaterial(
       requestBody.materialId,
       userId,

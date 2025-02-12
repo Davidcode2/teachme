@@ -36,14 +36,14 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('stats')
   async getStats(@Request() req: any) {
-    const userId = req.cookies.userId;
+    const userId = req.user['id'];
     return this.usersService.getStatistics(userId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch()
   async update(@Request() req: any, @Body() body: UpdateUserDto) {
-    const userId = req.cookies.userId;
+    const userId = req.user['id'];
     const updatedUser = await this.usersService.partialUpdate(userId, body);
     return updatedUser.displayName;
   }
