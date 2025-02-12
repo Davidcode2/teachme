@@ -34,7 +34,7 @@ function Card({
     <img
       src={image}
       onClick={togglePreview}
-      className="thumbnail sm:h-full cursor-pointer object-cover object-top transition-transform duration-300 hover:scale-105 md:w-[400px] lg:w-[600px]"
+      className="thumbnail cursor-pointer object-cover object-top transition-transform duration-300 hover:scale-105 sm:h-full md:w-[400px] lg:w-[600px]"
       alt="Thumbnail"
     />
   ) : (
@@ -79,23 +79,24 @@ function Card({
         id={materialWithThumbnail.id.toString()}
       >
         <BorderColorBlur>
-          <div className="h-[250px] sm:h-[450px] overflow-hidden grid grid-rows-[1fr_auto] md:grid-cols-[2fr_3fr] grid-cols-[40%_auto] text-sm sm:grid-cols-2 bg-white rounded-lg">
+          <div className="grid h-[250px] grid-cols-[40%_auto] grid-rows-[1fr_auto] overflow-hidden rounded-lg bg-white text-sm sm:h-[450px] sm:grid-cols-2 md:grid-cols-[2fr_3fr]">
             <div className="overflow-hidden border-r sm:row-span-2">
               {imageElement}
             </div>
-            <div className="flex flex-1 flex-col gap-4 overflow-hidden rounded-r-lg border-slate-100 bg-white p-4 md:p-10 md:border-t-0">
+            <div className="flex flex-1 flex-col gap-4 overflow-hidden rounded-r-lg border-slate-100 bg-white p-4 md:border-t-0 md:p-10">
               <div className="flex flex-col overflow-auto">
                 <div className="text-lg md:text-2xl">
                   {materialWithThumbnail.title}
                 </div>
-                <div className="md:text-base line-clamp-5 sm:line-clamp-none">{materialWithThumbnail.description}</div>
+                <div className="line-clamp-5 sm:line-clamp-none md:text-base">
+                  {materialWithThumbnail.description}
+                </div>
               </div>
               <p className="text-emerald-500 md:text-3xl">
-                {Number(materialWithThumbnail.price / 100).toFixed(2)}{" "}
-                €
+                {Number(materialWithThumbnail.price / 100).toFixed(2)} €
               </p>
             </div>
-            <div className="col-span-2 border-t sm:border-none sm:col-start-2 px-4 p-2 md:p-10 mt-auto flex">
+            <div className="col-span-2 mt-auto flex border-t p-2 px-4 sm:col-start-2 sm:border-none md:p-10">
               <div className="self-center">
                 <ActionButtons
                   id={materialWithThumbnail.id.toString()}
