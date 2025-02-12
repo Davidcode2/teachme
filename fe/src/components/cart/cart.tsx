@@ -17,7 +17,10 @@ export default function Cart(): JSX.Element {
   const auth = useAuth();
 
   const getItems = async () => {
-    const data = await cartService.getItems(auth.user?.profile?.sub!, auth.user?.access_token!);
+    const data = await cartService.getItems(
+      auth.user?.profile?.sub!,
+      auth.user?.access_token!,
+    );
     return data;
   };
 
@@ -53,20 +56,12 @@ export default function Cart(): JSX.Element {
     <div className="m-0 mt-10 flex flex-col gap-4 sm:m-10 md:max-w-[600px]">
       {cartItems &&
         cartItems.map((item: MaterialInDto) => (
-          <CartItem
-            key={item.id}
-            item={item}
-            cartService={cartService}
-          />
+          <CartItem key={item.id} item={item} cartService={cartService} />
         ))}
       {cartItems.length > 0 && (
         <button
           onClick={() =>
-            toCheckout(
-              cartItems.map((item: Material) =>
-                item.id.toString(),
-              ),
-            )
+            toCheckout(cartItems.map((item: Material) => item.id.toString()))
           }
           className="flex justify-center rounded-md bg-emerald-500 p-2 shadow-md hover:bg-emerald-600 hover:shadow-sm"
         >
