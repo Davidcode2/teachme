@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
 import { useNavigate } from "react-router";
-import { handleSignIn, parseIdJwt } from "../../services/authService";
+import { handleSignIn } from "../../services/authService";
 import { useAccessTokenStore, useUserStore } from "../../store";
 import { customFetch } from "../../actions/customFetch";
 
@@ -10,13 +10,6 @@ export default function AuthCallback() {
   const navigate = useNavigate();
   const accessTokenStore = useAccessTokenStore();
   const userStore = useUserStore();
-
-  const getSessionStatus = async () => {
-    const session = await auth.querySessionStatus();
-    //const jwt = parseIdJwt(session?.sub!);
-    console.log(session);
-    return session?.sub!;
-  };
 
   const fetchAuthorId = async () => {
     const res = await customFetch(`/api/users/authorId`, {
@@ -28,7 +21,6 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const handleAuth = async () => {
-      const sessionSub = await getSessionStatus();
       if (auth.isAuthenticated) {
         const username = auth?.user?.profile.preferred_username!;
         console.log("access token:", auth.user?.access_token!);
