@@ -36,7 +36,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
 
   const addToShoppingCart = async () => {
     setLoading(true);
-    await new CartService().addItem(id, auth.user?.access_token, auth.user?.profile.sub);
+    await new CartService().addItem(id, auth.user?.profile?.sub!);
     setLoading(false);
     showSuccessIndication();
   };
