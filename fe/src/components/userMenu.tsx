@@ -14,6 +14,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "react-oidc-context";
 import { parseIdJwt, switchUser } from "../services/authService";
+import { customFetch } from "../actions/customFetch";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -79,11 +80,10 @@ export default function UserMenu({
 
   const handleDisplayNameSubmit = async (e: any) => {
     setEditUserName(false);
-    const res = await fetch("/api/users", {
+    const res = await customFetch("/api/users", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
       },
       body: JSON.stringify({ displayName: e.target.displayName.value }),
     });

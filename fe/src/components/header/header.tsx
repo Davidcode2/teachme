@@ -21,7 +21,6 @@ function Header() {
   const [scroll, setScroll] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
-  auth.user?.toStorageString
 
   const toggleSearch = () => {
     if (!showSearch) {
@@ -39,7 +38,7 @@ function Header() {
   });
 
   if (!eventListenerRegistered) {
-    document.body.addEventListener("click", function (event: any) {
+    document.body.addEventListener("click", function(event: any) {
       if (event.target.closest(".searchBar")) return;
       if (event.target.closest(".searchBox")) return;
       setShowSearch(false);
@@ -90,7 +89,13 @@ function Header() {
     <div className="flex">
       <NavLink
         className={`${onAddPage ? "rounded-lg border border-blue-400 text-blue-400" : "border-none"}`}
-        to={!onAddPage ? (auth?.isAuthenticated ? "materials/add" : "login") : "materials"}
+        to={
+          !onAddPage
+            ? auth?.isAuthenticated
+              ? "materials/add"
+              : "login"
+            : "materials"
+        }
         onClick={toggleAddMaterial}
       >
         {addButton}
@@ -101,7 +106,9 @@ function Header() {
   const navigation = (
     <Nav
       materialsLink="materials"
-      myMaterialsLink={auth?.isAuthenticated ? "materials/mine/bought" : "login"}
+      myMaterialsLink={
+        auth?.isAuthenticated ? "materials/mine/bought" : "login"
+      }
     ></Nav>
   );
 

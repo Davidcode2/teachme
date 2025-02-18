@@ -1,5 +1,6 @@
 import { redirect } from "react-router";
-import { useAccessTokenStore, useErrorStore } from "../store";
+import { useErrorStore } from "../store";
+import { customFetch } from "./customFetch";
 
 export default async function editMaterialAction({
   request,
@@ -11,11 +12,8 @@ export default async function editMaterialAction({
   const price = formData.get("price");
   const id = formData.get("id");
   formData.set("price", price!.toString().replace(/,/g, ""));
-  const res = await fetch(`/api/materials/${id}`, {
+  const res = await customFetch(`/api/materials/${id}`, {
     method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-    },
     body: formData,
   });
   
