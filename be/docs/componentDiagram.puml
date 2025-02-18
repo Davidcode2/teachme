@@ -7,9 +7,9 @@ component Backend {
 }
 database postgres
 
-Frontend -0)- Backend
-Frontend -0)- Keycloak
-Backend -0)- Keycloak
-Backend -> postgres
+Frontend -do0)-- Backend
+Frontend -ri0)-- Keycloak
+Backend -le0)- Keycloak
+Backend --> postgres
 
 @enduml
