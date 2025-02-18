@@ -16,11 +16,17 @@ export default function AuthCallback() {
       method: "GET",
     });
     const user = await res.json();
-    return user
-  }
+    return user;
+  };
+
+  const getSessionStatus = async () => {
+    const session = await auth.querySessionStatus();
+    return session?.sub!;
+  };
 
   useEffect(() => {
     const handleAuth = async () => {
+      await getSessionStatus();
       if (auth.isAuthenticated) {
         const username = auth?.user?.profile.preferred_username!;
         console.log("access token:", auth.user?.access_token!);
@@ -28,7 +34,7 @@ export default function AuthCallback() {
         const userId = auth?.user?.profile.sub!;
         const { data } = await fetchAuthorId();
         console.log(data);
-        userStore.setAuthor(data); 
+        userStore.setAuthor(data);
         console.log(username);
         handleSignIn(userId, username);
       }
