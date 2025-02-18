@@ -59,7 +59,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
     setEventListenerRegistered(true);
   }
 
-  const isAuthor = auth.isAuthenticated && authorId === userStore.authorId;
+  const isAuthor = auth.isAuthenticated && authorId === sessionStorage.getItem("authorId");
 
   return (
     <>

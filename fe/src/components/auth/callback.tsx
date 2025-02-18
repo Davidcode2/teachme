@@ -33,6 +33,7 @@ export default function AuthCallback() {
         accessTokenStore.setAccessToken(auth.user?.access_token!);
         const userId = auth?.user?.profile.sub!;
         const { data } = await fetchAuthorId();
+        sessionStorage.setItem("authorId", data);
         console.log(data);
         userStore.setAuthor(data);
         console.log(username);
