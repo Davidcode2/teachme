@@ -11,8 +11,8 @@ FROM quay.io/keycloak/keycloak:latest
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 # Copy the certificates from the shared volume
-COPY certbot-etc/live/teachly.store/fullchain.pem /opt/keycloak/conf/fullchain.pem
-COPY certbot-etc/live/teachly.store/privkey.pem /opt/keycloak/conf/privkey.pem
+COPY /etc/letsencrypt/live/teachly.store/fullchain.pem /opt/keycloak/conf/fullchain.pem
+COPY /etc/letsencrypt/live/teachly.store/privkey.pem /opt/keycloak/conf/privkey.pem
 
 # Copy the startup script
 COPY start-keycloak.sh /opt/keycloak/
