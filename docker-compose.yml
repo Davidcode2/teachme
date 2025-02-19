@@ -45,7 +45,6 @@ services:
     build:
       context: ./keycloak
       dockerfile: dockerfile
-    image: keycloak
     container_name: keycloak
     env_file: "./keycloak/.env"
     ports:
@@ -57,10 +56,6 @@ services:
       - ./conf:/opt/keycloak/conf
     depends_on:
       - keycloak_db
-    command: 
-      - "start"
-      - "--optimized"
-      - "--hostname=localhost"
 
   certbot:
     image: certbot/certbot
