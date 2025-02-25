@@ -38,6 +38,8 @@ services:
       dockerfile: dockerfile
     ports: 
       - '8081:80'
+    networks:
+      - app-network
 
   reverse-proxy:
     image: nginx:alpine
@@ -49,6 +51,8 @@ services:
     depends_on:
       - frontend
       - blog
+    networks:
+      - app-network
 
   keycloak_db:
     image: postgres
