@@ -1,7 +1,3 @@
-import SignUpForm from "./components/signin/signup.tsx";
-import signUpAction from "./actions/signUpAction.ts";
-import loginAction from "./actions/loginAction.ts";
-import LoginForm from "./components/signin/login.tsx";
 import Materials from "./components/materials/materials.tsx";
 import AddMaterial from "./components/materials/addMaterial/addMaterial.tsx";
 import AddMaterialSuccess from "./components/materials/addMaterial/addSuccess.tsx";
@@ -49,11 +45,11 @@ const routes = [
         children: [
           {
             index: true,
-            element: <MyMaterials />
+            element: <MyMaterials />,
           },
           {
             path: "bought/",
-            element: <MyMaterials />
+            element: <MyMaterials />,
           },
           {
             path: "workspace/",

@@ -6,9 +6,7 @@ import ShuffleIcon from "../assets/icons/icons8-shuffle-48.png";
 import EditIcon from "../assets/icons/icons8-edit-48.png";
 import DarkModeIcon from "../assets/icons/icons8-dark-mode-48.png";
 import {
-  useAccessTokenStore,
   useAvatarStore,
-  useGlobalLoadingStore,
   useUserStore,
 } from "../store";
 import { useEffect, useRef, useState } from "react";
@@ -27,23 +25,6 @@ export default function UserMenu({
   const [avatar, setAvatar] = useState<string | null>(null);
   const [editUserName, setEditUserName] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
-
-  const logout = () => {
-    useGlobalLoadingStore.setState({ loading: true });
-    const res = fetch("/api/auth/logout", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
-      },
-    });
-    res.then((response) => {
-      useGlobalLoadingStore.setState({ loading: false });
-      if (response.status === 200) {
-        useAccessTokenStore.getState().setAccessToken("");
-        useUserStore.getState().setUser(null);
-      }
-    });
-  };
 
   useEffect(() => {
     const contextMenu = userMenuRef.current;

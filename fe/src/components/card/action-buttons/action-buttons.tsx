@@ -5,7 +5,6 @@ import EditIcon from "../../../assets/icons/icons8-edit-48.png";
 import SpinnerGif from "../../../assets/icons/icons8-spinner.gif";
 import addToShoppingCartIcon from "../../../assets/icons/icons8-add-shopping-cart-50.png";
 import arrowIcon from "../../../assets/icons/icons8-arrow-50.png";
-import { useUserStore } from "../../../store";
 import { useState } from "react";
 import DeleteMaterialModal from "./deleteMaterialModal";
 import CartService from "../../../services/cart.service";
@@ -23,7 +22,6 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [eventListenerRegistered, setEventListenerRegistered] = useState(false);
-  const userStore = useUserStore();
   const auth = useAuth();
 
   if (!auth.isAuthenticated)

@@ -9,7 +9,6 @@ import Search from "./search/search";
 import SearchService from "../../services/searchService";
 import ShoppingCartIcon from "../cart/shoppingCartIcon";
 import { useAuth } from "react-oidc-context";
-import { User } from "oidc-client-ts";
 
 function Header() {
   const [showSearch, setShowSearch] = useState(false);
@@ -111,10 +110,6 @@ function Header() {
       }
     ></Nav>
   );
-
-  const onSigninCallback = (_user: User | void): void => {
-    window.history.replaceState({}, document.title, window.location.pathname);
-  };
 
   const signIn = async () => {
     auth.signinRedirect();

@@ -1,4 +1,3 @@
-import { customFetch } from "../actions/customFetch";
 import { getUser } from "../services/authService";
 
 export default async function loadMyMaterials() {

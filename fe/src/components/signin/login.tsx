@@ -1,6 +1,6 @@
 import PaperPlane from "../../assets/icons/icons8-paper-plane-64.png";
 import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
-import { Link, useActionData, useNavigate, useNavigation } from "react-router";
+import { Link, useActionData, useNavigation } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
@@ -8,9 +8,8 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { useRef, useState } from "react";
 
 function LoginForm() {
-  const [showPlane, setShowPlane] = useState(false);
+  const [showPlane, ] = useState(false);
   const navigation = useNavigation();
-  const navigate = useNavigate();
   const loginSuccess = useActionData();
   const loopTween: any = useRef(undefined);
   const failTween: any = useRef(undefined);
@@ -63,11 +62,6 @@ function LoginForm() {
       },
     });
   });
-
-  const toggleTimeline = () => {
-    setShowPlane(true);
-    loopTween.current.play();
-  };
 
   if (loginSuccess === false) {
     console.log("login failed");

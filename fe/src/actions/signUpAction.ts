@@ -6,7 +6,6 @@ import {
 } from "../store";
 import verifyCaptcha from "../services/reCaptchaService";
 import { UserService } from "../services/userService";
-import CartService from "../services/cart.service";
 
 export default async function handleSubmit({ request }: { request: Request }) {
   await verifyCaptcha();
@@ -33,7 +32,7 @@ export default async function handleSubmit({ request }: { request: Request }) {
     const setAccessToken = useAccessTokenStore.getState().setAccessToken;
     setAccessToken(responseData.tokens.accessToken);
     await UserService.setUserAndAvatar(responseData.user);
-    new CartService().getItems();
+    //new CartService().getItems();
     return redirect("/materials");
   }
   const pushError = useErrorStore.getState().pushError;

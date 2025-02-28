@@ -19,7 +19,6 @@ export default function Cart(): JSX.Element {
   const getItems = async () => {
     const data = await cartService.getItems(
       auth.user?.profile?.sub!,
-      auth.user?.access_token!,
     );
     return data;
   };
