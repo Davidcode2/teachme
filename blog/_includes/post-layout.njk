@@ -1,0 +1,12 @@
+---
+title: My Internet Corner
+layout: layout.njk
+---
+
+<div class="md:w-3/5 px-8 pt-4">
+  <div class="flex gap-8 items-center">
+    <h1>{{ title }}</h1>
+    <span class="text-sm">{{ date | formatDate("MMMM d, yyyy") }}</span>
+  </div>
+  {{ content | safe }}
+</div>
