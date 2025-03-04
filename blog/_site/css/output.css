@@ -228,6 +228,9 @@
   .p-8 {
     padding: calc(var(--spacing) * 8);
   }
+  .px-2 {
+    padding-inline: calc(var(--spacing) * 2);
+  }
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
   }
@@ -261,6 +264,11 @@
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
+  }
+  .sm\:px-8 {
+    @media (width >= 40rem) {
+      padding-inline: calc(var(--spacing) * 8);
+    }
   }
   .md\:w-3\/5 {
     @media (width >= 48rem) {
