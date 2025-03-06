@@ -116,3 +116,20 @@ representation of how a deployment should work. Maybe I learned something
 through my experimentation or a source at work or online which I will use to
 update my representation. This updated representation can then improve my code
 and so on. A virtuous circle.
+
+## Deliberate practice
+
+What is the difference between purposeful practice and deliberate practice?
+Deliberate practice adds the following characteristics:
+
+- Learning in a field with in which experts can relatively objectively
+  differentiated from novices. 
+- Learning from the experience of experts in the field.
+
+The challenge now seems to lie in the task of finding measures of progress
+and finding the most efficient way to learn something.
+
+## Using genAI for learning
+
+I'm thinking that genAI enables us to receive fast feedback
+and help iterate toward a better mental representation of something.
