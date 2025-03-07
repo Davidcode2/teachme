@@ -122,7 +122,7 @@ and so on. A virtuous circle.
 What is the difference between purposeful practice and deliberate practice?
 Deliberate practice adds the following characteristics:
 
-- Learning in a field with in which experts can relatively objectively
+- Learning in a field in which experts can relatively objectively be
   differentiated from novices. 
 - Learning from the experience of experts in the field.
 

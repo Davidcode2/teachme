@@ -173,11 +173,8 @@
   }
 }
 @layer utilities {
-  .collapse {
-    visibility: collapse;
-  }
-  .relative {
-    position: relative;
+  .fixed {
+    position: fixed;
   }
   .block {
     display: block;
@@ -188,12 +185,6 @@
   .flex {
     display: flex;
   }
-  .inline-flex {
-    display: inline-flex;
-  }
-  .list-item {
-    display: list-item;
-  }
   .table {
     display: table;
   }
@@ -203,21 +194,11 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
-  .resize {
-    resize: both;
-  }
   .items-center {
     align-items: center;
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
-  }
-  .border {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
   }
   .bg-white {
     background-color: var(--color-white);
@@ -257,9 +238,6 @@
   }
   .text-stone-200 {
     color: var(--color-stone-200);
-  }
-  .underline {
-    text-decoration-line: underline;
   }
   .outline {
     outline-style: var(--tw-outline-style);
@@ -307,11 +285,6 @@ p {
 }
 .markdown li {
   margin-bottom: 0.5rem;
-}
-@property --tw-border-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
 }
 @property --tw-font-weight {
   syntax: "*";
