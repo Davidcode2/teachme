@@ -65,6 +65,8 @@ services:
     env_file: "./keycloak/.db.env"
     networks:
       - app-network
+    volumes:
+      - keycloak_db_data:/var/lib/postgresql/data
 
   keycloak:
     build:
@@ -100,6 +102,7 @@ volumes:
   assets:
   web-root:
     driver: local
+  keycloak_db_data:
 
 networks:
   app-network:
