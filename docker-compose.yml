@@ -28,6 +28,7 @@ services:
       - app-network
 
   blog:
+    container_name: learning_blog
     build:
       context: ./blog
       dockerfile: dockerfile
@@ -38,6 +39,7 @@ services:
 
   reverse-proxy:
     image: nginx:alpine
+    container_name: reverse_proxy
     ports:
       - "80:80"
       - "443:443"
@@ -86,8 +88,14 @@ services:
       - web-root:/var/www/html
     depends_on:
       - frontend
-      #      - keycloak
-    command: certonly -v --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --force-renewal -d teachly.store -d www.teachly.store -d blog.teachly.store -d www.blog.teachly.store
+      - keycloak
+    command: certonly -v \ 
+      --webroot --webroot-path=/var/www/html \ 
+      --email jakob.lingel@hotmail.de \ 
+      --agree-tos --no-eff-email --force-renewal \
+      -d teachly.store -d www.teachly.store \
+      -d blog.teachly.store -d www.blog.teachly.store \
+      -d auth.teachly.store -d www.auth.teachly.store
 
 volumes:
   certbot-etc:
