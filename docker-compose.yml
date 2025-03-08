@@ -48,7 +48,7 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       # if the certificate has expired, uncomment the below line and run "docker compose up -d"
-      #      - web-root:/var/www/html
+      - web-root:/var/www/html
     depends_on:
       - frontend
       - blog
@@ -77,6 +77,8 @@ services:
       - ./conf:/opt/keycloak/conf
     depends_on:
       - keycloak_db
+    networks:
+      - app-network
 
   certbot:
     image: certbot/certbot
