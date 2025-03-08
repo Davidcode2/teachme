@@ -45,9 +45,9 @@ const onSigninCallback = (_user: User | void): void => {
 };
 
 export const oidcConfig: AuthProviderProps = {
-  authority: "https://localhost:8443/realms/Teachly/",
-  client_id: "teachly",
-  redirect_uri: "http://localhost:5173/auth/callback",
+  authority: import.meta.env.VITE_OIDC_AUTHORITY_URL,
+  client_id: import.meta.env.VITE_OIDC_CLIENT_ID,
+  redirect_uri: import.meta.env.VITE_OIDC_REDIRECT_URL,
   onSigninCallback: onSigninCallback,
 };
 
@@ -75,7 +75,7 @@ export const switchUser = async (auth: any) => {
 
 export function getUser() {
   const oidcStorage = sessionStorage.getItem(
-    `oidc.user:https://localhost:8443/realms/Teachly/:teachly`,
+    `oidc.user:${import.meta.env.VITE_OIDC_AUTHORITY_URL}:teachly`,
   );
   if (!oidcStorage) {
     return null;

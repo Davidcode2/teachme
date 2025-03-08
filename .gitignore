@@ -32,6 +32,12 @@ profile.json
 
 .*.env
 .env
+*.env.dev
+*.env.local
+*.env.development
+*.env.test
+*.env.production
+*.env.staging
 node_modules
 .envrc
 .swcrc
