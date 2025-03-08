@@ -61,21 +61,21 @@ services:
     shm_size: 128mb
     env_file: "./keycloak/.db.env"
 
-    #  keycloak:
-    #    build:
-    #      context: ./keycloak
-    #      dockerfile: dockerfile
-    #    container_name: keycloak
-    #    env_file: "./keycloak/.env"
-    #    ports:
-    #      - '8443:8443'
-    #      - '9000:9000'
-    #    volumes:
-    #      - certbot-etc:/etc/letsencrypt
-    #      - certbot-var:/var/lib/letsencrypt
-    #      - ./conf:/opt/keycloak/conf
-    #    depends_on:
-    #      - keycloak_db
+  keycloak:
+    build:
+      context: ./keycloak
+      dockerfile: dockerfile
+    container_name: keycloak
+    env_file: "./keycloak/.env"
+    ports:
+      - '8443:8443'
+      - '9000:9000'
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - ./conf:/opt/keycloak/conf
+    depends_on:
+      - keycloak_db
 
   certbot:
     image: certbot/certbot
