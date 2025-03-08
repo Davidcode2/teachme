@@ -9,6 +9,10 @@ p {
   @apply text-xl font-bold mb-2; /* Adjust the value as needed */
 }
 
+.markdown h3 {
+  @apply text-lg font-bold mb-2; /* Adjust the value as needed */
+}
+
 /* lists */
 .markdown ul {
   list-style-type: disc; /* Or any other list style */
