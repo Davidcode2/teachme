@@ -88,13 +88,7 @@ services:
     depends_on:
       - frontend
       - keycloak
-    command: certonly -v \ 
-      --webroot --webroot-path=/var/www/html \ 
-      --email jakob.lingel@hotmail.de \ 
-      --agree-tos --no-eff-email --force-renewal \
-      -d teachly.store -d www.teachly.store \
-      -d blog.teachly.store -d www.blog.teachly.store \
-      -d auth.teachly.store -d www.auth.teachly.store
+    command: certonly -v --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --force-renewal -d teachly.store -d www.teachly.store -d blog.teachly.store -d www.blog.teachly.store -d auth.teachly.store -d www.auth.teachly.store
 
 volumes:
   certbot-etc:
