@@ -52,6 +52,7 @@ services:
     depends_on:
       - frontend
       - blog
+      - keycloak
     networks:
       - app-network
 
@@ -73,8 +74,6 @@ services:
       - '8443:8443'
       - '9000:9000'
     volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
       - ./conf:/opt/keycloak/conf
     depends_on:
       - keycloak_db
