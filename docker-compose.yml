@@ -63,6 +63,8 @@ services:
     # set shared memory limit when using docker-compose
     shm_size: 128mb
     env_file: "./keycloak/.db.env"
+    networks:
+      - app-network
 
   keycloak:
     build:
