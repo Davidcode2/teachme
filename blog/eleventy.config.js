@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import markdownIt from "markdown-it";
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("css/output.css");
@@ -17,4 +18,6 @@ export default function(eleventyConfig) {
     linkify: true, // Autoconvert URLs to links
   });
   eleventyConfig.setLibrary("md", markdownLibrary);
+
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin);
 }
