@@ -42,7 +42,8 @@ export class AuthService {
 
   async verifyTokenWithKeycloak(token: string) {
     const userInfoEndpoint =
-      'https://localhost:8443/realms/Teachly/protocol/openid-connect/userinfo';
+      this.configService.get<string>('KEYCLOAK_REALM_URL') +
+      this.configService.get<string>('KEYCLOAK_USERINFO_ENDPOINT');
     const res = await fetch(userInfoEndpoint, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -53,12 +54,12 @@ export class AuthService {
   }
 
   async getPublicKey() {
-    const response = await fetch(
-      `${this.configService.get<string>('KEYCLOAK_REALM_URL')}/protocol/openid-connect/certs`,
-      {
-        agent: new https.Agent({ rejectUnauthorized: false }), // because of self-signed certificate
-      },
-    );
+    const certsEndpoint =
+      this.configService.get<string>('KEYCLOAK_REALM_URL') +
+      this.configService.get<string>('KEYCLOAK_CERTS_ENDPOINT');
+    const response = await fetch(certsEndpoint, {
+      agent: new https.Agent({ rejectUnauthorized: false }), // because of self-signed certificate
+    });
     const data = await response.json();
     const jwk = data.keys[0];
 
