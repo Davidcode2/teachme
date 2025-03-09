@@ -96,6 +96,46 @@ The following properties describe purposeful practice:
 - tight feedback loop
 - outside of comfort zone 
 
+**Clear goal**
+
+To define a goal, two attributes should be given. The goal should be specific
+and measurable.
+
+**Focus**
+
+The task should occupy most of our mental capacities. If takes up too little,
+we will not be pushed to adapt and the extra capacity might easily be filled by
+other thoughts creeping in. If it takes up too much, we will be jittery and
+won't be able to sustain the effort for long enough. I think the Book
+"Hyperfocus" has something to say about that which I might need to revisit.
+
+**Feedback**
+
+In order to improve, we need to know what we did wrong and how we can improve
+it. This constitutes directed feedback or I think in the book Ultralearning it
+might be called something like mentoring feedback? In the book it is described
+as the best possible kind of feedback. It will not only show us what we did
+wrong, but show us a way to improve specifically tailored to our current level.
+The next best thing is probably directed feedback, which also shows us what to
+improve but cannot give us tailored advice.
+
+One important part of purposeful practice is to find ways of receiving high
+quality feedback. When we do not have a mentor available, we can learn from
+other source such as books, videos, interviews and so on. By perusing the
+performance of experts we can build up our mental representation of how the
+result should look, and iterate forward to get closer to that ideal.
+
+**Outside of comfort zone**
+
+We need to do things in our training which we aren't yet able to comfortably do.
+In order to push our brains to adapt, we need to be working at the maximum of
+our capacity. This ties in with the focus part as described above. We can vary
+the excertion by cutting back or stepping up the effort to make sure we are in
+the sweet spot for adaptation. The parallel to weight lifting is useful here.
+When a body builder hits a plateau he will vary his training in small ways. We
+can alter our training in miriad ways and test whether the changes help us
+improve.
+
 ## Mental Representations
 
 In order to learn something, one must have a clear mental representation of the
@@ -124,7 +164,7 @@ Deliberate practice adds the following characteristics:
 
 - Learning in a field in which experts can relatively objectively be
   differentiated from novices. 
-- Learning from the experience of experts in the field.
+- Availability of a clear path to expertise
 
 The challenge now seems to lie in the task of finding measures of progress
 and finding the most efficient way to learn something.

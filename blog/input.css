@@ -30,3 +30,49 @@ p {
   margin-bottom: 0.5rem; /* Adjust spacing between list items */
 }
 
+.markdown table {
+  overflow-x: auto;
+  display: block;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem; /* Add some space below the table */
+  font-size: 0.9rem; /* Adjust font size for better readability */
+  line-height: 1.6; /* Improve line spacing */
+  text-align: left; /* Align text to the left by default */
+}
+
+.markdown th,
+.markdown td {
+  padding: 0.75rem 1rem; /* Consistent padding for cells */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Light bottom border */
+}
+
+.markdown th {
+  background-color: rgba(0, 0, 0, 0.03); /* Subtle background for headers */
+  font-weight: 600; /* Bold headers */
+  text-align: left; /* Ensure headers are left-aligned */
+}
+
+.markdown tr:hover {
+  background-color: rgba(0, 0, 0, 0.015); /* Subtle hover effect */
+}
+
+.markdown thead tr {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15); /* Slightly thicker border for thead bottom */
+}
+
+.markdown tbody tr:last-child td {
+  border-bottom: none; /* Remove border from the last row's cells */
+}
+
+.markdown table caption {
+  caption-side: bottom;
+  text-align: center;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 0.5rem;
+}
+
+/* Optional: Striped rows for better readability */
+.markdown tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.01);
+}
