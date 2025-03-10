@@ -187,9 +187,6 @@
   .contents {
     display: contents;
   }
-  .flex {
-    display: flex;
-  }
   .inline-flex {
     display: inline-flex;
   }
@@ -198,9 +195,6 @@
   }
   .table {
     display: table;
-  }
-  .h-screen {
-    height: 100vh;
   }
   .min-h-screen {
     min-height: 100vh;
@@ -216,12 +210,6 @@
   }
   .resize {
     resize: both;
-  }
-  .items-center {
-    align-items: center;
-  }
-  .gap-8 {
-    gap: calc(var(--spacing) * 8);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -279,11 +267,6 @@
   .sm\:px-8 {
     @media (width >= 40rem) {
       padding-inline: calc(var(--spacing) * 8);
-    }
-  }
-  .md\:w-3\/5 {
-    @media (width >= 48rem) {
-      width: calc(3/5 * 100%);
     }
   }
   .\[\&\>\*\]\:hover\:text-purple-800 {
