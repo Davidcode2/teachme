@@ -7,6 +7,7 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-purple-800: oklch(0.438 0.218 303.724);
+    --color-gray-100: oklch(0.967 0.003 264.542);
     --color-stone-200: oklch(0.923 0.003 48.717);
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -175,23 +176,11 @@
   }
 }
 @layer utilities {
-  .collapse {
-    visibility: collapse;
-  }
-  .relative {
-    position: relative;
-  }
   .block {
     display: block;
   }
   .contents {
     display: contents;
-  }
-  .inline-flex {
-    display: inline-flex;
-  }
-  .list-item {
-    display: list-item;
   }
   .table {
     display: table;
@@ -202,18 +191,8 @@
   .max-w-\[800px\] {
     max-width: 800px;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
   .transform {
     transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
-  }
-  .resize {
-    resize: both;
-  }
-  .border {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
   }
   .bg-white {
     background-color: var(--color-white);
@@ -253,12 +232,6 @@
   }
   .text-stone-200 {
     color: var(--color-stone-200);
-  }
-  .italic {
-    font-style: italic;
-  }
-  .underline {
-    text-decoration-line: underline;
   }
   .outline {
     outline-style: var(--tw-outline-style);
@@ -346,6 +319,12 @@ p {
 .markdown tbody tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.01);
 }
+.markdown code {
+  border-radius: 0.25rem;
+  background-color: var(--color-gray-100);
+  padding-inline: calc(var(--spacing) * 1);
+  padding-block: calc(var(--spacing) * 0.5);
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
@@ -370,11 +349,6 @@ p {
   syntax: "*";
   inherits: false;
   initial-value: skewY(0);
-}
-@property --tw-border-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
 }
 @property --tw-font-weight {
   syntax: "*";

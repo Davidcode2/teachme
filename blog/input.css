@@ -76,3 +76,7 @@ p {
 .markdown tbody tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.01);
 }
+
+.markdown code {
+  @apply bg-gray-100 px-1 py-0.5 rounded; /* Adjust padding and border radius as needed */
+}

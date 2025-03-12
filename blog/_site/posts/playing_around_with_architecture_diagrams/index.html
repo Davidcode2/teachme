@@ -20,12 +20,11 @@
     <div class="text-sm pb-4">March 9, 2025</div>
   
   <div class="markdown">
-  <h2>Playing around with PlantUML</h2>
-<p>I'm trying to understand some of the following: Nginx, networking, docker
+  <p>I'm trying to understand some of the following: Nginx, networking, docker
 networks, TLS, Client Server communication, server to server communication..
 Playing around with PlantUML might help with that. It also has the nice side effect
 of giving me some practice with PlantUML.</p>
-<p><picture><source type="image/webp" srcset="/posts/playing_around_with_architecture_diagrams/bURmUuwkUs-469.webp 469w"><img src="/posts/playing_around_with_architecture_diagrams/bURmUuwkUs-469.jpeg" alt="component diagram" width="469" height="415"></picture></p>
+<p><picture><source type="image/webp" srcset="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1726-understanding_networking.png&width=469&format=webp&via=transform 469w"><img src="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1726-understanding_networking.png&width=469&format=jpeg&via=transform" alt="component diagram" width="469" height="415"></picture></p>
 <p>I learned that Nginx does not encrypt the packet as it is shown below. Instead
 a TLS handshake is carried out between the Backend (which is the client in this case) and Keycloak, which
 acts as the server. For this the client initiates a connection request to the server.</p>
@@ -51,7 +50,7 @@ decrypt it.</p>
 secret to derive a master secret. For this, previously exchanged random numbers
 are used.</p>
 <p>The below diagram will have to be updated with this new found understanding.</p>
-<p><picture><source type="image/webp" srcset="/posts/playing_around_with_architecture_diagrams/wsYAWq-Pl1-631.webp 631w"><img src="/posts/playing_around_with_architecture_diagrams/wsYAWq-Pl1-631.jpeg" alt="sequence diagram" width="631" height="568"></picture></p>
+<p><picture><source type="image/webp" srcset="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1751-how_tls_works_with_nginx_outbound_and_inbound_traffic.png&width=631&format=webp&via=transform 631w"><img src="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1751-how_tls_works_with_nginx_outbound_and_inbound_traffic.png&width=631&format=jpeg&via=transform" alt="sequence diagram" width="631" height="568"></picture></p>
 
   </div>
 </div>
