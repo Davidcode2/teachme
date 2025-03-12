@@ -40,3 +40,4 @@ layout: post-layout.njk
 
 - 21 Lessons for the 21. Century
 - Smarter than you think by Clive Thompson
+- Peak - secrets from the new science of expertise by Anders Ericsson

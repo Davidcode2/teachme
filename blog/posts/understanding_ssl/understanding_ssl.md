@@ -35,11 +35,35 @@ So thinking about this and recollecting what I have read, these should serve the
   true, the `fullchain` certificate will also contain the public key. Since in
   my configuration there is no other certificate.
 
-Let's check what we got so far.
+Let's check what we got so far. Gemnini and a quick verification web search
+tell me that the above reasoning is correct. The `fullchain` certificate
+contains the public key, some info about the certificate like who it was issued
+to, by whom (Certificate Authority) and when it will expire. Beyond that it contains
+the intermediate CA or CAs which enable the client to trace the chain of trust 
+back to the Root CA.
 
+Now what are those Certificate Authorities? It starts with the Root CAs. These
+are a few trusted authorities. There is a list of those installed in a browser.
+So when the browser receives a certificate, it will check the intermediate
+authorities and trace them back to a root authority. If the root authority is
+trusted (i.e. is stored in the browsers list) all is fine. 
 
+Here's how this hierarchy might look like:
 
-Chain of trust:
+![Chain of trust visualization](./250312-2131-chain_of_trust.png)
 
-![Chain of trust visualization](./)
+But how can this be checked? There would need to be some way for the browser to
+verify that the root authority is legit and that it trusts the intermediate
+authorities. 
+
+To do this the browser must check the digital signature of each certificate in
+the chain. When a CA issues a certificate it calculates the hash over the certificates
+content. It then encrypts the hash using the CAs private key. This encrypted hash
+is attached to the issued certificate.
+
+The client will upon receiving a certificate calculate the hash of it. It will
+then decrypt the signature using the CAs public key. If the decrypted signature
+matches the calculated hash, the CAs certificate is trusted.
+
+![Walking the chain of trust](./250312-2205-walking_the_chain_of_trust.png)
 
