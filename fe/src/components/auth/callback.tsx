@@ -45,5 +45,9 @@ export default function AuthCallback() {
     handleAuth();
   }, [auth.isAuthenticated]);
 
-  return <img src={Spinnkreis} alt="loading" />;
+  return (
+    <div className="flex h-96 w-screen justify-center items-center">
+      <img src={Spinnkreis} alt="loading" className="w-10 h-10" />
+    </div>
+  );
 }
