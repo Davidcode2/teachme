@@ -4,7 +4,7 @@ import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail.ts";
 import { Form, useParams } from "react-router";
 import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
 import CardService from "../../services/cardService.ts";
-import SpinnerGif from "../../assets/icons/icons8-spinner.gif";
+import SpinnerGif from "../../assets/icons/icons8-spinnkreis.gif";
 import Price from "../materials/addMaterial/price.tsx";
 
 function EditMaterial(): JSX.Element {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { handleSignIn } from "../../services/authService";
 import { useAccessTokenStore, useUserStore } from "../../store";
 import { customFetch } from "../../actions/customFetch";
+import Spinnkreis from "../../assets/icons/icons8-spinnkreis.gif";
 
 export default function AuthCallback() {
   const auth = useAuth();
@@ -44,5 +45,5 @@ export default function AuthCallback() {
     handleAuth();
   }, [auth.isAuthenticated]);
 
-  return <>...loading</>;
+  return <img src={Spinnkreis} alt="loading" />;
 }

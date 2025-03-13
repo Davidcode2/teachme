@@ -46,6 +46,9 @@ function Header() {
   }
 
   const toggleAddMaterial = () => {
+    if (!auth.isAuthenticated) {
+      auth.signinRedirect();
+    }
     if (onAddPage) {
       navigate("materials");
     }
@@ -90,9 +93,9 @@ function Header() {
         className={`${onAddPage ? "rounded-lg border border-blue-400 text-blue-400" : "border-none"}`}
         to={
           !onAddPage
-            ? auth?.isAuthenticated
+            ? auth.isAuthenticated
               ? "materials/add"
-              : "login"
+              : ""
             : "materials"
         }
         onClick={toggleAddMaterial}

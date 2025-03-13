@@ -1,5 +1,5 @@
 import ActionButtons from "./card/action-buttons/action-buttons";
-import SpinnerGif from "../assets/icons/icons8-spinner.gif";
+import SpinnerGif from "../assets/icons/icons8-spinnkreis.gif";
 
 interface PreviewProps {
   material: any;
