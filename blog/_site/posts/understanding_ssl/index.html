@@ -71,6 +71,13 @@ is attached to the issued certificate.</p>
 then decrypt the signature using the CAs public key. If the decrypted signature
 matches the calculated hash, the CAs certificate is trusted.</p>
 <p><picture><source type="image/webp" srcset="/.11ty/image/?src=posts%2Funderstanding_ssl%2F250312-2205-walking_the_chain_of_trust.png&width=643&format=webp&via=transform 643w"><img src="/.11ty/image/?src=posts%2Funderstanding_ssl%2F250312-2205-walking_the_chain_of_trust.png&width=643&format=jpeg&via=transform" alt="Walking the chain of trust" width="643" height="48"></picture></p>
+<p>The following diagram is a first attempt at working with icon libs in PlantUML.
+This is an attempt to better understand how the chain of trust is verified.
+I'll need to come back to this as I haven't had the opportunity to fact check
+it and deepen my understanding. I'd also like to add a sequence diagram which
+digs into more detail on how the certificates / signatures of each CA get
+checked.</p>
+<p><picture><source type="image/webp" srcset="/.11ty/image/?src=posts%2Funderstanding_ssl%2F250314-2128-hashing.png&width=833&format=webp&via=transform 833w"><img src="/.11ty/image/?src=posts%2Funderstanding_ssl%2F250314-2128-hashing.png&width=833&format=jpeg&via=transform" alt="Checking certificates" width="833" height="791"></picture></p>
 
   </div>
 </div>
