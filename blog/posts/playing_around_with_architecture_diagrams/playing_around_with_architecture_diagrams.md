@@ -46,3 +46,19 @@ The below diagram will have to be updated with this new found understanding.
 
 ![sequence diagram](./250309-1751-how_tls_works_with_nginx_outbound_and_inbound_traffic.png)
 
+One issue I have with creating plantUML diagrams is that I build them in my
+notes directory - seperate from my blog - and copy the images over when done.
+This is a bit of a hassle and needs to be optimized. Thus I will put my
+plantUML code right into the blog posts. I will write some logic which checks
+for the `@startuml` and `@enduml` tags. When these show up, I will have a tab
+section where the viewer can toggle between the code and the image. And because
+I am lazy and I have other things to do, I'll let Gemini do that for me.
+
+Let's see how it does:
+
+@startuml
+
+Alice -> Bob : does it work?
+Bob --> Alice : we'll see...
+
+@enduml

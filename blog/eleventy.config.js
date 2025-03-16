@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import markdownIt from "markdown-it";
+import plantUmlPlugin from './_11ty/plantuml.cjs';
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 export default function(eleventyConfig) {
@@ -20,4 +21,6 @@ export default function(eleventyConfig) {
   eleventyConfig.setLibrary("md", markdownLibrary);
 
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
+
+  eleventyConfig.addPlugin(plantUmlPlugin);
 }

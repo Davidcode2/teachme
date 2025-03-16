@@ -7,12 +7,14 @@ layout: post-layout.njk
 
 ## Progress tracking of deliberate walks
 
-The following table will serve my tracking of deliberate walks. 
+The following table will serve my tracking of deliberate walks.
 These walks should happen at least twice a week.
 
 | Duration | Sprints | Wandered / Sprint | Avg duration of wandering |
 | -------- | ------- | ----------------- | ------------------------- |
 | 1h       | 5       | 3                 | 20s                       |
+| 50m      | 3       | 6                 | 30s                       |
+| 1h       | 4       | 5                 | 20s                       |
 
 **Analyzing wanderings**
 
