@@ -24,7 +24,7 @@
 networks, TLS, Client Server communication, server to server communication..
 Playing around with PlantUML might help with that. It also has the nice side effect
 of giving me some practice with PlantUML.</p>
-<p><picture><source type="image/webp" srcset="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1726-understanding_networking.png&width=469&format=webp&via=transform 469w"><img src="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1726-understanding_networking.png&width=469&format=jpeg&via=transform" alt="component diagram" width="469" height="415"></picture></p>
+<p><picture><source type="image/webp" srcset="/posts/playing_around_with_architecture_diagrams/bURmUuwkUs-469.webp 469w"><img src="/posts/playing_around_with_architecture_diagrams/bURmUuwkUs-469.jpeg" alt="component diagram" width="469" height="415"></picture></p>
 <p>I learned that Nginx does not encrypt the packet as it is shown below. Instead
 a TLS handshake is carried out between the Backend (which is the client in this case) and Keycloak, which
 acts as the server. For this the client initiates a connection request to the server.</p>
@@ -50,7 +50,7 @@ decrypt it.</p>
 secret to derive a master secret. For this, previously exchanged random numbers
 are used.</p>
 <p>The below diagram will have to be updated with this new found understanding.</p>
-<p><picture><source type="image/webp" srcset="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1751-how_tls_works_with_nginx_outbound_and_inbound_traffic.png&width=631&format=webp&via=transform 631w"><img src="/.11ty/image/?src=posts%2Fplaying_around_with_architecture_diagrams%2F250309-1751-how_tls_works_with_nginx_outbound_and_inbound_traffic.png&width=631&format=jpeg&via=transform" alt="sequence diagram" width="631" height="568"></picture></p>
+<p><picture><source type="image/webp" srcset="/posts/playing_around_with_architecture_diagrams/wsYAWq-Pl1-631.webp 631w"><img src="/posts/playing_around_with_architecture_diagrams/wsYAWq-Pl1-631.jpeg" alt="sequence diagram" width="631" height="568"></picture></p>
 <p>One issue I have with creating plantUML diagrams is that I build them in my
 notes directory - seperate from my blog - and copy the images over when done.
 This is a bit of a hassle and needs to be optimized. Thus I will put my
@@ -61,12 +61,12 @@ I am lazy and I have other things to do, I'll let Gemini do that for me.</p>
 <p>Let's see how it does:</p>
 
 <div class="plantuml-container">
-  <div class="tabs">
-    <button class="tab-button active" data-tab="image">Image</button>
-    <button class="tab-button" data-tab="code">Code</button>
-  </div>
+    <div class="tabs">
+      <button class="tab-button active" data-tab="image">Image</button>
+      <button class="tab-button" data-tab="code">Code</button>
+    </div>
   <div class="tab-content" data-tab-content="image">
-    <img src="/plantuml-1742246182067.png" alt="PlantUML Diagram">
+    <img src="/plantuml-1742248013578.png" alt="PlantUML Diagram">
   </div>
   <div class="tab-content hidden" data-tab-content="code">
     <pre><code>@startuml
@@ -74,6 +74,36 @@ Alice -&gt; Bob : does it work?
 Bob --&gt; Alice : we'll see...
 Charline -&gt; Bob : this works pretty good!
 Bob --&gt; Charline : That's right!
+@enduml</code></pre>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.plantuml-container .tab-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const tab = button.dataset.tab;
+      document.querySelectorAll('.plantuml-container .tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.plantuml-container .tab-content').forEach(content => content.classList.add('hidden'));
+      button.classList.add('active');
+      document.querySelector(`.plantuml-container .tab-content[data-tab-content="${tab}"]`).classList.remove('hidden');
+    });
+  });
+</script>
+
+<p>Let me put another Uml Diagram right here:</p>
+
+<div class="plantuml-container">
+    <div class="tabs">
+      <button class="tab-button active" data-tab="image">Image</button>
+      <button class="tab-button" data-tab="code">Code</button>
+    </div>
+  <div class="tab-content" data-tab-content="image">
+    <img src="/plantuml-1742248014239.png" alt="PlantUML Diagram">
+  </div>
+  <div class="tab-content hidden" data-tab-content="code">
+    <pre><code>@startuml
+[component1] --&gt; [componentX]
+[component1] --&gt; [component2]
+[component2] -&gt; [component3]
 @enduml</code></pre>
   </div>
 </div>

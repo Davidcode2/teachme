@@ -65,3 +65,14 @@ Charline -> Bob : this works pretty good!
 Bob --> Charline : That's right!
 
 @enduml
+
+Let me put another Uml Diagram right here: 
+
+@startuml
+
+[component1] --> [componentX]
+[component1] --> [component2]
+[component2] -> [component3]
+
+@enduml
+
