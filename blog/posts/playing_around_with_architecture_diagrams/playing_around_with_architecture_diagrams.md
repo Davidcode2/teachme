@@ -61,4 +61,7 @@ Let's see how it does:
 Alice -> Bob : does it work?
 Bob --> Alice : we'll see...
 
+Charline -> Bob : this works pretty good!
+Bob --> Charline : That's right!
+
 @enduml

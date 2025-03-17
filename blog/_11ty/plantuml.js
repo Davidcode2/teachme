@@ -1,87 +1,37 @@
-const plantuml = require('node-plantuml');
-const fs = require('fs').promises;
-const path = require('path');
+import plantuml from 'node-plantuml';
+import fs from 'fs/promises';
+import path from 'path';
 
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addTransform('plantuml', async function(content, outputPath) {
-    if (!outputPath.endsWith('.html')) {
-      return content;
-    }
-
-    return await processPlantUml(content, eleventyConfig.dir.output || '_site');
+export default function(eleventyConfig) {
+  eleventyConfig.addTransform('plantuml', async function(content) {
+    const withPlantUmlImage = await processPlantUml(content, eleventyConfig.dir.output || '_site');
+    return withPlantUmlImage;
   });
 };
 
 async function processPlantUml(content, outputDir) {
-  const startTag = '@startuml';
-  const endTag = '@enduml';
-  const startRegex = /^@startuml$/m;
-  const endRegex = /^@enduml$/m;
-
+  const umlBlocks = getUmlBlocks(content);
   let processedContent = content;
-  let startIndex = processedContent.indexOf(startTag);
-
-  while (startIndex !== -1) {
-    const { endIndex, umlCodeWithHtml } = findUmlBlock(processedContent, startIndex, startTag, endTag);
-    console.log('Found PlantUML block:', umlCodeWithHtml);
-    console.log('End index:', endIndex);
-
-    if (endIndex === -1) {
-      break; // No matching end tag, stop processing.
-    }
-
-    umlCode = stripHtmlTags(umlCodeWithHtml);
-    console.log('PlantUML code:', umlCode);
-
-    if (umlCode.match(startRegex) && umlCode.match(endRegex)) {
-      console.log('Processing PlantUML block...');
-      try {
-        const replacement = await generateAndReplace(umlCode, outputDir);
-        processedContent = processedContent.replace(umlCode, replacement);
-      } catch (err) {
-        console.error('Error processing PlantUML:', err);
-        processedContent = processedContent.replace(umlCode, `<pre><code>${escapeHtml(umlCode)}</code></pre>`);
-      }
-    }
-
-    startIndex = processedContent.indexOf(startTag, startIndex + 1);
+  if (!umlBlocks) {
+    return processedContent;
   }
-
+  console.log('Found PlantUML blocks:', umlBlocks);
+  for (const umlBlockWithHtml of umlBlocks) {
+    const umlCode = stripHtmlTags(umlBlockWithHtml);
+    const replacement = await generateAndReplace(umlCode, outputDir);
+    processedContent = processedContent.replace(umlBlockWithHtml, replacement);
+  }
   return processedContent;
 }
 
-function findUmlBlock(content, startIndex, startTag, endTag) {
-  let endIndex = -1;
-  let currentStartIndex = startIndex + startTag.length;
-  let openUmlBlocks = 1;
-
-  while (openUmlBlocks > 0 && currentStartIndex < content.length) {
-    let potentialEndIndex = content.indexOf(endTag, currentStartIndex);
-    let potentialStartIndex = content.indexOf(startTag, currentStartIndex);
-
-    if (potentialEndIndex === -1) {
-      break;
-    }
-
-    if (potentialStartIndex !== -1 && potentialStartIndex < potentialEndIndex) {
-      openUmlBlocks++;
-      currentStartIndex = potentialStartIndex + startTag.length;
-    } else {
-      openUmlBlocks--;
-      if (openUmlBlocks === 0) {
-        endIndex = potentialEndIndex;
-      }
-      currentStartIndex = potentialEndIndex + endTag.length;
-    }
-  }
-
-  const umlCodeWithHtml = endIndex !== -1 ? content.substring(startIndex, endIndex + endTag.length) : '';
-  return { endIndex, umlCodeWithHtml };
+function getUmlBlocks(content) {
+  const umlBlockRegex = /^<p>@startuml<\/p>\n(?:.*\n)+?^<p>@enduml<\/p>$/gm
+  const umlBlocks = content.match(umlBlockRegex);
+  return umlBlocks;
 }
 
 async function generateAndReplace(umlCode, outputDir) {
   const pngBuffer = await generatePng(umlCode);
-  console.log('Generated PNG:', pngBuffer);
   const uniqueFilename = `plantuml-${Date.now()}.png`;
   const imagePath = path.join(outputDir, uniqueFilename);
   const relativeImagePath = `/${uniqueFilename}`;
@@ -89,7 +39,8 @@ async function generateAndReplace(umlCode, outputDir) {
   await fs.writeFile(imagePath, pngBuffer);
   console.log('Saved PNG:', imagePath);
 
-  return generateHtml(relativeImagePath, umlCode);
+  const generatedHtml = generateHtml(relativeImagePath, umlCode);
+  return generatedHtml;
 }
 
 async function generatePng(umlCode) {
