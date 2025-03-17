@@ -62,10 +62,10 @@ async function generatePng(umlCode) {
 function generateHtml(imagePath, umlCode) {
   return `
 <div class="plantuml-container">
-  <div class="tabs">
-    <button class="tab-button active" data-tab="image">Image</button>
-    <button class="tab-button" data-tab="code">Code</button>
-  </div>
+    <div class="tabs">
+      <button class="tab-button active" data-tab="image">Image</button>
+      <button class="tab-button" data-tab="code">Code</button>
+    </div>
   <div class="tab-content" data-tab-content="image">
     <img src="${imagePath}" alt="PlantUML Diagram">
   </div>
@@ -84,40 +84,6 @@ function generateHtml(imagePath, umlCode) {
     });
   });
 </script>
-
-<style>
-.plantuml-container {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-.plantuml-container .tabs {
-  display: flex;
-}
-
-.plantuml-container .tab-button {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-bottom: none;
-  cursor: pointer;
-  background-color: #f0f0f0;
-}
-
-.plantuml-container .tab-button.active {
-  background-color: #fff;
-}
-
-.plantuml-container .tab-content {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-
-.plantuml-container .tab-content.hidden {
-  display: none;
-}
-</style>
 `;
 }
 

@@ -80,3 +80,32 @@ p {
 .markdown code {
   @apply bg-gray-100 px-1 py-0.5 rounded; /* Adjust padding and border radius as needed */
 }
+
+.plantuml-container {
+  @apply bg-gray-100 rounded flex flex-col
+}
+
+.plantuml-container .tab-button.active {
+  @apply text-gray-600 font-bold
+}
+
+.plantuml-container .tabs {
+  @apply flex rounded-t-md text-sm ml-auto gap-4 mr-2 border-b border-gray-300
+}
+
+.plantuml-container .tab-button {
+  @apply py-1 text-gray-500 cursor-pointer hover:text-gray-400
+}
+
+.plantuml-container .tab-button:first-child {
+  @apply rounded-tl
+}
+
+.plantuml-container .tab-content {
+  padding: 10px;
+  overflow-x: scroll
+}
+
+.plantuml-container .tab-content.hidden {
+  display: none;
+}
