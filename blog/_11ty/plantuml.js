@@ -1,18 +1,19 @@
 import plantuml from "node-plantuml";
 import fs from "fs/promises";
 import path from "path";
+import { exec } from 'child_process';
 
 export default function (eleventyConfig) {
   eleventyConfig.addTransform("plantuml", async function (content) {
     const withPlantUmlImage = await processPlantUml(
       content,
-      eleventyConfig.dir.output || "_site",
+      this.page.inputPath,
     );
     return withPlantUmlImage;
   });
 }
 
-async function processPlantUml(content, outputDir) {
+async function processPlantUml(content, inputPath) {
   const umlBlocks = getUmlBlocks(content);
   let processedContent = content;
   if (!umlBlocks) {
@@ -21,7 +22,7 @@ async function processPlantUml(content, outputDir) {
   console.log("Found PlantUML blocks:", umlBlocks);
   for (const umlBlockWithHtml of umlBlocks) {
     const umlCode = stripHtmlTags(umlBlockWithHtml);
-    const replacement = await generateAndReplace(umlCode, outputDir);
+    const replacement = await generateAndReplace(umlCode, inputPath);
     processedContent = processedContent.replace(umlBlockWithHtml, replacement);
   }
   return processedContent;
@@ -33,17 +34,36 @@ function getUmlBlocks(content) {
   return umlBlocks;
 }
 
-async function generateAndReplace(umlCode, outputDir) {
-  const pngBuffer = await generatePng(umlCode);
-  const uniqueFilename = `plantuml-${Date.now()}.png`;
-  const imagePath = path.join(outputDir, uniqueFilename);
-  const relativeImagePath = `/${uniqueFilename}`;
+async function generateAndReplace(umlCode, inputPath) {
+  const imagePath = await generatePngWithLocalPlantUml(umlCode, inputPath);
+  const relativeImagePath = path.relative(path.dirname(inputPath), imagePath);
 
-  await fs.writeFile(imagePath, pngBuffer);
-  console.log("Saved PNG:", imagePath);
-
+  console.log("Generated PlantUML image:", relativeImagePath);
   const generatedHtml = generateHtml(relativeImagePath, umlCode);
   return generatedHtml;
+}
+
+async function generatePngWithLocalPlantUml(umlCode, imagePath) {
+  const fileName = path.basename(imagePath, path.extname(imagePath));
+  return new Promise((resolve, reject) => {
+    const tempFile = path.join(path.dirname(imagePath), `${fileName}-${Date.now()}.txt`);
+
+    fs.writeFile(tempFile, umlCode)
+      .then(() => {
+        exec(`java -jar ~/.plantuml/plantuml.jar -tpng -o "./" "${tempFile}"`, (error, stdout, stderr) => {
+          fs.unlink(tempFile);
+          if (error) {
+            console.error(`exec error: ${error}`);
+            reject(error);
+            return;
+          }
+          resolve(tempFile.replace(".txt", ".png"));
+        });
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 }
 
 async function generatePng(umlCode) {
