@@ -8,12 +8,13 @@ export default function (eleventyConfig) {
     const withPlantUmlImage = await processPlantUml(
       content,
       this.page.inputPath,
+      eleventyConfig.dir.output || "_site"
     );
     return withPlantUmlImage;
   });
 }
 
-async function processPlantUml(content, inputPath) {
+async function processPlantUml(content, inputPath, outputPath) {
   const umlBlocks = getUmlBlocks(content);
   let processedContent = content;
   if (!umlBlocks) {
@@ -22,7 +23,7 @@ async function processPlantUml(content, inputPath) {
   console.log("Found PlantUML blocks:", umlBlocks);
   for (const umlBlockWithHtml of umlBlocks) {
     const umlCode = stripHtmlTags(umlBlockWithHtml);
-    const replacement = await generateAndReplace(umlCode, inputPath);
+    const replacement = await generateAndReplace(umlCode, inputPath, outputPath);
     processedContent = processedContent.replace(umlBlockWithHtml, replacement);
   }
   return processedContent;
@@ -34,10 +35,12 @@ function getUmlBlocks(content) {
   return umlBlocks;
 }
 
-async function generateAndReplace(umlCode, inputPath) {
-  const imagePath = await generatePngWithLocalPlantUml(umlCode, inputPath);
-  const relativeImagePath = path.relative(path.dirname(inputPath), imagePath);
+async function generateAndReplace(umlCode, inputPath, outputPath) {
+  const imagePath = await generatePngWithLocalPlantUml(umlCode, inputPath, outputPath);
+  const imageOutputPath = path.join(outputPath, imagePath);
+  await fs.copyFile(imagePath, imageOutputPath);
 
+  const relativeImagePath = `/${imagePath}`;
   console.log("Generated PlantUML image:", relativeImagePath);
   const generatedHtml = generateHtml(relativeImagePath, umlCode);
   return generatedHtml;
