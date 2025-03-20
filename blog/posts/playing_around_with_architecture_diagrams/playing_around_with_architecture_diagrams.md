@@ -10,7 +10,33 @@ networks, TLS, Client Server communication, server to server communication..
 Playing around with PlantUML might help with that. It also has the nice side effect
 of giving me some practice with PlantUML.
 
-![component diagram](./250309-1726-understanding_networking.png)
+@startuml
+
+skinparam componentStyle rectangle
+
+rectangle Server {
+  rectangle Nginx {
+    component "Backend"
+    component "Keycloak"
+  }
+}
+
+rectangle "Public Internet" as public_internet
+
+[Browser] -> [Backend] : request
+[Browser] --> [Keycloak] : authenticate
+[Backend] --> public_internet
+public_internet --> [Keycloak] : userinfo
+
+note left of public_internet 
+  I need to send the request to 
+  keycloak via the public internet 
+  because I do not have 
+  internal TLS set up
+  in my docker network 
+end note
+
+@enduml
 
 I learned that Nginx does not encrypt the packet as it is shown below. Instead
 a TLS handshake is carried out between the Backend (which is the client in this case) and Keycloak, which 
@@ -44,7 +70,45 @@ are used.
 
 The below diagram will have to be updated with this new found understanding.
 
-![sequence diagram](./250309-1751-how_tls_works_with_nginx_outbound_and_inbound_traffic.png)
+@startuml
+
+!pragma teoz true
+skinparam BoxPadding 5
+skinparam ParticipantPadding 5
+
+participant "Public Internet" order 50
+
+Browser -> Nginx : GET api/cart
+
+note left Nginx: Nginx terminates TLS 
+
+Nginx -> Backend ++ : proxy_pass :3000
+Backend -> Nginx : GET realm/userinfo
+note left Backend: Initiate encrypted transfer
+Nginx -> "Public Internet" : GET realm/userinfo
+"Public Internet" --> Nginx : :443
+Nginx -> Keycloak ++ : proxy_pass :8080
+Keycloak --> Nginx -- : userinfo
+Nginx -> "Public Internet" : 168.290.592.104
+"Public Internet" --> Nginx
+Nginx -> Backend : proxy_pass :3000
+Backend -> Backend : authenticate
+Backend --> Nginx -- 
+Nginx --> Browser : response
+
+box "Server" #c1cde6
+
+  box "Docker Network"
+
+  participant Nginx
+  participant Backend
+  participant Keycloak
+  
+  end box
+
+end box
+
+@enduml
 
 One issue I have with creating plantUML diagrams is that I build them in my
 notes directory - seperate from my blog - and copy the images over when done.
@@ -56,6 +120,7 @@ I am lazy and I have other things to do, I'll let Gemini do that for me.
 
 Let's see how it does:
 
+```plantuml
 @startuml
 
 Alice -> Bob : does it work?
@@ -65,6 +130,7 @@ Charline -> Bob : this works pretty good!
 Bob --> Charline : That's right!
 
 @enduml
+```
 
 Let me put another Uml Diagram right here: 
 

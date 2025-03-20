@@ -30,9 +30,18 @@ async function processPlantUml(content, inputPath, outputPath) {
 }
 
 function getUmlBlocks(content) {
+  // these are blocks which are directly in the markdown content
   const umlBlockRegex = /^<p>@startuml<\/p>\n(?:.*\n)+?^<p>@enduml<\/p>$/gm;
+  // these are blocks enclosed in ```plantuml code blocks
+  const codeBlockPlantumlRegex = /^<pre><code class="language-plantuml">@startuml\n(?:.*\n)+?^@enduml\n<\/code><\/pre>$/gm;
+
   const umlBlocks = content.match(umlBlockRegex);
-  return umlBlocks;
+  const codeBlocks = content.match(codeBlockPlantumlRegex);
+  if (!umlBlocks) {
+    return null;
+  }
+  const allPlantUmlBlocks = umlBlocks.concat(codeBlocks);
+  return allPlantUmlBlocks;
 }
 
 async function generateAndReplace(umlCode, inputPath, outputPath) {
@@ -48,6 +57,7 @@ async function generateAndReplace(umlCode, inputPath, outputPath) {
 
 async function generatePngWithLocalPlantUml(umlCode, imagePath) {
   const fileName = path.basename(imagePath, path.extname(imagePath));
+  console.log("uml code", umlCode);
   return new Promise((resolve, reject) => {
     const tempFile = path.join(path.dirname(imagePath), `${fileName}-${Date.now()}.txt`);
 
@@ -121,8 +131,11 @@ function generateHtml(imagePath, umlCode) {
 `;
 }
 
-function greaterThanAndLessThan(text) {
-  return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+function replaceEscapedCharacters(text) {
+  return text
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"');
 }
 
 function escapeHtml(text) {
@@ -131,6 +144,6 @@ function escapeHtml(text) {
 
 function stripHtmlTags(html) {
   const stripped = html.replace(/<[^>]*>/g, "");
-  const withSymbols = greaterThanAndLessThan(stripped);
+  const withSymbols = replaceEscapedCharacters(stripped);
   return withSymbols;
 }
