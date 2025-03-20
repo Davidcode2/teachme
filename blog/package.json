@@ -23,7 +23,6 @@
     "@tailwindcss/cli": "^4.0.9",
     "luxon": "^3.5.0",
     "markdown-it": "^14.1.0",
-    "node-plantuml": "^0.9.0",
     "tailwindcss": "^4.0.9"
   },
   "devDependencies": {

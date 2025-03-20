@@ -1,4 +1,3 @@
-import plantuml from "node-plantuml";
 import fs from "fs/promises";
 import path from "path";
 import { exec } from 'child_process';
@@ -76,22 +75,6 @@ async function generatePngWithLocalPlantUml(umlCode, imagePath) {
       .catch((err) => {
         reject(err);
       });
-  });
-}
-
-async function generatePng(umlCode) {
-  return new Promise((resolve, reject) => {
-    const gen = plantuml.generate(umlCode, { format: "png" });
-    let buffer = Buffer.from([]);
-    gen.out.on("data", (data) => {
-      buffer = Buffer.concat([buffer, data]);
-    });
-    gen.out.on("end", () => {
-      resolve(buffer);
-    });
-    gen.out.on("error", (err) => {
-      reject(err);
-    });
   });
 }
 
