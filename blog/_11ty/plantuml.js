@@ -99,7 +99,7 @@ function generateHtml(imagePath, umlCode) {
   const uniqueId = `plantuml-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
   return `
-<div class="plantuml-container" id="${uniqueId}">
+<div class="plantuml-container" style="margin: 20px 0" id="${uniqueId}">
   <div class="tabs">
     <button class="tab-button active" data-tab="image-${uniqueId}">Image</button>
     <button class="tab-button" data-tab="code-${uniqueId}">Code</button>
