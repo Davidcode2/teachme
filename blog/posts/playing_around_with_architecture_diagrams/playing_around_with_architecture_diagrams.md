@@ -142,3 +142,75 @@ Let me put another Uml Diagram right here:
 
 @enduml
 
+Now I have a concrete use case for a plantUML diagram relating to this blog.
+Currently, the transform code which parses each blog post and checks whether it
+can find plantuml code blocks will create an image for each code block it
+finds, everytime something changes - anywhere in the code. This is a problem.
+My output folder gets spammed with all these duplicate images. Also, if a
+diagram actually changes, the old version of the image will just stay there.
+
+A first point of consideration would be that the image generation shouldn't run  
+on any change in the codebase.
+
+Second I need to figure out how to delete old versions when the diagram code
+changed.
+
+The goal is to have only one image for each diagram in a post at any given time.
+
+Let's draw it up: 
+
+```plantuml
+@startuml
+
+skinparam componentStyle rectangle
+
+component markdown
+rectangle {
+    component "11ty" as 11ty
+    component "PlantUml Transform" as transform
+    note top of transform
+        Iterate over uml blocks
+        and append index 
+        to output file
+    end note
+}
+component "plantUml Image" as png
+actor user 
+
+user -> markdown : changes and saves
+11ty --> markdown : registers change and builds
+11ty -> transform 
+transform -> png : creates
+
+@enduml
+```
+
+For the file names of the generated PNGs I use the same convention as plantUML
+does. This means that when I manually run plantUML, it will just update the
+existing images instead of creating new ones.
+
+Turns out my reasoning above was flawed. I don't even have the problem of
+having to delete old versions of the images. I just override the one image file
+I create initially.
+
+So now as I researched the markdown capabilities in 11ty, I came across
+syntax highlighting. Let's test it out with an example of the code 
+used for the transform.
+
+```javascript
+function getUmlBlocks(content) {
+  // these are blocks which are directly in the markdown content
+  const umlBlockRegex = /^<p>@startuml<\/p>\n(?:.*\n)+?^<p>@enduml<\/p>$/gm;
+  // these are blocks enclosed in ```plantuml code blocks
+  const codeBlockPlantumlRegex = /^<pre><code class="language-plantuml">@startuml\n(?:.*\n)+?^@enduml\n<\/code><\/pre>$/gm;
+
+  const umlBlocks = content.match(umlBlockRegex);
+  const codeBlocks = content.match(codeBlockPlantumlRegex);
+  if (!umlBlocks) {
+    return null;
+  }
+  const allPlantUmlBlocks = umlBlocks.concat(codeBlocks);
+  return allPlantUmlBlocks;
+}
+```
+

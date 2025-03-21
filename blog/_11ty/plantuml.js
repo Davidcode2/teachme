@@ -19,10 +19,12 @@ async function processPlantUml(content, inputPath, outputPath) {
   if (!umlBlocks) {
     return processedContent;
   }
-  console.log("Found PlantUML blocks:", umlBlocks);
-  for (const umlBlockWithHtml of umlBlocks) {
+  for (const [index, umlBlockWithHtml] of umlBlocks.entries()) {
+    if (!umlBlockWithHtml) {
+      continue;
+    }
     const umlCode = stripHtmlTags(umlBlockWithHtml);
-    const replacement = await generateAndReplace(umlCode, inputPath, outputPath);
+    const replacement = await generateAndReplace(umlCode, index, inputPath, outputPath);
     processedContent = processedContent.replace(umlBlockWithHtml, replacement);
   }
   return processedContent;
@@ -32,7 +34,7 @@ function getUmlBlocks(content) {
   // these are blocks which are directly in the markdown content
   const umlBlockRegex = /^<p>@startuml<\/p>\n(?:.*\n)+?^<p>@enduml<\/p>$/gm;
   // these are blocks enclosed in ```plantuml code blocks
-  const codeBlockPlantumlRegex = /^<pre><code class="language-plantuml">@startuml\n(?:.*\n)+?^@enduml\n<\/code><\/pre>$/gm;
+  const codeBlockPlantumlRegex = /^<pre><code class="hljs">@startuml\n(?:.*\n)+?^@enduml\n<\/code><\/pre>$/gm;
 
   const umlBlocks = content.match(umlBlockRegex);
   const codeBlocks = content.match(codeBlockPlantumlRegex);
@@ -43,22 +45,21 @@ function getUmlBlocks(content) {
   return allPlantUmlBlocks;
 }
 
-async function generateAndReplace(umlCode, inputPath, outputPath) {
-  const imagePath = await generatePngWithLocalPlantUml(umlCode, inputPath, outputPath);
+async function generateAndReplace(umlCode, index, inputPath, outputPath) {
+  const imagePath = await generatePngWithLocalPlantUml(umlCode, index, inputPath);
   const imageOutputPath = path.join(outputPath, imagePath);
   await fs.copyFile(imagePath, imageOutputPath);
 
   const relativeImagePath = `/${imagePath}`;
-  console.log("Generated PlantUML image:", relativeImagePath);
   const generatedHtml = generateHtml(relativeImagePath, umlCode);
   return generatedHtml;
 }
 
-async function generatePngWithLocalPlantUml(umlCode, imagePath) {
+async function generatePngWithLocalPlantUml(umlCode, index, imagePath) {
   const fileName = path.basename(imagePath, path.extname(imagePath));
-  console.log("uml code", umlCode);
+  const formattedIndex = formatNumberWithLeadingZero(index);
   return new Promise((resolve, reject) => {
-    const tempFile = path.join(path.dirname(imagePath), `${fileName}-${Date.now()}.txt`);
+    const tempFile = path.join(path.dirname(imagePath), `${fileName}_${formattedIndex}.txt`);
 
     fs.writeFile(tempFile, umlCode)
       .then(() => {
@@ -76,6 +77,11 @@ async function generatePngWithLocalPlantUml(umlCode, imagePath) {
         reject(err);
       });
   });
+}
+
+function formatNumberWithLeadingZero(number) {
+  const formattedIndex = String(number + 1).padStart(3, "0");
+  return formattedIndex;
 }
 
 function generateHtml(imagePath, umlCode) {
