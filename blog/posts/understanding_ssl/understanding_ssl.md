@@ -74,4 +74,50 @@ it and deepen my understanding. I'd also like to add a sequence diagram which
 digs into more detail on how the certificates / signatures of each CA get
 checked.
 
-![Checking certificates](./250314-2128-hashing.png)
+@startuml
+
+!define osaPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons/master
+!include osaPuml/Common.puml
+!include osaPuml/User/all.puml
+!include osaPuml/Hardware/all.puml
+!include osaPuml/Misc/all.puml
+!include osaPuml/Server/all.puml
+!include osaPuml/Site/all.puml
+
+' Devices
+osa_laptop(client, "Client", "Firefox", "Browser")
+note left
+  * The client receives the servers certificate
+  * calculates the hash of the certificate
+  * receives the fingerprint (encrypted hash) of certificate
+  * decrypts using public key
+  * checks if hashes match
+  * reads certificate chain
+  * checks next certificate by following steps above
+end note
+osa_server(server, "Server", "nginx", "Web server")
+
+together {
+  osa_server(intermediate_ca, "Intermediate CA", "Certificate Authority", "Certificate Authority")
+  osa_server(root_ca, "Root CA", "Certificate Authority", "Certificate Authority")
+}
+
+' Certificates
+osa_contract(server_certificate, "Server Fullchain Certificate", "Certificate","Certificate")
+
+together {
+  osa_contract(intermediate_ca_certificate, "Intermediate CA Certificate", "Certificate","Certificate")
+  osa_contract(root_ca_certificate, "Root CA Certificate", "Certificate","Certificate")
+}
+
+client --> server : 1. request 
+server --> server_certificate : provide
+server_certificate --> client 
+
+client -> intermediate_ca : 2. request 
+intermediate_ca --> intermediate_ca_certificate : provide
+client -> root_ca : 3. request
+root_ca --> root_ca_certificate : provide
+
+@enduml
+
