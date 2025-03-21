@@ -1,12 +1,13 @@
 import { DateTime } from "luxon";
-import markdownIt from "markdown-it";
-import plantUmlPlugin from './_11ty/plantuml.js';
+import markdownit from "markdown-it";
+import hljs from "highlight.js"; // https://highlightjs.org
+import plantUmlPlugin from "./_11ty/plantuml.js";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
-export default function(eleventyConfig) {
+export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("css/output.css");
 
-  eleventyConfig.addFilter("formatDate", function(dateString, format) {
+  eleventyConfig.addFilter("formatDate", function (dateString, format) {
     const dateObj = DateTime.fromJSDate(new Date(dateString));
     if (!dateObj.isValid) {
       return "";
@@ -14,11 +15,29 @@ export default function(eleventyConfig) {
     return dateObj.toFormat(format);
   });
 
-  const markdownLibrary = markdownIt({
+  // Actual default values
+  const md = markdownit({
     html: true, // Allow HTML tags in Markdown
     linkify: true, // Autoconvert URLs to links
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return (
+            '<pre><code class="hljs">' +
+            hljs.highlight(str, { language: lang, ignoreIllegals: true })
+              .value +
+            "</code></pre>"
+          );
+        } catch (__) {}
+      }
+
+      return (
+        '<pre><code class="hljs">' + md.utils.escapeHtml(str) + "</code></pre>"
+      );
+    },
   });
-  eleventyConfig.setLibrary("md", markdownLibrary);
+
+  eleventyConfig.setLibrary("md", md);
 
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
 
