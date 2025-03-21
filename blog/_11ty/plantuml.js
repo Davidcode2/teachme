@@ -1,13 +1,13 @@
 import fs from "fs/promises";
 import path from "path";
-import { exec } from 'child_process';
+import { exec } from "child_process";
 
 export default function (eleventyConfig) {
   eleventyConfig.addTransform("plantuml", async function (content) {
     const withPlantUmlImage = await processPlantUml(
       content,
       this.page.inputPath,
-      eleventyConfig.dir.output || "_site"
+      eleventyConfig.dir.output || "_site",
     );
     return withPlantUmlImage;
   });
@@ -24,7 +24,12 @@ async function processPlantUml(content, inputPath, outputPath) {
       continue;
     }
     const umlCode = stripHtmlTags(umlBlockWithHtml);
-    const replacement = await generateAndReplace(umlCode, index, inputPath, outputPath);
+    const replacement = await generateAndReplace(
+      umlCode,
+      index,
+      inputPath,
+      outputPath,
+    );
     processedContent = processedContent.replace(umlBlockWithHtml, replacement);
   }
   return processedContent;
@@ -34,7 +39,8 @@ function getUmlBlocks(content) {
   // these are blocks which are directly in the markdown content
   const umlBlockRegex = /^<p>@startuml<\/p>\n(?:.*\n)+?^<p>@enduml<\/p>$/gm;
   // these are blocks enclosed in ```plantuml code blocks
-  const codeBlockPlantumlRegex = /^<pre><code class="hljs">@startuml\n(?:.*\n)+?^@enduml\n<\/code><\/pre>$/gm;
+  const codeBlockPlantumlRegex =
+    /^<pre><code class="hljs">@startuml\n(?:.*\n)+?^@enduml\n<\/code><\/pre>$/gm;
 
   const umlBlocks = content.match(umlBlockRegex);
   const codeBlocks = content.match(codeBlockPlantumlRegex);
@@ -46,8 +52,18 @@ function getUmlBlocks(content) {
 }
 
 async function generateAndReplace(umlCode, index, inputPath, outputPath) {
-  const imagePath = await generatePngWithLocalPlantUml(umlCode, index, inputPath);
+  const imagePath = await generatePngWithLocalPlantUml(
+    umlCode,
+    index,
+    inputPath,
+  );
   const imageOutputPath = path.join(outputPath, imagePath);
+  try {
+    await ensureDirectoryExists(path.dirname(imageOutputPath));
+  } catch (error) {
+    console.error(`Error ensuring directory exists:`, error);
+    throw error;
+  }
   await fs.copyFile(imagePath, imageOutputPath);
 
   const relativeImagePath = `/${imagePath}`;
@@ -55,23 +71,53 @@ async function generateAndReplace(umlCode, index, inputPath, outputPath) {
   return generatedHtml;
 }
 
+async function ensureDirectoryExists(directoryPath) {
+  try {
+    await fs.access(directoryPath);
+    // Folder exists, no need to create it
+    console.log(`Directory '${directoryPath}' exists.`);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      try {
+        await fs.mkdir(directoryPath, { recursive: true });
+        console.log(`Directory '${directoryPath}' created.`);
+      } catch (mkdirError) {
+        console.error(
+          `Error creating directory '${directoryPath}':`,
+          mkdirError,
+        );
+        throw mkdirError; // Rethrow the error to be handled by the caller
+      }
+    } else {
+      console.error(`Error accessing directory '${directoryPath}':`, error);
+      throw error; // Rethrow other errors
+    }
+  }
+}
+
 async function generatePngWithLocalPlantUml(umlCode, index, imagePath) {
   const fileName = path.basename(imagePath, path.extname(imagePath));
   const formattedIndex = formatNumberWithLeadingZero(index);
   return new Promise((resolve, reject) => {
-    const tempFile = path.join(path.dirname(imagePath), `${fileName}_${formattedIndex}.txt`);
+    const tempFile = path.join(
+      path.dirname(imagePath),
+      `${fileName}_${formattedIndex}.txt`,
+    );
 
     fs.writeFile(tempFile, umlCode)
       .then(() => {
-        exec(`java -jar ~/.plantuml/plantuml.jar -tpng -o "./" "${tempFile}"`, (error, stdout, stderr) => {
-          fs.unlink(tempFile);
-          if (error) {
-            console.error(`exec error: ${error}`);
-            reject(error);
-            return;
-          }
-          resolve(tempFile.replace(".txt", ".png"));
-        });
+        exec(
+          `java -jar ~/.plantuml/plantuml.jar -tpng -o "./" "${tempFile}"`,
+          (error, stdout, stderr) => {
+            fs.unlink(tempFile);
+            if (error) {
+              console.error(`exec error: ${error}`);
+              reject(error);
+              return;
+            }
+            resolve(tempFile.replace(".txt", ".png"));
+          },
+        );
       })
       .catch((err) => {
         reject(err);
