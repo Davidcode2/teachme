@@ -2,16 +2,16 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
-COPY . .
-
 # Install Java, Graphviz, and PlantUML
 RUN apk add --no-cache openjdk17-jre graphviz
 # Create the PlantUML directory
 RUN mkdir -p /root/.plantuml
 # Download PlantUML jar
 RUN wget -O /root/.plantuml/plantuml.jar https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar
+
+COPY package*.json ./
+RUN npm install
+COPY . .
 
 RUN npm run build
 
