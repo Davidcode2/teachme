@@ -42,12 +42,12 @@ function getUmlBlocks(content) {
   const codeBlockPlantumlRegex =
     /^<pre><code class="hljs">@startuml\n(?:.*\n)+?^@enduml\n<\/code><\/pre>$/gm;
 
-  const umlBlocks = content.match(umlBlockRegex);
-  const codeBlocks = content.match(codeBlockPlantumlRegex);
-  if (!umlBlocks) {
+  const umlBlocks = content.match(umlBlockRegex) || [];
+  const codeBlocks = content.match(codeBlockPlantumlRegex) || [];
+  const allPlantUmlBlocks = umlBlocks.concat(codeBlocks);
+  if (allPlantUmlBlocks.length === 0) {
     return null;
   }
-  const allPlantUmlBlocks = umlBlocks.concat(codeBlocks);
   return allPlantUmlBlocks;
 }
 
