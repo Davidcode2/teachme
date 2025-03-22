@@ -26,8 +26,8 @@ export class CartService {
     const user = await this.userService.findOneById(userId);
     user.consumer.cart = cart;
     user.consumer.cart.materials = [];
-    this.cartRepository.save(cart);
-    this.userService.update(user);
+    await this.cartRepository.save(cart);
+    await this.userService.update(user);
     return cart;
   }
 
@@ -68,7 +68,7 @@ export class CartService {
   private async createCartIfNotExists(userId: string) {
     const user = await this.userService.findOneById(userId);
     if (!user.consumer.cart) {
-      await this.create(userId);
+      return await this.create(userId);
     }
   }
 

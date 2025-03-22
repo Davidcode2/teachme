@@ -71,6 +71,7 @@ export class UsersService {
 
   async getAuthorId(userId: string): Promise<string> {
     const user = await this.findOneById(userId);
+    if (!user) return null;
     return user.authorId;
   }
 
@@ -117,6 +118,12 @@ export class UsersService {
   async addMaterials(materials: Material[], userId: string) {
     const user = await this.findOneById(userId);
     const consumerId = user.consumerId;
+    // check if user already has these materials
+    for (const material of materials) {
+      if (user.consumer.materials.includes(material)) {
+        throw new Error('User already has these materials');
+      }
+    }
     user.consumer = await this.consumerService.addMaterials(
       materials,
       consumerId,
