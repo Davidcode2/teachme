@@ -108,9 +108,7 @@ function Header() {
   const navigation = (
     <Nav
       materialsLink="materials"
-      myMaterialsLink={
-        auth?.isAuthenticated ? "materials/mine/bought" : "login"
-      }
+      myMaterialsLink="materials/mine/bought"
     ></Nav>
   );
 

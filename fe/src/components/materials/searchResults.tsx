@@ -41,7 +41,6 @@ function SearchResults() {
   };
 
   const setSearchResultsGlobal = (materials: MaterialWithThumbnail[]) => {
-    console.log(materials);
     if (materials.length === 0) {
       useSearchState.setState({ searchResults: [] });
       return;
@@ -62,7 +61,6 @@ function SearchResults() {
   };
 
   useEffect(() => {
-    console.log(searchString);
     searchMaterials();
   }, [searchString]);
 

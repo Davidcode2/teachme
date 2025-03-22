@@ -26,11 +26,9 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
 
   if (!auth.isAuthenticated)
     return (
-      <div className="flex hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer">
-        <Link to="/login">
+      <button onClick={() => auth.signinRedirect()} className="flex hover:-translate-y-1 transition-transform ease-in duration-100 rounded-full hover:cursor-pointer">
           <img src={addToShoppingCartIcon} width="25" alt="" />
-        </Link>
-      </div>
+      </button>
     );
 
   const addToShoppingCart = async () => {

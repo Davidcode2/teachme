@@ -14,6 +14,12 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
     hideSidebar();
   };
 
+  const myMaterialLinkButton = (
+    <div className="font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline">
+      Meins
+    </div>
+  );
+
   return (
     <>
       <div className="z-40 flex items-center gap-x-6">
@@ -43,9 +49,7 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
                 : "border-none"
           }
         >
-          <div className="font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline">
-            Meins
-          </div>
+        { myMaterialLinkButton }
         </NavLink>
       </div>
     </>

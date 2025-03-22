@@ -16,6 +16,7 @@ import EditMaterial from "./components/card/edit_card.tsx";
 import editMaterialAction from "./actions/editMaterialAction.ts";
 import App from "./App.tsx";
 import AuthCallback from "./components/auth/callback.tsx";
+import ProtectedRoute from "./components/protectedRoute.tsx";
 
 const routes = [
   {
@@ -31,7 +32,7 @@ const routes = [
       },
       {
         path: "/materials/:id/edit",
-        element: <EditMaterial />,
+        element: <ProtectedRoute><EditMaterial /></ProtectedRoute>,
         action: editMaterialAction,
       },
       {
@@ -41,7 +42,7 @@ const routes = [
       },
       {
         path: "/materials/mine",
-        element: <Mine />,
+        element: <ProtectedRoute><Mine /></ProtectedRoute>,
         children: [
           {
             index: true,
@@ -49,22 +50,22 @@ const routes = [
           },
           {
             path: "bought/",
-            element: <MyMaterials />,
+            element: <ProtectedRoute><MyMaterials /></ProtectedRoute>,
           },
           {
             path: "workspace/",
-            element: <Workspace />,
+            element: <ProtectedRoute><Workspace /></ProtectedRoute>,
           },
         ],
       },
       {
         path: "/materials/add",
-        element: <AddMaterial />,
+        element: <ProtectedRoute><AddMaterial /></ProtectedRoute>,
         action: addMaterialAction,
       },
       {
         path: "/materials/add/success",
-        element: <AddMaterialSuccess />,
+        element: <ProtectedRoute><AddMaterialSuccess /></ProtectedRoute>,
         action: addUsernameAction,
       },
       {
@@ -74,7 +75,7 @@ const routes = [
       },
       {
         path: "/success",
-        element: <SuccessPage />,
+        element: <ProtectedRoute><SuccessPage /></ProtectedRoute>,
       },
       {
         path: "/auth/callback",
