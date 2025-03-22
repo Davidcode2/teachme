@@ -82,7 +82,7 @@ p {
 }
 
 .plantuml-container {
-  @apply bg-gray-100 rounded flex flex-col
+  @apply bg-gray-100 rounded flex flex-col my-4
 }
 
 .plantuml-container .tab-button.active {
@@ -103,7 +103,7 @@ p {
 
 .plantuml-container .tab-content {
   padding: 10px;
-  overflow-x: scroll
+  overflow-x: auto
 }
 
 .plantuml-container .tab-content.hidden {

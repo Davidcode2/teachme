@@ -383,6 +383,7 @@ p {
   padding-block: calc(var(--spacing) * 0.5);
 }
 .plantuml-container {
+  margin-block: calc(var(--spacing) * 4);
   display: flex;
   flex-direction: column;
   border-radius: 0.25rem;
@@ -421,7 +422,7 @@ p {
 }
 .plantuml-container .tab-content {
   padding: 10px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .plantuml-container .tab-content.hidden {
   display: none;
