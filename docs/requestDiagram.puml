@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+
+rectangle "Client" as Client
+
+rectangle "Docker Host" {
+  rectangle "Nginx Proxy (Port 80/443)" as Proxy {
+    component "Nginx (Proxy)" as ProxyNginx
+  }
+
+  rectangle "Nginx (Blog)" as BlogNginxContainer {
+    component "Blog" as BlogNginx
+  }
+
+  rectangle "Nginx (App)" as AppNginxContainer {
+    component "App" as AppNginx
+  }
+}
+
+Client -d-> ProxyNginx : HTTP Request (Port 80)
+ProxyNginx .u.> Client : HTTPS Redirect
+Client -d-> ProxyNginx : HTTPS Request (Port 443)
+
+ProxyNginx -d-> BlogNginx : blog.teachly.store
+ProxyNginx -d-> AppNginx : teachly.store
+
+BlogNginx ..> ProxyNginx : Static Blog Files
+AppNginx ..> ProxyNginx : Web Application
+
+@enduml
