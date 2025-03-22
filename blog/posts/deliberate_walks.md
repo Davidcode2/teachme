@@ -15,6 +15,7 @@ These walks should happen at least twice a week.
 | 1h       | 5       | 3                 | 20s                       |
 | 50m      | 3       | 6                 | 30s                       |
 | 1h       | 4       | 5                 | 20s                       |
+| 1h       | 4       | 2                 | 20s                       |
 
 **Analyzing wanderings**
 
