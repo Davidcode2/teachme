@@ -80,7 +80,7 @@ function EditMaterial(): JSX.Element {
       ) : (
         <div
           id={materialWithThumbnail.material.id.toString()}
-          className="m-4 lg:mx-auto rounded-lg shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 lg:w-2/3"
+          className="m-4 rounded-lg shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 lg:mx-auto lg:w-2/3"
         >
           <BorderColorBlur>
             <Form
@@ -109,14 +109,28 @@ function EditMaterial(): JSX.Element {
                     value={materialWithThumbnail.material.id.toString()}
                     readOnly
                   />
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    htmlFor="title"
+                  >
+                    Titel
+                  </label>
                   <input
+                    id="title"
                     className="max-w-fit rounded-lg border border-slate-200 p-2 text-2xl"
                     type="text"
                     placeholder={`${materialWithThumbnail.material.title}`}
                     defaultValue={materialWithThumbnail.material.title}
                     name="title"
                   />
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    htmlFor="description"
+                  >
+                    Beschreibung
+                  </label>
                   <textarea
+                    id="description"
                     className="max-w-fit rounded-lg border border-slate-200 p-2"
                     cols={40}
                     rows={5}
@@ -124,6 +138,12 @@ function EditMaterial(): JSX.Element {
                     defaultValue={materialWithThumbnail.material.description}
                     name="description"
                   />
+                  <label
+                    className="block text-sm font-medium text-gray-700"
+                    htmlFor="price"
+                  >
+                    Preis
+                  </label>
                   <Price
                     initialValue={materialWithThumbnail.material.price.toString()}
                   />
