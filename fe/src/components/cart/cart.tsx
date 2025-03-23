@@ -8,6 +8,7 @@ import Skeleton from "../card/skeleton";
 import MaterialInDto from "../../DTOs/materialInDto";
 import Material from "../../DTOs/material";
 import { useAuth } from "react-oidc-context";
+import CartSkeleton from "./cartItemSkeleton";
 
 export default function Cart(): JSX.Element {
   const [cartItems, setCartItems] = useState([]);
@@ -17,9 +18,7 @@ export default function Cart(): JSX.Element {
   const auth = useAuth();
 
   const getItems = async () => {
-    const data = await cartService.getItems(
-      auth.user?.profile?.sub!,
-    );
+    const data = await cartService.getItems(auth.user?.profile?.sub!);
     return data;
   };
 
@@ -46,7 +45,11 @@ export default function Cart(): JSX.Element {
   );
 
   if (loading) {
-    return <Skeleton id={crypto.randomUUID()} />;
+    return (
+      <div className="m-0 mt-10 flex flex-col gap-4 sm:m-10 md:max-w-[600px]">
+        <CartSkeleton id={crypto.randomUUID()} />
+      </div>
+    );
   } else if (!cartItems || cartItems.length === 0) {
     return noItemsInCart;
   }
@@ -68,7 +71,7 @@ export default function Cart(): JSX.Element {
         cartItems.map((item: MaterialInDto) => (
           <CartItem key={item.id} item={item} cartService={cartService} />
         ))}
-      {cartItems.length > 0 && checkoutButton }
+      {cartItems.length > 0 && checkoutButton}
     </div>
   );
 }
