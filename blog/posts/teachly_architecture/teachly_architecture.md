@@ -20,10 +20,10 @@ Person(personAlias, "User", "Teacher or Refendar")
 System(systemAlias, "Teachly")
 System_Ext(paymentProvider, "Payment Provider")
 
-personAlias ..> systemAlias : browse
-personAlias ..> systemAlias : upload
-personAlias ..> systemAlias : buy
-systemAlias -> paymentProvider : handle payment
+personAlias --> systemAlias : browse materials
+personAlias --> systemAlias : upload materials
+personAlias --> systemAlias : buy materials
+systemAlias -> paymentProvider : delegate payment handling
 
 @enduml
 ```
@@ -43,12 +43,7 @@ System_Boundary(boundary, "Teachly System", $link="https://github.com/davidcode2
 
     Container(webfe, "Single Page App", "React", $descr="Web UI", $link="https://github.com/davidcode2/teachme/fe")
 
-
-together {
-    Container(reverse_proxy, "Reverse Proxy", "Nginx", $descr="Reverse proxy for terminating SSL", $link="https://github.com/davidcode2/teachme/reverse_proxy")
-
     Container(idp, "Identity Provider", "Keycloak", $descr="Identity provider for authentication and authorization", $link="https://github.com/davidcode2/teachme/keycloak")
-}
 
     ContainerDb(database, "Database", "Postgres", $descr="Database for storing material references, users, carts, etc.", $link="https://github.com/davidcode2/teachme")
 
@@ -58,17 +53,19 @@ together {
 
 Container_Ext(paymentProvider, "Payment provider", "Stripe", $descr="Payment provider handling payments", $link="https://github.com/davidcode2/teachme/be")
 
-person --> webfe
-webfe -> idp
-webfe --> reverse_proxy
-reverse_proxy --> webapi
-webapi -u-> idp
-webapi -l-> database
-webapi -> paymentProvider
-webapi --> file_store
+person --> webfe : access web ui
+webfe -> idp : redirect user for sign in
+webfe --> webapi : requests resources\n updates state
+webapi -u-> idp : check user authorization
+webapi -l-> database : store + retrieve
+webapi -> paymentProvider : delegate payment
+webapi --> file_store : store + retrieve
 
 @enduml
 ```
+
+There's a reverse proxy in front of the other containers which terminates SSL.
+Each container runs in a docker container behind its own nginx server.
 
 **Components**
 
@@ -84,12 +81,11 @@ Container_Boundary(boundary, "Web API") {
 
   together {
     Component(userController, "Users Controller", $descr="GET, POST, PATCH")
-    Component(materialController, "Materials Controller", $descr="GET, POST, DELETE")
+    Component(authorController, "Author Controller", $descr="GET")
+    Component(materialController, "Materials Controller", $descr="GET, POST, PATCH, DELETE")
     Component(cartController, "Carts Controller", $descr="GET, POST, DELETE")
-    Component(consumerController, "Consumers Controller", $descr="GET, POST, DELETE")
-    Component(authorController, "Author Controller", $descr="GET, POST, DELETE")
-    Component(authController, "Auth Controller", $descr="GET, POST, DELETE")
-    Component(stripeController, "Stripe Controller", $descr="GET, POST, DELETE")
+    Component(stripeController, "Stripe Controller", $descr="GET, POST")
+    Component(authController, "Auth Controller", $descr="GET, POST")
   }
 
   together {
@@ -104,7 +100,6 @@ Container_Boundary(boundary, "Web API") {
   Component(authService, "Auth Service", $descr="")
   Component(authorService, "Author Service", $descr="")
   Component(imageService, "Image Service", $descr="")
-  Component(configService, "Config Service", $descr="")
   Component(materialFinderService, "Material PriceId Finder Service", $descr="")
 
 }
@@ -131,13 +126,11 @@ cartService --> commonCartService
 
 
 stripeController --> stripeService
-stripeService --> configService
 stripeService --> userService
 stripeService --> materialFinderService
 stripeService --> commonCartService
 stripeService -> stripe
 
-consumerController --> consumerService
 authorController --> authorService
 authController --> authService
 
@@ -145,3 +138,6 @@ authController --> authService
 ```
 
 **Code**
+
+Simon Brown - the creator of C4 - says to not draw code level diagrams when not
+absolutely necessary. Makes sense to me.
