@@ -104,6 +104,7 @@ export class MaterialsController {
     return this.materialsService.delete(materialId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('download')
   async download(@Query('id') materialId: string, @Res() response: Response) {
     // check if material is owned by user

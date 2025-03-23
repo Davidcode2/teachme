@@ -6,6 +6,9 @@ export async function customFetch(
   init?: Parameters<typeof fetch>[1],
 ): ReturnType<typeof fetch> {
   const user = getUser();
+  if (!init) {
+    init = {};
+  }
   init!.headers = { ...init!.headers, Authorization: `Bearer ${user?.access_token}` };
   const res = await fetch(url, init);
   if (res.status.toString().startsWith("5")) {
