@@ -11,7 +11,10 @@ export default async function addUsernameAction({
   useUserStore.getState().setUser(username);
   const res = await customFetch(`/api/users`, {
     method: "PATCH",
-    body: username 
+    body: username,
+    headers: {
+      "Content-Type": "application/json",
+    }
   });
 
   if (!res.ok) {
@@ -19,4 +22,5 @@ export default async function addUsernameAction({
       .getState()
       .pushError({ code: res.status, message: res.statusText });
   }
+  return res;
 }

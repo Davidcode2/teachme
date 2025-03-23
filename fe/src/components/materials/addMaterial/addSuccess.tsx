@@ -4,6 +4,7 @@ import { useUserStore } from "../../../store";
 import { useEffect, useState } from "react";
 import React from "react";
 import IconLink from "../../styling/iconLink";
+import CheckMarkIcon from "../../../assets/icons/icons8-checkmark-48.png";
 
 export default function AddMaterialSuccess() {
   const userStore = useUserStore();
@@ -13,16 +14,24 @@ export default function AddMaterialSuccess() {
   const displayName = useActionData();
 
   const NameForm = (
-    <Form method="patch" onSubmit={() => setEditName(false)}>
-      <input
-        className="mx-auto my-3 w-52 min-w-0 rounded-md border border-slate-200 px-4 py-2 shadow-sm"
-        type="text"
-        placeholder="Nutzername"
-        name="displayName"
-        ref={inputRef}
-        defaultValue={displayName}
-        required
-      />
+    <Form
+      method="patch"
+      onSubmit={() => setEditName(false)}
+    >
+      <div className="mx-auto flex justify-center items-center gap-x-4">
+        <input
+          className="my-3 w-52 min-w-0 rounded-md border border-slate-200 px-4 py-2 shadow-sm"
+          type="text"
+          placeholder="Nutzername"
+          name="displayName"
+          ref={inputRef}
+          defaultValue={displayName}
+          required
+        />
+        <button className="">
+          <img src={CheckMarkIcon} width="30" />
+        </button>
+      </div>
     </Form>
   );
 
@@ -50,8 +59,8 @@ export default function AddMaterialSuccess() {
           <p className="py-4 text-lg font-bold">Schön, dass du bei uns bist</p>
           {editName && NameForm}
           {!editName && (
-            <div className="grid grid-cols-3 gap-2 py-4 text-2xl font-bold">
-              <div className="col-start-2">{displayName}</div>
+            <div className="mx-auto flex gap-2 py-4 text-2xl font-bold">
+              <div>{displayName}</div>
               <button
                 className="w-5 opacity-50"
                 onClick={() => focusEditName()}
