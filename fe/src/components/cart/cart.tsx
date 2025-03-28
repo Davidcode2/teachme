@@ -4,7 +4,6 @@ import { useEffect, useState, type JSX } from "react";
 import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
 import { useCartStore } from "../../store";
-import Skeleton from "../card/skeleton";
 import MaterialInDto from "../../DTOs/materialInDto";
 import Material from "../../DTOs/material";
 import { useAuth } from "react-oidc-context";
