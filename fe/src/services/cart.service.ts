@@ -22,10 +22,13 @@ class CartService {
     return data;
   }
 
-  addItem = async (id: string, userId: string) => {
+  addItem = async (id: string) => {
     const res = await customFetch("/api/cart", {
       method: "POST",
-      body: JSON.stringify({ userId: userId, materialId: id }),
+      body: JSON.stringify({ materialId: id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     const numberOfItems = await res.json();
     useCartStore.setState({ numberOfCartItems: numberOfItems });

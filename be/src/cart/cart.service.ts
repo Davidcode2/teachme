@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from './cart.entity';
 import { Repository } from 'typeorm';
@@ -22,6 +22,7 @@ export class CartService {
   ) {}
 
   async create(userId: string): Promise<Cart> {
+    Logger.log('Creating cart for user with id: ' + userId);
     const cart = new Cart();
     const user = await this.userService.findOneById(userId);
     user.consumer.cart = cart;
