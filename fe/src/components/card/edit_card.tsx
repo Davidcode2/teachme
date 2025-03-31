@@ -7,6 +7,7 @@ import CardService from "../../services/cardService.ts";
 import SpinnerGif from "../../assets/icons/icons8-spinnkreis.gif";
 import Price from "../materials/addMaterial/price.tsx";
 import BorderColorBlur from "../styling/borderColorBlur.tsx";
+import { redirect } from "react-router";
 
 function EditMaterial(): JSX.Element {
   const [materialWithThumbnail, setMaterialWithThumbnail] =
@@ -71,6 +72,10 @@ function EditMaterial(): JSX.Element {
     </div>
   );
 
+  const closeEditModal = async () => {
+    redirect(`/materials`);
+  };
+
   return (
     <>
       {!materialWithThumbnail.material ? (
@@ -88,6 +93,12 @@ function EditMaterial(): JSX.Element {
               encType="multipart/form-data"
               className="flex flex-col md:flex-row"
             >
+            <button
+              className="absolute right-0 top-2 rounded-lg px-4 text-slate-500 hover:text-red-600"
+              onClick={closeEditModal}
+            >
+              <div className="font-handwriting text-sm">X</div>
+            </button>
               <div className="overflow-hidden rounded-t-lg bg-white md:rounded-l-lg md:rounded-r-none">
                 <label htmlFor="file-edit-input">
                   {fileSelectedImageElement}
