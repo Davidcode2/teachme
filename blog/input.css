@@ -78,7 +78,7 @@ p {
 }
 
 .markdown code {
-  @apply bg-gray-100 px-1 py-0.5 rounded; /* Adjust padding and border radius as needed */
+  @apply bg-gray-100 px-1 py-0.5 rounded my-4; /* Adjust padding and border radius as needed */
 }
 
 .plantuml-container {
