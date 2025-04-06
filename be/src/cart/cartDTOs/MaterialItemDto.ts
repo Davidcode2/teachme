@@ -1,7 +1,7 @@
 import { IsString, IsNotEmpty, IsUUID } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-export class RemoveItemParamsDto {
+export class MaterialItemDto {
   @IsString()
   @IsNotEmpty()
   @Transform(({ value }) => value.trim())

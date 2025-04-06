@@ -36,13 +36,12 @@ class CartService {
   };
 
   buyMaterial = async (materialIds: string[]) => {
-    const res = await fetch("/api/cart/buy", {
+    const res = await customFetch("/api/cart/buy", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ materialId: materialIds }),
+      body: JSON.stringify({ materialIds: materialIds }),
     });
     const body = await res.json();
     if (body && body.url) {
