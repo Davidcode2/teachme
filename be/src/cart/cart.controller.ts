@@ -9,12 +9,15 @@ import {
   Req,
   Res,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CartService } from './cart.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
+import { RemoveItemParamsDto } from './cartDTOs/RemoveItemParamsDto';
 
 @ApiTags('cart')
 @Controller('cart')
@@ -43,12 +46,10 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':materialId')
-  async removeItem(
-    @Req() req: Request,
-    @Param('materialId') materialId: string,
-  ) {
+  @UsePipes(new ValidationPipe())
+  async removeItem(@Req() req: Request, @Param() params: RemoveItemParamsDto) {
     const user = req.user;
-    return this.cartService.removeItem(user['id'], materialId);
+    return this.cartService.removeItem(user['id'], params.materialId);
   }
 
   @UseGuards(JwtAuthGuard)
