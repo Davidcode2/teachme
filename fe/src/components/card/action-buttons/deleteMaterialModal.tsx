@@ -1,4 +1,4 @@
-import { useAccessTokenStore } from "../../../store";
+import { customFetch } from "../../../actions/customFetch";
 
 type PropTypes = {
   title: string;
@@ -11,11 +11,10 @@ export default function DeleteMaterialModal(props: PropTypes) {
   const deleteMaterial = () => {
     return async () => {
       props.setLoading(true);
-      const res = await fetch(`/api/materials/${props.id}`, {
+      const res = await customFetch(`/api/materials/${props.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${useAccessTokenStore.getState().accessToken}`,
         },
       });
       if (res.status === 200) {
