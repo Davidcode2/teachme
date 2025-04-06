@@ -17,12 +17,16 @@ function BorderColorBlur({
   viaColor?: string;
   animate?: boolean;
 }): JSX.Element {
+ const isDevelopment = import.meta.env.DEV;
+
   return (
     <>
       <div className="relative">
-        <div
-          className={`${animate ? "animate-gradient" : ""} absolute inset-0 bg-gradient-to-r from-${fromColor} to-${toColor} ${viaColor ? `via-${viaColor}` : ""} blur-${blurSize} lg:blur-${blurSizeLg}`}
-        />
+        {!isDevelopment && (
+          <div
+            className={`${animate ? "animate-gradient" : ""} absolute inset-0 bg-gradient-to-r from-${fromColor} to-${toColor} ${viaColor ? `via-${viaColor}` : ""} blur-${blurSize} lg:blur-${blurSizeLg}`}
+          />
+        )}
         <div className="relative">{children}</div>
       </div>
     </>
