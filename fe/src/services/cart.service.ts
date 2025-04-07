@@ -1,6 +1,5 @@
 import { customFetch } from "../actions/customFetch";
 import {
-  useAccessTokenStore,
   useCartStore,
   useErrorStore,
 } from "../store";
