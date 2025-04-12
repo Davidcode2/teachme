@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import logo from "../../assets/teachly_logo_color_gradient_bg_transparent.png";
 import { useSidebarStore } from "../../store";
+import { useAuth } from "react-oidc-context";
 
 interface NavProps {
   materialsLink: string;
@@ -8,7 +9,7 @@ interface NavProps {
 }
 
 export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
-
+  const auth = useAuth();
   const closeOpenedMenus = () => {
     const hideSidebar = useSidebarStore.getState().hide;
     hideSidebar();
@@ -38,19 +39,22 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
             width="100"
           />
         </NavLink>
-        <NavLink
-          to={myMaterialsLink}
-          end
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "animate-pulse"
-              : isActive
-                ? "underline decoration-green-300 decoration-wavy decoration-1 underline-offset-4"
-                : "border-none"
-          }
-        >
-        { myMaterialLinkButton }
-        </NavLink>
+
+        {auth?.isAuthenticated && (
+          <NavLink
+            to={myMaterialsLink}
+            end
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "animate-pulse"
+                : isActive
+                  ? "underline decoration-green-300 decoration-wavy decoration-1 underline-offset-4"
+                  : "border-none"
+            }
+          >
+            {myMaterialLinkButton}
+          </NavLink>
+        )}
       </div>
     </>
   );

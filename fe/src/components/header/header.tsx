@@ -114,7 +114,6 @@ function Header() {
 
   const signIn = async () => {
     auth.signinRedirect();
-    console.log(auth?.user);
   };
 
   return (
