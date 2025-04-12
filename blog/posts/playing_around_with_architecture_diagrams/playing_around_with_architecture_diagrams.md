@@ -111,7 +111,7 @@ end box
 @enduml
 
 One issue I have with creating plantUML diagrams is that I build them in my
-notes directory - seperate from my blog - and copy the images over when done.
+notes directory - separate from my blog - and copy the images over when done.
 This is a bit of a hassle and needs to be optimized. Thus I will put my
 plantUML code right into the blog posts. I will write some logic which checks
 for the `@startuml` and `@enduml` tags. When these show up, I will have a tab
@@ -132,7 +132,7 @@ Bob --> Charline : That's right!
 @enduml
 ```
 
-Let me put another Uml Diagram right here: 
+Let me put another UML Diagram right here: 
 
 @startuml
 
@@ -144,13 +144,13 @@ Let me put another Uml Diagram right here:
 
 Now I have a concrete use case for a plantUML diagram relating to this blog.
 Currently, the transform code which parses each blog post and checks whether it
-can find plantuml code blocks will create an image for each code block it
-finds, everytime something changes - anywhere in the code. This is a problem.
+can find plantUML code blocks will create an image for each code block it
+finds, every time something changes - anywhere in the code. This is a problem.
 My output folder gets spammed with all these duplicate images. Also, if a
 diagram actually changes, the old version of the image will just stay there.
 
 A first point of consideration would be that the image generation shouldn't run  
-on any change in the codebase.
+on any change in the code base.
 
 Second I need to figure out how to delete old versions when the diagram code
 changed.

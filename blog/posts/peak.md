@@ -7,7 +7,7 @@ layout: post-layout.njk
 
 Today I'll start reading the Book 'Peak - secrets from the new science of
 expertise'. I want to document the process as to make sure to thoroughly read
-and think throug the concepts. The goal is to incorporate at least one learning
+and think through the concepts. The goal is to incorporate at least one learning
 into my daily life.
 
 To start it might be helpful to gather what I think to already know about the
@@ -23,7 +23,7 @@ get a mental "map" of the book.
 ## Definition
 
 Expertise is an attribute which is used to describe the quality in a person
-which says about them that they posess of skills and knowledge which others do
+which says about them that they possess of skills and knowledge which others do
 not. One is an Expert in her field when one can set oneself apart from others
 by means of the quality of ones skills.
 
@@ -33,7 +33,7 @@ A term that is used by Robert Greene for perhaps the same thing is Mastery.
 There are multiple dimensions to expertise. One is knowledge as in the ability
 to recall facts and processes which aid in solving a specific problem. Another
 is skill as in the ability to perform certain processes in an expert fashion.
-Another yet is intuition as in the ability to quickly without concsious effort
+Another yet is intuition as in the ability to quickly without conscious effort
 categorize and find solutions to novel problems based on extensive past
 experiences
 
@@ -78,9 +78,9 @@ So it takes more than putting in the time. It takes deliberate practice.
 ## Adaptability
 
 Given the right stimuli over an extended period of time our brains physiology
-changes. Londons cab drivers need to learn amazing amounts of landmarks and
+changes. London's cab drivers need to learn amazing amounts of landmarks and
 routes. The training is sometimes referred to as The Knowledge. It has been
-shown that the Hippocampi - the area in the brain responsible for orientation -
+shown that the Hippocampi - the areas in the brain responsible for orientation -
 are significantly enlarged in people who have successfully mastered The
 Knowledge. The same is true for many other areas of expertise and brain
 regions. Einstein had an enlarged region in the brain which is responsible for
@@ -130,10 +130,10 @@ result should look, and iterate forward to get closer to that ideal.
 We need to do things in our training which we aren't yet able to comfortably do.
 In order to push our brains to adapt, we need to be working at the maximum of
 our capacity. This ties in with the focus part as described above. We can vary
-the excertion by cutting back or stepping up the effort to make sure we are in
+the exertion by cutting back or stepping up the effort to make sure we are in
 the sweet spot for adaptation. The parallel to weight lifting is useful here.
 When a body builder hits a plateau he will vary his training in small ways. We
-can alter our training in miriad ways and test whether the changes help us
+can alter our training in myriad ways and test whether the changes help us
 improve.
 
 ## Mental Representations
@@ -145,7 +145,7 @@ at any given time and how that feels. He needs to have an understanding of
 where he is in space. Without this model the dive will be hard to accomplish.
 
 This model does not pop out of the blue. People must inch forward toward a
-clearer representation. The practice builds up the represenation and the
+clearer representation. The practice builds up the representation and the
 representation improves the practice.
 
 To put this into the context of my own learning: When trying to understand how
@@ -169,7 +169,7 @@ Deliberate practice adds the following characteristics:
 The challenge now seems to lie in the task of finding measures of progress
 and finding the most efficient way to learn something.
 
-## Using genAI for learning
+## Using GenAI for learning
 
-I'm thinking that genAI enables us to receive fast feedback
+I'm thinking that GenAI enables us to receive fast feedback
 and help iterate toward a better mental representation of something.

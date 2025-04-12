@@ -48,7 +48,7 @@ ask Gemini or some other GenAI to flesh these out.
 
 - ignore HIPPO (highest paid person in the room)
 - The different methods for arriving at scientific results ordered by their quality:
-    - anectodal evidence 
+    - anecdotal evidence 
     - natural experiments
     - multiple regression analysis 
     - double blind controlled experiment (the gold standard)

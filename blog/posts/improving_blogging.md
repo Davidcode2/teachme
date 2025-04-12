@@ -14,7 +14,7 @@ link to them.
 
 Another feature that would be very useful is to be able to search for web links
 right from the editor. For example if I am referencing an episode of the
-Huberman Lab podcast, it would be extermely nice to have a shortcut like for
+Huberman Lab podcast, it would be extremely nice to have a shortcut like for
 the local notes, which pulls data from a search engine. If I could get that
 experience to be similar to using fzf inside the editor, this would be super
 exciting.

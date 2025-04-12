@@ -22,7 +22,7 @@ this key (with some modifications - turning the pre-master key into a master
 key) to encrypt their messages. Since both the client (it created it) and the
 server (it has the private key to decrypt it) have the master key, they can
 read each others messages. And the messages are encrypted while in transit. So
-thats the part of the actual communication at a high level. 
+that's the part of the actual communication at a high level. 
 
 Now what about the certificates that lay on the server? These are a mystery to me. There
 are two of them. One of them may be called `fullchain` and the other `privkey`.
@@ -35,7 +35,7 @@ So thinking about this and recollecting what I have read, these should serve the
   true, the `fullchain` certificate will also contain the public key. Since in
   my configuration there is no other certificate.
 
-Let's check what we got so far. Gemnini and a quick verification web search
+Let's check what we got so far. Gemini and a quick verification web search
 tell me that the above reasoning is correct. The `fullchain` certificate
 contains the public key, some info about the certificate like who it was issued
 to, by whom (Certificate Authority) and when it will expire. Beyond that it contains

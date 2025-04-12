@@ -41,7 +41,7 @@ episodes of the Huberman Lab podcast.
 This is another topic that maps directly to a concept from Peak. It highlights
 the importance of learning a skill over learning a concept. So the focus is on
 knowing *how* to do something over learning the *what*, or facts - skill over
-knowledge. Ericson in his book emphasizes that the knowledge comes with the
+knowledge. Ericsson in his book emphasizes that the knowledge comes with the
 skill and not the other way around. Scott provides some strategies to learn by
 directly practicing the desired skill. For language learning this could be
 **Immersion** For many practical skills like programming, engineering etc.
@@ -54,27 +54,27 @@ Here things get practical. What exactly does one need to do to improve?
 Doing a project is straight forward but how exactly will building a website 
 make me a greater developer than any other learner who does the same?
 
-Drills focus on a specific subskill in my domain. So when I am building a
-website there a tons of subskills to be mastered. It is easy to assume that
-someone quickly putting together a website with genAI will be less accomplished
+Drills focus on a specific sub skill in my domain. So when I am building a
+website there a tons of sub skills to be mastered. It is easy to assume that
+someone quickly putting together a website with GenAI will be less accomplished
 by the end of the project than someone who performed drills on each aspect
 involved.
 
 Let's draw out some skills which could be learned by using drills. On the
-starting side theres HTML. One can get away with a very basic skill level on
+starting side there's HTML. One can get away with a very basic skill level on
 this front. But one could also go very deep and consider all the kinds of tags
 and build example pages with those over and over again. The idea is to get the
 skill of building a HTML template to a sort of muscle memory level. I could
-imagine asking genAI to write up a catalog of scenarios for a website and use
+imagine asking GenAI to write up a catalog of scenarios for a website and use
 this list to train building templates for those scenarios. Then one could continue
-to learn about HTMLs impact on SEO, accessibility and so. The idea is to break 
-a skill down and master each subskill.
+to learn about HTML's impact on SEO, accessibility and so. The idea is to break 
+a skill down and master each sub skill.
 
 For me a relevant area of practice right now would be authentication. I would need 
 to look at different aspects and find opportunities to hone in on those through
 practical execution.
 
-Here it's also useful to point out a comment of Ericson: In order for the
+Here it's also useful to point out a comment of Ericsson: In order for the
 practice to be efficient it needs to push you outside of your comfort zone. So
 it is not useful to do the same thing over and over again but to always push a
 little further.
@@ -97,7 +97,7 @@ online, make sure find a service which gives you the correct answer immediately 
 
 I can't remember the terms used by Scott, so I made these up. Ideally you want
 to get most of your feedback in the latter form. Finding a mentor isn't always
-easy so what can we do to get good feedback? I think genAI provides some
+easy so what can we do to get good feedback? I think GenAI provides some
 potential here. 
 
 **Retrieval**
@@ -105,7 +105,7 @@ potential here.
 Here some strategies for retrieval are given:
 
 - spaced repetition
-    - flash cards (anki)
+    - flash cards (Anki)
 - active recall
     - test to learn
     - closed book learning

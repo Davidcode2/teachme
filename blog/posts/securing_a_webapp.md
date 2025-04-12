@@ -66,7 +66,7 @@ So what happens if a client sends tow requests in 100ms? If the
 will be rejected. The server will return a 503 Error (Service Temporarily
 Unavailable). This can be a problem. When loading a page, there might be many
 calls to the server in quick succession to load pages, scripts, images, and
-make api calls etc. So how can we solve this? Here the `burst` parameter comes
+make API calls etc. So how can we solve this? Here the `burst` parameter comes
 into play.
 
 It's important to understand that the above directive only creates a shared

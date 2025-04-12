@@ -2,7 +2,7 @@
 title: Becoming great
 date: 2025-03-08
 layout: post-layout.njk
-tags: post
+tags: privatepost
 ---
 
 ## Exercise plan for greatness
