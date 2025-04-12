@@ -77,7 +77,7 @@ export default function UserMenu({
   const changeDisplayNameForm = (
     <Form className="flex gap-1" onSubmit={handleDisplayNameSubmit}>
       <input
-        className="min-w-0 max-w-40 rounded-lg border border-slate-200 p-1 text-sm text-stone-900 shadow-sm"
+        className="max-w-40 min-w-0 rounded-lg border border-slate-200 p-1 text-sm text-stone-900 shadow-sm"
         type="text"
         placeholder={displayName || "Dein Name hier! Wow!"}
         name="displayName"
@@ -89,7 +89,7 @@ export default function UserMenu({
         <img src={CheckMarkIcon} width="20" />
       </button>
       <button
-        className="min-w-0 rounded-lg border border-slate-200 bg-red-200 p-1 px-2 font-handwriting shadow-sm hover:bg-red-300"
+        className="font-handwriting min-w-0 rounded-lg border border-slate-200 bg-red-200 p-1 px-2 shadow-sm hover:bg-red-300"
         onClick={() => setEditUserName(false)}
       >
         X
@@ -114,7 +114,7 @@ export default function UserMenu({
       </button>
       <div ref={userMenuRef} className="context-menu userMenu">
         <CenteredModal>
-          <div className="userMenu absolute rounded-md border border-slate-300 bg-white shadow-md dark:bg-black dark:text-white">
+          <div className="userMenu absolute rounded-md border border-slate-300 bg-white shadow-md dark:bg-neutral-800 dark:text-white">
             <div className="userMenu flex justify-center p-10">
               <ul className="userMenu flex flex-col gap-y-3 pr-4 text-2xl">
                 <li
@@ -130,7 +130,9 @@ export default function UserMenu({
                     Nutzer&nbsp;wechseln
                   </button>
                 </li>
-                <ThemeToggle/>
+                <li className="userMenu flex items-center gap-4 hover:text-purple-700">
+                  <ThemeToggle />
+                </li>
                 <li
                   onClick={() => setEditUserName(true)}
                   className="flex cursor-pointer gap-4 hover:text-purple-700"

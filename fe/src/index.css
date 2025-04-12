@@ -159,3 +159,30 @@ body {
 
   This pure CSS configuration provides a direct translation of the font families and the specific classes listed in your `safelist`. For a full Tailwind v4 experience without the framework, you would need to manually implement all the utility classes and features you require.
 */
+
+/* ThemeToggle.css */
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.peer:checked + span {
+  transform: translateX(1.5rem); /* Adjust based on your toggle size */
+}
+
+/* Basic Light/Dark Mode Transition */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme='light'] {
+}
+
+[data-theme='dark'] {
+}
