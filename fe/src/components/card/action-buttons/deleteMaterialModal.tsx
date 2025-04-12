@@ -1,4 +1,5 @@
 import { customFetch } from "../../../actions/customFetch";
+import CenteredModal from "../../styling/centeredModal";
 
 type PropTypes = {
   title: string;
@@ -27,40 +28,38 @@ export default function DeleteMaterialModal(props: PropTypes) {
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-50 h-screen w-screen backdrop-blur-sm">
-        <div className="flex h-full items-center justify-center">
-          <div
-            id="deleteModal"
-            className="flex flex-row gap-5 rounded-lg border bg-white p-10 shadow-lg"
-          >
-            <div className="h-[25vh]"></div>
-            <div className="flex flex-col justify-between">
-              <div className="text-2xl xl:text-4xl">
-                Sind Sie sicher, dass Sie
-                <div className="font-bold">
-                  {props.title || "dieses Material"}
-                </div>{" "}
-                löschen möchten?
-              </div>
-              <hr />
-              <div className="flex gap-10">
-                <button
-                  className="rounded-lg bg-sky-300 p-4 hover:bg-sky-400"
-                  onClick={() => props.setShowDeleteModal(false)}
-                >
-                  Abbrechen
-                </button>
-                <button
-                  className="rounded-lg bg-purple-200 p-4 hover:bg-purple-300"
-                  onClick={deleteMaterial()}
-                >
-                  Ja, löschen
-                </button>
-              </div>
+      <CenteredModal>
+        <div
+          id="deleteModal"
+          className="flex flex-row gap-5 rounded-lg border bg-white p-10 shadow-lg"
+        >
+          <div className="h-[25vh]"></div>
+          <div className="flex flex-col justify-between">
+            <div className="text-2xl xl:text-4xl">
+              Sind Sie sicher, dass Sie
+              <div className="font-bold">
+                {props.title || "dieses Material"}
+              </div>{" "}
+              löschen möchten?
+            </div>
+            <hr />
+            <div className="flex gap-10">
+              <button
+                className="rounded-lg bg-sky-300 p-4 hover:bg-sky-400"
+                onClick={() => props.setShowDeleteModal(false)}
+              >
+                Abbrechen
+              </button>
+              <button
+                className="rounded-lg bg-purple-200 p-4 hover:bg-purple-300"
+                onClick={deleteMaterial()}
+              >
+                Ja, löschen
+              </button>
             </div>
           </div>
         </div>
-      </div>
+    </CenteredModal >
     </>
   );
 }

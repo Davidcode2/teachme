@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "react-oidc-context";
 import { parseIdJwt, switchUser } from "../services/authService";
 import { customFetch } from "../actions/customFetch";
+import CenteredModal from "./styling/centeredModal";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -99,35 +100,37 @@ export default function UserMenu({
           alt="User"
         />
       </button>
-      <div ref={userMenuRef} className="context-menu userMenu relative">
-        <div className="userMenu absolute right-0 top-6 rounded-md border bg-white shadow-md">
-          <div className="userMenu flex justify-center p-5">
-            <ul className="userMenu flex flex-col gap-y-2 pr-4">
+      <div ref={userMenuRef} className="context-menu userMenu">
+      <CenteredModal>
+        <div className="userMenu absolute rounded-md border bg-white shadow-md">
+          <div className="userMenu flex justify-center p-10">
+            <ul className="userMenu flex flex-col gap-y-3 pr-4 text-2xl">
               <li
-                className="flex cursor-pointer gap-4 hover:text-sky-800"
+                className="flex cursor-pointer gap-4 hover:text-purple-700"
                 onClick={() => auth.signoutRedirect()}
               >
-                <img src={ArrowIcon} width="24" />
+                <img src={ArrowIcon} width="32" />
                 <span>Logout</span>
               </li>
-              <li className="flex cursor-pointer gap-4 hover:text-sky-800">
-                <img src={ShuffleIcon} width="25" />
+              <li className="flex cursor-pointer gap-4 hover:text-purple-700">
+                <img src={ShuffleIcon} width="32" />
                 <button onClick={() => switchUser(auth)}>Nutzer&nbsp;wechseln</button>
               </li>
-              <li className="flex cursor-pointer gap-4 hover:text-sky-800">
-                <img src={DarkModeIcon} width="25" />
+              <li className="flex cursor-pointer gap-4 hover:text-purple-700">
+                <img src={DarkModeIcon} width="32" />
                 <span>Dark Mode</span>
               </li>
               <li
                 onClick={() => setEditUserName(true)}
-                className="flex cursor-pointer gap-4 hover:text-sky-800"
+                className="flex cursor-pointer gap-4 hover:text-purple-700"
               >
-                <img src={EditIcon} width="25" />
+                <img src={EditIcon} width="32" />
                 <button>Name&nbsp;ändern</button>
               </li>
             </ul>
           </div>
         </div>
+        </CenteredModal>
       </div>
     </div>
   );
