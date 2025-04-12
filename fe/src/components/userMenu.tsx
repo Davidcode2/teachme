@@ -4,16 +4,13 @@ import userIcon from "../assets/icons/icons8-user-48.png";
 import ArrowIcon from "../assets/icons/icons8-logout-50.png";
 import ShuffleIcon from "../assets/icons/icons8-shuffle-48.png";
 import EditIcon from "../assets/icons/icons8-edit-48.png";
-import DarkModeIcon from "../assets/icons/icons8-dark-mode-48.png";
-import {
-  useAvatarStore,
-  useUserStore,
-} from "../store";
+import { useAvatarStore, useUserStore } from "../store";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "react-oidc-context";
 import { parseIdJwt, switchUser } from "../services/authService";
 import { customFetch } from "../actions/customFetch";
 import CenteredModal from "./styling/centeredModal";
+import ThemeToggle from "./themeToggle";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -78,12 +75,27 @@ export default function UserMenu({
   };
 
   const changeDisplayNameForm = (
-    <Form className="flex gap-1" onSubmit={handleDisplayNameSubmit} >
-      <input className="text-sm text-stone-900 p-1 rounded-lg border border-slate-200 shadow-sm min-w-0 max-w-40" type="text" placeholder={displayName || "Dein Name hier! Wow!"} name="displayName" />
-      <button className="p-1 rounded-lg border border-slate-200 shadow-sm min-w-0 bg-green-200 hover:bg-green-300" type="submit"><img src={CheckMarkIcon} width="20"/></button>
-      <button className="p-1 rounded-lg border border-slate-200 shadow-sm min-w-0 font-handwriting px-2 bg-red-200 hover:bg-red-300" onClick={() => setEditUserName(false)}>X</button>
+    <Form className="flex gap-1" onSubmit={handleDisplayNameSubmit}>
+      <input
+        className="min-w-0 max-w-40 rounded-lg border border-slate-200 p-1 text-sm text-stone-900 shadow-sm"
+        type="text"
+        placeholder={displayName || "Dein Name hier! Wow!"}
+        name="displayName"
+      />
+      <button
+        className="min-w-0 rounded-lg border border-slate-200 bg-green-200 p-1 shadow-sm hover:bg-green-300"
+        type="submit"
+      >
+        <img src={CheckMarkIcon} width="20" />
+      </button>
+      <button
+        className="min-w-0 rounded-lg border border-slate-200 bg-red-200 p-1 px-2 font-handwriting shadow-sm hover:bg-red-300"
+        onClick={() => setEditUserName(false)}
+      >
+        X
+      </button>
     </Form>
-  )
+  );
 
   return (
     <div className="flex items-center">
@@ -101,35 +113,34 @@ export default function UserMenu({
         />
       </button>
       <div ref={userMenuRef} className="context-menu userMenu">
-      <CenteredModal>
-        <div className="userMenu absolute rounded-md border bg-white shadow-md">
-          <div className="userMenu flex justify-center p-10">
-            <ul className="userMenu flex flex-col gap-y-3 pr-4 text-2xl">
-              <li
-                className="flex cursor-pointer gap-4 hover:text-purple-700"
-                onClick={() => auth.signoutRedirect()}
-              >
-                <img src={ArrowIcon} width="32" />
-                <span>Logout</span>
-              </li>
-              <li className="flex cursor-pointer gap-4 hover:text-purple-700">
-                <img src={ShuffleIcon} width="32" />
-                <button onClick={() => switchUser(auth)}>Nutzer&nbsp;wechseln</button>
-              </li>
-              <li className="flex cursor-pointer gap-4 hover:text-purple-700">
-                <img src={DarkModeIcon} width="32" />
-                <span>Dark Mode</span>
-              </li>
-              <li
-                onClick={() => setEditUserName(true)}
-                className="flex cursor-pointer gap-4 hover:text-purple-700"
-              >
-                <img src={EditIcon} width="32" />
-                <button>Name&nbsp;ändern</button>
-              </li>
-            </ul>
+        <CenteredModal>
+          <div className="userMenu absolute rounded-md border bg-white shadow-md dark:bg-black dark:text-white">
+            <div className="userMenu flex justify-center p-10">
+              <ul className="userMenu flex flex-col gap-y-3 pr-4 text-2xl">
+                <li
+                  className="flex cursor-pointer gap-4 hover:text-purple-700"
+                  onClick={() => auth.signoutRedirect()}
+                >
+                  <img src={ArrowIcon} width="32" />
+                  <span>Logout</span>
+                </li>
+                <li className="flex cursor-pointer gap-4 hover:text-purple-700">
+                  <img src={ShuffleIcon} width="32" />
+                  <button onClick={() => switchUser(auth)}>
+                    Nutzer&nbsp;wechseln
+                  </button>
+                </li>
+                <ThemeToggle/>
+                <li
+                  onClick={() => setEditUserName(true)}
+                  className="flex cursor-pointer gap-4 hover:text-purple-700"
+                >
+                  <img src={EditIcon} width="32" />
+                  <button>Name&nbsp;ändern</button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
         </CenteredModal>
       </div>
     </div>
