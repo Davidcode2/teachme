@@ -114,7 +114,7 @@ export default function UserMenu({
       </button>
       <div ref={userMenuRef} className="context-menu userMenu">
         <CenteredModal>
-          <div className="userMenu absolute rounded-md border bg-white shadow-md dark:bg-black dark:text-white">
+          <div className="userMenu absolute rounded-md border border-slate-300 bg-white shadow-md dark:bg-black dark:text-white">
             <div className="userMenu flex justify-center p-10">
               <ul className="userMenu flex flex-col gap-y-3 pr-4 text-2xl">
                 <li

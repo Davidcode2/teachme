@@ -42,7 +42,7 @@ function AddMaterials() {
                     </label>
                     <input
                       id="title"
-                      className="mt-1 block w-full rounded-lg border px-3 py-2 text-sm text-gray-900 shadow-sm focus:ring-emerald-500"
+                      className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-gray-900 shadow-xs focus:ring-emerald-500"
                       type="text"
                       name="title"
                       onChange={(e) =>
@@ -60,7 +60,7 @@ function AddMaterials() {
                     </label>
                     <textarea
                       id="description"
-                      className="mt-1 block w-full rounded-lg border px-3 py-2 text-sm text-gray-900 shadow-sm focus:ring-emerald-500"
+                      className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-gray-900 shadow-xs focus:ring-emerald-500"
                       name="description"
                       rows={4}
                       onChange={(e) =>

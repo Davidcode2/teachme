@@ -39,7 +39,7 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
       <div className="searchBox w-4/5 self-center sm:w-[600px] lg:w-[800px]">
         <div className="searchBox z-50 flex flex-col rounded-lg border border-fuchsia-200 bg-white px-10 pb-10 shadow-2xl shadow-fuchsia-900 blur-none">
           <div className="flex flex-col gap-2">
-            <div className="pt-10 text-2xl font-semibold text-slate-900">
+            <div className="pt-10 text-2xl text-slate-900">
               Finde deinen Arbeitserleichterer
             </div>
             <div className="flex">
@@ -49,7 +49,7 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
                 onChange={changeSearchString}
                 onKeyDown={onCloseButton}
                 autoFocus={true}
-                className="searchBox w-full grow rounded-3xl border border-fuchsia-200 p-4 focus:border-none focus:shadow-lg focus:shadow-purple-200 focus:outline-none focus:outline-purple-300"
+                className="searchBox w-full grow rounded-3xl border border-fuchsia-200 p-4 focus:shadow-xs focus:shadow-purple-200 focus:outline-none focus:outline-purple-300"
               />
               {searchString && (
                 <div className="justify-end">

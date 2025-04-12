@@ -31,7 +31,7 @@ export default function DeleteMaterialModal(props: PropTypes) {
       <CenteredModal>
         <div
           id="deleteModal"
-          className="flex flex-row gap-5 rounded-lg border bg-white p-10 shadow-lg"
+          className="flex flex-row gap-5 rounded-lg border border-slate-200 bg-white p-10 shadow-lg"
         >
           <div className="h-[25vh]"></div>
           <div className="flex flex-col justify-between">
@@ -42,7 +42,7 @@ export default function DeleteMaterialModal(props: PropTypes) {
               </div>{" "}
               löschen möchten?
             </div>
-            <hr />
+            <hr className="text-slate-200" />
             <div className="flex gap-10">
               <button
                 className="rounded-lg bg-sky-300 p-4 hover:bg-sky-400"

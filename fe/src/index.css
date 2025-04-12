@@ -1,9 +1,161 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* @import "tailwindcss";
+@import "tailwindcss";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* Pure CSS Configuration based on tailwind.config.js */
+
+/* Font Families */
+:root {
+  --font-sans: ui-sans-serif, system-ui;
+  --font-serif: ui-serif, Georgia;
+  --font-mono: ui-monospace, SFMono-Regular;
+  --font-handwriting: Pacifico, cursive; /* Added cursive for better representation */
+  --font-body: "Open Sans", sans-serif; /* Added sans-serif as fallback */
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-handwriting {
+  font-family: var(--font-handwriting);
+}
+
+/* Safelist Styles (Directly defined as CSS classes) */
+
+/* Blurs */
+.blur-sm {
+  filter: blur(4px); /* Tailwind's default for blur-sm */
+}
+
+.blur-md {
+  filter: blur(8px); /* Tailwind's default for blur-md */
+}
+
+.blur-lg {
+  filter: blur(12px); /* Tailwind's default for blur-lg */
+}
+
+@media (min-width: 1024px) { /* Equivalent to Tailwind's lg: */
+  .lg\:blur-lg {
+    filter: blur(12px);
+  }
+
+  .lg\:blur-sm {
+    filter: blur(4px);
+  }
+
+  .lg\:blur {
+    filter: blur(8px); /* Tailwind's default for blur */
+  }
+}
+
+/* Gradient Colors (Basic linear gradients) */
+.from-blue-300 {
+  /* You'll likely need to combine this with a 'to-' class */
+  /* Example of a basic usage: */
+  background-image: linear-gradient(to right, #60a5fa, transparent); /* Approximate blue-300 */
+}
+
+.to-purple-400 {
+  /* Used in conjunction with a 'from-' or 'via-' class */
+  /* Example: */
+  background-image: linear-gradient(to right, transparent, #a78bfa); /* Approximate purple-400 */
+}
+
+.to-purple-500 {
+  /* Used in conjunction with a 'from-' or 'via-' class */
+  /* Example: */
+  background-image: linear-gradient(to right, transparent, #8b5cf6); /* Approximate purple-500 */
+}
+
+.via-emerald-300 {
+  /* Used in conjunction with 'from-' and 'to-' classes */
+  /* Example: */
+  background-image: linear-gradient(to right, blue, #6ee7b7, purple); /* Approximate emerald-300 */
+}
+
+/* Background Colors */
+.bg-blue-300 {
+  background-color: #60a5fa; /* Approximate Tailwind's blue-300 */
+}
+
+.bg-purple-500 {
+  background-color: #8b5cf6; /* Approximate Tailwind's purple-500 */
+}
+
+.bg-emerald-300 {
+  background-color: #6ee7b7; /* Approximate Tailwind's emerald-300 */
+}
+
+/* Text Colors */
+.text-blue-300 {
+  color: #60a5fa; /* Approximate Tailwind's blue-300 */
+}
+
+.text-purple-500 {
+  color: #8b5cf6; /* Approximate Tailwind's purple-500 */
+}
+
+.text-emerald-300 {
+  color: #6ee7b7; /* Approximate Tailwind's emerald-300 */
+}
+
+/*
+  Explanation:
+
+  1. Font Families:
+     - The `theme.fontFamily` section is directly translated into CSS custom properties (variables) defined within the `:root` pseudo-class.
+     - Corresponding CSS classes (`.font-sans`, `.font-serif`, etc.) are created to apply these font families to HTML elements.
+
+  2. `extend`:
+     - The `extend` section in Tailwind allows you to add or override default theme values. In pure CSS, you would directly define any additional styles or overrides as needed. Since the provided `extend` is empty, no specific CSS is generated for it. You would add any custom properties or classes here.
+
+  3. `safelist`:
+     - The `safelist` array in Tailwind specifies classes that should always be included in the generated CSS, even if they aren't found in your content files.
+     - In this pure CSS configuration, each class in the `safelist` is directly created as a CSS rule.
+     - Media queries (like `lg:`) are translated into `@media (min-width: ...)` rules in CSS.
+     - For utility classes that involve color palettes (like `from-blue-300`, `to-purple-400`), it's important to note that Tailwind generates combinations of these. In pure CSS, you'll need to define the specific combinations you intend to use. The examples provided show basic linear gradients as an illustration. You might need more complex CSS for more nuanced gradient effects.
+
+  4. `plugins`:
+     - Tailwind plugins can add custom CSS, components, or utilities. Pure CSS doesn't have a plugin system. You would need to manually write the CSS that these plugins would generate. Since the `plugins` array is empty in the provided configuration, no specific CSS is generated for it.
+
+  How to Use:
+
+  1. Save this code as a `.css` file (e.g., `styles.css`).
+  2. Link this CSS file to your `index.html` file:
+     ```html
+     <head>
+       <link rel="stylesheet" href="styles.css">
+     </head>
+     ```
+  3. Apply the generated CSS classes directly to your HTML elements:
+     ```html
+     <div class="font-sans text-blue-300 bg-gray-100 p-4 blur-md lg:blur-lg">
+       This is some text with Tailwind-like styles.
+     </div>
+     <div class="bg-gradient-to-r from-blue-300 to-purple-500 text-white p-2">
+       A gradient example.
+     </div>
+     ```
+
+  Limitations:
+
+  - **Dynamic Generation:** Pure CSS is static. Tailwind's power comes from its ability to generate a vast number of utility classes based on your configuration and content. With pure CSS, you need to explicitly define every class you want to use.
+  - **Complex Utilities:** Some of Tailwind's more complex utilities (e.g., responsive variants, state variants like `hover:`, more intricate gradient options) require more verbose and manual CSS implementation.
+  - **Build Process:** Tailwind's build process optimizes the CSS output by only including the classes you actually use. With pure CSS based on a `safelist`, you might end up with a larger CSS file if your `safelist` is extensive.
+
+  This pure CSS configuration provides a direct translation of the font families and the specific classes listed in your `safelist`. For a full Tailwind v4 experience without the framework, you would need to manually implement all the utility classes and features you require.
 */
