@@ -87,20 +87,20 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
       <div id="main" className="flex">
         <div className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer">
           {!isMine && (
-            <img
-              className=""
-              onClick={addToShoppingCart}
-              src={addToShoppingCartIcon}
-              width="25"
-              alt=""
-            />
+            <button>
+              <img
+                className=""
+                onClick={addToShoppingCart}
+                src={addToShoppingCartIcon}
+                width="25"
+                alt=""
+              />
+            </button>
           )}
         </div>
         <div className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer">
           {isMine && !isAuthor && (
-            <button
-              onClick={downloadMaterial}
-            >
+            <button onClick={downloadMaterial}>
               <img className="rotate-90" src={arrowIcon} width="25" alt="" />
             </button>
           )}
