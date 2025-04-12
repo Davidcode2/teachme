@@ -37,10 +37,12 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
   return (
     <div className="flex h-full w-full justify-center">
       <div className="searchBox w-4/5 self-center sm:w-[600px] lg:w-[800px]">
-        <div className="searchBox z-50 flex flex-col rounded-lg border border-fuchsia-200 bg-white p-10 shadow-2xl shadow-fuchsia-900 blur-none">
-          <div className="flex">
-            <textarea
+        <div className="searchBox z-50 flex flex-col rounded-lg border border-fuchsia-200 bg-white px-10 pb-10 shadow-2xl shadow-fuchsia-900 blur-none">
+          <div className="flex flex-col gap-2">
+          <div className="text-2xl text-slate-900 font-semibold pt-10">Finde deinen Arbeitserleichterer</div>
+            <input
               value={searchString}
+              placeholder="Deutsch Klasse 6 Fabeln"
               onChange={changeSearchString}
               onKeyDown={onCloseButton}
               autoFocus={true}
@@ -51,7 +53,7 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
                 <div className="absolute">
                   <div
                     onClick={clearSearch}
-                    className="relative right-12 top-4 cursor-pointer self-center p-4 font-handwriting text-xs text-stone-500 hover:text-stone-600"
+                    className="relative right-12 top-1 cursor-pointer self-center p-4 font-handwriting text-xs text-stone-500 hover:text-stone-600"
                   >
                     X
                   </div>

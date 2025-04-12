@@ -18,11 +18,12 @@ function BorderColorBlur({
   animate?: boolean;
 }): JSX.Element {
  const isDevelopment = import.meta.env.DEV;
+ const isProduction = import.meta.env.PROD;
 
   return (
     <>
       <div className="relative">
-        {!isDevelopment && (
+        {(!isDevelopment && isProduction && false) && (
           <div
             className={`${animate ? "animate-gradient" : ""} absolute inset-0 bg-gradient-to-r from-${fromColor} to-${toColor} ${viaColor ? `via-${viaColor}` : ""} blur-${blurSize} lg:blur-${blurSizeLg}`}
           />

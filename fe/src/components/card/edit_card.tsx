@@ -85,7 +85,7 @@ function EditMaterial(): JSX.Element {
       ) : (
         <div
           id={materialWithThumbnail.material.id.toString()}
-          className="m-4 rounded-lg shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 lg:mx-auto lg:w-2/3"
+          className="m-4 rounded-lg shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 border border-slate-200 lg:mx-auto lg:w-2/3"
         >
           <BorderColorBlur>
             <Form

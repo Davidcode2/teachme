@@ -12,7 +12,7 @@ function Skeleton({ id }: { id: string }) {
     <>
       <div
         id={id}
-        className="flex flex-col rounded-lg border border-gray-300 bg-white opacity-0 shadow-lg transition-opacity duration-700 md:flex-row"
+        className="flex flex-col rounded-lg border border-slate-200 bg-white opacity-0 shadow-lg transition-opacity duration-700 md:flex-row"
       >
         <div className="min-h-96 animate-pulse rounded-t-lg bg-gray-100 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]">
           <div className="h-full w-8 "></div>

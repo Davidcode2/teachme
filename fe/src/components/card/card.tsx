@@ -75,7 +75,7 @@ function Card({
         />
       )}
       <div
-        className="m-4 rounded-lg opacity-0 shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
+        className="m-4 rounded-lg opacity-0 shadow-lg border border-slate-200 transition-opacity duration-700 md:mx-10 md:mb-10"
         id={materialWithThumbnail.id.toString()}
       >
         <BorderColorBlur>
