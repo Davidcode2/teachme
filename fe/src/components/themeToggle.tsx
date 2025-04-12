@@ -39,9 +39,9 @@ const ThemeToggle = () => {
 
   const getLabel = () => {
     if (theme === 'light') {
-      return 'Light Mode';
-    } else if (theme === 'dark') {
       return 'Dark Mode';
+    } else if (theme === 'dark') {
+      return 'Light Mode';
     } else {
       return 'System';
     }
