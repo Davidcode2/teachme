@@ -114,7 +114,7 @@ export default function UserMenu({
       </button>
       <div ref={userMenuRef} className="context-menu userMenu">
         <CenteredModal>
-          <div className="userMenu absolute rounded-md border border-slate-300 bg-white shadow-md dark:bg-neutral-800 dark:text-white">
+          <div className="userMenu absolute rounded-md border border-slate-300 bg-white shadow-md dark:bg-slate-900 dark:text-white">
             <div className="userMenu flex justify-center p-10">
               <ul className="userMenu flex flex-col gap-y-3 pr-4 text-2xl">
                 <li
@@ -130,15 +130,16 @@ export default function UserMenu({
                     Nutzer&nbsp;wechseln
                   </button>
                 </li>
-                <li className="userMenu flex items-center gap-4 hover:text-purple-700">
-                  <ThemeToggle />
-                </li>
                 <li
                   onClick={() => setEditUserName(true)}
                   className="flex cursor-pointer gap-4 hover:text-purple-700"
                 >
                   <img src={EditIcon} width="32" />
                   <button>Name&nbsp;ändern</button>
+                </li>
+                <hr className="text-slate-200"/>
+                <li className="userMenu flex items-center gap-4 hover:text-purple-700">
+                  <ThemeToggle />
                 </li>
               </ul>
             </div>

@@ -79,11 +79,11 @@ function Card({
         id={materialWithThumbnail.id.toString()}
       >
         <BorderColorBlur>
-          <div className="grid h-[250px] grid-cols-[40%_auto] grid-rows-[1fr_auto] overflow-hidden rounded-lg bg-white text-sm sm:h-[450px] sm:grid-cols-2 md:grid-cols-[2fr_3fr]">
+          <div className="grid h-[250px] grid-cols-[40%_auto] grid-rows-[1fr_auto] overflow-hidden rounded-lg bg-white dark:bg-slate-800 text-sm sm:h-[450px] sm:grid-cols-2 md:grid-cols-[2fr_3fr]">
             <div className="overflow-hidden border-r border-slate-200 sm:row-span-2">
               {imageElement}
             </div>
-            <div className="flex flex-1 flex-col gap-4 overflow-hidden rounded-r-lg border-slate-100 bg-white p-4 md:border-t-0 md:p-10">
+            <div className="flex flex-1 flex-col gap-4 overflow-hidden rounded-r-lg border-slate-100 p-4 md:border-t-0 md:p-10">
               <div className="flex flex-col overflow-auto">
                 <div className="text-lg md:text-2xl">
                   {materialWithThumbnail.title}

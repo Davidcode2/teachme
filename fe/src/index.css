@@ -185,4 +185,5 @@ html {
 }
 
 [data-theme='dark'] {
+  @apply bg-gray-900 text-slate-100;
 }
