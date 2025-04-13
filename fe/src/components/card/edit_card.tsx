@@ -43,7 +43,7 @@ function EditMaterial(): JSX.Element {
       <div className="mx-auto flex w-fit cursor-pointer justify-between gap-5 rounded-lg border border-slate-100 bg-white/20 p-2">
         <div className="p-1">{file?.name}</div>
         <button
-          className="p-1 font-handwriting text-slate-500 hover:text-red-500"
+          className="font-handwriting p-1 text-slate-500 hover:text-red-500"
           onClick={() => setFile(null)}
         >
           X
@@ -85,7 +85,7 @@ function EditMaterial(): JSX.Element {
       ) : (
         <div
           id={materialWithThumbnail.material.id.toString()}
-          className="m-4 rounded-lg shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 border border-slate-200 lg:mx-auto lg:w-2/3"
+          className="m-4 rounded-lg border border-slate-200 shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 lg:mx-auto lg:w-2/3"
         >
           <BorderColorBlur>
             <Form
@@ -93,12 +93,12 @@ function EditMaterial(): JSX.Element {
               encType="multipart/form-data"
               className="flex flex-col md:flex-row"
             >
-            <button
-              className="absolute right-0 top-2 rounded-lg px-4 text-slate-500 hover:text-red-600"
-              onClick={closeEditModal}
-            >
-              <div className="font-handwriting text-sm">X</div>
-            </button>
+              <button
+                className="absolute top-2 right-0 rounded-lg px-4 text-slate-500 hover:text-red-600"
+                onClick={closeEditModal}
+              >
+                <div className="font-handwriting text-sm">X</div>
+              </button>
               <div className="overflow-hidden rounded-t-lg bg-white md:rounded-l-lg md:rounded-r-none">
                 <label htmlFor="file-edit-input">
                   {fileSelectedImageElement}
@@ -112,7 +112,7 @@ function EditMaterial(): JSX.Element {
                   accept="application/pdf"
                 />
               </div>
-              <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
+              <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 dark:bg-slate-700 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-t-0 md:border-l">
                 <div className="flex flex-col gap-2">
                   <input
                     className="hidden"
@@ -121,7 +121,7 @@ function EditMaterial(): JSX.Element {
                     readOnly
                   />
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium dark:text-gray-400 text-gray-700"
                     htmlFor="title"
                   >
                     Titel
@@ -135,7 +135,7 @@ function EditMaterial(): JSX.Element {
                     name="title"
                   />
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="dark:text-gray-400 block text-sm font-medium text-gray-700"
                     htmlFor="description"
                   >
                     Beschreibung
@@ -150,7 +150,7 @@ function EditMaterial(): JSX.Element {
                     name="description"
                   />
                   <label
-                    className="block text-sm font-medium text-gray-700"
+                    className="dark:text-gray-400 block text-sm font-medium text-gray-700"
                     htmlFor="price"
                   >
                     Preis

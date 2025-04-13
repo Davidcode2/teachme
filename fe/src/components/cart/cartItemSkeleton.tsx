@@ -12,7 +12,7 @@ function CartSkeleton({ id }: { id: string }) {
     <>
       <div
         id={id}
-        className="flex flex-col rounded-lg border border-slate-200 bg-white opacity-0 shadow-lg transition-opacity duration-700"
+        className="flex flex-col rounded-lg border border-slate-200 dark:bg-slate-800 bg-white opacity-0 shadow-lg transition-opacity duration-700"
       >
         <div className="flex flex-row">
           <div className="flex flex-1 flex-col gap-4 overflow-auto p-10">

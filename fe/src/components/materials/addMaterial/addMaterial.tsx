@@ -26,7 +26,7 @@ function AddMaterials() {
         >
           <div className="min-w-0 rounded-lg border border-slate-200 bg-white shadow-2xl">
             <Form
-              className="flex min-w-0 flex-col items-center gap-6 rounded-lg bg-white px-8 py-6 pt-10 sm:w-96"
+              className="flex min-w-0 flex-col items-center gap-6 rounded-lg bg-white px-8 py-6 pt-10 sm:w-96 dark:bg-slate-700"
               method="post"
               encType="multipart/form-data"
             >
@@ -35,14 +35,14 @@ function AddMaterials() {
                 <div className="grid grid-cols-1 gap-2">
                   <div>
                     <label
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700 dark:text-slate-200"
                       htmlFor="title"
                     >
                       Titel
                     </label>
                     <input
                       id="title"
-                      className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-gray-900 shadow-xs focus:ring-emerald-500"
+                      className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-gray-900 shadow-xs focus:ring-emerald-500 dark:text-slate-50"
                       type="text"
                       name="title"
                       onChange={(e) =>
@@ -53,14 +53,14 @@ function AddMaterials() {
                   </div>
                   <div>
                     <label
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700 dark:text-slate-200"
                       htmlFor="description"
                     >
                       Beschreibung
                     </label>
                     <textarea
                       id="description"
-                      className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-gray-900 shadow-xs focus:ring-emerald-500"
+                      className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-gray-900 shadow-xs focus:ring-emerald-500 dark:text-slate-50"
                       name="description"
                       rows={4}
                       onChange={(e) =>
@@ -74,7 +74,7 @@ function AddMaterials() {
                   </div>
                   <div>
                     <label
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="mb-1 block text-sm font-medium text-gray-700 dark:text-slate-200"
                       htmlFor="price"
                     >
                       Preis

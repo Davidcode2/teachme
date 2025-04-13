@@ -41,7 +41,7 @@ export default function SubmitButton({ formState }: PropType) {
   return (
     <>
       <button
-        className="mt-10 grid grid-cols-3 rounded-lg border border-slate-200 shadow-sm enabled:hover:bg-emerald-600 enabled:hover:shadow-lg disabled:bg-slate-200"
+        className="mt-10 grid grid-cols-3 rounded-lg border border-slate-200 shadow-sm enabled:hover:bg-emerald-600 enabled:hover:shadow-lg disabled:bg-slate-200 dark:text-slate-700"
         type="submit"
         disabled={navigation.state === "submitting" || !enableSubmitButton()}
       >

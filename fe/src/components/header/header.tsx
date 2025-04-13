@@ -123,8 +123,8 @@ function Header() {
           <Search setShowSearch={setShowSearch} />
         </div>
       )}
-      <div className="relative top-0 z-50 bg-gradient-to-b from-white dark:from-slate-950 from-70% via-white/95 dark:via-slate-950/98 to-white/85 dark:to-slate-950/95 md:sticky">
-        <div className={scroll ? "p-4 shadow-gray-100 md:shadow-sm" : "p-4"}>
+      <div className="relative top-0 z-50 bg-gradient-to-b from-white dark:from-slate-900 from-70% via-white/95 dark:via-slate-900/98 to-white/85 dark:to-slate-900/95 md:sticky">
+        <div className={scroll ? "p-4 shadow-gray-100 dark:shadow-slate-700 md:shadow-sm" : "p-4"}>
           <div className="flex justify-between gap-3">
             <div className="hidden items-center gap-2 md:flex">
               {navigation}

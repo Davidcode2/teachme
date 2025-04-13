@@ -61,7 +61,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
   return (
     <div
       id={item.id.toString() + "-cart-item"}
-      className="rounded-lg border border-slate-200 opacity-0 shadow-md transition-opacity duration-700"
+      className="dark:bg-slate-800 rounded-lg border border-slate-200 opacity-0 shadow-md transition-opacity duration-700"
     >
       <div className="grid grid-cols-2">
         <div className="m-10">

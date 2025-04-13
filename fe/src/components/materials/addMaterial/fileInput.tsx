@@ -29,7 +29,7 @@ export default function FileInput({ formState, setFormState }: PropType) {
         />
         <label htmlFor="file-input-material" className="text-center">
           <div
-            className={`relative flex items-center justify-center hover:text-stone-900 hover:shadow-xl rounded-full border border-slate-200 bg-white shadow-sm hover:scale-105 transition-all duration-200 ease-in-out lg:h-64 lg:w-64 lg:flex-col lg:p-4 ${formState.file !== null ? "border-green-400" : ""}`}
+            className={`relative flex items-center justify-center dark:hover:text-purple-300 hover:text-stone-900 hover:shadow-xl rounded-full border border-slate-200 bg-white dark:bg-slate-800 shadow-sm hover:scale-105 transition-all duration-200 ease-in-out lg:h-64 lg:w-64 lg:flex-col lg:p-4 ${formState.file !== null ? "border-green-400" : ""}`}
           >
             <div className="p-2 text-slate-600">Datei wählen</div>
             <div

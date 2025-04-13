@@ -75,11 +75,11 @@ function Card({
         />
       )}
       <div
-        className="m-4 rounded-lg opacity-0 shadow-lg border border-slate-200 transition-opacity duration-700 md:mx-10 md:mb-10"
+        className="m-4 rounded-lg border border-slate-200 opacity-0 shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
         id={materialWithThumbnail.id.toString()}
       >
         <BorderColorBlur>
-          <div className="grid h-[250px] grid-cols-[40%_auto] grid-rows-[1fr_auto] overflow-hidden rounded-lg bg-white dark:bg-slate-800 text-sm sm:h-[450px] sm:grid-cols-2 md:grid-cols-[2fr_3fr]">
+          <div className="grid h-[250px] grid-cols-[40%_auto] grid-rows-[1fr_auto] overflow-hidden rounded-lg bg-white text-sm sm:h-[450px] sm:grid-cols-2 md:grid-cols-[auto_3fr] dark:bg-slate-800">
             <div className="overflow-hidden border-r border-slate-200 sm:row-span-2">
               {imageElement}
             </div>
@@ -96,7 +96,7 @@ function Card({
                 {Number(materialWithThumbnail.price / 100).toFixed(2)} €
               </p>
             </div>
-            <div className="col-span-2 mt-auto flex border-t p-2 px-4 sm:col-start-2 sm:border-none md:p-10">
+            <div className="col-span-2 mt-auto flex border-t border-slate-200 p-2 px-4 sm:col-start-2 sm:border-none md:p-10">
               <div className="self-center">
                 <ActionButtons
                   id={materialWithThumbnail.id.toString()}

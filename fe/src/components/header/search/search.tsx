@@ -37,9 +37,9 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
   return (
     <div className="flex h-full w-full justify-center">
       <div className="searchBox w-4/5 self-center sm:w-[600px] lg:w-[800px]">
-        <div className="searchBox z-50 flex flex-col rounded-lg border border-fuchsia-200 bg-white px-10 pb-10 shadow-2xl shadow-fuchsia-900 blur-none">
+        <div className="searchBox z-50 flex flex-col rounded-lg border border-fuchsia-200 dark:bg-slate-800 bg-white px-10 pb-10 shadow-2xl shadow-fuchsia-900 blur-none">
           <div className="flex flex-col gap-2">
-            <div className="pt-10 text-2xl text-slate-900">
+            <div className="pt-10 text-2xl dark:text-slate-200 text-slate-900">
               Finde deinen Arbeitserleichterer
             </div>
             <div className="flex">
