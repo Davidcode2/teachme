@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DarkModeIcon from "../../assets/icons/icons8-dark-mode-48.png";
 import LightModeIcon from "../../assets/icons/icons8-light-mode-78.png";
 
-const ThemeToggle = () => {
+const ThemeToggle = ({showMenu}: { showMenu: boolean }) => {
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
@@ -27,7 +27,6 @@ const ThemeToggle = () => {
   );
 
   useEffect(() => {
-    console.log(theme);
     localStorage.setItem("theme", theme);
     localStorage.setItem("useSystem", useSystem.valueOf() ? "true" : "false");
     document.documentElement.setAttribute(
@@ -76,7 +75,7 @@ const ThemeToggle = () => {
   };
 
   const toggleSwitch = (
-    <div className="userMenu relative h-6 w-12 rounded-full bg-gray-300 transition-all duration-300">
+    <div className={`userMenu ${ showMenu ? "relative" : "block" } h-6 w-12 rounded-full bg-gray-300 transition-all duration-300`}>
       <input
         type="checkbox"
         className="userMenu peer absolute top-0 left-0 h-full w-full cursor-pointer appearance-none rounded-full"

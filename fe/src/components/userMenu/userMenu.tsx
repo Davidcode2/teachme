@@ -23,6 +23,9 @@ export default function UserMenu({
   const userMenuRef = useRef<HTMLDivElement>(null);
   const editNameRef = useRef<HTMLInputElement>(null);
 
+  const keyCodeEnter = 13;
+  const keycodeEscape = 27;
+
   useEffect(() => {
     const contextMenu = userMenuRef.current;
     showMenu
@@ -48,6 +51,18 @@ export default function UserMenu({
       contextMenu?.classList.remove("open");
     }
   });
+
+  const onCloseButton = (e: any) => {
+    if (
+      e.key === "Enter" ||
+      e.keyCode == keyCodeEnter ||
+      e.keyCode == keycodeEscape
+    ) {
+      setShowMenu(false);
+    }
+  };
+
+  document.body.addEventListener("keydown", onCloseButton);
 
   let displayName = "";
   if (user!.preferredUsername) {
@@ -90,7 +105,7 @@ export default function UserMenu({
                   onClick={() => auth.signoutRedirect()}
                 >
                   <img src={ArrowIcon} width="32" />
-                  <span>Logout</span>
+                  <button>Logout</button>
                 </li>
                 <li className="flex cursor-pointer gap-4 hover:text-purple-700">
                   <img src={ShuffleIcon} width="32" />
@@ -105,15 +120,15 @@ export default function UserMenu({
                   <img src={EditIcon} width="32" />
                   <button className="userMenu">Name&nbsp;ändern</button>
                 </li>
-                <div
+                <li
                   className="userMenu mr-2 text-slate-400"
                 >
                   {editUserName && <EditUserName setEditUserName={setEditUserName} displayName={displayName} editNameRef={editNameRef} user={user} />}
-                </div>
-                <hr className="text-slate-200" />
-                <li className="userMenu flex items-center gap-4 hover:text-purple-700">
-                  <ThemeToggle />
                 </li>
+                <hr className="text-slate-200" />
+                <div className="userMenu flex items-center gap-4 hover:text-purple-700">
+                  <ThemeToggle showMenu={showMenu} />
+                </div>
               </ul>
             </div>
           </div>

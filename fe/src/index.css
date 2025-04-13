@@ -2,6 +2,13 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+[data-theme='light'] {
+}
+
+[data-theme='dark'] {
+  @apply bg-gray-900 text-slate-100;
+}
+
 /* Pure CSS Configuration based on tailwind.config.js */
 
 /* Font Families */
@@ -179,11 +186,4 @@ body {
 /* Basic Light/Dark Mode Transition */
 html {
   transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-[data-theme='light'] {
-}
-
-[data-theme='dark'] {
-  @apply bg-gray-900 text-slate-100;
 }

@@ -20,7 +20,6 @@ function EditMaterial(): JSX.Element {
   useEffect(() => {
     const fetchMaterial = async () => {
       const material = (await cardService.getMaterialWithThumbnail(id!))[0];
-      console.log(material);
       const images = cardService.getImages([material.thumbnail]);
       setImage(images[0]);
       setMaterialWithThumbnail(material);

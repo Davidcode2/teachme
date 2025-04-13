@@ -33,7 +33,6 @@ export default function SuccessPage() {
     });
     const json: Stats = await response.json();
     setStats(json);
-    console.log(json);
   };
 
   useEffect(() => {

@@ -30,14 +30,11 @@ export default function AuthCallback() {
       await getSessionStatus();
       if (auth.isAuthenticated) {
         const username = auth?.user?.profile.preferred_username!;
-        console.log("access token:", auth.user?.access_token!);
         accessTokenStore.setAccessToken(auth.user?.access_token!);
         const userId = auth?.user?.profile.sub!;
         const { data } = await fetchAuthorId();
         sessionStorage.setItem("authorId", data);
-        console.log(data);
         userStore.setAuthor(data);
-        console.log(username);
         handleSignIn(userId, username);
       }
       navigate("/materials");

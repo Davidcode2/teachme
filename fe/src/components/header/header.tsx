@@ -67,12 +67,13 @@ function Header() {
         {searchString}
       </div>
       {searchString && (
-        <button
+        <div
+          role="button"
           onClick={searchService.clearSearch}
           className="absolute right-4 cursor-pointer self-center p-1 font-handwriting text-xs text-stone-500 hover:text-stone-600"
         >
-          X<img src="" alt="" />
-        </button>
+          X
+        </div>
       )}
     </button>
   );

@@ -13,7 +13,6 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
 
   const changeSearchString = (e: any) => {
     const searchString: string = e.target.value;
-    console.log(searchString);
     setSearchString(searchString);
     if (searchString.length > 0) {
       navigate("/search");
@@ -55,6 +54,7 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
                 <div className="justify-end">
                   <div className="absolute">
                     <div
+                      role="button"
                       onClick={clearSearch}
                       className="relative right-12 top-1 cursor-pointer self-center p-4 font-handwriting text-xs text-stone-500 hover:text-stone-600"
                     >
