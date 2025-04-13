@@ -1,16 +1,14 @@
-import { Form } from "react-router";
-import CheckMarkIcon from "../assets/icons/icons8-checkmark-48.png";
-import userIcon from "../assets/icons/icons8-user-48.png";
-import ArrowIcon from "../assets/icons/icons8-logout-50.png";
-import ShuffleIcon from "../assets/icons/icons8-shuffle-48.png";
-import EditIcon from "../assets/icons/icons8-edit-48.png";
-import { useAvatarStore, useUserStore } from "../store";
+import userIcon from "../../assets/icons/icons8-user-48.png";
+import ArrowIcon from "../../assets/icons/icons8-logout-50.png";
+import ShuffleIcon from "../../assets/icons/icons8-shuffle-48.png";
+import EditIcon from "../../assets/icons/icons8-edit-48.png";
+import { useAvatarStore } from "../../store";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "react-oidc-context";
-import { parseIdJwt, switchUser } from "../services/authService";
-import { customFetch } from "../actions/customFetch";
-import CenteredModal from "./styling/centeredModal";
+import { parseIdJwt, switchUser } from "../../services/authService";
+import CenteredModal from "../styling/centeredModal";
 import ThemeToggle from "./themeToggle";
+import EditUserName from "./editUserName";
 
 export default function UserMenu({
   sidebarShown = false,
@@ -23,6 +21,7 @@ export default function UserMenu({
   const [avatar, setAvatar] = useState<string | null>(null);
   const [editUserName, setEditUserName] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const editNameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const contextMenu = userMenuRef.current;
@@ -57,52 +56,21 @@ export default function UserMenu({
     displayName = "";
   }
 
-  const handleDisplayNameSubmit = async (e: any) => {
-    setEditUserName(false);
-    const res = await customFetch("/api/users", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ displayName: e.target.displayName.value }),
-    });
-    if (res.status === 200) {
-      useUserStore.getState().setUser({
-        ...user,
-        displayName: e.target.displayName.value,
-      });
-    }
+  const handleEditUserName = () => {
+    setEditUserName(true);
+    setTimeout(() => {
+      if (editNameRef.current) {
+        editNameRef.current.focus();
+      }
+    }, 50);
   };
-
-  const changeDisplayNameForm = (
-    <Form className="flex gap-1" onSubmit={handleDisplayNameSubmit}>
-      <input
-        className="max-w-40 min-w-0 rounded-lg border border-slate-200 p-1 text-sm text-stone-900 shadow-sm"
-        type="text"
-        placeholder={displayName || "Dein Name hier! Wow!"}
-        name="displayName"
-      />
-      <button
-        className="min-w-0 rounded-lg border border-slate-200 bg-green-200 p-1 shadow-sm hover:bg-green-300"
-        type="submit"
-      >
-        <img src={CheckMarkIcon} width="20" />
-      </button>
-      <button
-        className="font-handwriting min-w-0 rounded-lg border border-slate-200 bg-red-200 p-1 px-2 shadow-sm hover:bg-red-300"
-        onClick={() => setEditUserName(false)}
-      >
-        X
-      </button>
-    </Form>
-  );
 
   return (
     <div className="flex items-center">
       <div
         className={`mr-2 text-slate-400 ${sidebarShown ? "block" : "hidden lg:block"}`}
       >
-        {editUserName ? changeDisplayNameForm : displayName}
+        {displayName}
       </div>
       <button className="userMenu hover:cursor-pointer" onClick={toggleMenu}>
         <img
@@ -131,13 +99,18 @@ export default function UserMenu({
                   </button>
                 </li>
                 <li
-                  onClick={() => setEditUserName(true)}
-                  className="flex cursor-pointer gap-4 hover:text-purple-700"
+                  onClick={handleEditUserName}
+                  className="userMenu flex cursor-pointer gap-4 hover:text-purple-700"
                 >
                   <img src={EditIcon} width="32" />
-                  <button>Name&nbsp;ändern</button>
+                  <button className="userMenu">Name&nbsp;ändern</button>
                 </li>
-                <hr className="text-slate-200"/>
+                <div
+                  className="userMenu mr-2 text-slate-400"
+                >
+                  {editUserName && <EditUserName setEditUserName={setEditUserName} displayName={displayName} editNameRef={editNameRef} user={user} />}
+                </div>
+                <hr className="text-slate-200" />
                 <li className="userMenu flex items-center gap-4 hover:text-purple-700">
                   <ThemeToggle />
                 </li>

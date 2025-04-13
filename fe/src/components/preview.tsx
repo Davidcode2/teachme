@@ -25,7 +25,7 @@ export default function Preview({
           </div>
         )}
         {material && (
-          <div className="relative mx-6 flex flex-col gap-5 rounded-lg border border-slate-300 bg-white p-2 shadow-lg md:flex-row md:mx-10 md:p-10 lg:max-w-[80vw] max-h-[90%]">
+          <div className="relative mx-6 flex flex-col gap-5 rounded-lg border border-slate-300 dark:bg-slate-700 bg-white p-2 shadow-lg md:flex-row md:mx-10 md:p-10 lg:max-w-[80vw] max-h-[90%]">
             <button
               className="absolute right-0 top-2 rounded-lg px-4 text-slate-500 hover:text-red-600"
               onClick={() => setShowPreview(false)}

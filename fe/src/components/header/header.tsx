@@ -3,7 +3,7 @@ import plus from "../../assets/addPlusGradient.png";
 import UserIcon from "../../assets/icons/icons8-user-48.png";
 import { useSearchState, useSidebarStore } from "../../store";
 import Nav from "./nav";
-import UserMenu from "../userMenu";
+import UserMenu from "../userMenu/userMenu";
 import { useEffect, useState } from "react";
 import Search from "./search/search";
 import SearchService from "../../services/searchService";

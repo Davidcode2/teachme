@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import DarkModeIcon from "../assets/icons/icons8-dark-mode-48.png";
-import LightModeIcon from "../assets/icons/icons8-light-mode-78.png";
+import DarkModeIcon from "../../assets/icons/icons8-dark-mode-48.png";
+import LightModeIcon from "../../assets/icons/icons8-light-mode-78.png";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(() => {
