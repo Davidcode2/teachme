@@ -81,7 +81,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
         <div className="ml-auto">
           <button
             onClick={() => removeItem(item.id.toString())}
-            className="mr-2 rounded-md border-slate-200 px-2 hover:bg-red-400"
+            className="cursor-pointer mr-2 rounded-md border-slate-200 px-2 hover:bg-red-400"
           >
             <img
               src={TrashBin}

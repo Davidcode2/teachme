@@ -58,7 +58,7 @@ export default function Cart(): JSX.Element {
       onClick={() =>
         toCheckout(cartItems.map((item: Material) => item.id.toString()))
       }
-      className="flex justify-center rounded-md bg-emerald-500 p-2 shadow-md hover:bg-emerald-600 hover:shadow-sm"
+      className="cursor-pointer flex justify-center rounded-md bg-emerald-500 p-2 shadow-md hover:bg-emerald-600 hover:shadow-sm"
     >
       <img width="30" src={arrowIcon} />
     </button>

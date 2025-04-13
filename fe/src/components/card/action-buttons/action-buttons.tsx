@@ -87,10 +87,9 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
       <div id="main" className="flex">
         <div className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer">
           {!isMine && (
-            <button>
+            <button onClick={addToShoppingCart}>
               <img
-                className=""
-                onClick={addToShoppingCart}
+                className="cursor-pointer"
                 src={addToShoppingCartIcon}
                 width="25"
                 alt=""

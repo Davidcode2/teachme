@@ -45,13 +45,13 @@ export default function DeleteMaterialModal(props: PropTypes) {
             <hr className="text-slate-200" />
             <div className="flex gap-10">
               <button
-                className="rounded-lg bg-sky-300 p-4 hover:bg-sky-400 dark:text-slate-900"
+                className="cursor-pointer rounded-lg bg-sky-300 p-4 hover:bg-sky-400 dark:text-slate-900"
                 onClick={() => props.setShowDeleteModal(false)}
               >
                 Abbrechen
               </button>
               <button
-                className="rounded-lg bg-purple-200 p-4 hover:bg-purple-300 dark:text-slate-900"
+                className="cursor-pointer rounded-lg bg-purple-200 p-4 hover:bg-purple-300 dark:text-slate-900"
                 onClick={deleteMaterial()}
               >
                 Ja, löschen

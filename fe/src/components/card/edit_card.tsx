@@ -7,7 +7,6 @@ import CardService from "../../services/cardService.ts";
 import SpinnerGif from "../../assets/icons/icons8-spinnkreis.gif";
 import Price from "../materials/addMaterial/price.tsx";
 import BorderColorBlur from "../styling/borderColorBlur.tsx";
-import { redirect } from "react-router";
 
 function EditMaterial(): JSX.Element {
   const [materialWithThumbnail, setMaterialWithThumbnail] =
@@ -42,7 +41,7 @@ function EditMaterial(): JSX.Element {
       <div className="mx-auto flex w-fit cursor-pointer justify-between gap-5 rounded-lg border border-slate-100 bg-white/20 p-2">
         <div className="p-1">{file?.name}</div>
         <button
-          className="font-handwriting p-1 text-slate-500 hover:text-red-500"
+          className="cursor-pointer font-handwriting p-1 text-slate-500 hover:text-red-500"
           onClick={() => setFile(null)}
         >
           X
@@ -71,8 +70,8 @@ function EditMaterial(): JSX.Element {
     </div>
   );
 
-  const closeEditModal = async () => {
-    redirect(`/materials`);
+  const closeEditModal = () => {
+    history.back();
   };
 
   return (
@@ -93,7 +92,8 @@ function EditMaterial(): JSX.Element {
               className="flex flex-col md:flex-row"
             >
               <button
-                className="absolute top-2 right-0 rounded-lg px-4 text-slate-500 hover:text-red-600"
+                type="button"
+                className="cursor-pointer absolute top-2 right-0 rounded-lg px-4 text-slate-500 hover:text-red-600"
                 onClick={closeEditModal}
               >
                 <div className="font-handwriting text-sm">X</div>
@@ -160,7 +160,7 @@ function EditMaterial(): JSX.Element {
                 </div>
                 <div className="mt-auto flex">
                   <div className="self-center">
-                    <button type="submit">
+                    <button className="cursor-pointer" type="submit">
                       <img src={CheckMarkIcon} className="w-8" alt="" />
                     </button>
                   </div>
