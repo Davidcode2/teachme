@@ -2,8 +2,8 @@ backend:
   name: github
   branch: master
   repo: davidcode2/teachme
-media_folder: "blog/_site/"
-public_folder: "blog/_site/"
+media_folder: "blog/_site/images/uploads"
+public_folder: "/images/uploads"
 
 # Please run "npx netlify-cms-proxy-server" for local backend
 local_backend: false
