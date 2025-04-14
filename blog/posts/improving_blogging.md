@@ -4,7 +4,6 @@ date: 2025-03-22
 tags: post
 layout: post-layout.njk
 ---
-
 As I'm writing posts in this blog I have some ideas 
 for improving the workflow. For one, I am currently unable 
 to quickly link to other posts within the blog. This should be 
@@ -18,3 +17,7 @@ Huberman Lab podcast, it would be extremely nice to have a shortcut like for
 the local notes, which pulls data from a search engine. If I could get that
 experience to be similar to using fzf inside the editor, this would be super
 exciting.
+
+
+
+![](/images/uploads/white_cat_happy.webp)
