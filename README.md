@@ -144,7 +144,7 @@ Want to run TeachMe Marketplace on your local machine? Follow these steps:
 
 **Note:** You'll need to have Docker, Node.js, npm (or yarn), and PostgreSQL installed on your local machine. You might also need to run a local Keycloak instance for full authentication functionality.
 
-## Running with Docker 
+##  🐳  Running with Docker 
 
 1. run `docker compose build && docker compose up -d`
 
