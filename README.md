@@ -1,9 +1,9 @@
 <div align="center">
   <br />
-  <img src="https://raw.githubusercontent.com/Davidcode2/teachme/main/client/public/logo.png" alt="TeachMe Logo" width="200">
-  <h1><a href="https://your-deployed-marketplace-url.com">TeachMe Marketplace</a> 🚀</h1>
+  <img src="https://raw.githubusercontent.com/Davidcode2/teachme/master/fe/src/assets/teachly_logo_color_gradient_bg_transparent.png" alt="Teachly Logo" width="200">
+  <h1><a href="https://teachly.store">Teachly Marketplace</a> 🚀</h1>
   <p>
-    A Fullstack Learning Project for Teachers, by Teachers! 🧑‍🏫📚👩‍🏫
+    A Fullstack Learning Project for Teachers! 🧑‍🏫📚👩‍🏫
   </p>
 </div>
 
@@ -162,8 +162,9 @@ This project is open-source and licensed under the [MIT License](https://www.goo
 
 -----
 
-\<div align="center"\>
-\<p\>
-Made with ❤️ by \<a href="https://github.com/Davidcode2"\>Davidcode2\</a\> Germany 🇩🇪.
-\</p\>
-\</div\>
+<div align="center">
+  https://raw.githubusercontent.com/Davidcode2/teachme/master/fe/src/assets/teachly_t_favicon.png
+<p>
+Made with ❤️ by <a href="https://github.com/Davidcode2">Davidcode2</a> Germany 🇩🇪.
+</p>
+</div>
