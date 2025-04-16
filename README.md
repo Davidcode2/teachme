@@ -163,7 +163,7 @@ This project is open-source and licensed under the [MIT License](https://www.goo
 -----
 
 <div align="center">
-  https://raw.githubusercontent.com/Davidcode2/teachme/master/fe/src/assets/teachly_t_favicon.png
+  <img src="https://raw.githubusercontent.com/Davidcode2/teachme/master/fe/src/assets/teachly_t_favicon.png" width="50" alt="Teachly favicon">
 <p>
 Made with ❤️ by <a href="https://github.com/Davidcode2">Davidcode2</a> Germany 🇩🇪.
 </p>
