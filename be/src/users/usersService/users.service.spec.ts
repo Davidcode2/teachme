@@ -49,6 +49,11 @@ describe('UsersService', () => {
     update: jest.fn(),
   };
 
+  // Mock the UsersService for methods that call itself
+  const mockUsersService = {
+    findOneById: jest.fn(),
+  };
+
   beforeEach(async () => {
     jest.clearAllMocks();
 
@@ -81,6 +86,9 @@ describe('UsersService', () => {
     );
     consumerService = module.get<ConsumerService>(ConsumerService);
     authorService = module.get<AuthorService>(AuthorService);
+    
+    // Mock the service's own methods that are called internally
+    service.findOneById = mockUsersService.findOneById;
   });
 
   it('should be defined', () => {
