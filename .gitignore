@@ -219,3 +219,4 @@ TODOs.md
 .eslintcache
 
 *.xcf
+.aider*
