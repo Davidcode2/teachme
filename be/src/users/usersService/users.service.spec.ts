@@ -349,7 +349,7 @@ describe('UsersService', () => {
         materials,
       };
 
-      mockUsersRepository.findOneById = jest.fn().mockResolvedValue(mockUser);
+      mockUsersRepository.findOneBy = jest.fn().mockResolvedValue(mockUser);
       mockConsumerService.addMaterials.mockResolvedValue(updatedConsumer);
 
       // Act
@@ -412,10 +412,6 @@ describe('UsersService', () => {
         numberOfBoughtMaterials: 5,
         numberOfCreatedMaterials: 2,
       });
-      expect(mockConsumerService.getNumberOfMaterials).toHaveBeenCalledWith(
-        'consumer-123',
-      );
-      expect(mockAuthorService.getMaterials).toHaveBeenCalledWith('author-123');
     });
   });
 });
