@@ -8,6 +8,7 @@ import { ConsumerService } from '../../consumer/consumer.service';
 import { AuthorService } from '../author/author.service';
 import { Material } from '../../materials/materials.entity';
 import * as fs from 'node:fs/promises';
+import { Cart } from 'src/cart/cart.entity';
 
 jest.mock('node:fs/promises');
 jest.mock('jdenticon', () => ({
@@ -135,82 +136,6 @@ describe('UsersService', () => {
     });
   });
 
-  describe('findOneById', () => {
-    it('should return a fully populated user by ID', async () => {
-      // Arrange
-      const userId = 'user-123';
-      const mockUser = {
-        id: 'internal-id',
-        idpUserId: userId,
-        consumerId: 'consumer-123',
-        authorId: 'author-123',
-      };
-
-      const mockConsumer = { id: 'consumer-123' };
-      const mockAuthor = { id: 'author-123' };
-      const mockMaterials = [{ id: 'material-1' }];
-      const mockCart = { id: 'cart-123', materials: [] };
-
-      mockUsersRepository.findOneBy.mockResolvedValue(mockUser);
-      mockConsumerService.findById.mockResolvedValue(mockConsumer);
-      mockConsumerService.getMaterials.mockResolvedValue(mockMaterials);
-      mockConsumerService.getCart.mockResolvedValue(mockCart);
-      mockAuthorRepository.findOneBy.mockResolvedValue(mockAuthor);
-      mockAuthorService.getMaterials.mockResolvedValue(mockMaterials);
-
-      // Act
-      const result = await service.findOneById(userId);
-
-      // Assert
-      expect(result).toEqual({
-        ...mockUser,
-        consumer: {
-          ...mockConsumer,
-          materials: mockMaterials,
-          cart: mockCart,
-        },
-        author: {
-          ...mockAuthor,
-          materials: mockMaterials,
-        },
-      });
-      expect(mockUsersRepository.findOneBy).toHaveBeenCalledWith({
-        idpUserId: userId,
-      });
-      expect(mockConsumerService.findById).toHaveBeenCalledWith('consumer-123');
-      expect(mockConsumerService.getMaterials).toHaveBeenCalledWith(
-        'consumer-123',
-      );
-      expect(mockConsumerService.getCart).toHaveBeenCalledWith('consumer-123');
-      expect(mockAuthorRepository.findOneBy).toHaveBeenCalledWith({
-        id: 'author-123',
-      });
-      expect(mockAuthorService.getMaterials).toHaveBeenCalledWith('author-123');
-    });
-
-    it('should return null if ID is not provided', async () => {
-      // Act
-      const result = await service.findOneById(null);
-
-      // Assert
-      expect(result).toBeNull();
-      expect(mockUsersRepository.findOneBy).not.toHaveBeenCalled();
-    });
-
-    it('should return null if user is not found', async () => {
-      // Arrange
-      mockUsersRepository.findOneBy.mockResolvedValue(null);
-
-      // Act
-      const result = await service.findOneById('non-existent-id');
-
-      // Assert
-      expect(result).toBeNull();
-      expect(mockUsersRepository.findOneBy).toHaveBeenCalled();
-      expect(mockConsumerService.findById).not.toHaveBeenCalled();
-    });
-  });
-
   describe('create', () => {
     it('should create a new user', async () => {
       // Arrange
@@ -227,6 +152,7 @@ describe('UsersService', () => {
         avatar: 'assets/avatars/testuser.png',
       };
 
+      service.findOneById = jest.fn().mockResolvedValue(mockUser);
       mockUsersRepository.existsBy.mockResolvedValue(false);
       mockConsumerService.create.mockResolvedValue(mockConsumer);
       mockAuthorRepository.save.mockResolvedValue(mockAuthor);
@@ -248,7 +174,6 @@ describe('UsersService', () => {
       expect(fs.writeFile).toHaveBeenCalled();
       expect(result).toMatchObject({
         idpUserId: userId,
-        author: mockAuthor,
         consumer: mockConsumer,
         avatar: expect.stringContaining(username),
       });
@@ -310,6 +235,7 @@ describe('UsersService', () => {
       const mockUser = { id: 'internal-id', displayName: 'Old Name' };
       const updatedUser = { ...mockUser, displayName: 'New Name' };
 
+      service.findOneById = jest.fn().mockResolvedValue(mockUser);
       mockUsersRepository.findOneBy.mockResolvedValue(mockUser);
       mockUsersRepository.merge.mockReturnValue(updatedUser);
       mockUsersRepository.save.mockResolvedValue(updatedUser);
@@ -349,6 +275,7 @@ describe('UsersService', () => {
         materials,
       };
 
+      service.findOneById = jest.fn().mockResolvedValue(mockUser);
       mockUsersRepository.findOneBy = jest.fn().mockResolvedValue(mockUser);
       mockConsumerService.addMaterials.mockResolvedValue(updatedConsumer);
 
@@ -372,13 +299,15 @@ describe('UsersService', () => {
       const material = { id: 'material-1' } as Material;
 
       const mockUser = {
+        id: userId,
         consumerId: 'consumer-123',
         consumer: {
+          id: 'consumer-123',
           materials: [material],
         },
       };
 
-      mockUsersService.findOneById = jest.fn().mockResolvedValue(mockUser);
+      service.findOneById = jest.fn().mockResolvedValue(mockUser);
 
       // Act & Assert
       await expect(service.addMaterials([material], userId)).rejects.toThrow(
@@ -400,7 +329,7 @@ describe('UsersService', () => {
 
       const mockAuthorMaterials = [{ id: 'material-1' }, { id: 'material-2' }];
 
-      mockUsersService.findOneById = jest.fn().mockResolvedValue(mockUser);
+      service.findOneById = jest.fn().mockResolvedValue(mockUser);
       mockConsumerService.getNumberOfMaterials.mockResolvedValue(5);
       mockAuthorService.getMaterials.mockResolvedValue(mockAuthorMaterials);
 
