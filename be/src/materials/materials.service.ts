@@ -7,12 +7,12 @@ import { StripeService } from '../stripe/stripe.service';
 import { randomUUID } from 'node:crypto';
 import { UsersService } from '../users/usersService/users.service';
 import { ImageService } from './image.service';
-import { MaterialUnboughtDto } from 'src/shared/Models/MaterialsUnbought';
-import MaterialDtoIn from 'src/shared/Models/MaterialsIn';
-import { User } from 'src/users/user.entity';
-import MaterialWithThumbnail from 'src/shared/Models/MaterialsWithThumbnails';
-import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
-import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
+import { MaterialUnboughtDto } from '../shared/Models/MaterialsUnbought';
+import MaterialDtoIn from '../shared/Models/MaterialsIn';
+import { User } from '../users/user.entity';
+import MaterialWithThumbnail from '../shared/Models/MaterialsWithThumbnails';
+import { UpdateMaterialDto } from '../shared/DTOs/updatedMaterialDto';
+import MaterialOutDto from '../shared/DTOs/materialOutDto';
 
 @Injectable()
 export class MaterialsService {

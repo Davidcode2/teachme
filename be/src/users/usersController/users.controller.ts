@@ -9,9 +9,9 @@ import {
   Req,
 } from '@nestjs/common';
 import { UsersService } from '../usersService/users.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 import { Request, Response } from 'express';
-import { UpdateUserDto } from 'src/shared/DTOs/updatedUserDto';
+import { UpdateUserDto } from '../../shared/DTOs/updatedUserDto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')

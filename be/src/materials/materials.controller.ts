@@ -20,7 +20,7 @@ import { Express } from 'express';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
-import { UpdateMaterialDto } from 'src/shared/DTOs/updatedMaterialDto';
+import { UpdateMaterialDto } from '../shared/DTOs/updatedMaterialDto';
 
 @ApiTags('materials')
 @Controller('materials')
