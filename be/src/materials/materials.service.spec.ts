@@ -7,7 +7,7 @@ import { StripeService } from '../stripe/stripe.service';
 import { UsersService } from '../users/usersService/users.service';
 import { ImageService } from './image.service';
 import * as fs from 'node:fs/promises';
-import MaterialDtoIn from 'src/shared/Models/MaterialsIn';
+import MaterialDtoIn from '../shared/Models/MaterialsIn';
 
 jest.mock('node:fs/promises');
 jest.mock('node:crypto', () => ({

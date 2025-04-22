@@ -7,8 +7,8 @@ import { Material } from '../materials/materials.entity';
 import { MaterialsService } from '../materials/materials.service';
 import { StripeService } from '../stripe/stripe.service';
 import { CommonCartService } from '../common-cart/common-cart.service';
-import { User } from 'src/users/user.entity';
-import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
+import { User } from '../users/user.entity';
+import MaterialOutDto from '../shared/DTOs/materialOutDto';
 
 @Injectable()
 export class CartService {

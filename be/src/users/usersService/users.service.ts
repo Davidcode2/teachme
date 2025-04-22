@@ -8,7 +8,7 @@ import { ConsumerService } from '../../consumer/consumer.service';
 const jdenticon = require('jdenticon');
 import * as fs from 'node:fs/promises';
 import { AuthorService } from '../author/author.service';
-import { UpdateUserDto } from 'src/shared/DTOs/updatedUserDto';
+import { UpdateUserDto } from '../../shared/DTOs/updatedUserDto';
 
 @Injectable()
 export class UsersService {

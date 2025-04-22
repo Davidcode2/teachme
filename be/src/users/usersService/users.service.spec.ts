@@ -8,7 +8,6 @@ import { ConsumerService } from '../../consumer/consumer.service';
 import { AuthorService } from '../author/author.service';
 import { Material } from '../../materials/materials.entity';
 import * as fs from 'node:fs/promises';
-import { Cart } from 'src/cart/cart.entity';
 
 jest.mock('node:fs/promises');
 jest.mock('jdenticon', () => ({

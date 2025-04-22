@@ -16,7 +16,7 @@ import { Request, Response } from 'express';
 import { CartService } from './cart.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
-import MaterialOutDto from 'src/shared/DTOs/materialOutDto';
+import MaterialOutDto from '../shared/DTOs/materialOutDto';
 import { MaterialItemDto } from './cartDTOs/MaterialItemDto';
 import { MaterialItemsDto } from './cartDTOs/materialItemsDto';
 

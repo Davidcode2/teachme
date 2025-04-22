@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Author } from '../author.entity';
-import { Material } from 'src/materials/materials.entity';
+import { Material } from '../../materials/materials.entity';
 
 @Injectable()
 export class AuthorService {

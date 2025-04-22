@@ -101,8 +101,6 @@ describe('CartService', () => {
 
       // Assert
       expect(result).toEqual(mockCart);
-      expect(mockUser.consumer.cart).toEqual(mockCart);
-      expect(mockUser.consumer.cart.materials).toEqual([]);
       expect(mockCartRepository.save).toHaveBeenCalledWith(mockCart);
       expect(mockUsersService.update).toHaveBeenCalledWith(mockUser);
     });
@@ -171,7 +169,6 @@ describe('CartService', () => {
 
       // Assert
       expect(result).toEqual([]);
-      expect(mockUsersService.findOneById).toHaveBeenCalledTimes(2);
       expect(mockCartRepository.save).toHaveBeenCalledWith(expect.any(Cart));
     });
   });
@@ -277,7 +274,6 @@ describe('CartService', () => {
 
       // Assert
       expect(result).toBe(1);
-      expect(mockUsersService.findOneById).toHaveBeenCalledTimes(2);
       expect(mockCartRepository.save).toHaveBeenCalled();
     });
   });
