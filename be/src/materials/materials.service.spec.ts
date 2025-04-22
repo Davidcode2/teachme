@@ -415,14 +415,27 @@ describe('MaterialsService', () => {
     });
   });
 
-  describe('search', () => {
+describe('search', () => {
     it('should search for materials by title', async () => {
       // Arrange
       const searchTerm = 'test';
-      const mockMaterials = [
+      const mockMaterialsToSave = [
         { id: 'material-1', title: 'Test Material 1', file_path: 'path/1' },
         { id: 'material-2', title: 'Test Material 2', file_path: 'path/2' },
       ];
+
+      // Mock the save method (still important if other parts of your service use it)
+      const mockSave = jest.fn().mockResolvedValue(mockMaterialsToSave);
+      mockMaterialsRepository.save = mockSave;
+
+      // Mock the query builder and its methods
+      const mockQueryBuilder = {
+        where: jest.fn().mockReturnThis(), // Mock where and make it chainable
+        getMany: jest.fn().mockResolvedValue(mockMaterialsToSave), // Mock getMany to return our saved data
+      };
+      jest.spyOn(mockMaterialsRepository, 'createQueryBuilder').mockReturnValue(
+        mockQueryBuilder as any, // Type assertion to bypass strict type checking
+      );
 
       const mockThumbnails = [
         {
@@ -448,8 +461,9 @@ describe('MaterialsService', () => {
         'material.title LIKE :term',
         { term: '%test%' },
       );
-      expect(service.mapThumbnails).toHaveBeenCalled();
+      expect(mockQueryBuilder.getMany).toHaveBeenCalled();
       expect(result).toHaveLength(2);
+      expect(result.map(item => item.id)).toEqual(['material-1', 'material-2']);
     });
   });
 
