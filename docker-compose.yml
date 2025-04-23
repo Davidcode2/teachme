@@ -33,7 +33,8 @@ services:
       dockerfile: dockerfile
     image: schluesselmomente
     restart: always
-    ports: '80:8181'
+    ports: 
+      - '80:8181'
     networks:
       - app-network
 
