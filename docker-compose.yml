@@ -28,12 +28,13 @@ services:
       - app-network
 
   schluesselmomente:
-    build: schluesselmomente
-      context: ../schlusselmomente
+    build:
+      context: ../schluesselmomente
       dockerfile: dockerfile
     image: schluesselmomente
-    restart: always
-    ports: 
+    container_name: schluesselmomente
+    restart: unless-stopped
+    ports:
       - '80:8181'
     networks:
       - app-network
