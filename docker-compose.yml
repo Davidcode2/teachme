@@ -95,7 +95,7 @@ services:
     depends_on:
       - frontend
       - keycloak
-    command: certonly -v --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --force-renewal -d teachly.store -d www.teachly.store -d auth.teachly.store -d www.auth.teachly.store -d schluesselmomente-freibug.de -d www.schluesselmomente-freiburg.de
+    command: certonly -v --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --force-renewal -d teachly.store -d www.teachly.store -d auth.teachly.store -d www.auth.teachly.store -d schluesselmomente-freiburg.de -d www.schluesselmomente-freiburg.de
 
 volumes:
   certbot-etc:
