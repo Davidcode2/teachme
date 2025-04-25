@@ -27,18 +27,6 @@ services:
     networks:
       - app-network
 
-  schluesselmomente:
-    build:
-      context: ../schluesselmomente
-      dockerfile: dockerfile
-    image: schluesselmomente
-    container_name: schluesselmomente
-    restart: unless-stopped
-    ports:
-      - '8181:80'
-    networks:
-      - app-network
-
   reverse-proxy:
     image: nginx:alpine
     container_name: reverse_proxy
@@ -54,7 +42,6 @@ services:
     depends_on:
       - frontend
       - keycloak
-      - schluesselmomente
     networks:
       - app-network
 
@@ -95,7 +82,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - reverse-proxy
-    command: certonly -v --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --force-renewal -d teachly.store -d www.teachly.store -d auth.teachly.store -d www.auth.teachly.store -d schluesselmomente-freiburg.de -d www.schluesselmomente-freiburg.de
+    command: certonly -v --webroot --webroot-path=/var/www/html --email jakob.lingel@hotmail.de --agree-tos --no-eff-email --force-renewal -d teachly.store -d www.teachly.store -d auth.teachly.store -d www.auth.teachly.store
 
 volumes:
   certbot-etc:
