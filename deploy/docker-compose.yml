@@ -1,7 +1,7 @@
 services:
   backend:
     build:
-      context: ./be
+      context: ../be
       dockerfile: dockerfile
     image: backend
     container_name: backend
@@ -15,7 +15,7 @@ services:
 
   frontend:
     build:
-      context: ./fe
+      context: ../fe
       dockerfile: dockerfile
     image: frontend
     container_name: frontend
@@ -33,7 +33,7 @@ services:
     restart: always
     # set shared memory limit when using docker-compose
     shm_size: 128mb
-    env_file: "./keycloak/.db.env"
+    env_file: "../keycloak/.db.env"
     networks:
       - app-network
     volumes:
@@ -41,15 +41,15 @@ services:
 
   keycloak:
     build:
-      context: ./keycloak
+      context: ../keycloak
       dockerfile: dockerfile
     container_name: keycloak
-    env_file: "./keycloak/.env"
+    env_file: "../keycloak/.env"
     ports:
       - '8082:8080'
       - '9000:9000'
     volumes:
-      - ./conf:/opt/keycloak/conf
+      - ../conf:/opt/keycloak/conf
     depends_on:
       - keycloak_db
     networks:
