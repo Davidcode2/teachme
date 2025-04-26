@@ -1,3 +1,4 @@
+services:
   reverse-proxy:
     image: nginx:alpine
     container_name: reverse_proxy
@@ -27,12 +28,11 @@
 
 volumes:
   certbot-etc:
-    external: true
   certbot-var:
-    external: true
   web-root:
     driver: local
 
 networks:
   app-network:
     name: app-network
+    external: true
