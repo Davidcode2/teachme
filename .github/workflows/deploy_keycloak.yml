@@ -1,0 +1,29 @@
+name: Build and start keycloak container via SSH
+
+on: 
+  push:
+    branches:
+      - main
+      - master
+    paths: 
+      - 'keycloak/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_ADDRESS }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SERVER_PRIVATE_SSH_KEY }}
+          port: 22
+          script: |
+            cd /root/teachme/deploy
+            docker compose build keycloak || exit 1
+            docker compose up -d keycloak || exit 1
