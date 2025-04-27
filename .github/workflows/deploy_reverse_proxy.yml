@@ -1,4 +1,5 @@
 name: Update reverse-proxy nginx config via SSH
+
 on: 
   push:
     branches:
@@ -23,7 +24,7 @@ jobs:
           key: ${{ secrets.SERVER_PRIVATE_SSH_KEY }}
           port: 22
           script: |
-            cd /root/teachme/reverse-proxy
+            cd /root/teachme/deploy/reverse-proxy
             docker compose up -d certbot || exit 1
             TIMEOUT=30
             START_TIME=$SECONDS
