@@ -26,20 +26,5 @@ jobs:
           script: |
             cd /root/teachme/deploy/reverse-proxy
             docker compose up -d certbot || exit 1
-            TIMEOUT=30
-            START_TIME=$SECONDS
-            while true; do
-              if docker logs certbot 2>&1 | grep -q "Successfully received certificate"; then
-                echo "Certbot has finished successfully!"
-                break
-              elif docker logs certbot 2>&1 | grep -q "error" || (( $SECONDS - START_TIME > $TIMEOUT )); then
-                echo "Certbot failed or timed out!"
-                docker compose logs certbot # Print Certbot logs for debugging
-                exit 1
-              fi
-              echo "Waiting for certbot to finish..."
-              sleep 3
-            done
-            echo "Certbot has finished successfully!"
             docker compose stop reverse-proxy || exit 1
             docker compose up -d reverse-proxy || exit 1
