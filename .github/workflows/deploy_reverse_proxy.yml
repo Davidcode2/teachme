@@ -43,5 +43,3 @@ jobs:
             echo "Certbot has finished successfully!"
             docker compose stop reverse-proxy || exit 1
             docker compose up -d reverse-proxy || exit 1
-
-
