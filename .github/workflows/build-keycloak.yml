@@ -1,0 +1,19 @@
+name: Build and Push Keycloak
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'keycloak/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-and-push-reusable.yml
+    with:
+      image_name: teachme-keycloak
+      context: ./keycloak
+      dockerfile: ./keycloak/dockerfile
+    secrets: inherit
