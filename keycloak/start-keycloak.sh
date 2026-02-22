@@ -6,4 +6,3 @@
   --proxy-headers=xforwarded \
   --log=console \
   --log-console-output=json \
-
