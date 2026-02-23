@@ -133,23 +133,88 @@ Browser → Frontend (nginx)
                  └─ Returns JSON response
 ```
 
-### Nginx API Proxy Configuration
+### API Proxy Configuration
 
-**Frontend Container Nginx (`fe/nginx.conf`):**
+The application supports three deployment configurations with different API routing strategies:
+
+**1. Development (Vite Dev Server):**
+```typescript
+// vite.config.ts
+server: {
+  proxy: {
+    '/api': {
+      target: 'http://localhost:3000',
+      changeOrigin: true,
+    }
+  }
+}
+```
+
+**2. Docker Compose (Nginx Container):**
+
+*Frontend Container Nginx (`fe/nginx.conf`):*
 ```nginx
 location ~ /api/(?<section>.+) {
   proxy_pass http://172.17.0.1:3000/$section$is_args$args;
 }
 ```
-This proxies `/api/materials` to `http://backend:3000/materials`
 
-**Reverse Proxy Nginx (`deploy/reverse-proxy/nginx.conf`):**
+*Reverse Proxy Nginx (`deploy/reverse-proxy/nginx.conf`):*
 ```nginx
 location ~ /api/(?<section>.+) {
   proxy_pass $scheme://172.17.0.1:3000/$section$is_args$args;
 }
 ```
-Production SSL termination with rate limiting (15 req/sec per IP)
+
+**3. Kubernetes (Ingress Controller) - Current Production:**
+
+The Kubernetes ingress handles path-based routing at the cluster level:
+
+```yaml
+# teachme-frontend-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: app.teachly.store
+      http:
+        paths:
+          # API requests → backend service
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: teachme-backend-service
+                port:
+                  number: 80
+          # All other requests → frontend service
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: teachme-frontend-service
+                port:
+                  number: 80
+```
+
+**Routing Examples:**
+
+| Request | Path Received by Backend |
+|---------|-------------------------|
+| `app.teachly.store/api/materials` | `/materials` |
+| `app.teachly.store/api/cart/buy` | `/cart/buy` |
+| `app.teachly.store/api/auth/login` | `/auth/login` |
+
+**Benefits of Kubernetes Ingress Approach:**
+- ✅ No code changes required in frontend or backend
+- ✅ Single SSL certificate for frontend domain
+- ✅ No CORS issues (same origin)
+- ✅ Path-based routing at ingress controller level
+- ✅ Independent scaling of frontend and backend services
 
 ## Key Files & Directories
 

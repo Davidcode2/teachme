@@ -90,8 +90,11 @@ npm run preview
 ### Request Flow
 
 1. **Development:** Vite dev server proxies `/api/*` to backend (see vite.config.ts)
-2. **Production:** Nginx proxies `/api/(?<section>.+)` to `http://backend:3000/$section`
-3. **Authentication:** JWT tokens validated via Keycloak at `https://auth.teachly.store`
+2. **Docker Compose:** Nginx proxies `/api/(?<section>.+)` to `http://backend:3000/$section`
+3. **Kubernetes (Production):** Ingress controller routes `/api/*` paths to backend service
+   - Path `/api(/|$)(.*)` → backend service (with rewrite to remove `/api`)
+   - Path `/` → frontend service
+4. **Authentication:** JWT tokens validated via Keycloak at `https://auth.teachly.store`
 
 See root [AGENTS.md](../AGENTS.md) for complete architecture overview.
 
