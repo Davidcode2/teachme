@@ -117,7 +117,7 @@ jobs:
     permissions:
       contents: read
     env:
-      VERSION: ${{ needs.bump-version.outputs.version }}
+      VERSION: sha-${{ needs.bump-version.outputs.sha }}
 
     steps:
       - name: Generate GitHub App token
@@ -150,5 +150,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git diff --exit-code && echo "No changes to commit" && exit 0
           git add .
-          git commit -m "deploy: ${{ env.APP_REPO_NAME }} keycloak v${VERSION}"
+          git commit -m "deploy: ${{ env.APP_REPO_NAME }} keycloak ${VERSION}"
           git push
