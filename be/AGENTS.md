@@ -6,6 +6,16 @@ Guidelines for AI agents working on this NestJS backend repository.
 
 TeachMe is an educational platform backend built with NestJS, TypeORM, and PostgreSQL.
 
+### Architecture Context
+
+The backend is a NestJS REST API that:
+- Provides CRUD operations for materials, users, carts
+- Integrates with Stripe for payments
+- Validates JWT tokens via Keycloak
+- Stores files in `/app/assets` (PDFs and thumbnails)
+
+See root [AGENTS.md](../AGENTS.md) for complete architecture overview and request flows.
+
 ## Build/Test/Lint Commands
 
 ```bash

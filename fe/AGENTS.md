@@ -87,6 +87,14 @@ npm run preview
 - **SWR** for data fetching
 - **GSAP** for animations
 
+### Request Flow
+
+1. **Development:** Vite dev server proxies `/api/*` to backend (see vite.config.ts)
+2. **Production:** Nginx proxies `/api/(?<section>.+)` to `http://backend:3000/$section`
+3. **Authentication:** JWT tokens validated via Keycloak at `https://auth.teachly.store`
+
+See root [AGENTS.md](../AGENTS.md) for complete architecture overview.
+
 ## Directory Structure
 
 ```
