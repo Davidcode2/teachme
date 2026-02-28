@@ -16,7 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHealth()).toStrictEqual({ status: "healthy" });
+      expect(appController.getHealth()).toStrictEqual({ status: 'healthy' });
     });
   });
 });

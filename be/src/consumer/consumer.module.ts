@@ -10,4 +10,3 @@ import { Cart } from '../cart/cart.entity';
   exports: [ConsumerService],
 })
 export class ConsumerModule {}
-

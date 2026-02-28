@@ -62,7 +62,7 @@ export class ConsumerService {
 
     const materialsWithThumbnails = consumerWithMaterials.materials.map(
       async (material) => {
-        let thumbnail = await fs.readFile(material.thumbnail_path);
+        const thumbnail = await fs.readFile(material.thumbnail_path);
         return { material, thumbnail };
       },
     );

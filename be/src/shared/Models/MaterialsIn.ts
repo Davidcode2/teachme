@@ -6,4 +6,3 @@ export default class MaterialDtoIn {
   link: string;
   userId: string;
 }
-

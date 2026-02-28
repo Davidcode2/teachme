@@ -44,7 +44,7 @@ describe('CartService', () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
-    
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CartService,
@@ -110,7 +110,12 @@ describe('CartService', () => {
     it('should return cart items with thumbnails', async () => {
       // Arrange
       const userId = 'user-id';
-      const mockMaterial = { id: 'material-id', title: 'Test Material', description: 'Test Description', price: 1000 };
+      const mockMaterial = {
+        id: 'material-id',
+        title: 'Test Material',
+        description: 'Test Description',
+        price: 1000,
+      };
       const mockUser = {
         consumer: {
           cart: {
@@ -121,11 +126,13 @@ describe('CartService', () => {
 
       const mockThumbnail = Buffer.from('test-thumbnail');
       const mockMaterialWithThumbnail = [
-        { material: mockMaterial, thumbnail: mockThumbnail }
+        { material: mockMaterial, thumbnail: mockThumbnail },
       ];
 
       mockUsersService.findOneById.mockResolvedValue(mockUser);
-      mockMaterialsService.mapThumbnails.mockResolvedValue(mockMaterialWithThumbnail);
+      mockMaterialsService.mapThumbnails.mockResolvedValue(
+        mockMaterialWithThumbnail,
+      );
 
       // Act
       const result = await service.getItems(userId);
@@ -141,7 +148,9 @@ describe('CartService', () => {
         },
       ]);
       expect(mockUsersService.findOneById).toHaveBeenCalledWith(userId);
-      expect(mockMaterialsService.mapThumbnails).toHaveBeenCalledWith([mockMaterial]);
+      expect(mockMaterialsService.mapThumbnails).toHaveBeenCalledWith([
+        mockMaterial,
+      ]);
     });
 
     it('should create a cart if it does not exist', async () => {
@@ -153,7 +162,8 @@ describe('CartService', () => {
       const mockCart = new Cart();
       mockCart.materials = [];
 
-      mockUsersService.findOneById.mockResolvedValueOnce(mockUser)
+      mockUsersService.findOneById
+        .mockResolvedValueOnce(mockUser)
         .mockResolvedValueOnce({
           consumer: {
             cart: {
@@ -187,7 +197,10 @@ describe('CartService', () => {
 
       // Assert
       expect(result).toEqual(mockMaterials);
-      expect(mockCommonCartService.removeItem).toHaveBeenCalledWith(userId, materialId);
+      expect(mockCommonCartService.removeItem).toHaveBeenCalledWith(
+        userId,
+        materialId,
+      );
     });
   });
 
@@ -247,12 +260,12 @@ describe('CartService', () => {
       const userId = 'user-id';
       const materialId = 'material-id';
       const mockMaterial = { id: materialId } as Material;
-      
+
       // First call - no cart
       const mockUserNoCart = {
         consumer: {},
       };
-      
+
       // Second call - with cart
       const mockUserWithCart = {
         consumer: {
@@ -265,7 +278,7 @@ describe('CartService', () => {
       mockUsersService.findOneById
         .mockResolvedValueOnce(mockUserNoCart)
         .mockResolvedValueOnce(mockUserWithCart);
-      
+
       mockMaterialsService.findOne.mockResolvedValue(mockMaterial);
       mockCartRepository.save.mockResolvedValue(new Cart());
 
@@ -302,7 +315,10 @@ describe('CartService', () => {
         { price: 'price-id-1', quantity: 1 },
         { price: 'price-id-2', quantity: 1 },
       ]);
-      expect(mockStripeService.storeUserSession).toHaveBeenCalledWith(userId, 'session-id');
+      expect(mockStripeService.storeUserSession).toHaveBeenCalledWith(
+        userId,
+        'session-id',
+      );
     });
   });
 });

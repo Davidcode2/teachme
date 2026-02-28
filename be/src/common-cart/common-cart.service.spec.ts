@@ -38,7 +38,7 @@ describe('CommonCartService', () => {
       const materialId = 'material-id';
       const material1 = { id: materialId } as Material;
       const material2 = { id: 'other-material-id' } as Material;
-      
+
       const mockUser = {
         consumer: {
           cart: {
@@ -46,7 +46,7 @@ describe('CommonCartService', () => {
           },
         },
       };
-      
+
       mockUsersService.findOneById.mockResolvedValue(mockUser);
       mockUsersService.update.mockResolvedValue(mockUser);
 
@@ -66,7 +66,7 @@ describe('CommonCartService', () => {
       const userId = 'user-id';
       const materialId = 'non-existent-id';
       const material = { id: 'other-id' } as Material;
-      
+
       const mockUser = {
         consumer: {
           cart: {
@@ -74,7 +74,7 @@ describe('CommonCartService', () => {
           },
         },
       };
-      
+
       mockUsersService.findOneById.mockResolvedValue(mockUser);
       mockUsersService.update.mockResolvedValue(mockUser);
 

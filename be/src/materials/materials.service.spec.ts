@@ -415,7 +415,7 @@ describe('MaterialsService', () => {
     });
   });
 
-describe('search', () => {
+  describe('search', () => {
     it('should search for materials by title', async () => {
       // Arrange
       const searchTerm = 'test';
@@ -463,7 +463,10 @@ describe('search', () => {
       );
       expect(mockQueryBuilder.getMany).toHaveBeenCalled();
       expect(result).toHaveLength(2);
-      expect(result.map(item => item.id)).toEqual(['material-1', 'material-2']);
+      expect(result.map((item) => item.id)).toEqual([
+        'material-1',
+        'material-2',
+      ]);
     });
   });
 
@@ -471,8 +474,32 @@ describe('search', () => {
     it('should map thumbnails to materials', async () => {
       // Arrange
       const mockMaterials: Material[] = [
-        { id: 'material-1', thumbnail_path: 'path/to/thumbnail1', title: 'Material 1', file_path: 'path/to/file1', description: 'Description 1', price: 200, stripe_price_id: "123456790", preview_path: "blub/blub", link: "test", date_published: new Date(), author_id: "lksfjlkjls"  },
-        { id: 'material-2', thumbnail_path: 'path/to/thumbnail2', title: 'Material 2', file_path: 'path/to/file2', description: 'Description 2', price: 200, stripe_price_id: "223456790", preview_path: "test/blub", link: "test2", date_published: new Date(), author_id: "author-124"},
+        {
+          id: 'material-1',
+          thumbnail_path: 'path/to/thumbnail1',
+          title: 'Material 1',
+          file_path: 'path/to/file1',
+          description: 'Description 1',
+          price: 200,
+          stripe_price_id: '123456790',
+          preview_path: 'blub/blub',
+          link: 'test',
+          date_published: new Date(),
+          author_id: 'lksfjlkjls',
+        },
+        {
+          id: 'material-2',
+          thumbnail_path: 'path/to/thumbnail2',
+          title: 'Material 2',
+          file_path: 'path/to/file2',
+          description: 'Description 2',
+          price: 200,
+          stripe_price_id: '223456790',
+          preview_path: 'test/blub',
+          link: 'test2',
+          date_published: new Date(),
+          author_id: 'author-124',
+        },
       ];
 
       (fs.readFile as jest.Mock)

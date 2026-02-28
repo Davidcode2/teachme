@@ -86,7 +86,7 @@ describe('UsersService', () => {
     );
     consumerService = module.get<ConsumerService>(ConsumerService);
     authorService = module.get<AuthorService>(AuthorService);
-    
+
     // Mock the service's own methods that are called internally
     service.findOneById = mockUsersService.findOneById;
   });

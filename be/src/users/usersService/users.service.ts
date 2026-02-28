@@ -85,7 +85,7 @@ export class UsersService {
     user.signUpDate = new Date();
     user.author = author;
     user.consumer = consumer;
-    user.avatar = this.createAvatar(preferredUsername);
+    user.avatar = await this.createAvatar(preferredUsername);
     return this.usersRepository.save(user);
   }
 
@@ -158,12 +158,13 @@ export class UsersService {
     return author;
   }
 
-  private createAvatar(name: string): string {
+  private async createAvatar(name: string): Promise<string> {
     const size = 200;
     const png = jdenticon.toPng(name, size);
     const avatarsFolder = 'assets/avatars';
+    await fs.mkdir(avatarsFolder, { recursive: true });
     const filePath = `${avatarsFolder}/${name}.png`;
-    fs.writeFile(filePath, png);
+    await fs.writeFile(filePath, png);
     return filePath;
   }
 }
