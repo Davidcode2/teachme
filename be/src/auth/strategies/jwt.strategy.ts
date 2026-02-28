@@ -1,6 +1,6 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 const fetch = require('node-fetch');
 const https = require('https');
@@ -51,7 +51,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
       return publicKey;
     } catch (error) {
-      console.error('Error getting public key:', error);
+      Logger.error('Error getting public key:', error);
       return null;
     }
   }
@@ -86,7 +86,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       }
       this.cacheExpiration = new Date(Date.now() + this.cacheDuration);
     } catch (error) {
-      console.error('Error fetching/parsing JWK:', error);
+      Logger.error('Error fetching/parsing JWK:', error);
       throw error; // Re-throw to be handled by the strategy
     }
   }

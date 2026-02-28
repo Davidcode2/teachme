@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/usersService/users.service';
@@ -16,19 +16,19 @@ export class AuthService {
   ) {}
 
   async login(userId: string, preferredUsername: string) {
-    console.log('trying to log in user: ', userId);
+    Logger.log('trying to log in user: ' + userId);
     const user = await this.usersService.findOneById(userId);
     if (!user && userId) {
-      console.log('no user, trying to register');
-      console.log('userId: ', userId);
-      console.log('preferredUsername: ', preferredUsername);
+      Logger.log('no user, trying to register');
+      Logger.log('userId: ' + userId);
+      Logger.log('preferredUsername: ' + preferredUsername);
       this.register(userId, preferredUsername);
     }
   }
 
   async register(userId: string, preferredUsername: string): Promise<any> {
     const user = await this.usersService.create(userId, preferredUsername);
-    console.log('user created: ', user);
+    Logger.log('user created: ' + JSON.stringify(user));
     const tokens = await this.makeTokens(user.id, user.email);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
     return true;
@@ -50,7 +50,7 @@ export class AuthService {
       },
     });
     const data = await res.json();
-    console.log(data);
+    Logger.debug('verifyTokenWithKeycloak data: ' + JSON.stringify(data));
   }
 
   async getPublicKey() {

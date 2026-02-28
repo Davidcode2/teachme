@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Post,
   Query,
   RawBodyRequest,
@@ -41,7 +42,7 @@ export class StripeController {
     }
 
     if (res.res.type === 'checkout.session.completed') {
-      console.log('Checkout session completed');
+      Logger.log('Checkout session completed');
       this.stripeService.handleCheckoutSessionCompleted(res.res);
     }
 

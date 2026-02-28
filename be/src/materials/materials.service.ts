@@ -216,15 +216,16 @@ export class MaterialsService {
     return fs.readFile(material.file_path);
   }
 
-  private storeFile(multerFile: Express.Multer.File) {
+  private async storeFile(multerFile: Express.Multer.File) {
     if (!multerFile) {
       return null;
     }
     const path = 'assets/materials';
+    await fs.mkdir(path, { recursive: true });
     const file = multerFile.buffer;
     const fileName = randomUUID();
     const filePath = `${path}/${fileName}.pdf`;
-    fs.writeFile(filePath, file);
+    await fs.writeFile(filePath, file);
     return { fileName, filePath };
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Material } from '../materials/materials.entity';
 import { UsersService } from '../users/usersService/users.service';
@@ -81,7 +81,7 @@ export class StripeService {
     );
     const lineItems = sessionWithLineItems.line_items;
 
-    console.log('fulfilling order...');
+    Logger.log('fulfilling order...');
     this.fulfillOrder(lineItems, checkoutId);
   }
 

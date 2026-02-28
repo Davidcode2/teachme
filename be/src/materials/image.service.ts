@@ -5,7 +5,7 @@ import { exec } from 'child_process';
 
 export class ImageService {
   public async createPreview(fileInfo: { fileName: string; filePath: string }) {
-    fs.mkdir(`assets/previews/${fileInfo.fileName}`);
+    await fs.mkdir(`assets/previews/${fileInfo.fileName}`, { recursive: true });
     const options = this.createOptions(fileInfo.fileName, 'preview');
 
     Logger.debug(
@@ -75,6 +75,7 @@ export class ImageService {
     filePath: string;
   }) {
     const options = this.createOptions(fileInfo.fileName, 'thumbnail');
+    await fs.mkdir(options.savePath, { recursive: true });
     Logger.debug(
       `thumbnail options: ${options.savePath}\n saveFilename: ${options.saveFilename}`,
     );
