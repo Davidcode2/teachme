@@ -19,7 +19,7 @@ export class AuthService {
     console.log('trying to log in user: ', userId);
     const user = await this.usersService.findOneById(userId);
     if (!user && userId) {
-      console.log('no user user, trying to register');
+      console.log('no user, trying to register');
       console.log('userId: ', userId);
       console.log('preferredUsername: ', preferredUsername);
       this.register(userId, preferredUsername);

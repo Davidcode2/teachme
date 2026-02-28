@@ -33,8 +33,8 @@ export class CartService {
   }
 
   async getItems(id: string): Promise<MaterialOutDto[]> {
-    await this.createCartIfNotExists(id);
     const user = await this.userService.findOneById(id);
+    await this.createCartIfNotExists(id, user);
     const materials = user.consumer.cart.materials;
     const materialsWithThumbnails =
       await this.materialsService.mapThumbnails(materials);
@@ -55,8 +55,8 @@ export class CartService {
   }
 
   async addItem(userId: string, materialId: string) {
-    await this.createCartIfNotExists(userId);
     const user = await this.userService.findOneById(userId);
+    await this.createCartIfNotExists(userId, user);
     const material = await this.materialsService.findOne(materialId);
     if (this.alreadyInCart(user, material)) {
       return user.consumer.cart.materials.length;
@@ -66,8 +66,7 @@ export class CartService {
     return user.consumer.cart.materials.length;
   }
 
-  private async createCartIfNotExists(userId: string) {
-    const user = await this.userService.findOneById(userId);
+  private async createCartIfNotExists(userId: string, user: User) {
     if (!user.consumer.cart) {
       return await this.create(userId);
     }
