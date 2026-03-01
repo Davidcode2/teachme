@@ -59,3 +59,4 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
     </>
   );
 }
+
