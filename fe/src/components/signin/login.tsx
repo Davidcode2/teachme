@@ -1,5 +1,4 @@
-import PaperPlane from "../../assets/icons/icons8-paper-plane-64.png";
-import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
+import { Send, ChevronLeft } from "lucide-react";
 import { Link, useActionData, useNavigation } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -75,7 +74,7 @@ function LoginForm() {
   return (
     <>
       <Link to="/materials">
-        <img className="p-4 md:px-20" src={ChevronIcon} alt="" />
+        <ChevronLeft className="p-4 md:px-20" />
       </Link>
       <div className="grid-cols-2 items-center justify-center lg:h-[80vh] xl:grid">
         <div>
@@ -88,11 +87,9 @@ function LoginForm() {
         </div>
         <div className="flex">
           <div className={showPlane ? "block" : "hidden"}>
-            <img
+            <Send
               id="paperPlane"
               className={loginSuccess === false ? "" : ""}
-              src={PaperPlane}
-              alt="Paper Plane"
             />
           </div>
         </div>

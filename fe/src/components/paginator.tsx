@@ -1,4 +1,4 @@
-import ChevronIcon from "../assets/icons/icons8-chevron-24.png";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Paginator({
   setPage,
@@ -36,17 +36,14 @@ export default function Paginator({
     const handleClick = decrement
       ? () => setPage(page - 1)
       : () => setPage(page + 1);
+    const Icon = decrement ? ChevronLeft : ChevronRight;
     return (
       <button
         className={`px-2 transition-transform duration-200 ${page === limit ? "hidden" : "block"} ${decrement ? "rounded-l-full hover:-translate-x-1" : "rounded-r-full hover:translate-x-1"}`}
         onClick={handleClick}
         disabled={page === limit}
       >
-        <img
-          src={ChevronIcon}
-          alt="chevron"
-          className={`invert ${decrement ? "" : "rotate-180"}`}
-        />
+        <Icon className="h-6 w-6" />
       </button>
     );
   };

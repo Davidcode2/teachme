@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import DarkModeIcon from "../../assets/icons/icons8-dark-mode-48.png";
-import LightModeIcon from "../../assets/icons/icons8-light-mode-78.png";
+import { Moon, Sun } from "lucide-react";
 
 const ThemeToggle = ({ showMenu }: { showMenu: boolean }) => {
   const [theme, setTheme] = useState(() => {
@@ -56,11 +55,11 @@ const ThemeToggle = ({ showMenu }: { showMenu: boolean }) => {
 
   const getIcon = () => {
     if (useSystem) {
-      return <img src={DarkModeIcon} width="32" />;
+      return <Moon className="h-8 w-8" />;
     } else if (theme === "light") {
-      return <img src={LightModeIcon} width="42" />;
+      return <Sun className="h-8 w-8" />;
     } else {
-      return <img src={DarkModeIcon} width="32" />;
+      return <Moon className="h-8 w-8" />;
     }
   };
 

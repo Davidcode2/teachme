@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
+import { ChevronRight } from "lucide-react";
 import StatsCard from "./statsCard";
 import { useAccessTokenStore } from "../../store";
 
@@ -68,11 +68,7 @@ export default function SuccessPage() {
             </div>
             <div className="flex flex-col gap-4">
               <div className="group flex items-center">
-                <img
-                  className="transition:opacity h-4 w-0 scale-0 rotate-180 opacity-0 duration-200 ease-in-out group-hover:block group-hover:w-4 group-hover:scale-100 group-hover:opacity-100"
-                  src={ChevronIcon}
-                  alt=""
-                />
+                <ChevronRight className="h-4 w-0 scale-0 opacity-0 transition-all duration-200 ease-in-out group-hover:block group-hover:w-4 group-hover:scale-100 group-hover:opacity-100" />
                 <Link
                   to="/materials"
                   className="text-accent hover:text-accent-emphasis duration-200 ease-in-out hover:translate-x-[1px] hover:transition-transform"
@@ -81,11 +77,7 @@ export default function SuccessPage() {
                 </Link>
               </div>
               <div className="group flex items-center">
-                <img
-                  className="transition:opacity h-4 w-0 scale-0 rotate-180 opacity-0 duration-200 ease-in-out group-hover:block group-hover:w-4 group-hover:scale-100 group-hover:opacity-100"
-                  src={ChevronIcon}
-                  alt=""
-                />
+                <ChevronRight className="h-4 w-0 scale-0 opacity-0 transition-all duration-200 ease-in-out group-hover:block group-hover:w-4 group-hover:scale-100 group-hover:opacity-100" />
                 <Link
                   to="/materials/mine"
                   className="text-accent hover:text-accent-emphasis duration-200 ease-in-out hover:translate-x-[1px] hover:transition-transform"

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { handleSignIn } from "../../services/authService";
 import { useAccessTokenStore, useUserStore } from "../../store";
 import { customFetch } from "../../actions/customFetch";
-import Spinnkreis from "../../assets/icons/icons8-spinnkreis.gif";
+import { Loader2 } from "lucide-react";
 
 export default function AuthCallback() {
   const auth = useAuth();
@@ -43,8 +43,8 @@ export default function AuthCallback() {
   }, [auth.isAuthenticated]);
 
   return (
-    <div className="flex h-96 w-screen justify-center items-center">
-      <img src={Spinnkreis} alt="loading" className="w-10 h-10" />
+    <div className="flex h-96 w-screen items-center justify-center">
+      <Loader2 className="h-10 w-10 animate-spin" />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { Form } from "react-router";
 import { customFetch } from "../../actions/customFetch";
-import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
+import { Check } from "lucide-react";
 import { useUserStore } from "../../store";
 
 type PropTypes = {
@@ -48,7 +48,7 @@ export default function EditUserName({
         className="userMenu border-border bg-success/20 hover:bg-success/30 min-w-0 rounded-lg border p-1 shadow-sm"
         type="submit"
       >
-        <img className="userMenu" src={CheckMarkIcon} width="20" />
+        <Check className="userMenu h-5 w-5" />
       </button>
       <button
         className="userMenu font-handwriting border-border bg-alert/20 hover:bg-alert/30 min-w-0 rounded-lg border p-1 px-2 text-sm shadow-sm"

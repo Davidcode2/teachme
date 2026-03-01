@@ -2,9 +2,8 @@ import Author from "./author/author.tsx";
 import { useEffect, useState, type JSX } from "react";
 import { MaterialWithThumbnail } from "../../types/MaterialWithThumbnail.ts";
 import { Form, useParams } from "react-router";
-import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
+import { Check, Loader2 } from "lucide-react";
 import CardService from "../../services/cardService.ts";
-import SpinnerGif from "../../assets/icons/icons8-spinnkreis.gif";
 import Price from "../materials/addMaterial/price.tsx";
 import BorderColorBlur from "../styling/borderColorBlur.tsx";
 
@@ -78,7 +77,7 @@ function EditMaterial(): JSX.Element {
     <>
       {!materialWithThumbnail.material ? (
         <div className="flex h-screen w-screen items-center justify-center">
-          <img src={SpinnerGif} />
+          <Loader2 className="h-12 w-12 animate-spin" />
         </div>
       ) : (
         <div
@@ -161,7 +160,7 @@ function EditMaterial(): JSX.Element {
                 <div className="mt-auto flex">
                   <div className="self-center">
                     <button className="cursor-pointer" type="submit">
-                      <img src={CheckMarkIcon} className="w-8" alt="" />
+                      <Check className="h-8 w-8" />
                     </button>
                   </div>
                   <div className="ml-auto self-end">

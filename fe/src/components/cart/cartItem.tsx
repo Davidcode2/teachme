@@ -1,4 +1,4 @@
-import TrashBin from "../../assets/icons/icons8-trash-48.png";
+import { Trash2, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import CartService from "../../services/cart.service";
 import { useCartStore } from "../../store";
@@ -36,7 +36,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
     return (
       <div className="border-border rounded-lg border">
         <div className="flex justify-center p-28">
-          <div className="w-20 animate-spin">|</div>
+          <Loader2 className="h-20 w-20 animate-spin" />
         </div>
       </div>
     );
@@ -83,12 +83,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
             onClick={() => removeItem(item.id.toString())}
             className="border-border hover:bg-alert mr-2 cursor-pointer rounded-md px-2"
           >
-            <img
-              src={TrashBin}
-              alt="Trash Bin"
-              width="25"
-              className="opacity-70"
-            />
+            <Trash2 className="h-6 w-6 opacity-70" />
           </button>
         </div>
       </div>

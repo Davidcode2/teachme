@@ -1,10 +1,9 @@
 import { Form, useActionData } from "react-router";
-import EditIcon from "../../../assets/icons/icons8-edit-48.png";
+import { Pencil, Check } from "lucide-react";
 import { useUserStore } from "../../../store";
 import { useEffect, useState } from "react";
 import React from "react";
 import IconLink from "../../styling/iconLink";
-import CheckMarkIcon from "../../../assets/icons/icons8-checkmark-48.png";
 
 export default function AddMaterialSuccess() {
   const userStore = useUserStore();
@@ -26,7 +25,7 @@ export default function AddMaterialSuccess() {
           required
         />
         <button className="">
-          <img src={CheckMarkIcon} width="30" />
+          <Check className="h-8 w-8" />
         </button>
       </div>
     </Form>
@@ -62,7 +61,7 @@ export default function AddMaterialSuccess() {
                 className="w-5 opacity-50"
                 onClick={() => focusEditName()}
               >
-                <img src={EditIcon} />
+                <Pencil className="h-5 w-5" />
               </button>
             </div>
           )}

@@ -1,4 +1,4 @@
-import userIcon from "../../../assets/icons/icons8-user-48.png";
+import { User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { UserService } from "../../../services/userService";
 import CardService from "../../../services/cardService";
@@ -40,7 +40,11 @@ function Author(props: AppProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <img className="w-7 sm:w-9" src={avatar ? avatar : userIcon} alt="" />
+      {avatar ? (
+        <img className="w-7 sm:w-9" src={avatar} alt="" />
+      ) : (
+        <User className="w-7 sm:w-9" />
+      )}
       <div>
         <div className="font-bold">{author}</div>
         <div className="text-xs sm:text-sm">

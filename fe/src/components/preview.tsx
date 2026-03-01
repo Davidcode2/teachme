@@ -1,5 +1,5 @@
 import ActionButtons from "./card/action-buttons/action-buttons";
-import SpinnerGif from "../assets/icons/icons8-spinnkreis.gif";
+import { Loader2 } from "lucide-react";
 
 interface PreviewProps {
   material: any;
@@ -21,7 +21,7 @@ export default function Preview({
       <div className="flex h-full items-center justify-center">
         {!material && (
           <div>
-            <img src={SpinnerGif} />
+            <Loader2 className="h-12 w-12 animate-spin" />
           </div>
         )}
         {material && (

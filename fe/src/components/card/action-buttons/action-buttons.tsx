@@ -1,10 +1,5 @@
 import { NavLink } from "react-router";
-import CheckMarkIcon from "../../../assets/icons/icons8-checkmark-48.png";
-import TrashBin from "../../../assets/icons/icons8-trash-48.png";
-import EditIcon from "../../../assets/icons/icons8-edit-48.png";
-import SpinnerGif from "../../../assets/icons/icons8-spinner.gif";
-import addToShoppingCartIcon from "../../../assets/icons/icons8-add-shopping-cart-50.png";
-import arrowIcon from "../../../assets/icons/icons8-arrow-50.png";
+import { Check, Trash2, Pencil, ShoppingCart, ArrowDown, Loader2 } from "lucide-react";
 import { useState } from "react";
 import DeleteMaterialModal from "./deleteMaterialModal";
 import CartService from "../../../services/cart.service";
@@ -31,7 +26,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         onClick={() => auth.signinRedirect()}
         className="flex rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
       >
-        <img src={addToShoppingCartIcon} width="25" alt="" />
+        <ShoppingCart className="h-6 w-6" />
       </button>
     );
 
@@ -88,19 +83,14 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         <div className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer">
           {!isMine && (
             <button onClick={addToShoppingCart}>
-              <img
-                className="cursor-pointer"
-                src={addToShoppingCartIcon}
-                width="25"
-                alt=""
-              />
+              <ShoppingCart className="h-6 w-6 cursor-pointer" />
             </button>
           )}
         </div>
         <div className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer">
           {isMine && !isAuthor && (
             <button onClick={downloadMaterial}>
-              <img className="rotate-90" src={arrowIcon} width="25" alt="" />
+              <ArrowDown className="h-6 w-6" />
             </button>
           )}
         </div>
@@ -109,24 +99,19 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
             <div className="flex">
               <button
                 onClick={downloadMaterial}
-                className="rotate-90 rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
+                className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
               >
-                <img className="" src={arrowIcon} width="25" alt="" />
+                <ArrowDown className="h-6 w-6" />
               </button>
               <button
                 id="deleteMaterialButton"
                 className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
                 onClick={showDeleteMaterialModal}
               >
-                <img className="" src={TrashBin} width="25" alt="" />
+                <Trash2 className="h-6 w-6" />
               </button>
               <NavLink to={`/materials/${id}/edit`}>
-                <img
-                  className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
-                  src={EditIcon}
-                  width="25"
-                  alt=""
-                />
+                <Pencil className="h-6 w-6 rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer" />
               </NavLink>
             </div>
           )}
@@ -134,12 +119,12 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         <div className="mx-2">
           {loading && (
             <div className="">
-              <img src={SpinnerGif} alt="" width="25" />
+              <Loader2 className="h-6 w-6 animate-spin" />
             </div>
           )}
           {showSuccess && (
             <div className="">
-              <img src={CheckMarkIcon} alt="" width="25" />
+              <Check className="h-6 w-6" />
             </div>
           )}
         </div>

@@ -1,5 +1,4 @@
-import bag from "../../assets/icons/icons8-bag-64.png";
-import arrowIcon from "../../assets/icons/icons8-arrow-50.png";
+import { ShoppingBag, ArrowRight } from "lucide-react";
 import { useEffect, useState, type JSX } from "react";
 import CartService from "../../services/cart.service";
 import CartItem from "./cartItem";
@@ -38,7 +37,7 @@ export default function Cart(): JSX.Element {
     <>
       <div className="border-border m-0 mt-10 flex flex-col items-center justify-center gap-4 rounded-lg border p-10 sm:m-10">
         <div>Noch nichts in der Tasche</div>
-        <img src={bag} alt="" width="30" />
+        <ShoppingBag className="h-8 w-8" />
       </div>
     </>
   );
@@ -60,7 +59,7 @@ export default function Cart(): JSX.Element {
       }
       className="bg-success hover:bg-success-emphasis flex cursor-pointer justify-center rounded-md p-2 shadow-md hover:shadow-sm"
     >
-      <img width="30" src={arrowIcon} />
+      <ArrowRight className="h-8 w-8" />
     </button>
   );
 

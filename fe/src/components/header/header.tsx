@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router";
+import { User } from "lucide-react";
 import plus from "../../assets/addPlusGradient.png";
-import UserIcon from "../../assets/icons/icons8-user-48.png";
 import { useSearchState, useSidebarStore } from "../../store";
 import Nav from "./nav";
 import UserMenu from "../userMenu/userMenu";
@@ -145,12 +145,7 @@ function Header() {
             <div className="z-40 flex items-center gap-2">
               {!auth?.isAuthenticated && (
                 <button onClick={signIn} className="">
-                  <img
-                    className="min-w-5"
-                    src={UserIcon}
-                    width="30"
-                    alt="User"
-                  />
+                  <User className="min-w-5 h-8 w-8" />
                 </button>
               )}
               {auth?.isAuthenticated && (

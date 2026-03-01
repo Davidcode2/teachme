@@ -1,8 +1,5 @@
 import { Form, Link, useNavigation } from "react-router";
-import ChevronIcon from "../../assets/icons/icons8-chevron-24.png";
-import PaperPlane from "../../assets/icons/icons8-paper-plane-64.png";
-import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
-import ArrowIcon from "../../assets/icons/icons8-logout-50.png";
+import { ChevronLeft, Send, Check, ArrowRight } from "lucide-react";
 import { useRef, useState } from "react";
 import PasswordValidation from "./passwordValidation";
 import gsap from "gsap";
@@ -53,7 +50,7 @@ function SignUpForm() {
   return (
     <>
       <Link to="/">
-        <img className="p-4 md:px-20" src={ChevronIcon} alt="" />
+        <ChevronLeft className="p-4 md:px-20" />
       </Link>
       <div className="grid-cols-2 items-center justify-center lg:h-[80vh] xl:grid">
         <div>
@@ -72,7 +69,7 @@ function SignUpForm() {
             className="flex flex-col"
           >
             <button className="invisible ml-auto p-4">
-              <img src={ArrowIcon} width="30" alt="" />
+              <ArrowRight className="h-8 w-8" />
             </button>
             <div className="grid grid-cols-[.2fr_1fr] gap-y-1 px-4 py-4 sm:px-10 2xl:px-20">
               <label className="p-2" htmlFor="email">
@@ -88,11 +85,8 @@ function SignUpForm() {
                 required
               />
               <div className="relative right-1 bottom-8 z-50 col-start-2 w-4 justify-self-end">
-                <img
-                  src={CheckMarkIcon}
-                  className={emailValid ? "absolute" : "hidden"}
-                  width="30"
-                  alt=""
+                <Check
+                  className={`absolute h-8 w-8 ${emailValid ? "block" : "hidden"}`}
                 />
               </div>
               <label className="p-2" htmlFor="password">
@@ -110,17 +104,14 @@ function SignUpForm() {
                 required
               />
               <div className="relative right-1 bottom-8 z-50 col-start-2 w-4 justify-self-end">
-                <img
-                  src={CheckMarkIcon}
-                  className={passwordValid ? "absolute" : "hidden"}
-                  width="30"
-                  alt=""
+                <Check
+                  className={`absolute h-8 w-8 ${passwordValid ? "block" : "hidden"}`}
                 />
               </div>
               <PasswordValidation password={password} />
             </div>
             <button type="submit" className="ml-auto p-4">
-              <img src={ArrowIcon} width="30" alt="" />
+              <ArrowRight className="h-8 w-8" />
             </button>
           </Form>
         </div>
@@ -128,7 +119,7 @@ function SignUpForm() {
           <div
             className={navigation.state === "submitting" ? "block" : "hidden"}
           >
-            <img className="paperPlane" src={PaperPlane} alt="Paper Plane" />
+            <Send className="paperPlane h-16 w-16" />
           </div>
         </div>
       </div>

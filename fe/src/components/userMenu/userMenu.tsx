@@ -1,7 +1,4 @@
-import userIcon from "../../assets/icons/icons8-user-48.png";
-import ArrowIcon from "../../assets/icons/icons8-logout-50.png";
-import ShuffleIcon from "../../assets/icons/icons8-shuffle-48.png";
-import EditIcon from "../../assets/icons/icons8-edit-48.png";
+import { User, LogOut, Shuffle, Pencil } from "lucide-react";
 import { useAvatarStore } from "../../store";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "react-oidc-context";
@@ -88,12 +85,16 @@ export default function UserMenu({
         {displayName}
       </div>
       <button className="userMenu hover:cursor-pointer" onClick={toggleMenu}>
-        <img
-          className="userMenu min-w-5 rounded-full"
-          src={avatar ? avatar : userIcon}
-          width="30"
-          alt="User"
-        />
+        {avatar ? (
+          <img
+            className="userMenu min-w-5 rounded-full"
+            src={avatar}
+            width="30"
+            alt="User"
+          />
+        ) : (
+          <User className="userMenu h-8 w-8 rounded-full" />
+        )}
       </button>
       <div ref={userMenuRef} className="context-menu userMenu">
         <CenteredModal>
@@ -104,11 +105,11 @@ export default function UserMenu({
                   className="hover:text-accent-emphasis flex cursor-pointer gap-4"
                   onClick={() => auth.signoutRedirect()}
                 >
-                  <img src={ArrowIcon} width="32" />
+                  <LogOut className="h-8 w-8" />
                   <button>Logout</button>
                 </li>
                 <li className="hover:text-accent-emphasis flex cursor-pointer gap-4">
-                  <img src={ShuffleIcon} width="32" />
+                  <Shuffle className="h-8 w-8" />
                   <button onClick={() => switchUser(auth)}>
                     Nutzer&nbsp;wechseln
                   </button>
@@ -117,7 +118,7 @@ export default function UserMenu({
                   onClick={handleEditUserName}
                   className="userMenu hover:text-accent-emphasis flex cursor-pointer gap-4"
                 >
-                  <img src={EditIcon} width="32" />
+                  <Pencil className="h-8 w-8" />
                   <button className="userMenu">Name&nbsp;ändern</button>
                 </li>
                 <li className="userMenu text-text-muted mr-2">

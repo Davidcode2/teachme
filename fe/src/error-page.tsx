@@ -1,5 +1,5 @@
+import { ChevronLeft } from "lucide-react";
 import catSticker from "./assets/catSticker.jpg";
-import ChevronIcon from "./assets/icons/icons8-chevron-24.png";
 import { Link, useRouteError } from "react-router";
 
 export default function ErrorPage() {
@@ -20,7 +20,7 @@ export default function ErrorPage() {
           to="/materials"
           className="text-text-secondary flex flex-col text-center font-bold"
         >
-          <img className="self-center p-4 md:px-20" src={ChevronIcon} alt="" />
+          <ChevronLeft className="self-center p-4 md:px-20" />
           Zurück zur Startseite
         </Link>
         <a

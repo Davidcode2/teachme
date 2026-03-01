@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CheckMarkIcon from "../../assets/icons/icons8-checkmark-48.png";
+import { Check } from "lucide-react";
 
 export default function PasswordValidation({ password }: { password: string }) {
   const [passwordLengthRequirementMet, setPasswordLengthRequirementMet] =
@@ -66,7 +66,7 @@ export default function PasswordValidation({ password }: { password: string }) {
           }
         >
           <div className="flex items-center gap-1">
-            <img src={CheckMarkIcon} width="15" alt="" />
+            <Check className="h-4 w-4" />
             Zahl
           </div>
         </li>
@@ -78,7 +78,7 @@ export default function PasswordValidation({ password }: { password: string }) {
           }
         >
           <div className="flex items-center gap-1">
-            <img src={CheckMarkIcon} width="15" alt="" />
+            <Check className="h-4 w-4" />
             Großbuchstabe
           </div>
         </li>
@@ -90,7 +90,7 @@ export default function PasswordValidation({ password }: { password: string }) {
           }
         >
           <div className="flex items-center gap-1">
-            <img src={CheckMarkIcon} width="15" alt="" />
+            <Check className="h-4 w-4" />
             Kleinbuchstabe
           </div>
         </li>
@@ -102,7 +102,7 @@ export default function PasswordValidation({ password }: { password: string }) {
           }
         >
           <div className="flex items-center gap-1">
-            <img src={CheckMarkIcon} width="15" alt="" />
+            <Check className="h-4 w-4" />
             &ge; 6 Zeichen
           </div>
         </li>
