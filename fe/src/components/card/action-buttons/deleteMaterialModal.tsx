@@ -31,7 +31,7 @@ export default function DeleteMaterialModal(props: PropTypes) {
       <CenteredModal>
         <div
           id="deleteModal"
-          className="flex flex-row gap-5 rounded-lg border border-slate-200 bg-white p-10 shadow-lg dark:bg-slate-800"
+          className="border-border bg-surface-base dark:bg-surface-raised flex flex-row gap-5 rounded-lg border p-10 shadow-lg"
         >
           <div className="h-[25vh]"></div>
           <div className="flex flex-col justify-between">
@@ -42,16 +42,16 @@ export default function DeleteMaterialModal(props: PropTypes) {
               </div>{" "}
               löschen möchten?
             </div>
-            <hr className="text-slate-200" />
+            <hr className="text-border" />
             <div className="flex gap-10">
               <button
-                className="cursor-pointer rounded-lg bg-sky-300 p-4 hover:bg-sky-400 dark:text-slate-900"
+                className="bg-tone-informative hover:bg-tone-informative-muted dark:text-text-inverse cursor-pointer rounded-lg p-4"
                 onClick={() => props.setShowDeleteModal(false)}
               >
                 Abbrechen
               </button>
               <button
-                className="cursor-pointer rounded-lg bg-purple-200 p-4 hover:bg-purple-300 dark:text-slate-900"
+                className="bg-accent-muted hover:bg-accent-weak dark:text-text-inverse cursor-pointer rounded-lg p-4"
                 onClick={deleteMaterial()}
               >
                 Ja, löschen

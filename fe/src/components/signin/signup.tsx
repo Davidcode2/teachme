@@ -65,7 +65,7 @@ function SignUpForm() {
             men Lehrkraft
           </h1>
         </div>
-        <div className="m-4 rounded-xl border border-slate-400 shadow-md md:m-20">
+        <div className="border-border m-4 rounded-xl border shadow-md md:m-20">
           <Form
             onSubmit={toggleTimeline}
             method="post"
@@ -87,7 +87,7 @@ function SignUpForm() {
                 maxLength={80}
                 required
               />
-              <div className="relative bottom-8 right-1 z-50 col-start-2 w-4 justify-self-end">
+              <div className="relative right-1 bottom-8 z-50 col-start-2 w-4 justify-self-end">
                 <img
                   src={CheckMarkIcon}
                   className={emailValid ? "absolute" : "hidden"}
@@ -109,7 +109,7 @@ function SignUpForm() {
                 pattern={pattern}
                 required
               />
-              <div className="relative bottom-8 right-1 z-50 col-start-2 w-4 justify-self-end">
+              <div className="relative right-1 bottom-8 z-50 col-start-2 w-4 justify-self-end">
                 <img
                   src={CheckMarkIcon}
                   className={passwordValid ? "absolute" : "hidden"}

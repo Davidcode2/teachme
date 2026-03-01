@@ -36,7 +36,7 @@ export default function Cart(): JSX.Element {
 
   const noItemsInCart = (
     <>
-      <div className="m-0 mt-10 flex flex-col items-center justify-center gap-4 rounded-lg border border-slate-200 p-10 sm:m-10">
+      <div className="border-border m-0 mt-10 flex flex-col items-center justify-center gap-4 rounded-lg border p-10 sm:m-10">
         <div>Noch nichts in der Tasche</div>
         <img src={bag} alt="" width="30" />
       </div>
@@ -58,7 +58,7 @@ export default function Cart(): JSX.Element {
       onClick={() =>
         toCheckout(cartItems.map((item: Material) => item.id.toString()))
       }
-      className="cursor-pointer flex justify-center rounded-md bg-emerald-500 p-2 shadow-md hover:bg-emerald-600 hover:shadow-sm"
+      className="bg-success hover:bg-success-emphasis flex cursor-pointer justify-center rounded-md p-2 shadow-md hover:shadow-sm"
     >
       <img width="30" src={arrowIcon} />
     </button>

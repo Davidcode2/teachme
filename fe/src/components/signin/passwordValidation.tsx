@@ -61,8 +61,8 @@ export default function PasswordValidation({ password }: { password: string }) {
         <li
           className={
             passwordNumberRequirementMet
-              ? "text-green-600"
-              : "text-gray-400 grayscale"
+              ? "text-success"
+              : "text-text-muted grayscale"
           }
         >
           <div className="flex items-center gap-1">
@@ -73,8 +73,8 @@ export default function PasswordValidation({ password }: { password: string }) {
         <li
           className={
             passwordUppercaseRequirementMet
-              ? "text-green-600"
-              : "text-gray-400 grayscale"
+              ? "text-success"
+              : "text-text-muted grayscale"
           }
         >
           <div className="flex items-center gap-1">
@@ -85,8 +85,8 @@ export default function PasswordValidation({ password }: { password: string }) {
         <li
           className={
             passwordLowercaseRequirementMet
-              ? "text-green-600"
-              : "text-gray-400 grayscale"
+              ? "text-success"
+              : "text-text-muted grayscale"
           }
         >
           <div className="flex items-center gap-1">
@@ -97,8 +97,8 @@ export default function PasswordValidation({ password }: { password: string }) {
         <li
           className={
             passwordLengthRequirementMet
-              ? "text-green-600"
-              : "text-gray-400 grayscale"
+              ? "text-success"
+              : "text-text-muted grayscale"
           }
         >
           <div className="flex items-center gap-1">

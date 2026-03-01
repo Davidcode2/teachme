@@ -12,12 +12,29 @@ function Skeleton({ id }: { id: string }) {
     <>
       <div
         id={id}
-        className="flex flex-col rounded-lg border border-slate-200 bg-white opacity-0 shadow-lg transition-opacity duration-700 md:flex-row"
+        className="border-border bg-surface-base flex flex-col rounded-lg border opacity-0 shadow-lg transition-opacity duration-700 md:flex-row"
       >
-        <div className="min-h-96 animate-pulse rounded-t-lg bg-gray-100 md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]">
-          <div className="h-full w-8 "></div>
+        <div className="bg-surface-subtle min-h-96 animate-pulse rounded-t-lg md:w-[400px] md:rounded-l-lg md:rounded-tr-none lg:w-[600px]">
+          <div className="h-full w-8"></div>
         </div>
-        <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-200 dark:bg-slate-800 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-l md:border-t-0">
+        <div className="border-border dark:bg-surface-raised bg-surface-base flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t p-10 md:rounded-r-lg md:rounded-bl-none md:border-t-0 md:border-l">
+          <div className="flex flex-col gap-2">
+            <div className="bg-surface-raised h-8 w-24 animate-pulse rounded-xl text-2xl"></div>
+            <div className="bg-surface-subtle h-4 w-80 animate-pulse rounded-xl text-2xl"></div>
+            <div className="bg-surface-subtle h-4 w-36 rounded-xl text-2xl"></div>
+            <div className="bg-surface-subtle h-4 w-52 animate-pulse rounded-xl text-2xl"></div>
+          </div>
+          <p className="bg-success/20 text-success h-8 w-28 rounded-xl text-3xl"></p>
+          <div className="mt-auto flex gap-2">
+            <div className="bg-surface-subtle h-8 w-8 rounded-xl text-2xl"></div>
+            <div className="bg-surface-subtle h-8 w-8 rounded-xl text-2xl"></div>
+            <div className="bg-surface-subtle h-8 w-8 animate-pulse rounded-xl text-2xl"></div>
+            <div className="ml-auto self-end">
+              <div className="bg-surface-raised h-4 w-52 animate-pulse rounded-xl text-2xl"></div>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-200 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-t-0 md:border-l dark:bg-slate-800">
           <div className="flex flex-col gap-2">
             <div className="h-8 w-24 animate-pulse rounded-xl bg-gray-300 text-2xl"></div>
             <div className="h-4 w-80 animate-pulse rounded-xl bg-gray-200 text-2xl"></div>

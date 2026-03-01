@@ -17,7 +17,7 @@ export default function Preview({
   ));
 
   return (
-    <div className="fixed left-0 top-0 z-50 h-screen w-screen backdrop-blur-sm">
+    <div className="fixed top-0 left-0 z-50 h-screen w-screen backdrop-blur-sm">
       <div className="flex h-full items-center justify-center">
         {!material && (
           <div>
@@ -25,9 +25,9 @@ export default function Preview({
           </div>
         )}
         {material && (
-          <div className="relative mx-6 flex flex-col gap-5 rounded-lg border border-slate-300 dark:bg-slate-700 bg-white p-2 shadow-lg md:flex-row md:mx-10 md:p-10 lg:max-w-[80vw] max-h-[90%]">
+          <div className="border-border dark:bg-surface-raised bg-surface-base relative mx-6 flex max-h-[90%] flex-col gap-5 rounded-lg border p-2 shadow-lg md:mx-10 md:flex-row md:p-10 lg:max-w-[80vw]">
             <button
-              className="absolute right-0 top-2 rounded-lg px-4 text-slate-500 hover:text-red-600"
+              className="text-text-muted hover:text-alert absolute top-2 right-0 rounded-lg px-4"
               onClick={() => setShowPreview(false)}
             >
               <div className="font-handwriting text-sm">X</div>
@@ -39,12 +39,12 @@ export default function Preview({
               <div className="text-2xl xl:text-4xl">
                 {material.material.title}
               </div>
-              <hr className="text-slate-200" />
-              <div className="text-sm lg:text-base max-h-32 overflow-auto md:max-h-none">
+              <hr className="text-border" />
+              <div className="max-h-32 overflow-auto text-sm md:max-h-none lg:text-base">
                 {material.material.description}
               </div>
               <div className="flex items-center gap-x-10">
-                <p className="text-3xl text-emerald-500">
+                <p className="text-success text-3xl">
                   {Number(material.material.price / 100).toFixed(2)} €
                 </p>
                 <ActionButtons

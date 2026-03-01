@@ -35,13 +35,13 @@ function EditMaterial(): JSX.Element {
 
   const fileSelectedElement = (
     <div className="mx-4">
-      <div className="relative bottom-6 text-center text-xl font-bold text-stone-500">
+      <div className="text-text-muted relative bottom-6 text-center text-xl font-bold">
         Du hast eine neue Datei zum Hochladen ausgewählt
       </div>
-      <div className="mx-auto flex w-fit cursor-pointer justify-between gap-5 rounded-lg border border-slate-100 bg-white/20 p-2">
+      <div className="border-border bg-surface-base/20 mx-auto flex w-fit cursor-pointer justify-between gap-5 rounded-lg border p-2">
         <div className="p-1">{file?.name}</div>
         <button
-          className="cursor-pointer font-handwriting p-1 text-slate-500 hover:text-red-500"
+          className="font-handwriting text-text-muted hover:text-alert cursor-pointer p-1"
           onClick={() => setFile(null)}
         >
           X
@@ -51,7 +51,7 @@ function EditMaterial(): JSX.Element {
   );
 
   const noFileSelectedElement = (
-    <div className="flex cursor-pointer justify-between gap-5 rounded-lg border border-slate-100 bg-white/30 p-4 text-center text-xl font-bold text-stone-500 hover:bg-white/50">
+    <div className="border-border bg-surface-base/30 text-text-muted hover:bg-surface-base/50 flex cursor-pointer justify-between gap-5 rounded-lg border p-4 text-center text-xl font-bold">
       Wähle hier eine neue Datei aus
     </div>
   );
@@ -83,7 +83,7 @@ function EditMaterial(): JSX.Element {
       ) : (
         <div
           id={materialWithThumbnail.material.id.toString()}
-          className="m-4 rounded-lg border border-slate-200 shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 lg:mx-auto lg:w-2/3"
+          className="border-border m-4 rounded-lg border shadow-lg transition-opacity duration-700 md:mx-20 md:mb-10 lg:mx-auto lg:w-2/3"
         >
           <BorderColorBlur>
             <Form
@@ -93,25 +93,25 @@ function EditMaterial(): JSX.Element {
             >
               <button
                 type="button"
-                className="cursor-pointer absolute top-2 right-0 rounded-lg px-4 text-slate-500 hover:text-red-600"
+                className="text-text-muted hover:text-alert absolute top-2 right-0 cursor-pointer rounded-lg px-4"
                 onClick={closeEditModal}
               >
                 <div className="font-handwriting text-sm">X</div>
               </button>
-              <div className="overflow-hidden rounded-t-lg bg-white md:rounded-l-lg md:rounded-r-none">
+              <div className="bg-surface-base overflow-hidden rounded-t-lg md:rounded-l-lg md:rounded-r-none">
                 <label htmlFor="file-edit-input">
                   {fileSelectedImageElement}
                 </label>
                 <input
                   id="file-edit-input"
-                  className="hidden h-fit w-full min-w-0 rounded-md border border-slate-200 px-4 py-2"
+                  className="border-border hidden h-fit w-full min-w-0 rounded-md border px-4 py-2"
                   type="file"
                   name="file"
                   onChange={handleFileChange}
                   accept="application/pdf"
                 />
               </div>
-              <div className="flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t border-slate-100 dark:bg-slate-700 bg-white p-10 md:rounded-r-lg md:rounded-bl-none md:border-t-0 md:border-l">
+              <div className="border-border bg-surface-base dark:bg-surface-raised flex flex-1 flex-col gap-4 overflow-auto rounded-b-lg border-t p-10 md:rounded-r-lg md:rounded-bl-none md:border-t-0 md:border-l">
                 <div className="flex flex-col gap-2">
                   <input
                     className="hidden"
@@ -120,28 +120,28 @@ function EditMaterial(): JSX.Element {
                     readOnly
                   />
                   <label
-                    className="block text-sm font-medium dark:text-gray-400 text-gray-700"
+                    className="text-text-secondary dark:text-text-muted block text-sm font-medium"
                     htmlFor="title"
                   >
                     Titel
                   </label>
                   <input
                     id="title"
-                    className="max-w-fit rounded-lg border border-slate-200 p-2 text-2xl"
+                    className="border-border max-w-fit rounded-lg border p-2 text-2xl"
                     type="text"
                     placeholder={`${materialWithThumbnail.material.title}`}
                     defaultValue={materialWithThumbnail.material.title}
                     name="title"
                   />
                   <label
-                    className="dark:text-gray-400 block text-sm font-medium text-gray-700"
+                    className="text-text-secondary dark:text-text-muted block text-sm font-medium"
                     htmlFor="description"
                   >
                     Beschreibung
                   </label>
                   <textarea
                     id="description"
-                    className="max-w-fit rounded-lg border border-slate-200 p-2"
+                    className="border-border max-w-fit rounded-lg border p-2"
                     cols={40}
                     rows={5}
                     placeholder={`${materialWithThumbnail.material.description}`}
@@ -149,7 +149,7 @@ function EditMaterial(): JSX.Element {
                     name="description"
                   />
                   <label
-                    className="dark:text-gray-400 block text-sm font-medium text-gray-700"
+                    className="text-text-secondary dark:text-text-muted block text-sm font-medium"
                     htmlFor="price"
                   >
                     Preis

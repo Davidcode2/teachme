@@ -11,7 +11,7 @@ export default function Paginator({
 }) {
   const pageButton = (index: number) => (
     <button
-      className={`px-4 py-2 font-bold text-stone-200 hover:text-purple-400 hover:-translate-y-1 transition-transform duration-200 ${page === index ? "text-purple-600" : ""}`}
+      className={`text-text-muted hover:text-accent px-4 py-2 font-bold transition-transform duration-200 hover:-translate-y-1 ${page === index ? "text-accent-emphasis" : ""}`}
       key={index}
       onClick={() => setPage(index)}
     >
@@ -53,7 +53,7 @@ export default function Paginator({
 
   return (
     <div className="mb-5 flex items-center justify-center">
-      <div className="bg-black rounded-full flex shadow">
+      <div className="bg-surface-overlay flex rounded-full shadow">
         {incrementButton("down")}
         {pageNumberButtons()}
         {incrementButton()}

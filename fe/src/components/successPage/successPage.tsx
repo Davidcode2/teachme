@@ -48,15 +48,15 @@ export default function SuccessPage() {
     <>
       <div className="flex flex-col items-center justify-center gap-10">
         <div className="relative mx-4 my-8 mb-16 min-w-0 md:my-20">
-          <div className="animate-gradient absolute inset-0 block min-w-0 bg-gradient-to-r from-purple-200 via-green-200 to-pink-300 blur-lg lg:blur-2xl" />
-          <div className="relative flex min-w-0 flex-col gap-y-4 rounded-lg border border-slate-200 bg-white p-10 shadow-2xl">
+          <div className="animate-gradient from-accent-muted via-success-muted to-accent-weak absolute inset-0 block min-w-0 bg-gradient-to-r blur-lg lg:blur-2xl" />
+          <div className="border-border bg-surface-base relative flex min-w-0 flex-col gap-y-4 rounded-lg border p-10 shadow-2xl">
             <div className="text-center text-5xl font-extrabold">Yay!</div>
             <div className="text-center">
               Das Material wurde erfolgreich zu
               <br />
               deiner Sammlung hinzugefügt.
             </div>
-            <div className="flex flex-col md:flex-row justify-center gap-4">
+            <div className="flex flex-col justify-center gap-4 md:flex-row">
               <StatsCard
                 name="gekauft"
                 amount={stats!.numberOfBoughtMaterials}
@@ -69,26 +69,26 @@ export default function SuccessPage() {
             <div className="flex flex-col gap-4">
               <div className="group flex items-center">
                 <img
-                  className="transition:opacity w-0 h-4 rotate-180 scale-0 opacity-0 duration-200 ease-in-out group-hover:block group-hover:scale-100 group-hover:opacity-100 group-hover:w-4"
+                  className="transition:opacity h-4 w-0 scale-0 rotate-180 opacity-0 duration-200 ease-in-out group-hover:block group-hover:w-4 group-hover:scale-100 group-hover:opacity-100"
                   src={ChevronIcon}
                   alt=""
                 />
                 <Link
                   to="/materials"
-                  className="text-blue-600 duration-200 ease-in-out hover:translate-x-[1px] hover:text-blue-800 hover:transition-transform"
+                  className="text-accent hover:text-accent-emphasis duration-200 ease-in-out hover:translate-x-[1px] hover:transition-transform"
                 >
                   Weiter shoppen
                 </Link>
               </div>
               <div className="group flex items-center">
                 <img
-                  className="transition:opacity w-0 h-4 rotate-180 scale-0 opacity-0 duration-200 ease-in-out group-hover:block group-hover:scale-100 group-hover:opacity-100 group-hover:w-4"
+                  className="transition:opacity h-4 w-0 scale-0 rotate-180 opacity-0 duration-200 ease-in-out group-hover:block group-hover:w-4 group-hover:scale-100 group-hover:opacity-100"
                   src={ChevronIcon}
                   alt=""
                 />
                 <Link
                   to="/materials/mine"
-                  className="text-blue-600 duration-200 ease-in-out hover:translate-x-[1px] hover:text-blue-800 hover:transition-transform"
+                  className="text-accent hover:text-accent-emphasis duration-200 ease-in-out hover:translate-x-[1px] hover:transition-transform"
                 >
                   Meine Materialien ansehen
                 </Link>

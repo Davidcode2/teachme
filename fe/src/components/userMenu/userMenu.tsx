@@ -83,7 +83,7 @@ export default function UserMenu({
   return (
     <div className="flex items-center">
       <div
-        className={`mr-2 text-slate-400 ${sidebarShown ? "block" : "hidden lg:block"}`}
+        className={`text-text-muted mr-2 ${sidebarShown ? "block" : "hidden lg:block"}`}
       >
         {displayName}
       </div>
@@ -97,17 +97,17 @@ export default function UserMenu({
       </button>
       <div ref={userMenuRef} className="context-menu userMenu">
         <CenteredModal>
-          <div className="userMenu absolute rounded-md border border-slate-300 bg-white shadow-md dark:bg-slate-900 dark:text-white">
+          <div className="userMenu border-border bg-surface-base dark:bg-surface-base dark:text-text-primary absolute rounded-md border shadow-md">
             <div className="userMenu flex justify-center p-10">
               <ul className="userMenu flex flex-col gap-y-3 pr-4 text-2xl">
                 <li
-                  className="flex cursor-pointer gap-4 hover:text-purple-700"
+                  className="hover:text-accent-emphasis flex cursor-pointer gap-4"
                   onClick={() => auth.signoutRedirect()}
                 >
                   <img src={ArrowIcon} width="32" />
                   <button>Logout</button>
                 </li>
-                <li className="flex cursor-pointer gap-4 hover:text-purple-700">
+                <li className="hover:text-accent-emphasis flex cursor-pointer gap-4">
                   <img src={ShuffleIcon} width="32" />
                   <button onClick={() => switchUser(auth)}>
                     Nutzer&nbsp;wechseln
@@ -115,18 +115,23 @@ export default function UserMenu({
                 </li>
                 <li
                   onClick={handleEditUserName}
-                  className="userMenu flex cursor-pointer gap-4 hover:text-purple-700"
+                  className="userMenu hover:text-accent-emphasis flex cursor-pointer gap-4"
                 >
                   <img src={EditIcon} width="32" />
                   <button className="userMenu">Name&nbsp;ändern</button>
                 </li>
-                <li
-                  className="userMenu mr-2 text-slate-400"
-                >
-                  {editUserName && <EditUserName setEditUserName={setEditUserName} displayName={displayName} editNameRef={editNameRef} user={user} />}
+                <li className="userMenu text-text-muted mr-2">
+                  {editUserName && (
+                    <EditUserName
+                      setEditUserName={setEditUserName}
+                      displayName={displayName}
+                      editNameRef={editNameRef}
+                      user={user}
+                    />
+                  )}
                 </li>
-                <hr className="text-slate-200" />
-                <div className="userMenu flex items-center gap-4 hover:text-purple-700">
+                <hr className="text-border" />
+                <div className="userMenu hover:text-accent-emphasis flex items-center gap-4">
                   <ThemeToggle showMenu={showMenu} />
                 </div>
               </ul>

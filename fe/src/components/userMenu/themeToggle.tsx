@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import DarkModeIcon from "../../assets/icons/icons8-dark-mode-48.png";
 import LightModeIcon from "../../assets/icons/icons8-light-mode-78.png";
 
-const ThemeToggle = ({showMenu}: { showMenu: boolean }) => {
+const ThemeToggle = ({ showMenu }: { showMenu: boolean }) => {
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
@@ -75,7 +75,9 @@ const ThemeToggle = ({showMenu}: { showMenu: boolean }) => {
   };
 
   const toggleSwitch = (
-    <div className={`userMenu ${ showMenu ? "relative" : "block" } h-6 w-12 rounded-full bg-gray-300 transition-all duration-300`}>
+    <div
+      className={`userMenu ${showMenu ? "relative" : "block"} bg-surface-overlay h-6 w-12 rounded-full transition-all duration-300`}
+    >
       <input
         type="checkbox"
         className="userMenu peer absolute top-0 left-0 h-full w-full cursor-pointer appearance-none rounded-full"
@@ -84,7 +86,7 @@ const ThemeToggle = ({showMenu}: { showMenu: boolean }) => {
         id="system-toggle"
       />
       <span
-        className={`userMenu absolute top-0.5 left-0.5 h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-300 peer-checked:translate-x-0`}
+        className={`userMenu bg-surface-base absolute top-0.5 left-0.5 h-5 w-5 transform rounded-full shadow-md transition-transform duration-300 peer-checked:translate-x-0`}
       ></span>
     </div>
   );

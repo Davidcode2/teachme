@@ -41,18 +41,18 @@ export default function SubmitButton({ formState }: PropType) {
   return (
     <>
       <button
-        className="mt-10 grid grid-cols-3 rounded-lg border border-slate-200 shadow-sm enabled:hover:bg-emerald-600 enabled:hover:shadow-lg disabled:bg-slate-200 dark:text-slate-700"
+        className="border-border enabled:hover:bg-success-emphasis disabled:bg-surface-overlay dark:text-text-muted mt-10 grid grid-cols-3 rounded-lg border shadow-sm enabled:hover:shadow-lg"
         type="submit"
         disabled={navigation.state === "submitting" || !enableSubmitButton()}
       >
         <div
-          className={`h-full ${completion >= 1 ? "rounded-l-lg bg-emerald-500" : ""}`}
+          className={`h-full ${completion >= 1 ? "bg-success rounded-l-lg" : ""}`}
         ></div>
-        <div className={`py-2 ${completion >= 2 ? "bg-emerald-500" : ""}`}>
+        <div className={`py-2 ${completion >= 2 ? "bg-success" : ""}`}>
           {navigation.state === "submitting" ? "Erstelle..." : "Erstellen"}
         </div>
         <div
-          className={`h-full ${completion >= 3 ? "rounded-r-lg bg-emerald-500" : ""}`}
+          className={`h-full ${completion >= 3 ? "bg-success rounded-r-lg" : ""}`}
         ></div>
       </button>
     </>

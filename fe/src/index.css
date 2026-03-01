@@ -2,28 +2,116 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-[data-theme='light'] {
-}
+@theme {
+  /* Light theme colors */
+  --color-background: hsl(0, 0%, 100%);
+  --color-foreground: hsl(228, 15%, 15%);
 
-[data-theme='dark'] {
-  @apply bg-gray-900 text-slate-100;
-}
+  /* Surfaces */
+  --color-surface-base: hsl(0, 0%, 100%);
+  --color-surface-subtle: hsl(228, 20%, 97%);
+  --color-surface-raised: hsl(228, 20%, 95%);
+  --color-surface-overlay: hsl(228, 20%, 92%);
 
-/* Pure CSS Configuration based on tailwind.config.js */
+  /* Accent (purple) */
+  --color-accent-subtle: hsl(270, 40%, 96%);
+  --color-accent-muted: hsl(270, 45%, 90%);
+  --color-accent-weak: hsl(270, 55%, 70%);
+  --color-accent: hsl(270, 55%, 55%);
+  --color-accent-emphasis: hsl(270, 65%, 45%);
+  --color-accent-strong: hsl(270, 75%, 40%);
 
-/* Font Families */
-:root {
+  /* Feedback */
+  --color-success: hsl(140, 45%, 45%);
+  --color-success-emphasis: hsl(140, 60%, 40%);
+
+  --color-alert: hsl(0, 65%, 50%);
+  --color-alert-emphasis: hsl(0, 75%, 45%);
+
+  /* Text */
+  --color-text-primary: hsl(228, 15%, 15%);
+  --color-text-secondary: hsl(228, 12%, 30%);
+  --color-text-muted: hsl(228, 10%, 45%);
+  --color-text-inverse: hsl(0, 0%, 100%);
+
+  /* Tones */
+  --color-tone-neutral: hsl(40, 20%, 30%);
+  --color-tone-neutral-muted: hsl(40, 15%, 45%);
+
+  --color-tone-prominent: hsl(45, 85%, 40%);
+  --color-tone-prominent-muted: hsl(45, 60%, 55%);
+
+  --color-tone-positive: hsl(95, 40%, 35%);
+  --color-tone-positive-muted: hsl(95, 30%, 55%);
+
+  --color-tone-caution: hsl(30, 75%, 40%);
+  --color-tone-caution-muted: hsl(30, 55%, 55%);
+
+  --color-tone-critical: hsl(5, 65%, 40%);
+  --color-tone-critical-muted: hsl(5, 45%, 55%);
+
+  --color-tone-informative: hsl(180, 45%, 40%);
+  --color-tone-informative-muted: hsl(180, 30%, 55%);
+
+  /* Border */
+  --color-border: var(--color-surface-overlay);
+
+  /* Dark theme colors (defined as separate variables for dark variant) */
+  --color-dark-background: hsl(228, 10%, 10%);
+  --color-dark-foreground: hsl(228, 15%, 92%);
+
+  --color-dark-surface-base: hsl(228, 10%, 10%);
+  --color-dark-surface-subtle: hsl(228, 10%, 14%);
+  --color-dark-surface-raised: hsl(228, 10%, 18%);
+  --color-dark-surface-overlay: hsl(228, 10%, 22%);
+
+  --color-dark-accent-subtle: hsl(270, 30%, 20%);
+  --color-dark-accent-muted: hsl(270, 35%, 28%);
+  --color-dark-accent-weak: hsl(270, 45%, 48%);
+  --color-dark-accent: hsl(270, 50%, 60%);
+  --color-dark-accent-emphasis: hsl(270, 60%, 65%);
+  --color-dark-accent-strong: hsl(270, 70%, 70%);
+
+  --color-dark-success: hsl(140, 45%, 55%);
+  --color-dark-success-emphasis: hsl(140, 60%, 60%);
+
+  --color-dark-alert: hsl(0, 65%, 60%);
+  --color-dark-alert-emphasis: hsl(0, 75%, 65%);
+
+  --color-dark-text-primary: hsl(228, 15%, 92%);
+  --color-dark-text-secondary: hsl(228, 12%, 75%);
+  --color-dark-text-muted: hsl(228, 10%, 60%);
+  --color-dark-text-inverse: hsl(228, 15%, 10%);
+
+  --color-dark-tone-neutral: hsl(40, 10%, 70%);
+  --color-dark-tone-neutral-muted: hsl(40, 8%, 55%);
+
+  --color-dark-tone-prominent: hsl(45, 85%, 65%);
+  --color-dark-tone-prominent-muted: hsl(45, 60%, 50%);
+
+  --color-dark-tone-positive: hsl(95, 45%, 60%);
+  --color-dark-tone-positive-muted: hsl(95, 30%, 45%);
+
+  --color-dark-tone-caution: hsl(30, 75%, 60%);
+  --color-dark-tone-caution-muted: hsl(30, 55%, 48%);
+
+  --color-dark-tone-critical: hsl(5, 65%, 60%);
+  --color-dark-tone-critical-muted: hsl(5, 45%, 48%);
+
+  --color-dark-tone-informative: hsl(180, 45%, 60%);
+  --color-dark-tone-informative-muted: hsl(180, 30%, 45%);
+
+  --color-dark-border: var(--color-dark-surface-overlay);
+
+  /* Font Families */
   --font-sans: ui-sans-serif, system-ui;
   --font-serif: ui-serif, Georgia;
   --font-mono: ui-monospace, SFMono-Regular;
-  --font-handwriting: Pacifico, cursive; /* Added cursive for better representation */
-  --font-body: "Open Sans", sans-serif; /* Added sans-serif as fallback */
+  --font-handwriting: Pacifico, cursive;
+  --font-body: "Open Sans", sans-serif;
 }
 
-body {
-  font-family: var(--font-body);
-}
-
+/* Font family utilities */
 .font-sans {
   font-family: var(--font-sans);
 }
@@ -40,22 +128,24 @@ body {
   font-family: var(--font-handwriting);
 }
 
-/* Safelist Styles (Directly defined as CSS classes) */
+body {
+  font-family: var(--font-body);
+}
 
-/* Blurs */
+/* Blur utilities */
 .blur-sm {
-  filter: blur(4px); /* Tailwind's default for blur-sm */
+  filter: blur(4px);
 }
 
 .blur-md {
-  filter: blur(8px); /* Tailwind's default for blur-md */
+  filter: blur(8px);
 }
 
 .blur-lg {
-  filter: blur(12px); /* Tailwind's default for blur-lg */
+  filter: blur(12px);
 }
 
-@media (min-width: 1024px) { /* Equivalent to Tailwind's lg: */
+@media (min-width: 1024px) {
   .lg\:blur-lg {
     filter: blur(12px);
   }
@@ -65,110 +155,95 @@ body {
   }
 
   .lg\:blur {
-    filter: blur(8px); /* Tailwind's default for blur */
+    filter: blur(8px);
   }
 }
 
-/* Gradient Colors (Basic linear gradients) */
-.from-blue-300 {
-  /* You'll likely need to combine this with a 'to-' class */
-  /* Example of a basic usage: */
-  background-image: linear-gradient(to right, #60a5fa, transparent); /* Approximate blue-300 */
+/* Light theme - default */
+[data-theme="light"] {
+  --color-background: hsl(0, 0%, 100%);
+  --color-foreground: hsl(228, 15%, 15%);
+  --color-surface-base: hsl(0, 0%, 100%);
+  --color-surface-subtle: hsl(228, 20%, 97%);
+  --color-surface-raised: hsl(228, 20%, 95%);
+  --color-surface-overlay: hsl(228, 20%, 92%);
+  --color-accent-subtle: hsl(270, 40%, 96%);
+  --color-accent-muted: hsl(270, 45%, 90%);
+  --color-accent-weak: hsl(270, 55%, 70%);
+  --color-accent: hsl(270, 55%, 55%);
+  --color-accent-emphasis: hsl(270, 65%, 45%);
+  --color-accent-strong: hsl(270, 75%, 40%);
+  --color-success: hsl(140, 45%, 45%);
+  --color-success-emphasis: hsl(140, 60%, 40%);
+  --color-alert: hsl(0, 65%, 50%);
+  --color-alert-emphasis: hsl(0, 75%, 45%);
+  --color-text-primary: hsl(228, 15%, 15%);
+  --color-text-secondary: hsl(228, 12%, 30%);
+  --color-text-muted: hsl(228, 10%, 45%);
+  --color-text-inverse: hsl(0, 0%, 100%);
+  --color-tone-neutral: hsl(40, 20%, 30%);
+  --color-tone-neutral-muted: hsl(40, 15%, 45%);
+  --color-tone-prominent: hsl(45, 85%, 40%);
+  --color-tone-prominent-muted: hsl(45, 60%, 55%);
+  --color-tone-positive: hsl(95, 40%, 35%);
+  --color-tone-positive-muted: hsl(95, 30%, 55%);
+  --color-tone-caution: hsl(30, 75%, 40%);
+  --color-tone-caution-muted: hsl(30, 55%, 55%);
+  --color-tone-critical: hsl(5, 65%, 40%);
+  --color-tone-critical-muted: hsl(5, 45%, 55%);
+  --color-tone-informative: hsl(180, 45%, 40%);
+  --color-tone-informative-muted: hsl(180, 30%, 55%);
+  --color-border: hsl(228, 20%, 92%);
+
+  ::selection {
+    background: hsl(270, 55%, 55%);
+    color: hsl(0, 0%, 100%);
+  }
 }
 
-.to-purple-400 {
-  /* Used in conjunction with a 'from-' or 'via-' class */
-  /* Example: */
-  background-image: linear-gradient(to right, transparent, #a78bfa); /* Approximate purple-400 */
+/* Dark theme */
+[data-theme="dark"] {
+  --color-background: hsl(228, 10%, 10%);
+  --color-foreground: hsl(228, 15%, 92%);
+  --color-surface-base: hsl(228, 10%, 10%);
+  --color-surface-subtle: hsl(228, 10%, 14%);
+  --color-surface-raised: hsl(228, 10%, 18%);
+  --color-surface-overlay: hsl(228, 10%, 22%);
+  --color-accent-subtle: hsl(270, 30%, 20%);
+  --color-accent-muted: hsl(270, 35%, 28%);
+  --color-accent-weak: hsl(270, 45%, 48%);
+  --color-accent: hsl(270, 50%, 60%);
+  --color-accent-emphasis: hsl(270, 60%, 65%);
+  --color-accent-strong: hsl(270, 70%, 70%);
+  --color-success: hsl(140, 45%, 55%);
+  --color-success-emphasis: hsl(140, 60%, 60%);
+  --color-alert: hsl(0, 65%, 60%);
+  --color-alert-emphasis: hsl(0, 75%, 65%);
+  --color-text-primary: hsl(228, 15%, 92%);
+  --color-text-secondary: hsl(228, 12%, 75%);
+  --color-text-muted: hsl(228, 10%, 60%);
+  --color-text-inverse: hsl(228, 15%, 10%);
+  --color-tone-neutral: hsl(40, 10%, 70%);
+  --color-tone-neutral-muted: hsl(40, 8%, 55%);
+  --color-tone-prominent: hsl(45, 85%, 65%);
+  --color-tone-prominent-muted: hsl(45, 60%, 50%);
+  --color-tone-positive: hsl(95, 45%, 60%);
+  --color-tone-positive-muted: hsl(95, 30%, 45%);
+  --color-tone-caution: hsl(30, 75%, 60%);
+  --color-tone-caution-muted: hsl(30, 55%, 48%);
+  --color-tone-critical: hsl(5, 65%, 60%);
+  --color-tone-critical-muted: hsl(5, 45%, 48%);
+  --color-tone-informative: hsl(180, 45%, 60%);
+  --color-tone-informative-muted: hsl(180, 30%, 45%);
+  --color-border: hsl(228, 10%, 22%);
+
+  ::selection {
+    background: hsl(270, 30%, 20%);
+    color: hsl(228, 15%, 92%);
+  }
 }
 
-.to-purple-500 {
-  /* Used in conjunction with a 'from-' or 'via-' class */
-  /* Example: */
-  background-image: linear-gradient(to right, transparent, #8b5cf6); /* Approximate purple-500 */
-}
-
-.via-emerald-300 {
-  /* Used in conjunction with 'from-' and 'to-' classes */
-  /* Example: */
-  background-image: linear-gradient(to right, blue, #6ee7b7, purple); /* Approximate emerald-300 */
-}
-
-/* Background Colors */
-.bg-blue-300 {
-  background-color: #60a5fa; /* Approximate Tailwind's blue-300 */
-}
-
-.bg-purple-500 {
-  background-color: #8b5cf6; /* Approximate Tailwind's purple-500 */
-}
-
-.bg-emerald-300 {
-  background-color: #6ee7b7; /* Approximate Tailwind's emerald-300 */
-}
-
-/* Text Colors */
-.text-blue-300 {
-  color: #60a5fa; /* Approximate Tailwind's blue-300 */
-}
-
-.text-purple-500 {
-  color: #8b5cf6; /* Approximate Tailwind's purple-500 */
-}
-
-.text-emerald-300 {
-  color: #6ee7b7; /* Approximate Tailwind's emerald-300 */
-}
-
-/*
-  Explanation:
-
-  1. Font Families:
-     - The `theme.fontFamily` section is directly translated into CSS custom properties (variables) defined within the `:root` pseudo-class.
-     - Corresponding CSS classes (`.font-sans`, `.font-serif`, etc.) are created to apply these font families to HTML elements.
-
-  2. `extend`:
-     - The `extend` section in Tailwind allows you to add or override default theme values. In pure CSS, you would directly define any additional styles or overrides as needed. Since the provided `extend` is empty, no specific CSS is generated for it. You would add any custom properties or classes here.
-
-  3. `safelist`:
-     - The `safelist` array in Tailwind specifies classes that should always be included in the generated CSS, even if they aren't found in your content files.
-     - In this pure CSS configuration, each class in the `safelist` is directly created as a CSS rule.
-     - Media queries (like `lg:`) are translated into `@media (min-width: ...)` rules in CSS.
-     - For utility classes that involve color palettes (like `from-blue-300`, `to-purple-400`), it's important to note that Tailwind generates combinations of these. In pure CSS, you'll need to define the specific combinations you intend to use. The examples provided show basic linear gradients as an illustration. You might need more complex CSS for more nuanced gradient effects.
-
-  4. `plugins`:
-     - Tailwind plugins can add custom CSS, components, or utilities. Pure CSS doesn't have a plugin system. You would need to manually write the CSS that these plugins would generate. Since the `plugins` array is empty in the provided configuration, no specific CSS is generated for it.
-
-  How to Use:
-
-  1. Save this code as a `.css` file (e.g., `styles.css`).
-  2. Link this CSS file to your `index.html` file:
-     ```html
-     <head>
-       <link rel="stylesheet" href="styles.css">
-     </head>
-     ```
-  3. Apply the generated CSS classes directly to your HTML elements:
-     ```html
-     <div class="font-sans text-blue-300 bg-gray-100 p-4 blur-md lg:blur-lg">
-       This is some text with Tailwind-like styles.
-     </div>
-     <div class="bg-gradient-to-r from-blue-300 to-purple-500 text-white p-2">
-       A gradient example.
-     </div>
-     ```
-
-  Limitations:
-
-  - **Dynamic Generation:** Pure CSS is static. Tailwind's power comes from its ability to generate a vast number of utility classes based on your configuration and content. With pure CSS, you need to explicitly define every class you want to use.
-  - **Complex Utilities:** Some of Tailwind's more complex utilities (e.g., responsive variants, state variants like `hover:`, more intricate gradient options) require more verbose and manual CSS implementation.
-  - **Build Process:** Tailwind's build process optimizes the CSS output by only including the classes you actually use. With pure CSS based on a `safelist`, you might end up with a larger CSS file if your `safelist` is extensive.
-
-  This pure CSS configuration provides a direct translation of the font families and the specific classes listed in your `safelist`. For a full Tailwind v4 experience without the framework, you would need to manually implement all the utility classes and features you require.
-*/
-
-/* ThemeToggle.css */
-
+/* Theme toggle styles */
 .transition-all {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -180,10 +255,66 @@ body {
 }
 
 .peer:checked + span {
-  transform: translateX(1.5rem); /* Adjust based on your toggle size */
+  transform: translateX(1.5rem);
 }
 
-/* Basic Light/Dark Mode Transition */
+/* Light/Dark Mode Transition */
 html {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Gradient utilities using new color scale */
+.from-accent {
+  --tw-gradient-from: var(--color-accent) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(139 92 246 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-accent-muted {
+  --tw-gradient-from: var(--color-accent-muted) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(233 213 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-accent-subtle {
+  --tw-gradient-from: var(--color-accent-subtle)
+    var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(243 232 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-success {
+  --tw-gradient-from: var(--color-success) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(34 197 94 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.via-accent-weak {
+  --tw-gradient-to: rgb(192 132 252 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops:
+    var(--tw-gradient-from),
+    var(--color-accent-weak) var(--tw-gradient-via-position),
+    var(--tw-gradient-to);
+}
+
+.via-success-muted {
+  --tw-gradient-to: rgb(134 239 172 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops:
+    var(--tw-gradient-from),
+    var(--color-tone-positive-muted) var(--tw-gradient-via-position),
+    var(--tw-gradient-to);
+}
+
+.to-accent {
+  --tw-gradient-to: var(--color-accent) var(--tw-gradient-to-position);
+}
+
+.to-accent-emphasis {
+  --tw-gradient-to: var(--color-accent-emphasis) var(--tw-gradient-to-position);
+}
+
+.to-success-emphasis {
+  --tw-gradient-to: var(--color-success-emphasis) var(--tw-gradient-to-position);
 }

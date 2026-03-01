@@ -21,7 +21,7 @@ export default function SharedPreview() {
       <div className="flex h-full items-center justify-center">
         {!data.material && <div>lädt...</div>}
         {data.material && (
-          <div className="mx-6 flex flex-col gap-5 rounded-lg border bg-white p-2 shadow-lg sm:flex-row md:mx-10 md:p-10">
+          <div className="border-border bg-surface-base mx-6 flex flex-col gap-5 rounded-lg border p-2 shadow-lg sm:flex-row md:mx-10 md:p-10">
             <div className="h-[50vh] overflow-scroll md:h-[75vh]">
               {imageElements}
             </div>
@@ -30,7 +30,7 @@ export default function SharedPreview() {
               <hr />
               <div>{data.material.description}</div>
               <div className="flex items-center gap-x-10">
-                <p className="text-3xl text-emerald-500">
+                <p className="text-success text-3xl">
                   {Number(data.material.price / 100).toFixed(2)} €
                 </p>
                 <ActionButtons

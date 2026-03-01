@@ -36,9 +36,9 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
   return (
     <div className="flex h-full w-full justify-center">
       <div className="searchBox w-4/5 self-center sm:w-[600px] lg:w-[800px]">
-        <div className="searchBox z-50 flex flex-col rounded-lg border border-fuchsia-200 dark:bg-slate-800 bg-white px-10 pb-10 shadow-2xl shadow-fuchsia-900 blur-none">
+        <div className="searchBox border-accent-muted dark:bg-surface-raised bg-surface-base shadow-accent z-50 flex flex-col rounded-lg border px-10 pb-10 shadow-2xl blur-none">
           <div className="flex flex-col gap-2">
-            <div className="pt-10 text-2xl dark:text-slate-200 text-slate-900">
+            <div className="text-text-primary dark:text-text-primary pt-10 text-2xl">
               Finde deinen Arbeitserleichterer
             </div>
             <div className="flex">
@@ -48,7 +48,7 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
                 onChange={changeSearchString}
                 onKeyDown={onCloseButton}
                 autoFocus={true}
-                className="searchBox w-full grow rounded-3xl border border-fuchsia-200 p-4 focus:shadow-xs focus:shadow-purple-200 focus:outline-none focus:outline-purple-300"
+                className="searchBox border-accent-muted focus:shadow-accent-muted focus:outline-accent-weak w-full grow rounded-3xl border p-4 focus:shadow-xs focus:outline-none"
               />
               {searchString && (
                 <div className="justify-end">
@@ -56,7 +56,7 @@ export default function Search({ setShowSearch }: { setShowSearch: any }) {
                     <div
                       role="button"
                       onClick={clearSearch}
-                      className="relative right-12 top-1 cursor-pointer self-center p-4 font-handwriting text-xs text-stone-500 hover:text-stone-600"
+                      className="font-handwriting text-text-muted hover:text-text-secondary relative top-1 right-12 cursor-pointer self-center p-4 text-xs"
                     >
                       X
                     </div>

@@ -75,15 +75,15 @@ function Card({
         />
       )}
       <div
-        className="m-4 rounded-lg border border-slate-200 opacity-0 shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
+        className="border-border m-4 rounded-lg border opacity-0 shadow-lg transition-opacity duration-700 md:mx-10 md:mb-10"
         id={materialWithThumbnail.id.toString()}
       >
         <BorderColorBlur>
-          <div className="grid h-[250px] grid-cols-[40%_auto] grid-rows-[1fr_auto] overflow-hidden rounded-lg bg-white text-sm sm:h-[450px] sm:grid-cols-2 md:grid-cols-[auto_3fr] dark:bg-slate-800">
-            <div className="overflow-hidden border-r border-slate-200 sm:row-span-2">
+          <div className="bg-surface-base dark:bg-surface-raised grid h-[250px] grid-cols-[40%_auto] grid-rows-[1fr_auto] overflow-hidden rounded-lg text-sm sm:h-[450px] sm:grid-cols-2 md:grid-cols-[auto_3fr]">
+            <div className="border-border overflow-hidden border-r sm:row-span-2">
               {imageElement}
             </div>
-            <div className="flex flex-1 flex-col gap-4 overflow-hidden rounded-r-lg border-slate-100 p-4 md:border-t-0 md:p-10">
+            <div className="border-border flex flex-1 flex-col gap-4 overflow-hidden rounded-r-lg p-4 md:border-t-0 md:p-10">
               <div className="flex flex-col overflow-auto">
                 <div className="text-lg md:text-2xl">
                   {materialWithThumbnail.title}
@@ -92,11 +92,11 @@ function Card({
                   {materialWithThumbnail.description}
                 </div>
               </div>
-              <p className="text-emerald-500 md:text-3xl">
+              <p className="text-success md:text-3xl">
                 {Number(materialWithThumbnail.price / 100).toFixed(2)} €
               </p>
             </div>
-            <div className="col-span-2 mt-auto flex border-t border-slate-200 p-2 px-4 sm:col-start-2 sm:border-none md:p-10">
+            <div className="border-border col-span-2 mt-auto flex border-t p-2 px-4 sm:col-start-2 sm:border-none md:p-10">
               <div className="self-center">
                 <ActionButtons
                   id={materialWithThumbnail.id.toString()}

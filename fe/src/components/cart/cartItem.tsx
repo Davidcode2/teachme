@@ -34,7 +34,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
 
   if (loading) {
     return (
-      <div className="rounded-lg border border-slate-200">
+      <div className="border-border rounded-lg border">
         <div className="flex justify-center p-28">
           <div className="w-20 animate-spin">|</div>
         </div>
@@ -55,13 +55,13 @@ export default function CartItem({ item, cartService }: CartItemProps) {
   const imageElement = image ? (
     <img src={image} className="" alt="Thumbnail" />
   ) : (
-    <div className="bg-blue-400"></div>
+    <div className="bg-accent"></div>
   );
 
   return (
     <div
       id={item.id.toString() + "-cart-item"}
-      className="dark:bg-slate-800 rounded-lg border border-slate-200 opacity-0 shadow-md transition-opacity duration-700"
+      className="border-border dark:bg-surface-raised rounded-lg border opacity-0 shadow-md transition-opacity duration-700"
     >
       <div className="grid grid-cols-2">
         <div className="m-10">
@@ -70,7 +70,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
           </div>
           <div>
             Preis:{" "}
-            <p className="text-3xl text-emerald-500">
+            <p className="text-success text-3xl">
               {Number(item.price / 100).toFixed(2)} €
             </p>
           </div>
@@ -81,7 +81,7 @@ export default function CartItem({ item, cartService }: CartItemProps) {
         <div className="ml-auto">
           <button
             onClick={() => removeItem(item.id.toString())}
-            className="cursor-pointer mr-2 rounded-md border-slate-200 px-2 hover:bg-red-400"
+            className="border-border hover:bg-alert mr-2 cursor-pointer rounded-md px-2"
           >
             <img
               src={TrashBin}

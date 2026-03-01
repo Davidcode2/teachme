@@ -6,8 +6,7 @@ type PropType = {
 };
 
 export default function SuccessPage({ name, amount }: PropType) {
-
-   const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const target = amount || 0;
@@ -27,10 +26,10 @@ export default function SuccessPage({ name, amount }: PropType) {
   }, [amount]);
 
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-slate-200 py-4 pl-10 pr-4 shadow-sm">
+    <div className="border-border flex items-center gap-2 rounded-lg border py-4 pr-4 pl-10 shadow-sm">
       <div className="text-xl">{name}</div>
       <div
-        className={`flex h-20 w-20 items-center justify-center justify-self-center rounded-full border-8 text-center ${amount ? "border-green-500" : "border-slate-200"}`}
+        className={`flex h-20 w-20 items-center justify-center justify-self-center rounded-full border-8 text-center ${amount ? "border-success" : "border-border"}`}
       >
         <div className="text-2xl font-extrabold">{count || 0}</div>
       </div>

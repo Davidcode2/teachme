@@ -13,14 +13,14 @@ export default function Mine() {
     <>
       <div
         id="fade_in_element"
-        className="min-h-screen rounded-md border border-gray-200 dark:bg-slate-800 bg-slate-100 pt-8 opacity-0 shadow-xl transition-opacity duration-700 sm:mx-4 md:mx-0 md:ml-8 md:rounded-none md:rounded-l-md"
+        className="border-border dark:bg-surface-raised bg-surface-subtle min-h-screen rounded-md border pt-8 opacity-0 shadow-xl transition-opacity duration-700 sm:mx-4 md:mx-0 md:ml-8 md:rounded-none md:rounded-l-md"
       >
-        <nav className="flex gap-x-10 px-10 pb-4 text-lg text-black">
+        <nav className="text-text-primary flex gap-x-10 px-10 pb-4 text-lg">
           <NavLink
             className={({ isActive }) => {
               return isActive
-                ? "font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline text-emerald-600 underline"
-                : "font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline";
+                ? "font-handwriting text-success decoration-border hover:text-success underline decoration-wavy decoration-1 underline-offset-4 hover:underline"
+                : "font-handwriting decoration-border hover:text-success decoration-wavy decoration-1 underline-offset-4 hover:underline";
             }}
             to={"/materials/mine/bought"}
           >
@@ -30,8 +30,8 @@ export default function Mine() {
             to={"/materials/mine/workspace"}
             className={({ isActive }) => {
               return isActive
-                ? "font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline text-emerald-600 underline"
-                : "font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline";
+                ? "font-handwriting text-success decoration-border hover:text-success underline decoration-wavy decoration-1 underline-offset-4 hover:underline"
+                : "font-handwriting decoration-border hover:text-success decoration-wavy decoration-1 underline-offset-4 hover:underline";
             }}
           >
             Erstellt

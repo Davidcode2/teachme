@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Price({initialValue}: { initialValue?: string }) {
+export default function Price({ initialValue }: { initialValue?: string }) {
   const [value, setValue] = useState(initialValue);
 
   const formatCurrency = (value: string) => {
@@ -21,7 +21,7 @@ export default function Price({initialValue}: { initialValue?: string }) {
       <input
         id="price-field"
         onChange={handleChange}
-        className="min-w-0 grow max-w-52 rounded-md border border-slate-200 px-4 py-2 text-5xl shadow-xs"
+        className="border-border max-w-52 min-w-0 grow rounded-md border px-4 py-2 text-5xl shadow-xs"
         name="price"
         type="decimal"
         placeholder="0,00"

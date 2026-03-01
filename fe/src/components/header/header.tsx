@@ -37,7 +37,7 @@ function Header() {
   });
 
   if (!eventListenerRegistered) {
-    document.body.addEventListener("click", function(event: any) {
+    document.body.addEventListener("click", function (event: any) {
       if (event.target.closest(".searchBar")) return;
       if (event.target.closest(".searchBox")) return;
       setShowSearch(false);
@@ -61,16 +61,16 @@ function Header() {
   const searchBox = (
     <button
       onClick={toggleSearch}
-      className="searchBar relative col-start-2 flex max-h-10 max-w-60 grow overflow-hidden rounded-full border border-slate-200 px-4 py-2 shadow-sm hover:cursor-text sm:max-w-96 lg:max-w-none 2xl:col-start-3"
+      className="searchBar border-border relative col-start-2 flex max-h-10 max-w-60 grow overflow-hidden rounded-full border px-4 py-2 shadow-sm hover:cursor-text sm:max-w-96 lg:max-w-none 2xl:col-start-3"
     >
-      <div className={`mr-4 truncate ${showSearch ? "text-slate-300" : ""}`}>
+      <div className={`mr-4 truncate ${showSearch ? "text-text-muted" : ""}`}>
         {searchString}
       </div>
       {searchString && (
         <div
           role="button"
           onClick={searchService.clearSearch}
-          className="absolute right-4 cursor-pointer self-center p-1 font-handwriting text-xs text-stone-500 hover:text-stone-600"
+          className="font-handwriting text-text-muted hover:text-text-secondary absolute right-4 cursor-pointer self-center p-1 text-xs"
         >
           X
         </div>
@@ -79,7 +79,7 @@ function Header() {
   );
 
   const addButton = (
-    <div className="rounded-lg border border-slate-200 shadow-sm">
+    <div className="border-border rounded-lg border shadow-sm">
       <div
         className={`px-4 py-2 transition hover:scale-125 hover:brightness-110 ${onAddPage ? "rotate-45 transition-transform" : ""}`}
       >
@@ -91,7 +91,7 @@ function Header() {
   const addButtonContainer = (
     <div className="flex">
       <NavLink
-        className={`${onAddPage ? "rounded-lg border border-blue-400 text-blue-400" : "border-none"}`}
+        className={`${onAddPage ? "border-accent text-accent rounded-lg border" : "border-none"}`}
         to={
           !onAddPage
             ? auth.isAuthenticated
@@ -124,8 +124,14 @@ function Header() {
           <Search setShowSearch={setShowSearch} />
         </div>
       )}
-      <div className="relative top-0 z-50 bg-gradient-to-b from-white dark:from-slate-900 from-70% via-white/95 dark:via-slate-900/98 to-white/85 dark:to-slate-900/95 md:sticky">
-        <div className={scroll ? "p-4 shadow-gray-100 dark:shadow-slate-700 md:shadow-sm" : "p-4"}>
+      <div className="from-surface-base via-surface-base/95 to-surface-base/85 dark:from-surface-base dark:via-surface-base/98 dark:to-surface-base/95 relative top-0 z-50 bg-gradient-to-b from-70% md:sticky">
+        <div
+          className={
+            scroll
+              ? "shadow-border dark:shadow-surface-overlay p-4 md:shadow-sm"
+              : "p-4"
+          }
+        >
           <div className="flex justify-between gap-3">
             <div className="hidden items-center gap-2 md:flex">
               {navigation}

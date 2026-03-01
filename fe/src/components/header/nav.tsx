@@ -16,7 +16,7 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
   };
 
   const myMaterialLinkButton = (
-    <div className="font-handwriting decoration-gray-500 decoration-wavy decoration-1 underline-offset-4 hover:text-emerald-600 hover:underline">
+    <div className="font-handwriting decoration-border hover:text-success decoration-wavy decoration-1 underline-offset-4 hover:underline">
       Meins
     </div>
   );
@@ -48,7 +48,7 @@ export default function Nav({ materialsLink, myMaterialsLink }: NavProps) {
               isPending
                 ? "animate-pulse"
                 : isActive
-                  ? "underline decoration-green-300 decoration-wavy decoration-1 underline-offset-4"
+                  ? "decoration-success underline decoration-wavy decoration-1 underline-offset-4"
                   : "border-none"
             }
           >
