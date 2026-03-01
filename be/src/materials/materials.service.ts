@@ -181,7 +181,7 @@ export class MaterialsService {
   }
 
   private async saveFile(file: Express.Multer.File) {
-    const fileInfo = this.storeFile(file);
+    const fileInfo = await this.storeFile(file);
     const file_path = fileInfo.filePath;
     let thumbnail_path = '';
     let preview_path = '';
