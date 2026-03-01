@@ -20,6 +20,13 @@ npm run preview
 
 ## Code Style Guidelines
 
+### General
+
+- Follow the clean code approach
+- Try to keep files below 100 lines of code - exceptions are allowed where it makes sense
+- Keep functions as short as possible - follow the single responsibility principle
+- Functions should have one layer of abstraction - extract functions to keep higher level functions easy to read
+
 ### Imports
 
 - Always use `.tsx` or `.ts` extensions in imports (e.g., `import Card from "./card.tsx"`)
