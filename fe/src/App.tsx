@@ -28,10 +28,12 @@ function App(): JSX.Element {
 
   return (
     <AuthProvider {...oidcConfig}>
-      <ErrorOverlay />
-      <Sidebar></Sidebar>
-      <Header></Header>
-      <Outlet />
+      <div className='bg-surface-base'>
+        <ErrorOverlay />
+        <Sidebar></Sidebar>
+        <Header></Header>
+        <Outlet />
+      </div>
     </AuthProvider>
   );
 }
