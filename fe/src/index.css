@@ -184,6 +184,19 @@ body {
 }
 
 /* Basic Light/Dark Mode Transition */
+:root {
+  background-color: #f8fafc;
+}
+
+[data-theme='dark'] {
+  background-color: #111827;
+}
+
 html {
+  background-color: #f8fafc;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html[data-theme='dark'] {
+  background-color: #111827;
 }
