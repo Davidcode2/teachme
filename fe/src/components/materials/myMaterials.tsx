@@ -72,24 +72,23 @@ function MyMaterials() {
     }
   };
 
-  const setSearchResultsGlobal = (materials: MaterialWithThumbnail[]) => {
+  const setSearchResultsGlobal = (materials: Material[] | MaterialWithThumbnail[]) => {
     if (materials.length === 0) {
       useSearchState.setState({ searchResults: [] });
       return;
     }
-    const hasThumbnail = materials[0].thumbnail;
-    let materialsWithoutThumbnails;
-    if (hasThumbnail) {
-      materialsWithoutThumbnails = materials.map(
-        (el: { material: Material; thumbnail: any }) => {
-          return el.material;
-        },
+    // Check if materials have thumbnail property (MaterialWithThumbnail)
+    const firstItem = materials[0];
+    if ('thumbnail' in firstItem && 'material' in firstItem) {
+      // It's MaterialWithThumbnail[], extract the material
+      const materialsWithoutThumbnails = (materials as MaterialWithThumbnail[]).map(
+        (el) => el.material,
       );
       useSearchState.setState({ searchResults: materialsWithoutThumbnails });
     } else {
-      useSearchState.setState({ searchResults: materials });
+      // It's Material[]
+      useSearchState.setState({ searchResults: materials as Material[] });
     }
-    useSearchState.setState({ searchResults: materials });
   };
 
   useEffect(() => {
