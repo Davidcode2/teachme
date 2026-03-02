@@ -26,7 +26,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         onClick={() => auth.signinRedirect()}
         className="flex rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
       >
-        <ShoppingCart className="h-6 w-6" />
+        <ShoppingCart className="h-5 w-5" strokeWidth={1.5} />
       </button>
     );
 
@@ -60,7 +60,7 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = id; // Set the download filename
+    a.download = id;
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -83,14 +83,14 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         <div className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer">
           {!isMine && (
             <button onClick={addToShoppingCart}>
-              <ShoppingCart className="h-6 w-6 cursor-pointer" />
+              <ShoppingCart className="h-5 w-5 cursor-pointer" strokeWidth={1.5} />
             </button>
           )}
         </div>
         <div className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer">
           {isMine && !isAuthor && (
             <button onClick={downloadMaterial}>
-              <ArrowDown className="h-6 w-6" />
+              <ArrowDown className="h-5 w-5" strokeWidth={1.5} />
             </button>
           )}
         </div>
@@ -101,17 +101,17 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
                 onClick={downloadMaterial}
                 className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
               >
-                <ArrowDown className="h-6 w-6" />
+                <ArrowDown className="h-5 w-5" strokeWidth={1.5} />
               </button>
               <button
                 id="deleteMaterialButton"
                 className="rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer"
                 onClick={showDeleteMaterialModal}
               >
-                <Trash2 className="h-6 w-6" />
+                <Trash2 className="h-5 w-5" strokeWidth={1.5} />
               </button>
               <NavLink to={`/materials/${id}/edit`}>
-                <Pencil className="h-6 w-6 rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer" />
+                <Pencil className="h-5 w-5 rounded-full transition-transform duration-100 ease-in hover:-translate-y-1 hover:cursor-pointer" strokeWidth={1.5} />
               </NavLink>
             </div>
           )}
@@ -119,12 +119,12 @@ function ActionButtons({ id, isMine, authorId, title }: ActionButtonsProps) {
         <div className="mx-2">
           {loading && (
             <div className="">
-              <Loader2 className="h-6 w-6 animate-spin" />
+              <Loader2 className="h-5 w-5 animate-spin" strokeWidth={1.5} />
             </div>
           )}
           {showSuccess && (
             <div className="">
-              <Check className="h-6 w-6" />
+              <Check className="h-5 w-5" strokeWidth={1.5} />
             </div>
           )}
         </div>
