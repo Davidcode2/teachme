@@ -17,12 +17,10 @@ type MaterialWithThumbnail = {
 
 function MyMaterials() {
   const [materials, setMaterials] = useState<Material[]>([]);
-  const [searchResults, setSearchResults] = useState<Material[]>(
-    [],
-  );
   const loading = useGlobalLoadingStore((state) => state.loading);
   const paginator = new PaginationService();
   const searchString = useSearchState((state) => state.searchString);
+  const searchResults = useSearchState((state) => state.searchResults);
   const onMinePage = document.location.pathname === "/materials/mine" || document.location.pathname === "/materials/mine/bought";
   const lastMaterialIndex = useRef(0);
   const runCount = useRef(0);
@@ -43,28 +41,34 @@ function MyMaterials() {
   };
 
   const setInitialMaterials = async () => {
-    const url = buildLoadMaterialsUrl();
-    const json = await loadMaterials(url);
-    lastMaterialIndex.current = json.length;
-    setMaterials(json);
-    runCount.current++;
+    try {
+      const url = buildLoadMaterialsUrl();
+      const json = await loadMaterials(url);
+      
+      // Ensure json is an array
+      const safeJson = Array.isArray(json) ? json : [];
+      lastMaterialIndex.current = safeJson.length;
+      setMaterials(safeJson);
+      runCount.current++;
+    } catch (error) {
+      console.error("Failed to load initial materials:", error);
+      setMaterials([]);
+    }
   };
 
   const searchMaterials = async () => {
     if (runCount.current === 0) return;
-    const url = buildLoadMaterialsUrl();
-    const json = await loadMaterials(url);
-    setSearchResultsGlobal(json);
-    if (searchString !== "" && !onMinePage) {
-      const materialsWithNullThumbnail = json.map((el: Material) => {
-        return { material: el, thumbnail: null };
-      });
-      setSearchResults(materialsWithNullThumbnail);
-      return;
-    } else {
+    try {
       const url = buildLoadMaterialsUrl();
       const json = await loadMaterials(url);
-      setMaterials(json);
+      
+      // Ensure json is an array
+      const safeJson = Array.isArray(json) ? json : [];
+      setSearchResultsGlobal(safeJson);
+      setMaterials(safeJson);
+    } catch (error) {
+      console.error("Failed to search materials:", error);
+      setMaterials([]);
     }
   };
 
@@ -96,7 +100,16 @@ function MyMaterials() {
     searchMaterials();
   }, [searchString]);
 
-  if (!loading && materials.length === 0) {
+  // Ensure materials is always an array
+  const safeMaterials = Array.isArray(materials) ? materials : [];
+  const safeSearchResults = Array.isArray(searchResults) ? searchResults : [];
+
+  // Helper to get material from either Material or MaterialWithThumbnail
+  const getMaterial = (el: any): Material => {
+    return el.material || el;
+  };
+
+  if (!loading && safeMaterials.length === 0 && safeSearchResults.length === 0) {
     return (
       <>
         <NoData showImage={true} />
@@ -112,11 +125,12 @@ function MyMaterials() {
           <Skeleton id={crypto.randomUUID()} />
         </div>
       )}
-      {searchResults.length > 0
-        ? searchResults.map((el: Material) => {
-            return <Card key={el.id} material={el} />;
+      {safeSearchResults.length > 0
+        ? safeSearchResults.map((el: any) => {
+            const material = getMaterial(el);
+            return <Card key={material.id} material={material} />;
           })
-        : materials.map((el: Material) => {
+        : safeMaterials.map((el: Material) => {
             return <Card key={el.id} material={el}></Card>;
           })}
     </>

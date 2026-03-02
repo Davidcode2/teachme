@@ -15,18 +15,19 @@ export default function Workspace() {
   const loading = useGlobalLoadingStore((state) => state.loading);
 
   const searchMaterials = async () => {
-    const baseUrl = getUrl();
-    const url = `${baseUrl}?search=${searchString}`;
-    const json = await loadMaterials(url);
-    setSearchResults(json);
-    if (searchString !== "") {
-      const materialsWithNullThumbnail = json.map((el: Material) => {
-        return { material: el, thumbnail: null };
-      });
-      setMaterials(materialsWithNullThumbnail);
-      return;
+    try {
+      const baseUrl = getUrl();
+      const url = `${baseUrl}?search=${searchString}`;
+      const json = await loadMaterials(url);
+      
+      // Ensure json is an array
+      const safeJson = Array.isArray(json) ? json : [];
+      setSearchResults(safeJson);
+      setMaterials(safeJson);
+    } catch (error) {
+      console.error("Failed to search materials:", error);
+      setMaterials([]);
     }
-    setMaterials(json);
   };
 
   const setSearchResults = (materials: any) => {
@@ -55,7 +56,10 @@ export default function Workspace() {
     searchMaterials();
   }, [searchString]);
 
-  if (!loading && materials.length === 0) {
+  // Ensure materials is always an array
+  const safeMaterials = Array.isArray(materials) ? materials : [];
+
+  if (!loading && safeMaterials.length === 0) {
     return (
       <>
         <NoData message="Werde Autor!" />
@@ -72,7 +76,7 @@ export default function Workspace() {
         </div>
       )}
       <div>
-        {materials.map((el: Material) => {
+        {safeMaterials.map((el: Material) => {
           return <Card key={el.id} material={el}></Card>;
         })}
       </div>

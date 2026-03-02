@@ -23,9 +23,14 @@ function Materials() {
   };
 
   const getTotalPages = async () => {
-    const totalMaterialsCount = await getTotalMaterials();
-    const totalPages = Math.ceil(totalMaterialsCount / pageSize);
-    setTotalPages(totalPages);
+    try {
+      const totalMaterialsCount = await getTotalMaterials();
+      const totalPages = Math.ceil(totalMaterialsCount / pageSize);
+      setTotalPages(totalPages);
+    } catch (error) {
+      console.error("Failed to get total pages:", error);
+      setTotalPages(0);
+    }
   };
 
   const buildPaginatedMaterialsUrl = (page: number = 0, pageSize: number) => {
@@ -35,9 +40,15 @@ function Materials() {
   };
 
   const setPaginatedMaterials = async (page: number, pageSize: number) => {
-    const url = buildPaginatedMaterialsUrl(page, pageSize);
-    const json = await loadMaterials(url);
-    setMaterials(json);
+    try {
+      const url = buildPaginatedMaterialsUrl(page, pageSize);
+      const json = await loadMaterials(url);
+      // Ensure materials is always an array
+      setMaterials(Array.isArray(json) ? json : []);
+    } catch (error) {
+      console.error("Failed to load materials:", error);
+      setMaterials([]);
+    }
   };
 
   useEffect(() => {
@@ -48,7 +59,10 @@ function Materials() {
     getTotalPages();
   }, []);
 
-  if (!loading && materials.length === 0) {
+  // Ensure materials is always an array before rendering
+  const safeMaterials = Array.isArray(materials) ? materials : [];
+
+  if (!loading && safeMaterials.length === 0) {
     return (
       <>
         <NoData />
@@ -64,7 +78,7 @@ function Materials() {
           <Skeleton id={crypto.randomUUID()} />
         </div>
       )}
-      {materials.map((el: Material) => {
+      {safeMaterials.map((el: Material) => {
         return <Card key={el.id} material={el}></Card>;
       })}
       <Paginator setPage={setPage} page={page} totalPages={totalPages} />
