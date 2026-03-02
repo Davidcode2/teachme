@@ -1,26 +1,37 @@
-import { useErrorStore, useUserStore } from "../store";
 import { customFetch } from "./customFetch";
+import { useUserStore } from "../store";
+import { handleActionError, getRequiredFormField } from "../utils/actionUtils";
 
 export default async function addUsernameAction({
   request,
 }: {
   request: Request;
 }) {
-  const formData = await request.formData();
-  const username = JSON.stringify({ displayName: formData.get("displayName") });
-  useUserStore.getState().setUser(username);
-  const res = await customFetch(`/api/users`, {
-    method: "PATCH",
-    body: username,
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
+  try {
+    const formData = await request.formData();
+    
+    // Get and validate displayName
+    const displayName = getRequiredFormField(formData, "displayName");
+    const username = JSON.stringify({ displayName });
+    
+    // Update local store
+    useUserStore.getState().setUser(username);
+    
+    const response = await customFetch(`/api/users`, {
+      method: "PATCH",
+      body: username,
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
 
-  if (!res.ok) {
-    useErrorStore
-      .getState()
-      .pushError({ code: res.status, message: res.statusText });
+    if (!response.ok) {
+      throw response;
+    }
+
+    return response;
+  } catch (error) {
+    handleActionError(error, "Fehler beim Speichern des Benutzernamens");
+    return { error: true };
   }
-  return res;
 }

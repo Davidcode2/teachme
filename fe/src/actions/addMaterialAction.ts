@@ -1,22 +1,31 @@
 import { redirect } from "react-router";
-import { getUser } from "../services/authService";
+import { customFetch } from "./customFetch";
+import { formatPrice, handleActionError } from "../utils/actionUtils";
 
 export default async function addMaterialAction({
   request,
 }: {
   request: Request;
 }) {
-  const user = getUser();
-  const formData = await request.formData();
-  const price = formData.get("price");
-  formData.set("price", price!.toString().replace(/,/g, ""));
-  await fetch("/api/materials", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${user?.access_token}`,
-    },
-    body: formData,
-  });
-  return redirect("/materials/add/success");
-}
+  try {
+    const formData = await request.formData();
+    
+    // Format price before sending to API
+    const price = formData.get("price");
+    formData.set("price", formatPrice(price));
+    
+    const response = await customFetch("/api/materials", {
+      method: "POST",
+      body: formData,
+    });
 
+    if (!response.ok) {
+      throw response;
+    }
+
+    return redirect("/materials/add/success");
+  } catch (error) {
+    handleActionError(error, "Fehler beim Erstellen des Materials");
+    return { error: true };
+  }
+}
