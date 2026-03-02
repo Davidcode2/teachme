@@ -99,12 +99,13 @@ function MyMaterials() {
     searchMaterials();
   }, [searchString]);
 
-  // Ensure materials is always an array
-  const safeMaterials = Array.isArray(materials) ? materials : [];
-  const safeSearchResults = Array.isArray(searchResults) ? searchResults : [];
+  // Ensure materials is always an array and filter out undefined/null items
+  const safeMaterials = (Array.isArray(materials) ? materials : []).filter(Boolean);
+  const safeSearchResults = (Array.isArray(searchResults) ? searchResults : []).filter(Boolean);
 
   // Helper to get material from either Material or MaterialWithThumbnail
-  const getMaterial = (el: any): Material => {
+  const getMaterial = (el: any): Material | null => {
+    if (!el) return null;
     return el.material || el;
   };
 
@@ -125,9 +126,9 @@ function MyMaterials() {
         </div>
       )}
       {safeSearchResults.length > 0
-        ? safeSearchResults.map((el: any) => {
+        ? safeSearchResults.map((el: any, index: number) => {
             const material = getMaterial(el);
-            return <Card key={material.id} material={material} />;
+            return material ? <Card key={material.id || index} material={material} /> : null;
           })
         : safeMaterials.map((el: Material) => {
             return <Card key={el.id} material={el}></Card>;

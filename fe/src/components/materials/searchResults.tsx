@@ -63,14 +63,17 @@ function SearchResults() {
     searchMaterials();
   }, [searchString]);
 
-  if (searchResults.length === 0) {
+  // Filter out undefined/null items
+  const safeSearchResults = searchResults.filter(Boolean);
+
+  if (safeSearchResults.length === 0) {
     return <NoData />;
   }
 
   return (
     <>
-      {searchResults.map((el: Material) => {
-        return <Card key={el.id} material={el} />;
+      {safeSearchResults.map((el: Material) => {
+        return el ? <Card key={el.id} material={el} /> : null;
       })}
     </>
   );
