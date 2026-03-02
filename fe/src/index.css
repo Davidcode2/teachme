@@ -130,6 +130,7 @@
 
 body {
   font-family: var(--font-body);
+  color: var(--color-text-primary);
 }
 
 /* Blur utilities */
