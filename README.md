@@ -9,7 +9,7 @@
 
 ---
 
-👋 Welcome to the **TeachMe Marketplace** repository! This project was built with passion and a desire to learn the intricacies of modern fullstack development. It's a platform where educators can share and monetize their valuable teaching resources. Dive in to explore the technologies and architecture that power this marketplace!
+👋 Welcome to the **TeachMe Marketplace** repository! This project was built with passion and a desire to learn the intricacies of modern fullstack development. It's a platform where educators can share and monetize their valuable teaching resources. Dive in to explore the technologies and architecture that power this marketplace! To learn more about the architecture see the [blog post](https://blog.jakob-lingel.dev/posts/teachly_architecture/).
 
 [![.github/workflows/main.yml](https://github.com/Davidcode2/teachme/actions/workflows/main.yml/badge.svg)](https://github.com/Davidcode2/teachme/actions/workflows/main.yml)
 
