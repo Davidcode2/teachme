@@ -116,8 +116,6 @@ jobs:
     needs: [bump-version, build-and-push]
     permissions:
       contents: read
-    env:
-      VERSION: sha-${{ needs.bump-version.outputs.sha }}
 
     steps:
       - name: Generate GitHub App token
@@ -138,17 +136,17 @@ jobs:
       - name: Update deployment image tag
         working-directory: ${{ env.DEPLOYMENT_DIR }}
         run: |
-          OWNER_LC=$(echo "${{ env.GITHUB_OWNER }}" | tr '[:upper:]' '[:lower:]')
-          REPO_LC=$(echo "${{ env.APP_REPO_NAME }}" | tr '[:upper:]' '[:lower:]')
-          sed -i "s|image: ghcr.io/${OWNER_LC}/${REPO_LC}-keycloak:.*|image: ghcr.io/${OWNER_LC}/${REPO_LC}-keycloak:${VERSION}|g" "${{ env.DEPLOYMENT_FILE }}"
-          echo "Updated image tag to ${VERSION}"
+          IMAGE_REF='${{ needs.build-and-push.outputs.image_ref }}'
+          sed -i "s|image: .*|image: ${IMAGE_REF}|g" "${{ env.DEPLOYMENT_FILE }}"
+          echo "Updated image ref to ${IMAGE_REF}"
 
       - name: Commit and push deployment changes
         working-directory: ${{ env.DEPLOYMENT_DIR }}
         run: |
+          IMAGE_TAG='${{ needs.build-and-push.outputs.image_tag }}'
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git diff --exit-code && echo "No changes to commit" && exit 0
           git add .
-          git commit -m "deploy: ${{ env.APP_REPO_NAME }} keycloak ${VERSION}"
+          git commit -m "deploy: ${{ env.APP_REPO_NAME }} keycloak ${IMAGE_TAG}"
           git push

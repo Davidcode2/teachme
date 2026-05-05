@@ -23,6 +23,12 @@ on:
       version:
         description: "Version extracted from package.json"
         value: ${{ jobs.build-and-push.outputs.version }}
+      image_tag:
+        description: "Exact image tag pushed to the registry"
+        value: ${{ jobs.build-and-push.outputs.image_tag }}
+      image_ref:
+        description: "Exact image ref pushed to the registry"
+        value: ${{ jobs.build-and-push.outputs.image_ref }}
 
 env:
   REGISTRY: ghcr.io
@@ -32,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.pkg.outputs.version }}
+      image_tag: ${{ steps.image.outputs.tag }}
+      image_ref: ${{ steps.image.outputs.ref }}
     permissions:
       contents: read
       packages: write
@@ -52,7 +60,21 @@ jobs:
       - name: Read version from package.json
         id: pkg
         working-directory: ${{ inputs.context }}
-        run: echo "version=$(cat package.json | jq -r .version)" >> $GITHUB_OUTPUT
+        run: |
+          if [ -f package.json ]; then
+            echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Derive image tag from checked-out commit
+        id: image
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          IMAGE_TAG="sha-${SHORT_SHA}"
+          IMAGE_REF="${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ inputs.image_name }}:${IMAGE_TAG}"
+          echo "tag=${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
+          echo "ref=${IMAGE_REF}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4.0.0
@@ -64,8 +86,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ inputs.image_name }}
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
-            type=sha,enable=true
-            type=raw,value=${{ steps.pkg.outputs.version }}
+            type=raw,value=${{ steps.image.outputs.tag }}
+            type=raw,value=${{ steps.pkg.outputs.version }},enable=${{ steps.pkg.outputs.version != '' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7.0.0
