@@ -57,6 +57,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Normalize image namespace
+        id: namespace
+        run: |
+          OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "owner=${OWNER_LC}" >> "$GITHUB_OUTPUT"
+
       - name: Read version from package.json
         id: pkg
         working-directory: ${{ inputs.context }}
@@ -72,7 +78,7 @@ jobs:
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
           IMAGE_TAG="sha-${SHORT_SHA}"
-          IMAGE_REF="${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ inputs.image_name }}:${IMAGE_TAG}"
+          IMAGE_REF="${{ env.REGISTRY }}/${{ steps.namespace.outputs.owner }}/${{ inputs.image_name }}:${IMAGE_TAG}"
           echo "tag=${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
           echo "ref=${IMAGE_REF}" >> "$GITHUB_OUTPUT"
 
@@ -83,7 +89,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6.0.0
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ inputs.image_name }}
+          images: ${{ env.REGISTRY }}/${{ steps.namespace.outputs.owner }}/${{ inputs.image_name }}
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=${{ steps.image.outputs.tag }}
