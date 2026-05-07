@@ -48,6 +48,7 @@ dist
 *.out.js
 *.out.refresh.js
 **/package-lock.json
+!keycloak/theme-app/package-lock.json
 build
 *.wat
 zig-out
@@ -203,6 +204,7 @@ x64
 .DS_Store
 .idea
 .pnpm-store
+.playwright-cli
 *.cpuprofile
 *.local
 *.log
