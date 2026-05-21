@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 type Props = {
   id: string;
   name: string;
-  label: string;
+  label: ReactNode;
   showLabel?: boolean;
   autoFocus?: boolean;
   autoComplete?: string;
   defaultValue?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  onBlur?: () => void;
 };
 
 export function PasswordField(props: Props) {
-  const { id, name, label, showLabel = true, autoFocus, autoComplete, defaultValue } = props;
+  const { id, name, label, showLabel = true, autoFocus, autoComplete, defaultValue, value, onChange, onBlur } = props;
   const [visible, setVisible] = useState(false);
 
   return (
@@ -26,6 +29,9 @@ export function PasswordField(props: Props) {
           autoFocus={autoFocus}
           autoComplete={autoComplete}
           defaultValue={defaultValue}
+          value={value}
+          onChange={event => onChange?.(event.target.value)}
+          onBlur={onBlur}
         />
         <button
           type="button"

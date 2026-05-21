@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export function FieldError(props: { error?: string }) {
+export function FieldError(props: { error?: ReactNode }) {
   if (!props.error) {
     return null;
   }

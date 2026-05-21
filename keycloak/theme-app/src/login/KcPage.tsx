@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import LoginPassword from "./pages/LoginPassword";
 import LoginResetPassword from "./pages/LoginResetPassword";
 import LoginUsername from "./pages/LoginUsername";
+import Register from "./pages/Register";
 import ErrorPage from "./pages/ErrorPage";
 import InfoPage from "./pages/InfoPage";
 
@@ -33,6 +34,8 @@ export default function KcPage(props: { kcContext: KcContext }) {
             return <LoginPassword kcContext={kcContext} i18n={i18n} />;
           case "login-reset-password.ftl":
             return <LoginResetPassword kcContext={kcContext} i18n={i18n} />;
+          case "register.ftl":
+            return <Register kcContext={kcContext} i18n={i18n} />;
           case "info.ftl":
             return <InfoPage kcContext={kcContext} i18n={i18n} />;
           case "error.ftl":

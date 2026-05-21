@@ -54,7 +54,8 @@ a:hover {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -228,8 +229,22 @@ select {
   font-size: 0.92rem;
 }
 
+.auth-checkbox--start {
+  align-items: flex-start;
+}
+
 .auth-checkbox input {
   accent-color: var(--primary);
+}
+
+.auth-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.auth-textarea {
+  min-height: 7rem;
+  resize: vertical;
 }
 
 .auth-link {
