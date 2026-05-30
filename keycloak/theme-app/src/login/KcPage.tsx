@@ -13,6 +13,8 @@ import LoginUsername from "./pages/LoginUsername";
 import Register from "./pages/Register";
 import ErrorPage from "./pages/ErrorPage";
 import InfoPage from "./pages/InfoPage";
+import LogoutConfirmPage from "./pages/LogoutConfirmPage";
+import FrontchannelLogoutPage from "./pages/FrontchannelLogoutPage";
 
 const UserProfileFormFields = lazy(() => import("keycloakify/login/UserProfileFormFields"));
 
@@ -40,6 +42,10 @@ export default function KcPage(props: { kcContext: KcContext }) {
             return <InfoPage kcContext={kcContext} i18n={i18n} />;
           case "error.ftl":
             return <ErrorPage kcContext={kcContext} i18n={i18n} />;
+          case "logout-confirm.ftl":
+            return <LogoutConfirmPage kcContext={kcContext} i18n={i18n} />;
+          case "frontchannel-logout.ftl":
+            return <FrontchannelLogoutPage kcContext={kcContext} i18n={i18n} />;
           default:
             return (
               <DefaultPage
