@@ -1,4 +1,5 @@
 import type { PropsWithChildren, ReactNode } from "react";
+import { useRealmName } from "./realmContext";
 
 type Props = PropsWithChildren<{
   title?: ReactNode;
@@ -8,18 +9,31 @@ type Props = PropsWithChildren<{
   footer?: ReactNode;
 }>;
 
+type RealmBranding = {
+  mark: string;
+  title: string;
+  subtitle: string;
+};
+
+const REALM_BRANDING: Record<string, RealmBranding> = {
+  schreinerei: { mark: "S", title: "Schreinerei", subtitle: "Baustellenverwaltung" },
+  personal: { mark: "JL", title: "Jakob Lingel", subtitle: "Personal" }
+};
+
 export function AuthShell(props: Props) {
   const { title, subtitle, topRight, message, footer, children } = props;
+  const realmName = useRealmName();
+  const branding = REALM_BRANDING[realmName] ?? REALM_BRANDING.schreinerei;
 
   return (
-    <div className="auth-page">
+    <div className="auth-page" data-realm={realmName}>
       <div className="auth-page__panel">
         <div className="auth-brand">
           <div className="auth-brand__mark" aria-hidden="true">
-            S
+            {branding.mark}
           </div>
-          <div className="auth-brand__title">Schreinerei</div>
-          <div className="auth-brand__subtitle">Baustellenverwaltung</div>
+          <div className="auth-brand__title">{branding.title}</div>
+          <div className="auth-brand__subtitle">{branding.subtitle}</div>
         </div>
 
         {(title || topRight) && (
