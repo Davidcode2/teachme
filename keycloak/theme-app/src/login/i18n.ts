@@ -12,6 +12,7 @@ const { useI18n: useBaseI18n, ofTypeI18n } = i18nBuilder.withThemeName<ThemeName
 const GERMAN_MESSAGES: Record<string, string> = {
   // Field labels
   username: "Benutzername",
+  usernameOrEmail: "Benutzername oder E-Mail",
   email: "E-Mail",
   firstName: "Vorname",
   lastName: "Nachname",
