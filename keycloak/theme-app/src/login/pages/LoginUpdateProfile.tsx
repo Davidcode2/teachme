@@ -10,17 +10,16 @@ import { UsernameField } from "../components/UsernameField";
 import { FieldError } from "../components/formHelpers";
 
 type Props = {
-  kcContext: Extract<KcContext, { pageId: "register.ftl" }>;
+  kcContext: Extract<KcContext, { pageId: "login-update-profile.ftl" }>;
   i18n: I18n;
 };
 
 const doMakeUserConfirmPassword = true;
 
-export default function Register(props: Props) {
+export default function LoginUpdateProfile(props: Props) {
   const { kcContext, i18n } = props;
   const { msg, advancedMsg } = i18n;
-  const { url, termsAcceptanceRequired, messageHeader } = kcContext;
-  const [areTermsAccepted, setAreTermsAccepted] = useState(false);
+  const { url, isAppInitiatedAction } = kcContext;
 
   const {
     formState: { formFieldStates, isFormSubmittable },
@@ -32,8 +31,11 @@ export default function Register(props: Props) {
   });
 
   return (
-    <AuthShell title={messageHeader ? advancedMsg(messageHeader) : msg("registerTitle")} topRight={<LocaleSelect kcContext={kcContext} />}>
-      <form className="auth-form" action={url.registrationAction} method="post">
+    <AuthShell
+      title={msg("loginProfileTitle")}
+      topRight={<LocaleSelect kcContext={kcContext} />}
+    >
+      <form className="auth-form" action={url.loginAction} method="post">
         {formFieldStates.map(({ attribute, displayableErrors, valueOrValues }) => {
           if (attribute.annotations.inputType === "hidden") {
             return <input key={attribute.name} type="hidden" name={attribute.name} value={typeof valueOrValues === "string" ? valueOrValues : ""} />;
@@ -48,7 +50,7 @@ export default function Register(props: Props) {
           }
 
           return (
-            <RegisterField
+            <UpdateProfileField
               key={attribute.name}
               attribute={attribute}
               error={displayableErrors[0]?.errorMessage}
@@ -60,35 +62,22 @@ export default function Register(props: Props) {
           );
         })}
 
-        {termsAcceptanceRequired ? (
-          <div className="auth-stack auth-stack--sm">
-            <label className="auth-checkbox auth-checkbox--start" htmlFor="termsAccepted">
-              <input
-                id="termsAccepted"
-                type="checkbox"
-                name="termsAccepted"
-                checked={areTermsAccepted}
-                onChange={event => setAreTermsAccepted(event.target.checked)}
-              />
-              <span>{msg("acceptTerms")}</span>
-            </label>
-          </div>
-        ) : null}
-
         <div className="auth-actions">
-          <button className="auth-button auth-button--primary" type="submit" disabled={!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)}>
-            {msg("doRegister")}
+          <button className="auth-button auth-button--primary" type="submit" disabled={!isFormSubmittable}>
+            {msg("doSubmit")}
           </button>
-          <a className="auth-button auth-button--secondary" href={url.loginUrl}>
-            {msg("backToLogin")}
-          </a>
+          {isAppInitiatedAction ? (
+            <button className="auth-button auth-button--secondary" type="submit" name="cancel-aia" value="true" formNoValidate>
+              {msg("doCancel")}
+            </button>
+          ) : null}
         </div>
       </form>
     </AuthShell>
   );
 }
 
-type RegisterFieldProps = {
+type UpdateProfileFieldProps = {
   attribute: Attribute;
   label: ReactNode;
   value: string;
@@ -97,7 +86,7 @@ type RegisterFieldProps = {
   onBlur: () => void;
 };
 
-function RegisterField(props: RegisterFieldProps) {
+function UpdateProfileField(props: UpdateProfileFieldProps) {
   const { attribute, label, value, error, onChange, onBlur } = props;
 
   if (attribute.name === "password" || attribute.name === "password-confirm") {

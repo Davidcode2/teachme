@@ -15,7 +15,7 @@ const { getKcContextMock } = createGetKcContextMock<KcContextExtension, KcContex
 
 if (import.meta.env.DEV && !window.kcContext) {
   window.kcContext = getKcContextMock({
-    pageId: "login-password.ftl",
+    pageId: "register.ftl",
     overrides: {
       auth: {
         attemptedUsername: "max@schreinerei.de"
