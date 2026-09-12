@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 AS base
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY . .
 FROM base AS build
 RUN npm run build
 
-FROM nginx:latest
+FROM nginx:latest@sha256:05b8cb60c354a44ab824ea6e7dc69b46d50762cdbe728a347a5b656e6fb3d7c4
 COPY --from=build /app/dist /var/www/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /var/www/html

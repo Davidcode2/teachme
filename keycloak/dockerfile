@@ -1,4 +1,4 @@
-FROM node:20-alpine AS theme-builder
+FROM node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 AS theme-builder
 
 RUN apk update && apk add --no-cache openjdk17 maven
 
@@ -10,7 +10,7 @@ RUN npm ci
 COPY theme-app/ ./
 RUN npm run build-keycloak-theme
 
-FROM quay.io/keycloak/keycloak:latest AS builder
+FROM quay.io/keycloak/keycloak:latest@sha256:ff4257d0d64efbe99ed1ddfaf07765cc3c36dc7518bf8324d41961327f441c54 AS builder
 
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
@@ -20,7 +20,7 @@ WORKDIR /opt/keycloak
 COPY --from=theme-builder /app/theme-app/dist_keycloak/keycloak-theme-for-kc-all-other-versions.jar /opt/keycloak/providers/
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:latest
+FROM quay.io/keycloak/keycloak:latest@sha256:ff4257d0d64efbe99ed1ddfaf07765cc3c36dc7518bf8324d41961327f441c54
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 # Copy the startup script
