@@ -1,6 +1,6 @@
 services:
   reverse-proxy:
-    image: nginx:alpine
+    image: nginx:alpine@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2
     container_name: reverse_proxy
     configs:
       - source: nginx_conf
@@ -17,7 +17,7 @@ services:
       - app-network
 
   certbot:
-    image: certbot/certbot
+    image: certbot/certbot@sha256:f70ad0adbb7e117f0fe42a63c553f28ea451edabc0148757b6efcd9735acaa20
     container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
