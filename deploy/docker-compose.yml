@@ -28,7 +28,7 @@ services:
       - app-network
 
   keycloak_db:
-    image: postgres
+    image: postgres@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336
     container_name: keycloak_db
     restart: always
     # set shared memory limit when using docker-compose
