@@ -16,7 +16,6 @@ env:
   APP_OF_APPS_REPO: app-of-apps
 
   # Deployment configuration
-  DEPLOYMENT_DIR: teachme
   DEPLOYMENT_FILE: teachme-keycloak-deployment.yaml
 
   # Build configuration
@@ -133,20 +132,27 @@ jobs:
           repository: ${{ env.GITHUB_OWNER }}/${{ env.APP_OF_APPS_REPO }}
           token: ${{ steps.app-token.outputs.token }}
 
-      - name: Update deployment image tag
-        working-directory: ${{ env.DEPLOYMENT_DIR }}
+      - name: Update deployment image tag and push
         run: |
+          # Support both sides of the GitOps handoff, including a rollback.
+          deployment="keycloak/$DEPLOYMENT_FILE"
+          if [[ ! -f "$deployment" ]]; then
+            deployment="teachme/$DEPLOYMENT_FILE"
+          fi
+          if [[ ! -f "$deployment" ]]; then
+            echo "Keycloak deployment manifest not found" >&2
+            exit 1
+          fi
           IMAGE_REF='${{ needs.build-and-push.outputs.image_ref }}'
-          sed -i "s|image: .*|image: ${IMAGE_REF}|g" "${{ env.DEPLOYMENT_FILE }}"
+          sed -i "s|image: .*|image: ${IMAGE_REF}|g" "$deployment"
           echo "Updated image ref to ${IMAGE_REF}"
-
-      - name: Commit and push deployment changes
-        working-directory: ${{ env.DEPLOYMENT_DIR }}
-        run: |
           IMAGE_TAG='${{ needs.build-and-push.outputs.image_tag }}'
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git diff --exit-code && echo "No changes to commit" && exit 0
-          git add .
+          if git diff --quiet -- "$deployment"; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git add -- "$deployment"
           git commit -m "deploy: ${{ env.APP_REPO_NAME }} keycloak ${IMAGE_TAG}"
           git push
